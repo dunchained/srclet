@@ -132,14 +132,8 @@ class Parameters(QDialog):
         buttonClose = QPushButton('Close')
         buttonClose.clicked.connect(self.close)
         
-        
-        
         layout = QHBoxLayout()
-        
-        
         layout.addWidget(buttonClose)
-        
-        
         layout.setAlignment(Qt.AlignRight)
         layout.addStretch(1)
         DownGroupBox.setLayout(layout)
@@ -179,10 +173,7 @@ class Parameters(QDialog):
             self.msg.setStandardButtons(QMessageBox.Ok)
             #self.msg.buttonClicked.connect(self.close)
             self.msg.show()
-            
-    
-
-
+ 
 #obrisati nakon uvezivanja cijelog
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
