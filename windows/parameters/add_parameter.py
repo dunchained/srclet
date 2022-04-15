@@ -4,7 +4,7 @@ from sqlite3 import paramstyle
 import sys, json, os
 
 # app modules and windows
-from appdata import css
+#from appdata import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
@@ -21,7 +21,7 @@ class AddParameter(QDialog):
     def WindowGUI(self):
         self.setFixedSize(800, 600)
         self.setWindowTitle('Add new parameter')
-        self.setWindowIcon(QIcon(css.menu_about_icon))
+        #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.addParameterGroupBox())
         self.setLayout(self.grid)

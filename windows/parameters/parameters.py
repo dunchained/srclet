@@ -45,21 +45,14 @@ class Parameters(QDialog):
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
-                   
         self.list_widget.addItems(self.file_list)
-
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        
         buttonRefresh = QPushButton('Refresh parameter list')
         buttonRefresh.clicked.connect(self.refresh_parameters_list)
-
         buttonAddParameter = QPushButton('Add new parameter')
         buttonAddParameter.clicked.connect(self.newParameterWindow)
-
         buttonDelete = QPushButton('Delete selected parameter')
         buttonDelete.clicked.connect(self.delete_parameter)
-        
-               
 
         layout = QVBoxLayout()
         layout.addWidget(self.list_widget)
@@ -71,7 +64,7 @@ class Parameters(QDialog):
         
         return LeftGroupBox
     
-    def index_changed(self, i): # Not an index, i is a QListItem
+    def index_changed(self, i):
         self.json_path = 'parameters/' + i.text() + '.json'
        
         with open(self.json_path) as json_file:
@@ -82,12 +75,11 @@ class Parameters(QDialog):
             self.parameter_descriprion.setText(data["description"])
 
     def delete_parameter(self):
-
         list_items = self.list_widget.selectedItems()
         if not list_items: return
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove(self.json_path)
+        os.remove('parameters/' + item.text() + '.json')
             
     def refresh_parameters_list(self):
         get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
