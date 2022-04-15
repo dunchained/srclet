@@ -1,6 +1,8 @@
 # python standard modules
 import sys
 
+# neka promjena nešta
+
 # app modules and windows
 from appdata import css
 from windows.project.new_project import NewProjectWindow
