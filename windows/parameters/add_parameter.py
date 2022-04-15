@@ -1,4 +1,6 @@
 # python standard modules
+import imp
+from sqlite3 import paramstyle
 import sys, json, os
 
 # app modules and windows
@@ -111,7 +113,7 @@ class AddParameter(QDialog):
             
     def message_box_success(self):
         self.close()
-            
+
             
     
    
