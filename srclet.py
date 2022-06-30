@@ -1,5 +1,6 @@
 # python standard modules
 # samo da probam commit
+# podesio i github na svemu
 import sys
 
 # neka promjena nešta
