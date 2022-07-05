@@ -1,13 +1,8 @@
-# python standard modules
-import os
-
-# app modules and windows
+import os, json
 from appdata import css
 from windows.data.check_data import CheckDataTypeWidget
-
-# pyqt5 modules
-from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog, QPushButton, QGroupBox
-from PyQt5.QtWidgets import QMessageBox, QDesktopWidget
+from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
+from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 
@@ -19,14 +14,17 @@ class NewProjectWindow2(QWidget):
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.WindowGUI(name_of_project)
         self.project_path = os.getcwd() + '/projects/' + name_of_project
+        self.project_name = name_of_project
+        print(self.project_path)
 
     def WindowGUI(self, name_of_project):
-        self.setFixedSize(400, 300)
+        self.setFixedSize(800, 600)
         self.setWindowTitle('Create New Project: ' + name_of_project)
-        self.setWindowIcon(QIcon(css.menu_about_icon))
+        self.setWindowIcon(QIcon(css.new_project_window2_icon))
         self.grid = QGridLayout()
-        self.grid.addWidget(self.loadAndCheckData())
-        self.grid.addWidget(self.saveProject())
+        self.grid.addWidget(self.loadAndCheckData(), 0, 0, 1, 1)
+        self.grid.addWidget(self.projectParameters(), 0, 1, 1, 1)
+        self.grid.addWidget(self.saveProject(), 1, 0, -1, 2)
         self.setLayout(self.grid)
         self.centerUserInterface()
         self.show()
@@ -38,7 +36,7 @@ class NewProjectWindow2(QWidget):
         self.move(qr.topLeft())    
 
     def loadAndCheckData(self):
-        groupBox = QGroupBox('Browse for data file...')
+        groupBox = QGroupBox('project data file...')
         buttonBrowse = QPushButton('Browse')
         self.text_data_selected = QLabel()
         self.text_data_selected.setText('No file selected.')
@@ -52,6 +50,21 @@ class NewProjectWindow2(QWidget):
         vbox.addWidget(self.text_data_selected)
         vbox.addWidget(buttonLoadFile)
         vbox.addWidget(self.text_data_status)
+        vbox.addStretch(1)
+        groupBox.setLayout(vbox)
+        return groupBox
+    
+    def projectParameters(self):
+        groupBox = QGroupBox('Project settings and parameters...')
+        buttonSaveAndExit = QPushButton('Save project and Exit')
+        buttonSaveAndExit.clicked.connect(self.saveAndExit)
+        buttonSaveAndOpen = QPushButton('Save project and Open')
+        buttonSaveAndOpen.clicked.connect(self.saveAndOpen)
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(buttonSaveAndExit)
+        vbox.addWidget(buttonSaveAndOpen)
+        
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
         return groupBox
@@ -91,7 +104,25 @@ class NewProjectWindow2(QWidget):
             self.window = CheckDataTypeWidget(file_path_from_other_window, project_path_to_forward)
     
     def saveAndExit(self):
-        pass
+        project_settings_dict = {
+            "name": 'parametar1',
+            "unit": 'parametar2',
+            "description": 'parametar3'
+            }
+        
+        json_object = json.dumps(project_settings_dict, indent = 4)
+        with open(os.path.curdir + "/projects/" + self.project_name + "settings.json", "w") as outfile:
+            outfile.write(json_object)
+            
+        self.msg = QMessageBox()
+        self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.msg.setIcon(QMessageBox.Information)
+        self.msg.setText('Project saved...')
+        self.msg.setWindowTitle('Successuful...')
+        self.msg.setStandardButtons(QMessageBox.Ok)
+        self.msg.buttonClicked.connect(self.close)
+        self.msg.show()
+        
 
     def saveAndOpen(self):
         pass

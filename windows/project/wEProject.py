@@ -2,7 +2,7 @@
 import sys
 
 # app modules and windows
-from appdata import css
+#from appdata import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout
@@ -20,7 +20,7 @@ class Methods(QDialog):
     def WindowGUI(self):
         
         self.setWindowTitle('Methods')
-        self.setWindowIcon(QIcon(css.menu_about_icon))
+        #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.createTopLeftGroupBox(), 0, 0, 1, 1)
         self.grid.addWidget(self.createTopRightGroupBox(), 0, 1, 1, 1)

@@ -1,5 +1,13 @@
 #Style Sheet Data
 
+# New Project Window
+new_project_window_icon = 'appdata/photo/icon_AuM_icon.ico'
+
+# New Project Window 2
+new_project_window2_icon = 'appdata/photo/icon_AuM_icon.ico'
+
+
+
 #MainWindow settings:
 window_background_image =   "background-image : url(appdata/photo/srclet.png); position: relative;" \
                             "background-repeat: no-repeat; background-position: center;"
