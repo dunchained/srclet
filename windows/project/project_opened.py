@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget
 from PyQt5.QtWidgets import QPushButton, QGridLayout, QListWidget, QGroupBox
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QLineEdit
 
-from windows.project.project_opened_data import DataWidget
+from windows.project.project_opened_calc import CalculateWidget
 
 class ProjectWindow(QMainWindow):
     def __init__(self, project_path):
@@ -19,7 +19,7 @@ class ProjectWindow(QMainWindow):
         self.setWindowIcon(QIcon(css.srclet_main_window_icon))
         self.centerUserInterface()
         self.fileMenu()
-        self.central_widget = DataWidget()
+        self.central_widget = CalculateWidget(project_path=self.project_path)
         self.setCentralWidget(self.central_widget)
         self.show()
 

@@ -1,16 +1,13 @@
 import os, json
-from sre_constants import AT_END
 from appdata import css
 
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
-from PyQt5.QtGui import QIcon, QTextCursor
-from PyQt5.QtCore import Qt
 
-
-class DataWidget(QWidget):
+class CalculateWidget(QWidget):
     
-    def __init__(self):
+    def __init__(self, project_path):
+        self.project_path = project_path
         super().__init__()
         self.WindowGUI()
         
@@ -32,10 +29,12 @@ class DataWidget(QWidget):
 
     def loadAndCheckData(self):
         groupBox = QGroupBox('Load and show data info...')
+        label = QLabel(self.project_path)
         buttonBrowse = QPushButton('Neki')
         buttonBrowse.clicked.connect(self.buttonBrowse)
         vbox = QVBoxLayout()
         vbox.addWidget(buttonBrowse)
+        vbox.addWidget(label)
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
         return groupBox

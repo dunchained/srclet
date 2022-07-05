@@ -1,11 +1,5 @@
-# python standard modules
-# samo da probam commit
-# podesio i github na svemu
 import sys
 
-# neka promjena nešta
-
-# app modules and windows
 from appdata import css
 from windows.project.new_project import NewProjectWindow
 from windows.project.open_project import OpenProjectWindow
@@ -15,7 +9,6 @@ from windows.settings.settings import SettingsWindow
 from windows.parameters.parameters import Parameters
 from windows.methods.methods import Methods
 
-# pyqt5 modules
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget

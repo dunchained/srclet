@@ -1,8 +1,10 @@
 # python standard modules
-import os, sys
+import os, sys, json
+from pathlib import Path
+
 
 # app modules and windows
-from appdata import css
+#from appdata import css
 
 # pyqt5 modules
 from PyQt5.QtGui import QIcon
@@ -27,7 +29,7 @@ class TableWidget(QTableWidget):
         super(TableWidget, self).scrollContentsBy(dx, dy)
 
 class CheckDataTypeWidget(TableWidget):
-    def __init__(self, file_path, project_path):
+    def __init__(self, file_path='data.txt', project_path='/projects/Saigon97'):
         super(CheckDataTypeWidget, self).__init__()
         self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -41,7 +43,7 @@ class CheckDataTypeWidget(TableWidget):
         layout.addWidget(self.table, 0, 0)
         layout.addWidget(self.groupBox, 1, 0)
         self.setLayout(layout)
-        self.setWindowIcon(QIcon(css.srclet_main_window_icon))
+        #self.setWindowIcon(QIcon(css.srclet_main_window_icon))
         self.setWindowTitle('Check for data...')
         self.showMaximized()
 
@@ -68,23 +70,26 @@ class CheckDataTypeWidget(TableWidget):
                 print(item_text)
                 lista2.append(item_text)
             lista.append(lista2)
-        print("lista2")
-        print(lista2)
-        print("lista")
-        print(lista)
-        print("*"*1000)
-
         pd.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
 
         pprf = pd.DataFrame(lista)
         rt = pprf.transpose()
         rt.to_excel(self.project_path + "/data.xlsx")
-        print(self.project_path)
     
     def closeSelf(self):
         self.close()
 
     def createDataType(self):
+
+        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        self.file_list = []
+        for file in get_files:
+            #self.file_list.append(Path(file).stem)
+            #print('/parameters/' + Path(file).stem + '.json')
+            with open('parameters/' + Path(file).stem + '.json') as jsonFile:
+                data = json.load(jsonFile)
+                jsonData = data['name']
+                self.file_list.append(jsonData)
         self.buttons
         for i in range(0, self.table.columnCount()):
             button = QPushButton('Data type')
@@ -92,26 +97,10 @@ class CheckDataTypeWidget(TableWidget):
             self.buttons.append(button)
             self.table.setCellWidget(0, i, self.buttons[self.buttons.__len__() - 1])
             self.menu = QMenu(self)
-            self.temp = self.menu.addAction('Temp')
-            self.temp.triggered.connect(self.buttonClicked)
-            self.hum = self.menu.addAction('Hum')
-            self.hum.triggered.connect(self.buttonClicked)
-            self.tmin = self.menu.addAction('Tmin')
-            self.tmin.triggered.connect(self.buttonClicked)
-            self.tmax = self.menu.addAction('Tmax')
-            self.tmax.triggered.connect(self.buttonClicked)
-            self.nnn = self.menu.addAction('n')
-            self.nnn.triggered.connect(self.buttonClicked)
-            self.nnnn = self.menu.addAction('Ta')
-            self.nnnn.triggered.connect(self.buttonClicked)
-            self.nnnnn = self.menu.addAction('kg')
-            self.nnnnn.triggered.connect(self.buttonClicked)
-            self.nnnnnn = self.menu.addAction('cm')
-            self.nnnnnn.triggered.connect(self.buttonClicked)
-            self.nnnnnnn = self.menu.addAction('ta')
-            self.nnnnnnn.triggered.connect(self.buttonClicked)
-            self.nnnnnnnn = self.menu.addAction('Don\'t use')
-            self.nnnnnnnn.triggered.connect(self.buttonClicked)
+            for parameter in self.file_list:
+
+                self.temp = self.menu.addAction(parameter)
+                self.temp.triggered.connect(self.buttonClicked)
             self.buttons[i].setMenu(self.menu)
             self.menu.columnIndex = i
 
