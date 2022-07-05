@@ -32,7 +32,7 @@ class DataWidget(QWidget):
 
     def loadAndCheckData(self):
         groupBox = QGroupBox('Load and show data info...')
-        buttonBrowse = QPushButton('Browse')
+        buttonBrowse = QPushButton('Neki')
         buttonBrowse.clicked.connect(self.buttonBrowse)
         vbox = QVBoxLayout()
         vbox.addWidget(buttonBrowse)
@@ -42,7 +42,7 @@ class DataWidget(QWidget):
 
     def loadAndCheckMethods(self):
         groupBox = QGroupBox('Check methods to calculate...')
-        buttonBrowse = QPushButton('Browse')
+        buttonBrowse = QPushButton('Tekst')
         buttonBrowse.clicked.connect(self.buttonBrowse)
         vbox = QVBoxLayout()
         vbox.addWidget(buttonBrowse)
@@ -68,8 +68,8 @@ class DataWidget(QWidget):
 
     def exportAndSave(self):
         groupBox = QGroupBox('Export and Save...')
-        buttonBrowse = QPushButton('Browse')
-        buttonBrowse.clicked.connect(self.buttonBrowse)
+        buttonBrowse = QPushButton('Saki')
+        buttonBrowse.clicked.connect(self.buttonBrowse1)
         vbox = QVBoxLayout()
         vbox.addWidget(buttonBrowse)
         vbox.addStretch(1)
@@ -79,3 +79,7 @@ class DataWidget(QWidget):
     def buttonBrowse(self):
         #self.label_console.setText(self.label_console.toPlainText() + '\n line 2')
         self.label_console.insertPlainText('linija 2 \n')
+        
+    def buttonBrowse1(self):
+        #self.label_console.setText(self.label_console.toPlainText() + '\n line 2')
+        self.label_console.insertPlainText('linija 23 \n')
