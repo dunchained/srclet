@@ -3,6 +3,7 @@ import os
 
 # app modules and windows
 from appdata import css
+from windows.project.project_opened import ProjectWindow
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog, QPushButton, QGroupBox
@@ -59,8 +60,11 @@ class OpenProjectWindow(QWidget):
         return groupBox
     
     def openProject(self):
-        pass
-        print(self.combo_box.currentText())
+        self.project_path = os.path.curdir + '/projects/' + self.combo_box.currentText()
+        print(self.project_path)
+        self.hide()
+        self.next_window = ProjectWindow(project_path=self.project_path)
+        self.next_window.show()
 
     def deleteProject(self):
         pass

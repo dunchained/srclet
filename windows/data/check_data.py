@@ -27,12 +27,12 @@ class TableWidget(QTableWidget):
         super(TableWidget, self).scrollContentsBy(dx, dy)
 
 class CheckDataTypeWidget(TableWidget):
-    def __init__(self, file_path_from_other_window, project_path_to_forward):
+    def __init__(self, file_path, project_path):
         super(CheckDataTypeWidget, self).__init__()
-        self.project_path = project_path_to_forward
+        self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.buttons = []
-        self.data = numpy.loadtxt(file_path_from_other_window, skiprows=1)
+        self.data = numpy.loadtxt(file_path, skiprows=1)
         self.createTable()
         self.createOptions()
         self.createDataType()

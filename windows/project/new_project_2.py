@@ -1,6 +1,8 @@
 import os, json
 from appdata import css
 from windows.data.check_data import CheckDataTypeWidget
+from windows.project.project_opened import ProjectWindow
+
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox
 from PyQt5.QtGui import QIcon
@@ -99,11 +101,12 @@ class NewProjectWindow2(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            project_path_to_forward = self.project_path
-            file_path_from_other_window = self.text_data_selected.text()
-            self.window = CheckDataTypeWidget(file_path_from_other_window, project_path_to_forward)
+            project_path = self.project_path
+            file_path = self.text_data_selected.text()
+            self.window = CheckDataTypeWidget(file_path, project_path)
     
     def saveAndExit(self):
+        print(self.project_path)
         project_settings_dict = {
             "name": 'parametar1',
             "unit": 'parametar2',
@@ -111,7 +114,7 @@ class NewProjectWindow2(QWidget):
             }
         
         json_object = json.dumps(project_settings_dict, indent = 4)
-        with open(os.path.curdir + "/projects/" + self.project_name + "settings.json", "w") as outfile:
+        with open(self.project_path + '/' + "settings.json", "w") as outfile:
             outfile.write(json_object)
             
         self.msg = QMessageBox()
@@ -125,4 +128,27 @@ class NewProjectWindow2(QWidget):
         
 
     def saveAndOpen(self):
-        pass
+        print(self.project_path)
+        project_settings_dict = {
+            "name": 'parametar1',
+            "unit": 'parametar2',
+            "description": 'parametar3'
+            }
+        
+        json_object = json.dumps(project_settings_dict, indent = 4)
+        with open(self.project_path + '/' + "settings.json", "w") as outfile:
+            outfile.write(json_object)
+            
+        self.msg = QMessageBox()
+        self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.msg.setIcon(QMessageBox.Information)
+        self.msg.setText('Project saved...')
+        self.msg.setWindowTitle('Successuful...')
+        self.msg.setStandardButtons(QMessageBox.Ok)
+        self.msg.buttonClicked.connect(self.messageClose)
+        self.msg.show()
+
+    def messageClose(self):
+        self.hide()
+        self.next_window = ProjectWindow(project_path=self.project_path)
+        self.next_window.show()
