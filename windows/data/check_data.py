@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 # app modules and windows
-#from appdata import css
+from appdata import css
 
 # pyqt5 modules
 from PyQt5.QtGui import QIcon
@@ -29,7 +29,8 @@ class TableWidget(QTableWidget):
         super(TableWidget, self).scrollContentsBy(dx, dy)
 
 class CheckDataTypeWidget(TableWidget):
-    def __init__(self, file_path='data.txt', project_path='/projects/Saigon97'):
+    #def __init__(self, file_path='data.txt', project_path='/projects/Saigon97'):
+    def __init__(self, file_path, project_path):
         super(CheckDataTypeWidget, self).__init__()
         self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint)

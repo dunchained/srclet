@@ -5,8 +5,8 @@ import sys, os, json
 from pathlib import Path
 
 # app modules and windows
-#from appdata import css
-#from windows.parameters.add_parameter import AddParameter
+from appdata import css
+from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication

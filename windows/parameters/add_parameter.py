@@ -1,5 +1,6 @@
 # python standard modules
 import imp
+from re import I
 from sqlite3 import paramstyle
 import sys, json, os
 
