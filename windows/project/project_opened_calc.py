@@ -4,11 +4,14 @@ from appdata import css
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
 
+from engine.engine import SrcletEngine
+
 class CalculateWidget(QWidget):
     
     def __init__(self, project_path):
         self.project_path = project_path
         super().__init__()
+        SrcletEngine.calculator(self, calculation_data=self.project_path)
         self.WindowGUI()
         
     def WindowGUI(self):
