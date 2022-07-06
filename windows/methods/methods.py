@@ -1,5 +1,6 @@
 # python standard modules
-import sys
+import sys, os, json
+from pathlib import Path
 
 # app modules and windows
 #from appdata import css
@@ -7,7 +8,7 @@ import sys
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
-from PyQt5.QtWidgets import QSizePolicy, QLineEdit, QAbstractItemView, QCheckBox, QPlainTextEdit
+from PyQt5.QtWidgets import QSizePolicy, QLineEdit, QAbstractItemView, QCheckBox, QPlainTextEdit, QScrollArea
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
@@ -70,7 +71,19 @@ class Methods(QDialog):
         parameters_Groupbox = QGroupBox('Available paramaters:')
         grid_layout = QGridLayout()
         parameters_Groupbox.setLayout(grid_layout)
-        parameters = ['Temp', 'Hum', 'Tmin', 'Tmax', 'n', 'Ta', 'kg', 'cm', 'ta', 'Don\'t use']
+        
+        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        self.file_list = []
+        for file in get_files:
+          
+            with open('parameters/' + Path(file).stem + '.json') as jsonFile:
+                data = json.load(jsonFile)
+                jsonData = data['name']
+                self.file_list.append(jsonData)
+        
+        print(self.file_list)
+        
+        parameters = self.file_list
         self.rows = 3
         self.columns = 4
         
@@ -84,6 +97,7 @@ class Methods(QDialog):
                 i += 1
                 if i == len_list: break
         ###
+        
         conditions_Groupbox = QGroupBox('Calculation conditions (; separeated):')
         grid_layout = QGridLayout()
         condition_text_area = QPlainTextEdit()
@@ -109,6 +123,7 @@ class Methods(QDialog):
         layout.addWidget(buttonCancel)
         layout.addStretch(1)
         RightGroupBox.setLayout(layout)
+        
         
         return RightGroupBox
     
