@@ -3,6 +3,8 @@ from appdata import css
 
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
+from PyQt5.QtWidgets import QHBoxLayout, QProgressBar
+from PyQt5.QtCore import Qt
 
 from engine.engine import SrcletEngine
 
@@ -16,10 +18,13 @@ class CalculateWidget(QWidget):
         
     def WindowGUI(self):
         self.grid = QGridLayout()
-        self.grid.addWidget(self.loadAndCheckData(), 0, 0, 1, 1)
-        self.grid.addWidget(self.loadAndCheckMethods(), 0, 1, 1, 1)
-        self.grid.addWidget(self.loadAndCheckMonitor(), 0, 2, 1, 1)
-        self.grid.addWidget(self.exportAndSave(), 1, 0, 1, 3)
+        self.grid.addWidget(self.projectInfo(), 0, 0, 1, 1)
+        self.grid.addWidget(self.dataInfo(), 0, 1, 1, 1)
+        self.grid.addWidget(self.methodsInfo(), 0, 2, 1, 1)
+        self.grid.addWidget(self.dataVizualizationOptions(), 1, 0, 1, 1)
+        self.grid.addWidget(self.exportSaveCalculate(), 1, 1, 1, 2)
+        self.grid.addWidget(self.statusniCincilator(), 2 , 0 , 1, 3)
+
         self.setLayout(self.grid)
         self.centerUserInterface()
         self.show()
@@ -30,58 +35,64 @@ class CalculateWidget(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())    
 
-    def loadAndCheckData(self):
-        groupBox = QGroupBox('Load and show data info...')
-        label = QLabel(self.project_path)
-        buttonBrowse = QPushButton('Neki')
-        buttonBrowse.clicked.connect(self.buttonBrowse)
+    def projectInfo(self):
+        groupBox = QGroupBox('project_info')
+        label = QLabel(self.project_path + 'project')
         vbox = QVBoxLayout()
-        vbox.addWidget(buttonBrowse)
         vbox.addWidget(label)
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
         return groupBox
 
-    def loadAndCheckMethods(self):
-        groupBox = QGroupBox('Check methods to calculate...')
-        buttonBrowse = QPushButton('Tekst')
-        buttonBrowse.clicked.connect(self.buttonBrowse)
+    def dataInfo(self):
+        groupBox = QGroupBox('data_info')
+        label = QLabel(self.project_path + 'data')
         vbox = QVBoxLayout()
-        vbox.addWidget(buttonBrowse)
+        vbox.addWidget(label)
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
         return groupBox
 
-    def loadAndCheckMonitor(self):
-        groupBox = QGroupBox('Log...')
-        self.label_console = QTextEdit()
-        #label2.setGeometry(200, 250, 100, 50)
-        #label2.setStyleSheet("border : 2px solid black;")
-        #self.label_console = self.label_console.textCursor()
-        #self.label_console.insertText('Haba-haba.')
-        self.label_console.setWordWrapMode(True)
-        self.label_console.setText('srclet v1:2022')
-        #self.label_console.setFocus(QTextCursor.atEnd)
+    def methodsInfo(self):
+        groupBox = QGroupBox('methods_info')
+        label = QLabel(self.project_path  + 'methods')
         vbox = QVBoxLayout()
-        vbox.addWidget(self.label_console)
+        vbox.addWidget(label)
+        vbox.addStretch(1)
+        groupBox.setLayout(vbox)
+        groupBox.setEnabled(False)
+        return groupBox
+
+    def dataVizualizationOptions(self):
+        groupBox = QGroupBox('visualization_options')
+        label = QLabel(self.project_path  + 'vizual')
+        vbox = QVBoxLayout()
+        vbox.addWidget(label)
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
         return groupBox
 
-    def exportAndSave(self):
-        groupBox = QGroupBox('Export and Save...')
-        buttonBrowse = QPushButton('Saki')
-        buttonBrowse.clicked.connect(self.buttonBrowse1)
+    def exportSaveCalculate(self):
+        groupBox = QGroupBox('export_save_calculate')
+        label = QLabel(self.project_path  + 'export')
         vbox = QVBoxLayout()
-        vbox.addWidget(buttonBrowse)
+        vbox.addWidget(label)
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
         return groupBox
-  
-    def buttonBrowse(self):
-        #self.label_console.setText(self.label_console.toPlainText() + '\n line 2')
-        self.label_console.insertPlainText('linija 2 \n')
-        
-    def buttonBrowse1(self):
-        #self.label_console.setText(self.label_console.toPlainText() + '\n line 2')
-        self.label_console.insertPlainText('linija 23 \n')
+
+    def statusniCincilator(self):
+        groupBox = QGroupBox('status_info')
+        groupBox.setFixedHeight(80)
+        self.status_label = QLabel('status  | kalkulacija: 0 | mezertacmuminacija: 0')
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setMaximum(100)
+        self.progress_bar.setAlignment(Qt.AlignCenter)
+        #self.progress_bar.setVisible(False)
+        #self.progress_bar.setSizePolicy()
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.status_label)
+        hbox.addWidget(self.progress_bar)
+        hbox.addStretch(1)
+        groupBox.setLayout(hbox)
+        return groupBox
