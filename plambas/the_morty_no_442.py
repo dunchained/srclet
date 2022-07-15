@@ -1,0 +1,1 @@
+# izdirlika one račune ispred, da li će ga zvati neko prije ili svaki put kad se računa, čuće se xD

@@ -27843,3 +27843,5 @@ venv/lib/python3.10/site-packages/qtpy/tests/__pycache__/utils.cpython-310.pyc
 venv/lib/python3.10/site-packages/tests/__init__.py
 venv/lib/python3.10/site-packages/tests/test.py
 venv/lib/python3.10/site-packages/tests/__pycache__/__init__.cpython-310.pyc
+plambas/__pycache__/__init__.cpython-310.pyc
+plambas/__pycache__/engine.cpython-310.pyc
