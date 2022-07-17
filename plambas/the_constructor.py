@@ -25,71 +25,28 @@ for method in methods_list:
         print('The Morty The Complex Calculator nema posla ovdje.')
     else:
         # Poziv na:
+        #print(method)
         the_morty_the_complex_calculator(
             dataFrameZaCalc=dataFrameZaCalc,
             complex_params_formulas=complex_params_formulas,
             complex_params_list=complex_params_list,
             params_list=params_list)
-        # Za sada dummy code:
-        
 
-# učitaš je kao varijablu iz prethodnog prozora
-method_formula = 'formula.txt'
+    # Kalkulacija uslova i to, učito ih crni Morty.
+    conditions_dict = {
+        'uslov1': 'param1 < param2: c_param1 = c_param1 - 1',
+        'uslov2': 'param1 > param2: c_param2 = c_param2 + 1',
+        'uslov3': 'param1 == param2: c_param2 = c_param2 + 1'
+    }
 
+    if not conditions_dict:
+        print('The Morty The Conditioner nema posla ovdje.')
 
-#complex_params_list = []
+    else:
+        for key, condition in conditions_dict.items():
+            condition_to_pass = condition.split(':')[0]
+            new_formula = condition.split(':')[1]
+            print('Kondicionalna!')
 
-#if not complex_params_list:
-    #print('nema kompleksnih parametara')
-    # print zamijeni sa log consolom
- #   pass
-#else:
- #   dataFrameToAdd = pandas.DataFrame()
-  #  for complex_params_formula in complex_params_formulas:
-        # šalješ theConstructoru, complex_parmeters_calculator, vrati pandas DataFrame koji kasnije dodaješ
-        #complex_data = complex_params_calculator(dataFrame=dataFrame, )
-        #print(complex_params_formula)
-   #     dummy_complex_parameters_data = [[6, 6, 6],[0, 0, 0]]
-    #    dummy_complex_parameters_dataFrame = pandas.DataFrame(dummy_complex_parameters_data, complex_params_list)
-    #print(dummy_complex_parameters_dataFrame.T)
-    # zasad je append ovdje, treba ga premjestiti
-    #dummy_complex_parameters_dataFrame = dummy_complex_parameters_dataFrame.T
-
-    #dataFrameToAdd = pandas.concat([dataFrameToAdd, dummy_complex_parameters_dataFrame])
-    #print(dataFrameToAdd)
-    #dataFrameZaCalc = pandas.concat([dataFrameZaCalc, dataFrameToAdd], axis=1, join='inner')
-    #for parameter in complex_params_list:
-     #   params_list.append(parameter)
-#print('dataFrame nakon provjere na complexn parametre:')
-#print(dataFrame)
-#print('lista_parametara nakon provjere na complexne parametre:')
-#print(params_list)
-
-# dever s uslovima 
-conditions_dic = {
-    'uslov1': 'param1 < param2: c_param1 = c_param1 - 1',
-    'uslov2': 'param1 > param2: c_param2 = c_param2 + 1'
-}
-
-for key, condition in conditions_dic.items():
-    #print(key, ' : ', condition)
-    #print(condition.split(':'))
-    condition_to_pass = condition.split(':')[0]
-    new_formula = condition.split(':')[1]
-    #print(condition_to_pass)
-    #print(new_formula)
-    #dataFrame = conditions_data_transformation(dataFrame=dataFrame, condition=condition_to_pass, new_formula=new_formula)
-    #print(condition)
-#print('dataFrame nakon uslova:')
-#print(dataFrame)
-
-
-#if 
-#function = 'k'
-
-#method_list = ['method1', 'method2']
-
-#for method in method_list:
- #   print(method)
-  #  fcn = bob_the_builder(formula=formula, function_definition=function)
-   # print(fcn(9))
+    # Izračun:
+    method_formula = 'formula.txt'
