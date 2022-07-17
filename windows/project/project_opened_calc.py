@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox,
 from PyQt5.QtWidgets import QHBoxLayout, QProgressBar
 from PyQt5.QtCore import Qt
 
-from plambas.the_morty_no_001 import SrcletEngine
+#from plambas.the_constructor import SrcletEngine
 
 class CalculateWidget(QWidget):
     

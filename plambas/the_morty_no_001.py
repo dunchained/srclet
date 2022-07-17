@@ -1,7 +1,9 @@
-class SrcletEngine():
-    def __init__(self):
-        super().__init__()
-        # zaprimanje varijabli i uslovi
+# prima ime metoda, i vraća listu svega za račun, čita iz method foldera.
 
-    def calculator(self, calculation_data):
-        print(calculation_data)
+def the_black_reading_the_morty(method_name):
+    lista = []
+    lista.append(method_name)
+    print('The Black Reading Morty je odradio svoje.')
+    return lista
+
+#the_black_reading_morty(method_name='klitoral')
