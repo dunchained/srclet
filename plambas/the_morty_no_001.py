@@ -5,5 +5,3 @@ def the_black_reading_the_morty(method_name):
     lista.append(method_name)
     print('The Black Reading Morty je odradio svoje.')
     return lista
-
-#the_black_reading_morty(method_name='klitoral')

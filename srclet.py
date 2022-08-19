@@ -37,15 +37,9 @@ class MainWindow(QMainWindow):
         self.move(qr.topLeft())
 
     def fileMenu(self):
+        self.ime_projekta = 'Projekat'
         menubar = self.menuBar()
-        menubar.setStyleSheet(css.menu_background_image)
-        fileMenu = menubar.addMenu('File')
-        exitAct = QAction(QIcon(css.menu_exit_icon), 'Exit', self)
-        exitAct.setShortcut('Ctrl+Q')
-        exitAct.triggered.connect(mainApplication.quit)
-        fileMenu.addAction(exitAct)
-
-        fileMenu = menubar.addMenu('Project')
+        fileMenu = menubar.addMenu(self.ime_projekta)
         projectAct = QAction(QIcon((css.menu_project_icon)), 'New Project', self)
         projectAct.setShortcut('Ctrl+N')
         projectAct.triggered.connect(self.newProjectWindow)
@@ -55,16 +49,16 @@ class MainWindow(QMainWindow):
         projectAct.triggered.connect(self.openProjectWindow)
         fileMenu.addAction(projectAct)
 
-        fileMenu = menubar.addMenu('Podešavanja')
-        parametersAct = QAction(QIcon(css.menu_settings_icon), 'Parameters', self)
+        fileMenu = menubar.addMenu('Customize')
+        parametersAct = QAction(QIcon(css.menu_settings_icon), 'Create parameter', self)
         parametersAct.setShortcut('Crtl + P')
         parametersAct.triggered.connect(self.parametersWindow)
         fileMenu.addAction(parametersAct)
-        methodsAct = QAction(QIcon(css.menu_settings_icon), 'Methods', self)
+        methodsAct = QAction(QIcon(css.menu_settings_icon), 'Create complex parameter', self)
         methodsAct.setShortcut('Ctrl + M')
         methodsAct.triggered.connect(self.methodsWindow)
         fileMenu.addAction(methodsAct)
-        settingsAct = QAction(QIcon(css.menu_settings_icon), 'Settings', self)
+        settingsAct = QAction(QIcon(css.menu_settings_icon), 'Create method', self)
         settingsAct.setShortcut('Ctrl+S')
         settingsAct.triggered.connect(self.settingsWindow)
         fileMenu.addAction(settingsAct)
