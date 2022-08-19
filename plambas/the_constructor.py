@@ -1,21 +1,21 @@
 # Sprema podatke za računa i provodi račun, glavni algoritm računa!
 
 import pandas
-from the_morty_no_001 import the_black_reading_the_morty
-from the_morty_no_43_23 import the_morty_the_conditioner
-from the_morty_no_442 import the_morty_the_complex_calculator
+#from the_morty_no_001 import the_black_reading_the_morty
+#from the_morty_no_43_23 import the_morty_the_conditioner
+#from the_morty_no_442 import the_morty_the_complex_calculator
 
 # From project_opened_calc.py:
 methods_list = ['method1', 'method2', 'method3']
 
 # Common:
-params_list = params_list = ['param1', 'param2', 'param3']
+params_list = ['param1', 'param2', 'param3']
 params_data = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
 dataFrameZaCalc = pandas.DataFrame(data=params_data, columns=params_list)
 
 for method in methods_list:
     # Svi podaci za račun iz Black Morty:
-    the_black_reading_the_morty(method_name=method)
+    #the_black_reading_the_morty(method_name=method)
 
     # Kalkulacija kompleksnih parametara:
     complex_params_list = ['c_param1', 'c_param2']
@@ -26,11 +26,11 @@ for method in methods_list:
     else:
         # Poziv na:
         #print(method)
-        the_morty_the_complex_calculator(
+        #the_morty_the_complex_calculator(
             dataFrameZaCalc=dataFrameZaCalc,
             complex_params_formulas=complex_params_formulas,
             complex_params_list=complex_params_list,
-            params_list=params_list)
+            params_list=params_list
 
     # Kalkulacija uslova i to, učito ih crni Morty.
     conditions_dict = {

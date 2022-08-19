@@ -13,7 +13,7 @@ class CalculateWidget(QWidget):
     def __init__(self, project_path):
         self.project_path = project_path
         super().__init__()
-        SrcletEngine.calculator(self, calculation_data=self.project_path)
+        #SrcletEngine.calculator(self, calculation_data=self.project_path)
         self.WindowGUI()
         
     def WindowGUI(self):
