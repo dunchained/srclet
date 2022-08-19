@@ -10,7 +10,7 @@ from pathlib import Path
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy
-from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QMenuBar
+from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QMenuBar, QLabel
 
 # data manipulation modules
 import numpy
@@ -113,30 +113,26 @@ class CheckDataTypeWidget(TableWidget):
 
     def createOptions(self):
 
-        self.groupBoxCheckables = QGroupBox('Options:')
-        self.groupBoxButtons = QGroupBox('Options:')
-        self.groupBox = QGroupBox('Options:')
-        self.boxButtons = QGridLayout()
-        self.boxCheckables = QGridLayout()
-        self.boxGroupBox = QGridLayout()
+        self.groupBox = QGroupBox('Data options:')
+        self.groupBoxLayout = QGridLayout()
 
+        self.groupBoxOptions = QGroupBox()
+        self.groupBoxOptionsLayout = QGridLayout()
+        self.label = QLabel('huehue')
+        self.groupBoxOptionsLayout.addWidget(self.label)
+        self.groupBoxOptions.setLayout(self.groupBoxOptionsLayout)
+ 
+       
         self.buttonSave = QPushButton('Save Project Data')
         self.buttonSave.clicked.connect(self.saveData)
         self.buttonClose = QPushButton('Cancel')
         self.buttonClose.clicked.connect(self.closeSelf)
 
-        self.boxButtons.addWidget(self.buttonSave, 0, 0)
-        self.boxButtons.addWidget(self.buttonClose, 1, 0)
-        self.groupBoxButtons.setLayout(self.boxButtons)
-
-        self.boxCheckables.addWidget(self.buttonSave, 0, 0)
-        self.boxCheckables.addWidget(self.buttonClose, 1, 0)
-        self.groupBoxCheckables.setLayout(self.boxCheckables)
-
-        self.boxGroupBox.addWidget(self.groupBoxCheckables, 0, 0)
-        self.boxGroupBox.addWidget(self.groupBoxButtons, 1, 0)
-        self.groupBox.setLayout(self.boxGroupBox)
-
+        self.groupBoxLayout.addWidget(self.groupBoxOptions, 0, 0)
+        self.groupBoxLayout.addWidget(self.buttonSave, 1, 0)
+        self.groupBoxLayout.addWidget(self.buttonClose, 2, 0)
+        
+        self.groupBox.setLayout(self.groupBoxLayout)
 
         return self.groupBox
 
