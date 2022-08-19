@@ -10,8 +10,8 @@ from pathlib import Path
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy
-from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QMenuBar, QLabel
-
+from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
+from PyQt5.QtWidgets import QMessageBox
 # data manipulation modules
 import numpy
 import pandas as pd 
@@ -74,7 +74,44 @@ class CheckDataTypeWidget(TableWidget):
 
         pprf = pd.DataFrame(lista)
         rt = pprf.transpose()
+        print(self.project_path + '/data.xlsx')
         rt.to_excel(self.project_path + "/data.xlsx")
+
+        if not self.line_weather_station.text() and not self.line_weather_station_country.text() and not self.line_weather_station_elevation.text() and not self.line_weather_station_latitude.text() and not self.line_weather_station_longitude.text():
+            self.msg = QMessageBox()
+            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText('Fill missing data')
+            self.msg.setWindowTitle('Missing data...')
+            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.buttonClicked.connect(self.msg.close)
+            self.msg.show()
+        else:
+            parameter_dict = {
+                "weather_station": self.line_weather_station.text(),
+                "weather_station_country": self.line_weather_station_country.text(),
+                "weather_station_elevation": self.line_weather_station_elevation.text(),
+                "weather_station_latitude": self.line_weather_station_latitude.text(),
+                "weather_station_longitude": self.line_weather_station_longitude.text(),
+                "anamometer_height": self.line_anamometer_height.text(),
+                "wind_speed": self.line_wind_speed.text(),
+                "krs_factor": self.line_krs_factor.text(),
+                "skip_rows": self.line_skip_rows.text(),
+                "missing_data": self.line_missing_data.text()
+                }
+            json_object = json.dumps(parameter_dict, indent = 4)
+            self.ambalage = self.project_path + "/data.json"
+            with open(self.ambalage, "w") as outfile:
+                outfile.write(json_object)
+                
+            self.msg = QMessageBox()
+            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText('Data saved...')
+            self.msg.setWindowTitle('Successuful...')
+            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.buttonClicked.connect(self.closeSelf)
+            self.msg.show()
     
     def closeSelf(self):
         self.close()
@@ -118,8 +155,56 @@ class CheckDataTypeWidget(TableWidget):
 
         self.groupBoxOptions = QGroupBox()
         self.groupBoxOptionsLayout = QGridLayout()
-        self.label = QLabel('huehue')
-        self.groupBoxOptionsLayout.addWidget(self.label)
+
+        self.label_weather_station = QLabel('Weather station name:')
+        self.line_weather_station = QLineEdit()
+        self.label_weather_station_country = QLabel('Country:')
+        self.line_weather_station_country = QLineEdit()
+        self.label_weather_station_elevation = QLabel('Weather station elevation (z) in meters:')
+        self.line_weather_station_elevation = QLineEdit()
+        self.label_weather_station_latitude = QLabel('Weather station latitude (fi) in decimal degrees:')
+        self.line_weather_station_latitude = QLineEdit()
+        self.label_weather_station_longitude = QLabel('Weather station longitude (fi) in decimal degrees:')
+        self.line_weather_station_longitude = QLineEdit()
+
+
+        self.label_anamometer_height = QLabel('The anamometer height (zu) in meters:')
+        self.line_anamometer_height = QLineEdit('10')
+        self.label_wind_speed = QLabel('Value of wind speed if missing (u2) in m/s:')
+        self.line_wind_speed = QLineEdit('2')
+        self.label_krs_factor = QLabel('Value of krs factor:')
+        self.line_krs_factor = QLineEdit('0.162')
+
+        self.label_skip_rows = QLabel('Skip number of rows:')
+        self.line_skip_rows = QLineEdit('1')
+        self.label_missing_data = QLabel('Code for missing data:')
+        self.line_missing_data = QLineEdit('-999')
+
+
+
+
+        self.groupBoxOptionsLayout.addWidget(self.label_weather_station, 0, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_weather_station, 0, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_country, 1, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_country, 1, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_elevation, 2, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_elevation, 2, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_latitude, 3, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_longitude, 3, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_longitude, 4, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_latitude, 4, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_anamometer_height, 5, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_anamometer_height, 5, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_wind_speed, 6, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_wind_speed, 6, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_krs_factor, 7, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_krs_factor, 7, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_skip_rows, 8, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_skip_rows, 8, 1)
+        self.groupBoxOptionsLayout.addWidget(self.label_missing_data, 9, 0)
+        self.groupBoxOptionsLayout.addWidget(self.line_missing_data, 9, 1)
+
+
         self.groupBoxOptions.setLayout(self.groupBoxOptionsLayout)
  
        
