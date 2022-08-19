@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
         projectAct.triggered.connect(self.openProjectWindow)
         fileMenu.addAction(projectAct)
 
-        fileMenu = menubar.addMenu('Settings')
+        fileMenu = menubar.addMenu('Podešavanja')
         parametersAct = QAction(QIcon(css.menu_settings_icon), 'Parameters', self)
         parametersAct.setShortcut('Crtl + P')
         parametersAct.triggered.connect(self.parametersWindow)
