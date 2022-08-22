@@ -54,7 +54,7 @@ class LanguageWindow(QWidget):
         language = {
             "language": self.combo_box.currentText()
         }
-        with open("settings.json", "w") as outfile:
+        with open("appdata/languages/language.json", "w") as outfile:
             json.dump(language, outfile)
 
         self.msg = QMessageBox()
