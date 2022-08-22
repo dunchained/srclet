@@ -1,4 +1,4 @@
-import sys
+import sys, json
 
 from appdata import css
 from windows.project.new_project import NewProjectWindow
@@ -18,7 +18,15 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.CustomizeWindowHint)
-        self.setStyleSheet(css.window_background_image)
+        #self.setStyleSheet(css.window_background_image)
+        language_settings = open('settings.json')
+        language_settings_data = json.load(language_settings)
+        selected_language = language_settings_data['language']
+        language_settings.close()
+        language_file = 'appdata/languages/' + selected_language + '/' + selected_language + '.json'
+        selected_language_file = open(language_file)
+        self.language = json.load(selected_language_file)
+        selected_language_file.close()       
         self.WindowGUI()
 
     def WindowGUI(self):
@@ -37,28 +45,28 @@ class MainWindow(QMainWindow):
         self.move(qr.topLeft())
 
     def fileMenu(self):
-        self.ime_projekta = 'Projekat'
+        self.ime_projekta = self.language['menu_project']
         menubar = self.menuBar()
         fileMenu = menubar.addMenu(self.ime_projekta)
-        projectAct = QAction(QIcon((css.menu_project_icon)), 'New Project', self)
+        projectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_new_project'], self)
         projectAct.setShortcut('Ctrl+N')
         projectAct.triggered.connect(self.newProjectWindow)
         fileMenu.addAction(projectAct)
-        projectAct = QAction(QIcon((css.menu_project_icon)), 'Open Existing Project', self)
+        projectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_open_project'], self)
         projectAct.setShortcut('Ctrl+O')
         projectAct.triggered.connect(self.openProjectWindow)
         fileMenu.addAction(projectAct)
 
-        fileMenu = menubar.addMenu('Customize')
-        parametersAct = QAction(QIcon(css.menu_settings_icon), 'Create parameter', self)
+        fileMenu = menubar.addMenu(self.language['menu_customize'])
+        parametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_create_parameter'], self)
         parametersAct.setShortcut('Crtl + P')
         parametersAct.triggered.connect(self.parametersWindow)
         fileMenu.addAction(parametersAct)
-        methodsAct = QAction(QIcon(css.menu_settings_icon), 'Create complex parameter', self)
+        methodsAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_create_complex_parameter'], self)
         methodsAct.setShortcut('Ctrl + M')
         methodsAct.triggered.connect(self.methodsWindow)
         fileMenu.addAction(methodsAct)
-        settingsAct = QAction(QIcon(css.menu_settings_icon), 'Create method', self)
+        settingsAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_create_method'], self)
         settingsAct.setShortcut('Ctrl+S')
         settingsAct.triggered.connect(self.settingsWindow)
         fileMenu.addAction(settingsAct)

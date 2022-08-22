@@ -1,0 +1,11 @@
+{
+    "//": "Main window:",
+    "language_description": "en",
+    "menu_project": "Project",
+    "menu_project_new_project": "New project",
+    "menu_project_open_project": "Open existing project",
+    "menu_customize": "Customize",
+    "menu_customize_create_parameter": "Create parameter",
+    "menu_customize_create_complex_parameter": "Create complex parameter",
+    "menu_customize_create_method": "Create method"
+}

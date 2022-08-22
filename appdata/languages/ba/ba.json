@@ -1,0 +1,11 @@
+{
+    "//": "Main window:",
+    "language_description": "ba",
+    "menu_project": "Projekat",
+    "menu_project_new_project": "Novi Projekat",
+    "menu_project_open_project": "Otvori postojeći projekat",
+    "menu_customize": "Prilagodi",
+    "menu_customize_create_parameter": "Kreiraj parametar",
+    "menu_customize_create_complex_parameter": "Kreiraj kompleksni parametar",
+    "menu_customize_create_method": "kreiraj metod"
+}
