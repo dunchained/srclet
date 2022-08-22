@@ -1,5 +1,4 @@
 # python standard modules
-from curses import window
 import json
 import os
 # app modules and windows
