@@ -1,6 +1,7 @@
-import sys, json
+import sys, json, os
+cwd = os.getcwd()
 
-from appdata import css
+from css import css
 from windows.project.new_project import NewProjectWindow
 from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
@@ -20,11 +21,11 @@ class MainWindow(QMainWindow):
         self.setWindowState(QtCore.Qt.WindowMaximized)
         #self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.CustomizeWindowHint)
         #self.setStyleSheet(css.window_background_image)
-        language_settings = open('appdata/languages/language.json')
+        language_settings = open(cwd + '/appdata/languages/language.json')
         language_settings_data = json.load(language_settings)
         selected_language = language_settings_data['language']
         language_settings.close()
-        language_file = 'appdata/languages/' + selected_language + '/' + selected_language + '.json'
+        language_file = cwd + '/appdata/languages/' + selected_language + '/' + selected_language + '.json'
         selected_language_file = open(language_file)
         self.language = json.load(selected_language_file)
         selected_language_file.close()       

@@ -1,5 +1,5 @@
 import os, json
-from appdata import css
+from css import css
 from windows.data.check_data import CheckDataTypeWidget
 from windows.project.project_opened import ProjectWindow
 

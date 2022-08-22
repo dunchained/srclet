@@ -2,7 +2,7 @@
 import sys
 
 # app modules and windows
-#from appdata import css
+#from css import css
 #from windows.methods.add_method import AddMethod
 
 # pyqt5 modules

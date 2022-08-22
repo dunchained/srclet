@@ -1,3 +1,5 @@
+import os
+cwd = os.getcwd()
 #Style Sheet Data
 
 # New Project Window
@@ -13,7 +15,7 @@ window_background_image =   "background-image : url(appdata/photo/srclet.png); p
                             "background-repeat: no-repeat; background-position: center;"
 menu_background_image = "background-image : url(appdata/photo/srclet_menu.png); position: relative;" \
                         "background-repeat: repeat;"
-srclet_main_window_icon = 'appdata/photo/icon_AuM_icon.ico'
+srclet_main_window_icon = cwd + '/appdata/photo/icon_AuM_icon.ico'
 srclet_main_window_title = 'Soil water circuLation and evapotranspiration model'
 
 # MainMenu settings:

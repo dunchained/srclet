@@ -2,7 +2,7 @@
 import os
 
 # app modules and windows
-from appdata import css
+from css import css
 from windows.project.project_opened import ProjectWindow
 
 # pyqt5 modules

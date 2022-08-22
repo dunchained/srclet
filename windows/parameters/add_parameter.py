@@ -5,7 +5,7 @@ from sqlite3 import paramstyle
 import sys, json, os
 
 # app modules and windows
-#from appdata import css
+#from css import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit

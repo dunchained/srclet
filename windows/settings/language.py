@@ -3,7 +3,7 @@ from curses import window
 import json
 import os
 # app modules and windows
-from appdata import css
+from css import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QGroupBox, QVBoxLayout, QComboBox

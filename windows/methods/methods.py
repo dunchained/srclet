@@ -3,7 +3,7 @@ import sys, os, json
 from pathlib import Path
 
 # app modules and windows
-#from appdata import css
+#ffrom css import css
 #from windows.methods.add_method import AddMethod
 
 # pyqt5 modules

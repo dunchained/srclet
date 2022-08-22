@@ -1,5 +1,5 @@
 import os
-from appdata import css
+from css import css
 from windows.project.new_project_2 import NewProjectWindow2
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox

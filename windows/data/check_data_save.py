@@ -2,7 +2,7 @@
 import os, sys
 
 # app modules and windows
-from appdata import css
+from css import css
 
 # pyqt5 modules
 from PyQt5.QtGui import QIcon

@@ -5,7 +5,7 @@ import sys, os, json
 from pathlib import Path
 
 # app modules and windows
-from appdata import css
+from css import css
 from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules

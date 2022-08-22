@@ -1,6 +1,6 @@
 import sys, os, json
 from pathlib import Path
-from appdata import css
+from css import css
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget
