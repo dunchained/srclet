@@ -6,6 +6,7 @@ from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
+from windows.settings.language import LanguageWindow
 from windows.parameters.parameters import Parameters
 from windows.methods.methods import Methods
 
@@ -45,9 +46,8 @@ class MainWindow(QMainWindow):
         self.move(qr.topLeft())
 
     def fileMenu(self):
-        self.ime_projekta = self.language['menu_project']
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu(self.ime_projekta)
+        fileMenu = menubar.addMenu(self.language['menu_project'])
         projectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_new_project'], self)
         projectAct.setShortcut('Ctrl+N')
         projectAct.triggered.connect(self.newProjectWindow)
@@ -80,31 +80,39 @@ class MainWindow(QMainWindow):
         helpAct.setShortcut('F1')
         helpAct.triggered.connect(self.manualWindow)
         fileMenu.addAction(helpAct)
+
+        fileMenu = menubar.addMenu('Settings')
+        languageAct = QAction(QIcon(css.menu_manual_icon), 'Language', self)
+        languageAct.triggered.connect(self.languageWindow)
+        fileMenu.addAction(languageAct) 
        
 
     def exitSrclet(self):
         mainApication.quit()
 
     def newProjectWindow(self):
-        self.window = NewProjectWindow()
+        self.window = NewProjectWindow(self.language)
 
     def openProjectWindow(self):
-        self.window = OpenProjectWindow()
+        self.window = OpenProjectWindow(self.language)
 
     def settingsWindow(self):
-        self.window = SettingsWindow()
+        self.window = SettingsWindow(self.language)
+
+    def languageWindow(self):
+        self.window = LanguageWindow(self.language)
 
     def aboutWindow(self):
-        self.window = AboutWindow()
+        self.window = AboutWindow(self.language)
 
     def manualWindow(self):
-        self.window = ManualWindow()
+        self.window = ManualWindow(self.language)
         
     def parametersWindow(self):
-        self.window = Parameters()
+        self.window = Parameters(self.language)
         
     def methodsWindow(self):
-        self.window = Methods()
+        self.window = Methods(self.language)
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)

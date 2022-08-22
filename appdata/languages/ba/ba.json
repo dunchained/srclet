@@ -7,5 +7,8 @@
     "menu_customize": "Prilagodi",
     "menu_customize_create_parameter": "Kreiraj parametar",
     "menu_customize_create_complex_parameter": "Kreiraj kompleksni parametar",
-    "menu_customize_create_method": "kreiraj metod"
+    "menu_customize_create_method": "kreiraj metod",
+
+    "//": "Message: Language",
+    "message_language": "Jezik je uspiješno promijenjen."
 }

@@ -7,5 +7,8 @@
     "menu_customize": "Customize",
     "menu_customize_create_parameter": "Create parameter",
     "menu_customize_create_complex_parameter": "Create complex parameter",
-    "menu_customize_create_method": "Create method"
+    "menu_customize_create_method": "Create method",
+
+    "//": "Message: Language",
+    "message_language": "Language has been succssufully changed."
 }
