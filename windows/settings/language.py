@@ -17,7 +17,6 @@ class LanguageWindow(QWidget):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
-        print(self.language)
         self.WindowGUI()
 
     def WindowGUI(self):
