@@ -11,9 +11,10 @@ from PyQt5.QtCore import Qt
 
 class NewProjectWindow2(QWidget):
     
-    def __init__(self, name_of_project):
+    def __init__(self, name_of_project, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.language = language
         self.WindowGUI(name_of_project)
         self.project_path = os.getcwd() + '/projects/' + name_of_project
         self.project_name = name_of_project

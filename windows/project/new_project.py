@@ -81,5 +81,5 @@ class NewProjectWindow(QWidget):
                 os.mkdir(os.getcwd() + '/projects/' + self.project_name.text())
                 self.hide()
                 name_of_project = self.project_name.text()
-                self.next_window = NewProjectWindow2(name_of_project)
+                self.next_window = NewProjectWindow2(name_of_project, self.language)
                 self.next_window.show()
