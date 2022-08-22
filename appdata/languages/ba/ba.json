@@ -1,14 +1,34 @@
 {
     "//": "Main window:",
-    "language_description": "ba",
-    "menu_project": "Projekat",
-    "menu_project_new_project": "Novi Projekat",
-    "menu_project_open_project": "Otvori postojeći projekat",
-    "menu_customize": "Prilagodi",
-    "menu_customize_create_parameter": "Kreiraj parametar",
-    "menu_customize_create_complex_parameter": "Kreiraj kompleksni parametar",
-    "menu_customize_create_method": "kreiraj metod",
+    "language_description": "en",
+    "menu_project": "Project",
+    "menu_project_new_project": "New project",
+    "menu_project_open_project": "Open existing project",
+    "menu_customize": "Customize",
+    "menu_customize_create_parameter": "Create parameter",
+    "menu_customize_create_complex_parameter": "Create complex parameter",
+    "menu_customize_create_method": "Create method",
+
+    "//": "Create New project Window",
+    "create_new_project_title": "Create new project...",
+    "create_new_project_caption": "Enter new project name:",
+    "create_new_project_btn_create": "Create project",
+    "create_new_project_btn_cancel": "Cancel",
+
+    "//": "Create New project Window 2",
+    "create_new_project_2_title": "Create new project:",
+    "create_new_project_2_data_caption": "Project data file:",
+    "create_new_project_2_description_caption": "Short project description:",
+    "create_new_project_2_btn_browse": "Browse",
+    "create_new_project_2_label_browse": "No file selected.",
+    "create_new_project_2_btn_loadandcheck": "Load file and check data",
+    "create_new_project_2_label_loadandcheck": "File not checked.",
+    "create_new_project_2_btn_save_and_exit": "Save project and exit",
+    "create_new_project_2_btn_save and open": "Save and open project",
+
+    "":"",
+
 
     "//": "Message: Language",
-    "message_language": "Jezik je uspiješno promijenjen."
+    "message_language": "Language has been succssufully changed."
 }
