@@ -10,8 +10,9 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QLineEdit
 from windows.project.project_opened_calc import CalculateWidget
 
 class ProjectWindow(QMainWindow):
-    def __init__(self, project_path):
+    def __init__(self, project_path, language):
         super().__init__()
+        self.language = language
         self.project_path = project_path
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.showMaximized()

@@ -9,8 +9,9 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 
 class ManualWindow(QWidget):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
+        self.language = language
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.WindowGUI()
 

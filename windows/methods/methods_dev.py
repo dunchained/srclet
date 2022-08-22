@@ -12,10 +12,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 class Methods(QDialog):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.setWindowState(Qt.WindowMaximized)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.language = language
         self.WindowGUI()
 
     def WindowGUI(self):

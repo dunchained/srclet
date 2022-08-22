@@ -27,8 +27,9 @@ class TableWidget(QTableWidget):
         super(TableWidget, self).scrollContentsBy(dx, dy)
 
 class CheckDataTypeWidget(TableWidget):
-    def __init__(self, file_path, project_path):
+    def __init__(self, file_path, project_path, language):
         super(CheckDataTypeWidget, self).__init__()
+        self.language = language
         self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.buttons = []

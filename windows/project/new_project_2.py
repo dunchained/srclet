@@ -104,7 +104,7 @@ class NewProjectWindow2(QWidget):
         else:
             project_path = self.project_path
             file_path = self.text_data_selected.text()
-            self.window = CheckDataTypeWidget(file_path, project_path)
+            self.window = CheckDataTypeWidget(file_path, project_path, self.language)
     
     def saveAndExit(self):
         print(self.project_path)

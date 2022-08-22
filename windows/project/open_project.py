@@ -12,9 +12,10 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QLineF, Qt
 
 class OpenProjectWindow(QWidget):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.language = language
         self.WindowGUI()
 
     def WindowGUI(self):
@@ -63,7 +64,7 @@ class OpenProjectWindow(QWidget):
         self.project_path = os.path.curdir + '/projects/' + self.combo_box.currentText()
         print(self.project_path)
         self.hide()
-        self.next_window = ProjectWindow(project_path=self.project_path)
+        self.next_window = ProjectWindow(project_path=self.project_path, language=self.language)
         self.next_window.show()
 
     def deleteProject(self):

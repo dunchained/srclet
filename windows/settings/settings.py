@@ -11,9 +11,10 @@ from PyQt5.QtCore import Qt
 
 
 class SettingsWindow(QWidget):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.language = language
         self.WindowGUI()
 
     def WindowGUI(self):

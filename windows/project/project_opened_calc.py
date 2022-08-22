@@ -10,8 +10,9 @@ from PyQt5.QtCore import Qt
 
 class CalculateWidget(QWidget):
     
-    def __init__(self, project_path):
+    def __init__(self, project_path, language):
         self.project_path = project_path
+        self.language = language
         super().__init__()
         #SrcletEngine.calculator(self, calculation_data=self.project_path)
         self.WindowGUI()
