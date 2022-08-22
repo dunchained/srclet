@@ -1,0 +1,14 @@
+{
+    "//": "Main window:",
+    "language_description": "de",
+    "menu_project": "Projekten",
+    "menu_project_new_project": "Novi Projekten",
+    "menu_project_open_project": "Otvori postojeći projekten",
+    "menu_customize": "Prilagodi",
+    "menu_customize_create_parameter": "Kreiraj parameteren",
+    "menu_customize_create_complex_parameter": "Kreiraj kompleksni parameteren",
+    "menu_customize_create_method": "kreiraj metoden",
+
+    "//": "Message: Language",
+    "message_language": "Šprahe gefufne."
+}
