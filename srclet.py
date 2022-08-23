@@ -1,5 +1,5 @@
 import sys, json, os
-cwd = os.getcwd()
+cwd = os.path.curdir
 
 from css import css
 from windows.project.new_project import NewProjectWindow
@@ -8,7 +8,7 @@ from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
 from windows.parameters.parameters import ParametersWindow
-from windows.parameters.c_paramateres import ComplexParamateresWindow
+from windows.parameters.complex_paramateres import ComplexParamateresWindow
 from windows.methods.methods import Methods
 
 from PyQt5.QtGui import QIcon

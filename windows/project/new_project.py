@@ -1,4 +1,6 @@
 import os
+cwd = os.path.curdir
+
 from css import css
 from windows.project.new_project_2 import NewProjectWindow2
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
@@ -17,7 +19,7 @@ class NewProjectWindow(QWidget):
 
     def WindowGUI(self):
         self.setFixedSize(300, 150)
-        self.setWindowTitle('Create new project...')
+        self.setWindowTitle(self.language['new_project_title'])
         self.setWindowIcon(QIcon(css.new_project_window_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.createNewProject())
@@ -32,18 +34,13 @@ class NewProjectWindow(QWidget):
         self.move(qr.topLeft())
 
     def createNewProject(self):
-        
         groupBox = QGroupBox()
-        
-        self.text_save_project = QLabel('Enter new project name:')
+        self.text_save_project = QLabel(self.language['new_project_caption'])
         self.project_name = QLineEdit()
-        
-        buttonSaveProject = QPushButton('Create project')
+        buttonSaveProject = QPushButton(self.language['new_project_btn_create'])
         buttonSaveProject.clicked.connect(self.createProject)
-        
-        buttonCancel = QPushButton('Cancel')
+        buttonCancel = QPushButton(self.language['new_project_btn_cancel'])
         buttonCancel.clicked.connect(self.close)
-       
         vbox = QVBoxLayout()
         vbox.addWidget(self.text_save_project)
         vbox.addWidget(self.project_name)
@@ -51,19 +48,16 @@ class NewProjectWindow(QWidget):
         vbox.addWidget(buttonCancel)
         vbox.addStretch(1)
         groupBox.setLayout(vbox)
-        
         return groupBox
 
     def createProject(self):
-        
-        self.lista_projekata = os.listdir(os.getcwd() + '/projects/')
-        
+        self.lista_projekata = os.listdir(cwd + '/projects/')
         if self.project_name.text() in self.lista_projekata:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('There is a project with that name already...')
-            self.msg.setWindowTitle('Project name...')
+            self.msg.setText(self.language['new_project_message_name'])
+            self.msg.setWindowTitle(self.language['new_project_message_name_title'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -72,13 +66,13 @@ class NewProjectWindow(QWidget):
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText('Project name can not be empty...')
-                self.msg.setWindowTitle('Project name...')
+                self.msg.setText(self.language['new_project_message_empty'])
+                self.msg.setWindowTitle(self.language['new_project_message_empty_title'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
             else:
-                os.mkdir(os.getcwd() + '/projects/' + self.project_name.text())
+                os.mkdir(cwd + '/projects/' + self.project_name.text())
                 self.hide()
                 name_of_project = self.project_name.text()
                 self.next_window = NewProjectWindow2(name_of_project, self.language)

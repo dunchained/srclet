@@ -14,8 +14,8 @@ from PyQt5.QtCore import QLineF, Qt
 class OpenProjectWindow(QWidget):
     def __init__(self, language):
         super().__init__()
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.WindowGUI()
 
     def WindowGUI(self):

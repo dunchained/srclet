@@ -20,7 +20,7 @@ class ProjectWindow(QMainWindow):
         self.setWindowIcon(QIcon(css.srclet_main_window_icon))
         self.centerUserInterface()
         self.fileMenu()
-        self.central_widget = CalculateWidget(project_path=self.project_path)
+        self.central_widget = CalculateWidget(project_path=self.project_path, language=language)
         self.setCentralWidget(self.central_widget)
         self.show()
 

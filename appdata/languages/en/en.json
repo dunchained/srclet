@@ -19,26 +19,31 @@
     "menu_help_about": "About",
     "menu_help_manual": "Manual",
 
-    "//": "Create New project Window",
-    "create_new_project_title": "Create new project...",
-    "create_new_project_caption": "Enter new project name:",
-    "create_new_project_btn_create": "Create project",
-    "create_new_project_btn_cancel": "Cancel",
+    "//": "Settings Window",
+    "message_language": "Language has been succssufully changed.",
 
-    "//": "Create New project Window 2",
-    "create_new_project_2_title": "Create new project:",
-    "create_new_project_2_data_caption": "Project data file:",
-    "create_new_project_2_description_caption": "Short project description:",
-    "create_new_project_2_btn_browse": "Browse",
-    "create_new_project_2_label_browse": "No file selected.",
-    "create_new_project_2_btn_loadandcheck": "Load file and check data",
-    "create_new_project_2_label_loadandcheck": "File not checked.",
-    "create_new_project_2_btn_save_and_exit": "Save project and exit",
-    "create_new_project_2_btn_save and open": "Save and open project",
+    "//": "New project Window",
+    "new_project_title": "Create new project...",
+    "new_project_caption": "Enter new project name:",
+    "new_project_btn_create": "Create project",
+    "new_project_btn_cancel": "Cancel",
+    "new_project_message_name_title": "Project name...",
+    "new_project_message_name": "There is a project with that name already...",
+    "new_project_message_empty_title": "Project name...",
+    "new_project_message_empty": "Project name can not be empty...",
 
-    "":"",
+    "//": "New project Window 2",
+    "new_project_2_title": "Create new project: ",
+    "new_project_2_data_caption": "Project data file:",
+    "new_project_2_btn_browse": "Browse",
+    "new_project_2_label_browse": "No file selected.",
+    "new_project_2_btn_loadandcheck": "Load file and check data",
+    "new_project_2_label_loadandcheck": "File not checked.",
 
+    "new_project_2_description_caption": "Short project description:",
 
-    "//": "Message: Language",
-    "message_language": "Language has been succssufully changed."
+    "new_project_2_btn_save_and_exit": "Save project and exit",
+    "new_project_2_btn_save and open": "Save and open project",
+
+    "":""
 }
