@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
 
         self.setMinimumSize(800, 600)
         self.setWindowIcon(QIcon(css.srclet_main_window_icon))
-        self.setWindowTitle(css.srclet_main_window_title)
+        self.setWindowTitle(self.language['main_window_title'])
         self.fileMenu()
         self.centerUserInterface()
         self.show()

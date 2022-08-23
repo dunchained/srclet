@@ -89,11 +89,11 @@ class NewProjectWindow2(QWidget):
 
     def saveProject(self):
         groupBox = QGroupBox()
-        buttonSaveAndExit = QPushButton('Save project and Exit')
+        buttonSaveAndExit = QPushButton(self.language['new_project_2_btn_save_and_exit'])
         buttonSaveAndExit.clicked.connect(self.saveAndExit)
-        buttonSaveAndOpen = QPushButton('Save project and Open')
+        buttonSaveAndOpen = QPushButton(self.language['new_project_2_btn_save_and_open'])
         buttonSaveAndOpen.clicked.connect(self.saveAndOpen)
-        buttonCancel = QPushButton('Cancel')
+        buttonCancel = QPushButton(self.language['new_project_2_btn_cancel'])
         buttonCancel.clicked.connect(self.cancel)
 
         vbox = QVBoxLayout()
@@ -105,23 +105,27 @@ class NewProjectWindow2(QWidget):
         groupBox.setLayout(vbox)
         return groupBox
 
-    def saveAndExit(self):            
+    def saveAndExit(self):
+        # provjeriti je li sve upisano i mesege         
+        # snimiti project description   
         self.msg = QMessageBox()
         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.msg.setIcon(QMessageBox.Information)
-        self.msg.setText('Project saved...')
-        self.msg.setWindowTitle('Successuful...')
+        self.msg.setText(self.language['new_project_2_save_and_exit_message'])
+        self.msg.setWindowTitle(self.language['new_project_2_save_and_exit_message_caption'])
         self.msg.setStandardButtons(QMessageBox.Ok)
         self.msg.buttonClicked.connect(self.close)
         self.msg.show()
         
 
-    def saveAndOpen(self):            
+    def saveAndOpen(self):
+        # provjeriti je li sve upisano    
+        # snimiti project description        
         self.msg = QMessageBox()
         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.msg.setIcon(QMessageBox.Information)
-        self.msg.setText('Project saved...')
-        self.msg.setWindowTitle('Successuful...')
+        self.msg.setText(self.language['new_project_2_save_and_open_message'])
+        self.msg.setWindowTitle(self.language['new_project_2_save_and_open_message_caption'])
         self.msg.setStandardButtons(QMessageBox.Ok)
         self.msg.buttonClicked.connect(self.messageClose)
         self.msg.show()
@@ -132,4 +136,5 @@ class NewProjectWindow2(QWidget):
         self.next_window.show()
         
     def cancel(self):
+        # izbrisati direktorij projekta i poruku zadat
         pass

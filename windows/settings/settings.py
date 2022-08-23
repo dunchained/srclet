@@ -20,7 +20,7 @@ class SettingsWindow(QWidget):
 
     def WindowGUI(self):
         #self.setFixedSize(800, 600)
-        self.setWindowTitle('Language...')
+        self.setWindowTitle(self.language['settings_window_title'])
         self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.listOfLanguages())
@@ -35,12 +35,12 @@ class SettingsWindow(QWidget):
         self.move(qr.topLeft())
 
     def listOfLanguages(self):
-        groupBox = QGroupBox('List of available languages...')
+        groupBox = QGroupBox(self.language['settings_window_language'])
         self.combo_box = QComboBox()
         self.combo_box.addItems(next(os.walk(os.path.curdir + '/appdata/languages/'))[1])
         vbox = QVBoxLayout()
 
-        self.buttonSave = QPushButton('Save')
+        self.buttonSave = QPushButton(self.language['settings_window_language_save'])
         self.buttonSave.clicked.connect(self.saveLanguage)
 
         vbox.addWidget(self.combo_box)
@@ -58,8 +58,8 @@ class SettingsWindow(QWidget):
         self.msg = QMessageBox()
         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.msg.setIcon(QMessageBox.Information)
-        self.msg.setText(self.language['message_language'])
-        self.msg.setWindowTitle('Language...')
+        self.msg.setText(self.language['settings_window_message'])
+        self.msg.setWindowTitle(self.language['settings_window_message_caption'])
         self.msg.setStandardButtons(QMessageBox.Ok)
         self.msg.buttonClicked.connect(self.msg.close)
         self.msg.show()

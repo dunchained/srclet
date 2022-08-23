@@ -37,7 +37,7 @@ class CalculateWidget(QWidget):
         self.move(qr.topLeft())    
 
     def projectInfo(self):
-        groupBox = QGroupBox('project_info')
+        groupBox = QGroupBox(self.language['project_opened_widget_project_info'])
         label = QLabel(self.project_path + 'project')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -46,7 +46,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def dataInfo(self):
-        groupBox = QGroupBox('data_info')
+        groupBox = QGroupBox(self.language['project_opened_widget_data_info'])
         label = QLabel(self.project_path + 'data')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -55,7 +55,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def methodsInfo(self):
-        groupBox = QGroupBox('methods_info')
+        groupBox = QGroupBox(self.language['project_opened_widget_methods_info'])
         label = QLabel(self.project_path  + 'methods')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -65,7 +65,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def dataVizualizationOptions(self):
-        groupBox = QGroupBox('visualization_options')
+        groupBox = QGroupBox(self.language['project_opened_widget_vizualization_options'])
         label = QLabel(self.project_path  + 'vizual')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -74,7 +74,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def exportSaveCalculate(self):
-        groupBox = QGroupBox('export_save_calculate')
+        groupBox = QGroupBox(self.language['project_opened_widget_export_save_calc'])
         label = QLabel(self.project_path  + 'export')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -83,7 +83,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def statusniCincilator(self):
-        groupBox = QGroupBox('status_info')
+        groupBox = QGroupBox(self.language['project_opened_widget_status_info'])
         groupBox.setFixedHeight(80)
         self.status_label = QLabel('status  | kalkulacija: 0 | mezertacmuminacija: 0')
         self.progress_bar = QProgressBar()

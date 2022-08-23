@@ -16,7 +16,6 @@ window_background_image =   "background-image : url(appdata/images/srclet.png); 
 menu_background_image = "background-image : url(appdata/images/srclet_menu.png); position: relative;" \
                         "background-repeat: repeat;"
 srclet_main_window_icon = cwd + '/appdata/images/icon_AuM_icon.ico'
-srclet_main_window_title = 'Soil water circuLation and evapotranspiration model'
 
 # MainMenu settings:
 menu_exit_icon = 'appdata/images/logout.png'

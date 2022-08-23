@@ -20,7 +20,7 @@ class OpenProjectWindow(QWidget):
 
     def WindowGUI(self):
         self.setFixedSize(400, 300)
-        self.setWindowTitle('Open Existing Project')
+        self.setWindowTitle(self.language['open_project_title'])
         self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.listOfProjects())
@@ -36,7 +36,7 @@ class OpenProjectWindow(QWidget):
         self.move(qr.topLeft())
 
     def listOfProjects(self):
-        groupBox = QGroupBox('List of existing Projects...')
+        groupBox = QGroupBox(self.language['open_project_caption'])
         self.combo_box = QComboBox()
         self.combo_box.addItems(next(os.walk(os.path.curdir + '/projects/'))[1])
         vbox = QVBoxLayout()
@@ -45,12 +45,12 @@ class OpenProjectWindow(QWidget):
         return groupBox
 
     def doSomethingWithProject(self):
-        groupBox = QGroupBox('Save project...')
-        buttonOpenProject = QPushButton('Open selected project')
+        groupBox = QGroupBox(self.language['open_project_btn_caption'])
+        buttonOpenProject = QPushButton(self.language['open_project_btn_open'])
         buttonOpenProject.clicked.connect(self.openProject)
-        buttonDeleteProject = QPushButton('Delete selected project')
+        buttonDeleteProject = QPushButton(self.language['open_project_btn_delete'])
         buttonDeleteProject.clicked.connect(self.deleteProject)
-        buttonCancel = QPushButton('Cancel')
+        buttonCancel = QPushButton(self.language['open_project_btn_cancel'])
         buttonCancel.clicked.connect(self.close)
         vbox = QVBoxLayout()
         vbox.addWidget(buttonOpenProject)
