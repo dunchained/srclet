@@ -2,7 +2,7 @@
 import sys
 
 # app modules and windows
-from css import css
+#from css import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
@@ -21,7 +21,7 @@ class AddMethod(QDialog):
     def WindowGUI(self):
         
         self.setWindowTitle('Add method')
-        self.setWindowIcon(QIcon(css.menu_about_icon))
+        #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.createRightGroupBox(), 0, 1, 1, 1)
         self.setLayout(self.grid)
