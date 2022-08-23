@@ -82,21 +82,24 @@ class Methods(QDialog):
                 jsonData = data['name']
                 self.file_list.append(jsonData)
         
-        print(self.file_list)
+        for item in self.file_list:
+            button = QCheckBox(item)
+            grid_layout.addWidget(button)
         
-        parameters = self.file_list
-        self.rows = 3
-        self.columns = 4
+        #parameters = self.file_list
+        #self.rows = 3
+        #self.columns = 4
         
-        len_list = len(parameters)
+        #len_list = len(parameters)
 
-        i = 0
-        for row in range(self.rows): 
-           for column in range(self.columns): 
-                button = QCheckBox(f'{parameters[i]}', self)
-                grid_layout.addWidget(button, row+1, column)
-                i += 1
-                if i == len_list: break
+        #i = 0
+        #for row in range(self.rows): 
+        #   for column in range(self.columns): 
+         #       #button = QCheckBox(f'{parameters[i]}', self)
+          #      print(i)
+           #     grid_layout.addWidget(button, row+1, column)
+            #    i += 1
+             #   if i == len_list: break
         ###
         
         conditions_Groupbox = QGroupBox('Calculation conditions (; separeated):')
