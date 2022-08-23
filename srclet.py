@@ -7,8 +7,8 @@ from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
-from windows.settings.language import LanguageWindow
-from windows.parameters.parameters import Parameters
+from windows.parameters.parameters import ParametersWindow
+from windows.parameters.c_paramateres import ComplexParamateresWindow
 from windows.methods.methods import Methods
 
 from PyQt5.QtGui import QIcon
@@ -48,72 +48,105 @@ class MainWindow(QMainWindow):
 
     def fileMenu(self):
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu(self.language['menu_project'])
-        projectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_new_project'], self)
-        projectAct.setShortcut('Ctrl+N')
-        projectAct.triggered.connect(self.newProjectWindow)
-        fileMenu.addAction(projectAct)
-        projectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_open_project'], self)
-        projectAct.setShortcut('Ctrl+O')
-        projectAct.triggered.connect(self.openProjectWindow)
-        fileMenu.addAction(projectAct)
-
-        fileMenu = menubar.addMenu(self.language['menu_customize'])
-        parametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_create_parameter'], self)
-        parametersAct.setShortcut('Crtl + P')
-        parametersAct.triggered.connect(self.parametersWindow)
-        fileMenu.addAction(parametersAct)
-        methodsAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_create_complex_parameter'], self)
-        methodsAct.setShortcut('Ctrl + M')
-        methodsAct.triggered.connect(self.methodsWindow)
-        fileMenu.addAction(methodsAct)
-        settingsAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_create_method'], self)
+        
+        # File:        
+        fileMenu = menubar.addMenu(self.language['menu_file'])
+        
+        # File - Settings:
+        settingsAct = QAction(QIcon(css.menu_manual_icon), self.language['menu_file_settings'], self)
         settingsAct.setShortcut('Ctrl+S')
         settingsAct.triggered.connect(self.settingsWindow)
-        fileMenu.addAction(settingsAct)
+        fileMenu.addAction(settingsAct) 
+        
+        fileMenu.addSeparator()
+        
+        # File - Exit:
+        exitAct = QAction(QIcon(css.menu_manual_icon), self.language['menu_file_exit'], self)
+        exitAct.setShortcut('Ctrl+Q')
+        exitAct.triggered.connect(self.exitSrclet)
+        fileMenu.addAction(exitAct)
+        
+        # Project:
+        fileMenu = menubar.addMenu(self.language['menu_project'])
+        
+        # Project - New project:
+        newProjectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_new_project'], self)
+        newProjectAct.setShortcut('Ctrl+N')
+        newProjectAct.triggered.connect(self.newProjectWindow)
+        fileMenu.addAction(newProjectAct)
+        
+        # Project - Open existing project:
+        openProjectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_open_project'], self)
+        openProjectAct.setShortcut('Ctrl+O')
+        openProjectAct.triggered.connect(self.openProjectWindow)
+        fileMenu.addAction(openProjectAct)
+        
+        # Customize:
+        fileMenu = menubar.addMenu(self.language['menu_customize'])
+        
+        # Customize - Parameters:
+        parametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_parameters'], self)
+        parametersAct.setShortcut('Ctrl+P')
+        parametersAct.triggered.connect(self.parametersWindow)
+        fileMenu.addAction(parametersAct)
+        
+        # Customize - Complex paramateres:
+        complexParametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_complex_parameters'], self)
+        complexParametersAct.setShortcut('Ctrl+R')
+        complexParametersAct.triggered.connect(self.complexParametersWindow)
+        fileMenu.addAction(complexParametersAct)
+        
+        # Customize - Methods:
+        methodsAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods'], self)
+        methodsAct.setShortcut('Ctrl+M')
+        methodsAct.triggered.connect(self.methodsWindow)
+        fileMenu.addAction(methodsAct)
 
-        fileMenu = menubar.addMenu('Help')
-        aboutAct = QAction(QIcon(css.menu_about_icon), 'About', self)
+        # Help: 
+        fileMenu = menubar.addMenu(self.language['menu_help'])
+        
+        # Help - About:
+        aboutAct = QAction(QIcon(css.menu_about_icon), self.language['menu_help_about'], self)
         aboutAct.setShortcut('Ctrl+A')
         aboutAct.triggered.connect(self.aboutWindow)
         fileMenu.addAction(aboutAct)
-        helpAct = QAction(QIcon(css.menu_manual_icon), 'Manual', self)
+        
+        # Help - Manual:
+        helpAct = QAction(QIcon(css.menu_manual_icon), self.language['menu_help_manual'], self)
         helpAct.setShortcut('F1')
         helpAct.triggered.connect(self.manualWindow)
         fileMenu.addAction(helpAct)
 
-        fileMenu = menubar.addMenu('Settings')
-        languageAct = QAction(QIcon(css.menu_manual_icon), 'Language', self)
-        languageAct.triggered.connect(self.languageWindow)
-        fileMenu.addAction(languageAct) 
-       
+    # File:
+    def settingsWindow(self):
+        self.window = SettingsWindow(self.language)   
 
     def exitSrclet(self):
         mainApication.quit()
-
+        
+    # Project:
     def newProjectWindow(self):
         self.window = NewProjectWindow(self.language)
 
     def openProjectWindow(self):
         self.window = OpenProjectWindow(self.language)
-
-    def settingsWindow(self):
-        self.window = SettingsWindow(self.language)
-
-    def languageWindow(self):
-        self.window = LanguageWindow(self.language)
-
+        
+    # Customize:
+    def parametersWindow(self):
+        self.window = ParametersWindow(self.language)
+        
+    def complexParametersWindow(self):
+        self.window = ComplexParamateresWindow(self.language)
+        
+    def methodsWindow(self):
+        self.window = Methods(self.language)
+        
+    # Help:
     def aboutWindow(self):
         self.window = AboutWindow(self.language)
 
     def manualWindow(self):
-        self.window = ManualWindow(self.language)
-        
-    def parametersWindow(self):
-        self.window = Parameters(self.language)
-        
-    def methodsWindow(self):
-        self.window = Methods(self.language)
+        self.window = ManualWindow(self.language)  
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)

@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
-class Parameters(QDialog):
+class ParametersWindow(QDialog):
     def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -178,5 +178,5 @@ class Parameters(QDialog):
 #obrisati nakon uvezivanja cijelog
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = Parameters()
+    mainWindow = ParametersWindow()
     sys.exit(mainApplication.exec_())
