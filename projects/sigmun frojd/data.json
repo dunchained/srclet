@@ -1,0 +1,12 @@
+{
+    "weather_station": "xyx",
+    "weather_station_country": "xyxy",
+    "weather_station_elevation": "xyxy",
+    "weather_station_latitude": "xyxyxy",
+    "weather_station_longitude": "xyxy",
+    "anamometer_height": "10",
+    "wind_speed": "2",
+    "krs_factor": "0.162",
+    "skip_rows": "1",
+    "missing_data": "-999"
+}
