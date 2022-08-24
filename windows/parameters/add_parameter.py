@@ -3,19 +3,42 @@ import sys, json, os
 from pathlib import Path
 
 # app modules and windows
-from css import css
+#from css import css
+#from parameters.ParametersWindow import *
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QTextEdit
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
-class AddParameter(QDialog):
-    def __init__(self, language):
+class AddParameter(QWidget):
+    clicked = pyqtSignal()
+    def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = language
+        self.language = {
+            "add_parameter_window_title": "Add new parameter",
+            "add_parameter_window_caption": "Parameter information:",
+            "add_parameter_window_filename": "Filename:",
+            "add_parameter_window_filename_exp": "Text to be used as parameter filename.",
+            "add_parameter_window_name": "Parameter name:",
+            "add_parameter_window_name_exp": "Text to be used as parameter short description",
+            "add_parameter_window_unit": "Parameter unit:",
+            "add_parameter_window_unit_exp": "Unit to be used...",
+            "add_parameter_window_symbol": "Parameter symbol:",
+            "add_parameter_window_symbol_exp": "Text to be used as parameter symbol in forulas.",
+            "add_parameter_window_desc": "Parameter description:",
+            "add_parameter_window_desc_exp": "Text to be used for short explinations.",
+            "add_parameter_window_btn_add": "Save",
+            "add_parameter_window_btn_cancel": "Cancel",
+            "add_parameter_window_save_message": "Parameter name or unit empty...",
+            "add_parameter_window_save_message_caption": "Missing data...",
+            "add_parameter_window_saved_message": "Parameter saved...",
+            "add_parameter_window_saved_message_caption": "Successuful...",
+            "add_parameter_window_filename_message": "Parameter with this filename already exists.",
+            "add_parameter_window_filename_message_caption": "Filename..."
+        }
         self.WindowGUI()
 
     def WindowGUI(self):
@@ -42,6 +65,9 @@ class AddParameter(QDialog):
         self.text_parameter_name = QLabel(self.language['add_parameter_window_name'])
         self.text_parameter_name1 = QLabel(self.language['add_parameter_window_name_exp'])
         self.parameter_name = QLineEdit()
+        self.text_parameter_symbol = QLabel(self.language['add_parameter_window_symbol'])
+        self.text_parameter_symbol1 = QLabel(self.language['add_parameter_window_symbol_exp'])
+        self.parameter_symbol = QLineEdit()
         self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit'])
         self.text_parameter_unit1 = QLabel(self.language['add_parameter_window_unit_exp'])
         self.parameter_unit = QLineEdit()
@@ -61,6 +87,9 @@ class AddParameter(QDialog):
         layout.addWidget(self.text_parameter_name)
         layout.addWidget(self.text_parameter_name1)
         layout.addWidget(self.parameter_name)
+        layout.addWidget(self.text_parameter_symbol)
+        layout.addWidget(self.text_parameter_symbol1)
+        layout.addWidget(self.parameter_symbol)
         layout.addWidget(self.text_parameter_unit)
         layout.addWidget(self.text_parameter_unit1)
         layout.addWidget(self.parameter_unit)
@@ -82,7 +111,6 @@ class AddParameter(QDialog):
             self.file_list.append(Path(file).stem)
         
         if self.parameter_filename.text() in self.file_list:
-            print('ima file')
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
@@ -105,6 +133,7 @@ class AddParameter(QDialog):
                 parameter_dict = {
                     "name": self.parameter_name.text(),
                     "unit": self.parameter_unit.text(),
+                    "symbol": self.parameter_symbol.text(),
                     "description": self.parameter_descriprion.toPlainText(),
                     "type": "a"
                     }
@@ -121,4 +150,12 @@ class AddParameter(QDialog):
                 self.msg.show()
             
     def message_box_success(self):
-        self.close()
+       self.clicked
+       self.close()
+        
+        
+        
+if __name__ == '__main__':
+    mainApplication = QApplication(sys.argv)
+    mainWindow = AddParameter()
+    sys.exit(mainApplication.exec_())

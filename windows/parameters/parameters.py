@@ -6,17 +6,21 @@ from pathlib import Path
 
 # app modules and windows
 #from css import css
+import add_parameter
 #from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
-class ParametersWindow(QDialog):
+class ParametersWindow(QWidget):
     def __init__(self):
-        super().__init__()
+        super(ParametersWindow, self).__init__()
+        self.AddParameter = add_parameter.AddParameter()
+        self.AddParameter.hide()
+        self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = {
             "parameters_window_title": "Parameters",
@@ -27,6 +31,7 @@ class ParametersWindow(QDialog):
             "parameters_window_parameter_caption": "Parameters information:",
             "parameters_window_parameter_filename": "Filename:",
             "parameters_window_parameter_name": "Parameter name:",
+            "parameters_window_parameter_symbol": "Parameter symbol:",
             "parameters_window_parameter_unit": "Parameter unit:",
             "parameters_window_parameter_desc": "Parameter description:",
             "parameters_window_parameter_btn_save": "Save changes",
@@ -92,10 +97,13 @@ class ParametersWindow(QDialog):
        
         with open(self.json_path) as json_file:
             data = json.load(json_file)
+            print(data)
             if data['type'] == 'b':
                 self.parameter_filename.setText(i.text())
                 self.parameter_name.setEnabled(False)                
                 self.parameter_name.setText(data['name'])
+                self.parameter_symbol.setEnabled(False)
+                self.parameter_symbol.setText(data['symbol'])
                 self.parameter_unit.setEnabled(False)
                 self.parameter_unit.setText(data['unit'])
                 self.parameter_descriprion.setEnabled(False)
@@ -106,8 +114,15 @@ class ParametersWindow(QDialog):
             else:
                 self.parameter_filename.setText(i.text())
                 self.parameter_name.setText(data['name'])
+                self.parameter_name.setEnabled(True) 
+                self.parameter_symbol.setText(data['symbol'])
+                self.parameter_symbol.setEnabled(True)
                 self.parameter_unit.setText(data['unit'])
+                self.parameter_unit.setEnabled(True)
                 self.parameter_descriprion.setText(data['description'])
+                self.parameter_descriprion.setEnabled(True)
+                self.buttonSaveProject.setEnabled(True)
+                self.buttonCancel.setEnabled(True)
                 
             
     def refresh_parameters_list(self):
@@ -116,7 +131,7 @@ class ParametersWindow(QDialog):
         for file in get_files:
             if Path(file).stem not in self.file_list:
                 self.file_list_update.append(Path(file).stem)
-        #self.list_widget.clear()
+                #self.list_widget.clear()
         self.list_widget.addItems(self.file_list_update)
         
         
@@ -147,6 +162,10 @@ class ParametersWindow(QDialog):
         self.parameter_filename.setEnabled(False)
         self.text_parameter_name = QLabel(self.language['parameters_window_parameter_name'])
         self.parameter_name = QLineEdit()
+        
+        self.text_parameter_symbol = QLabel(self.language['parameters_window_parameter_symbol'])
+        self.parameter_symbol = QLineEdit()
+        
         self.text_parameter_unit = QLabel(self.language['parameters_window_parameter_unit'])
         self.parameter_unit = QLineEdit()
 
@@ -163,6 +182,8 @@ class ParametersWindow(QDialog):
         layout.addWidget(self.parameter_filename)
         layout.addWidget(self.text_parameter_name)
         layout.addWidget(self.parameter_name)
+        layout.addWidget(self.text_parameter_symbol)
+        layout.addWidget(self.parameter_symbol)
         layout.addWidget(self.text_parameter_unit)
         layout.addWidget(self.parameter_unit)
         layout.addWidget(self.text_parameter_descriprion)
@@ -189,7 +210,8 @@ class ParametersWindow(QDialog):
         return DownGroupBox
     
     def newParameterWindow(self):
-        self.window = AddParameter(self.language)
+        #self.window = AddParameter()
+        self.AddParameter.show()
 
     def save_changes_parameter(self):
         if not self.parameter_filename and not self.parameter_name.text() and not self.parameter_unit.text():
@@ -206,6 +228,7 @@ class ParametersWindow(QDialog):
             # poruka da li želite otvoriti kreirani projekat
             parameter_dict = {
                 "name": self.parameter_name.text(),
+                "symbol": self.parameter_symbol.text(),
                 "unit": self.parameter_unit.text(),
                 "description": self.parameter_descriprion.toPlainText(),
                 "type": "a"
