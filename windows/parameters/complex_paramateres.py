@@ -172,7 +172,7 @@ class ComplexParametersWindow(QDialog):
             self.msg.setText('Parameter saved...')
             self.msg.setWindowTitle('Successuful...')
             self.msg.setStandardButtons(QMessageBox.Ok)
-            #self.msg.buttonClicked.connect(self.close)
+            self.msg.buttonClicked.connect(self.close)
             self.msg.show()
  
 #obrisati nakon uvezivanja cijelog

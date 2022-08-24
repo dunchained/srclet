@@ -9,5 +9,6 @@ class win02(QWidget):
         super(win02, self).__init__(parent)
         self.button = QPushButton("call to func")
         self.button.clicked.connect(self.clicked)
+        self.button.clicked.connect(self.close)
         lay = QVBoxLayout(self)
         lay.addWidget(self.button)

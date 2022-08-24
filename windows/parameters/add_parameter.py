@@ -146,12 +146,19 @@ class AddParameter(QWidget):
                 self.msg.setText(self.language['add_parameter_window_saved_message'])
                 self.msg.setWindowTitle(self.language['add_parameter_window_saved_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
+                self.msg.buttonClicked.connect(self.clicked)
                 self.msg.buttonClicked.connect(self.message_box_success)
+
                 self.msg.show()
             
     def message_box_success(self):
-       self.clicked
-       self.close()
+        self.parameter_filename.clear()
+        self.parameter_name.clear()
+        self.parameter_symbol.clear()
+        self.parameter_unit.clear()
+        self.parameter_descriprion.clear()
+        self.close()
+
         
         
         

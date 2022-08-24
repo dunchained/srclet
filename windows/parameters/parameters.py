@@ -73,20 +73,20 @@ class ParametersWindow(QWidget):
         self.list_widget.addItems(self.file_list)
         
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        buttonRefresh = QPushButton(self.language['parameters_window_btn_refresh'])
-        buttonRefresh.clicked.connect(self.refresh_parameters_list)
+        self.buttonRefresh = QPushButton(self.language['parameters_window_btn_refresh'])
+        self.buttonRefresh.clicked.connect(self.refresh_parameters_list)
         
-        buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
-        buttonAddParameter.clicked.connect(self.newParameterWindow)
+        self.buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
+        self.buttonAddParameter.clicked.connect(self.newParameterWindow)
         
-        buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
-        buttonDelete.clicked.connect(self.delete_parameter)
+        self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
+        self.buttonDelete.clicked.connect(self.delete_parameter)
 
         layout = QVBoxLayout()
         layout.addWidget(self.list_widget)
-        layout.addWidget(buttonRefresh)
-        layout.addWidget(buttonAddParameter)
-        layout.addWidget(buttonDelete)
+        #layout.addWidget(buttonRefresh)
+        layout.addWidget(self.buttonAddParameter)
+        layout.addWidget(self.buttonDelete)
         layout.addStretch(1)
         LeftGroupBox.setLayout(layout)
         
@@ -110,6 +110,8 @@ class ParametersWindow(QWidget):
                 self.parameter_descriprion.setText(data['description'])
                 self.buttonSaveProject.setEnabled(False)
                 self.buttonCancel.setEnabled(False)
+                self.buttonDelete.setEnabled(False)
+            
                 
             else:
                 self.parameter_filename.setText(i.text())
@@ -123,6 +125,7 @@ class ParametersWindow(QWidget):
                 self.parameter_descriprion.setEnabled(True)
                 self.buttonSaveProject.setEnabled(True)
                 self.buttonCancel.setEnabled(True)
+                self.buttonDelete.setEnabled(True)
                 
             
     def refresh_parameters_list(self):
@@ -133,18 +136,6 @@ class ParametersWindow(QWidget):
                 self.file_list_update.append(Path(file).stem)
                 #self.list_widget.clear()
         self.list_widget.addItems(self.file_list_update)
-        
-        
-        ##get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
-        #self.file_list_update = []
-        #for file in get_files:
-         #   if Path(file).stem in self.file_list:
-          #      pass
-           # else:
-            #    self.file_list_update.append(Path(file).stem)
-        
-        #self.list_widget.addItems(self.file_list_update)
-        #self.list_widget.addItems(self.file_list)
 
     def delete_parameter(self):
         list_items = self.list_widget.selectedItems()
@@ -152,8 +143,6 @@ class ParametersWindow(QWidget):
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
         os.remove('parameters/basic/' + item.text() + '.json')
-            
-    
     
     def createRightGroupBox(self):
         RightGroupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
