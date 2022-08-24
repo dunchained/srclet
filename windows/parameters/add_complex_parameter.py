@@ -1,13 +1,14 @@
 # python standard modules
 import sys, json, os
 from pathlib import Path
+cwd = os.path.curdir
 
 # app modules and windows
-from css import css
+from css import css, var
 
 # pyqt5 modules
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit
+from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
+from PyQt5.QtWidgets import QMessageBox, QWidget, QTextEdit
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
@@ -20,7 +21,7 @@ class AddComplexParameter(QWidget):
         self.WindowGUI()
 
     def WindowGUI(self):
-        self.setFixedSize(800, 600)
+        #self.setFixedSize(800, 600)
         self.setWindowTitle(self.language['add_complex_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
@@ -89,7 +90,7 @@ class AddComplexParameter(QWidget):
         return groupBox
     
     def add_parameter(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/complex/"), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -123,7 +124,7 @@ class AddComplexParameter(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(os.path.curdir + "/parameters/complex/" + self.parameter_filename.text() + ".json", "w") as outfile:
+                with open(cwd + var.complex_parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)

@@ -1,5 +1,5 @@
 import os, json
-from css import css
+from css import css, var
 
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
@@ -38,7 +38,7 @@ class CalculateWidget(QWidget):
 
     def projectInfo(self):
         groupBox = QGroupBox(self.language['project_opened_widget_project_info'])
-        label = QLabel(self.project_path + 'project')
+        label = QLabel(self.project_path)
         vbox = QVBoxLayout()
         vbox.addWidget(label)
         vbox.addStretch(1)

@@ -1,9 +1,10 @@
 # python standard modules
 import sys, json, os
 from pathlib import Path
+cwd = os.path.curdir
 
 # app modules and windows
-from css import css
+from css import css, var
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
@@ -83,7 +84,7 @@ class AddParameter(QWidget):
         return groupBox
     
     def add_parameter(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -116,7 +117,7 @@ class AddParameter(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
+                with open(cwd + var.parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)

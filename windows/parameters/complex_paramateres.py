@@ -1,18 +1,17 @@
 # python standard modules
-from concurrent.futures import process
-from importlib.resources import path
 import sys, os, json
 from pathlib import Path
+cwd = os.path.curdir
 
 # app modules and windows
-from css import css
+from css import css, var
 from windows.parameters.add_complex_parameter import AddComplexParameter
 
 # pyqt5 modules
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 
 class ComplexParametersWindow(QWidget):
@@ -47,7 +46,7 @@ class ComplexParametersWindow(QWidget):
     def createLeftGroupBox(self):
         LeftGroupBox = QGroupBox(self.language['complex_parameters_window_caption'])
         self.list_widget = QListWidget()
-        get_files = next(os.walk(os.path.curdir + "/parameters/complex/"), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -66,7 +65,7 @@ class ComplexParametersWindow(QWidget):
         return LeftGroupBox
     
     def index_changed(self, i):
-        self.json_path = 'parameters/complex/' + i.text() + '.json'
+        self.json_path = cwd + var.complex_parameters_folder + i.text() + '.json'
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
@@ -101,7 +100,7 @@ class ComplexParametersWindow(QWidget):
                 self.buttonDelete.setEnabled(True)
             
     def refresh_parameters_list(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/complex/"), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         self.file_list_update = []
         for file in get_files:
             if Path(file).stem not in self.file_list:
@@ -113,7 +112,7 @@ class ComplexParametersWindow(QWidget):
         if not list_items: return
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove('parameters/complex/' + item.text() + '.json')
+        os.remove(cwd + var.complex_parameters_folder + item.text() + '.json')
     
     def createRightGroupBox(self):
         RightGroupBox = QGroupBox(self.language['complex_parameters_window_parameter_caption'])
@@ -161,7 +160,7 @@ class ComplexParametersWindow(QWidget):
         return RightGroupBox
 
     def cancel(self):
-        self.json_path = 'parameters/complex/' + self.list_widget.currentItem().text() + '.json'
+        self.json_path = cwd + var.complex_parameters_folder + self.list_widget.currentItem().text() + '.json'
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             
@@ -208,7 +207,7 @@ class ComplexParametersWindow(QWidget):
                 "type": "a"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(os.path.curdir + "/parameters/complex/" + self.parameter_filename.text() + ".json", "w") as outfile:
+            with open(cwd + var.complex_parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()

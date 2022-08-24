@@ -1,7 +1,7 @@
 import os
 cwd = os.path.curdir
 
-from css import css
+from css import css, var
 from windows.project.new_project_2 import NewProjectWindow2
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox
@@ -51,7 +51,7 @@ class NewProjectWindow(QWidget):
         return groupBox
 
     def createProject(self):
-        self.lista_projekata = os.listdir(cwd + '/projects/')
+        self.lista_projekata = os.listdir(cwd + var.projects_folder)
         if self.project_name.text() in self.lista_projekata:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -72,7 +72,7 @@ class NewProjectWindow(QWidget):
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
             else:
-                os.mkdir(cwd + '/projects/' + self.project_name.text())
+                os.mkdir(cwd + var.projects_folder + self.project_name.text())
                 self.hide()
                 name_of_project = self.project_name.text()
                 self.next_window = NewProjectWindow2(name_of_project, self.language)

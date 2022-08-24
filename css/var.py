@@ -1,0 +1,6 @@
+language_folder = '/appdata/languages/'
+language_file = 'language.json'
+projects_folder = '/projects/'
+parameters_folder = '/parameters/basic/'
+complex_parameters_folder = '/parameters/complex/'
+random_images_folder = '/appdata/images/random_image/'

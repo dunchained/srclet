@@ -1,7 +1,7 @@
 import sys, json, os
 cwd = os.path.curdir
 
-from css import css
+from css import css, var
 from windows.project.new_project import NewProjectWindow
 from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
@@ -10,6 +10,7 @@ from windows.settings.settings import SettingsWindow
 from windows.parameters.parameters import ParametersWindow
 from windows.parameters.complex_paramateres import ComplexParametersWindow
 from windows.methods.methods import Methods
+from widgets.random_widget import RandomWidget
 
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
@@ -21,11 +22,11 @@ class MainWindow(QMainWindow):
         self.setWindowState(QtCore.Qt.WindowMaximized)
         #self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.CustomizeWindowHint)
         #self.setStyleSheet(css.window_background_image)
-        language_settings = open(cwd + '/appdata/languages/language.json')
+        language_settings = open(os.path.join(cwd + var.language_folder + var.language_file))
         language_settings_data = json.load(language_settings)
         selected_language = language_settings_data['language']
         language_settings.close()
-        language_file = cwd + '/appdata/languages/' + selected_language + '/' + selected_language + '.json'
+        language_file = cwd + var.language_folder + selected_language + '/' + selected_language + '.json'
         selected_language_file = open(language_file)
         self.language = json.load(selected_language_file)
         selected_language_file.close()       
@@ -38,6 +39,8 @@ class MainWindow(QMainWindow):
         self.setWindowTitle(self.language['main_window_title'])
         self.fileMenu()
         self.centerUserInterface()
+        self.central_widget = RandomWidget()
+        self.setCentralWidget(self.central_widget)
         self.show()
 
     def centerUserInterface(self):

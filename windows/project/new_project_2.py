@@ -1,7 +1,7 @@
 import os, json
 cwd = os.path.curdir
 
-from css import css
+from css import css, var
 from windows.data.check_data import CheckDataTypeWidget
 from windows.project.project_opened import ProjectWindow
 
@@ -18,7 +18,7 @@ class NewProjectWindow2(QWidget):
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
         self.project_name = name_of_project
-        self.project_path = cwd + '/projects/' + name_of_project
+        self.project_path = cwd + var.projects_folder + name_of_project
         self.WindowGUI(name_of_project)
         
     def WindowGUI(self, name_of_project):

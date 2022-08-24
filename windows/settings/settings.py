@@ -2,7 +2,7 @@
 import json
 import os
 # app modules and windows
-from css import css
+from css import css, var
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QGroupBox, QVBoxLayout, QComboBox
@@ -37,7 +37,7 @@ class SettingsWindow(QWidget):
     def listOfLanguages(self):
         groupBox = QGroupBox(self.language['settings_window_language'])
         self.combo_box = QComboBox()
-        self.combo_box.addItems(next(os.walk(os.path.curdir + '/appdata/languages/'))[1])
+        self.combo_box.addItems(next(os.walk(os.path.curdir + var.language_folder))[1])
         vbox = QVBoxLayout()
 
         self.buttonSave = QPushButton(self.language['settings_window_language_save'])
@@ -52,7 +52,7 @@ class SettingsWindow(QWidget):
         language = {
             "language": self.combo_box.currentText()
         }
-        with open("appdata/languages/language.json", "w") as outfile:
+        with open(os.path.curdir + var.language_folder + var.language_file, "w") as outfile:
             json.dump(language, outfile)
 
         self.msg = QMessageBox()

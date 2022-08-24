@@ -2,7 +2,7 @@
 import os
 
 # app modules and windows
-from css import css
+from css import css, var
 from windows.project.project_opened import ProjectWindow
 
 # pyqt5 modules
@@ -38,7 +38,7 @@ class OpenProjectWindow(QWidget):
     def listOfProjects(self):
         groupBox = QGroupBox(self.language['open_project_caption'])
         self.combo_box = QComboBox()
-        self.combo_box.addItems(next(os.walk(os.path.curdir + '/projects/'))[1])
+        self.combo_box.addItems(next(os.walk(os.path.curdir + var.projects_folder))[1])
         vbox = QVBoxLayout()
         vbox.addWidget(self.combo_box)
         groupBox.setLayout(vbox)
@@ -61,7 +61,7 @@ class OpenProjectWindow(QWidget):
         return groupBox
     
     def openProject(self):
-        self.project_path = os.path.curdir + '/projects/' + self.combo_box.currentText()
+        self.project_path = os.path.curdir + var.projects_folder + self.combo_box.currentText()
         print(self.project_path)
         self.hide()
         self.next_window = ProjectWindow(project_path=self.project_path, language=self.language)

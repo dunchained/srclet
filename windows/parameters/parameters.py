@@ -3,9 +3,10 @@ from concurrent.futures import process
 from importlib.resources import path
 import sys, os, json
 from pathlib import Path
+cwd = os.path.curdir
 
 # app modules and windows
-from css import css
+from css import css, var
 from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules
@@ -45,7 +46,7 @@ class ParametersWindow(QWidget):
     def createLeftGroupBox(self):
         LeftGroupBox = QGroupBox(self.language['parameters_window_caption'])
         self.list_widget = QListWidget()
-        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -64,7 +65,7 @@ class ParametersWindow(QWidget):
         return LeftGroupBox
     
     def index_changed(self, i):
-        self.json_path = 'parameters/basic/' + i.text() + '.json'
+        self.json_path = cwd + var.parameters_folder + i.text() + '.json'
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
@@ -95,7 +96,7 @@ class ParametersWindow(QWidget):
                 self.buttonDelete.setEnabled(True)
             
     def refresh_parameters_list(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.parameters_folder), (None, None, []))[2]
         self.file_list_update = []
         for file in get_files:
             if Path(file).stem not in self.file_list:
@@ -107,7 +108,7 @@ class ParametersWindow(QWidget):
         if not list_items: return
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove('parameters/basic/' + item.text() + '.json')
+        os.remove(cwd + var.parameters_folder + item.text() + '.json')
     
     def createRightGroupBox(self):
         RightGroupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
@@ -150,7 +151,7 @@ class ParametersWindow(QWidget):
         return RightGroupBox
 
     def cancel(self):
-        self.json_path = 'parameters/basic/' + self.list_widget.currentItem().text() + '.json'
+        self.json_path = cwd + var.parameters_folder + self.list_widget.currentItem().text() + '.json'
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             
@@ -195,7 +196,7 @@ class ParametersWindow(QWidget):
                 "type": "a"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
+            with open(cwd + var.parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
