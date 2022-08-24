@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QMessageBox, QApplication, QTextEdit
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
-class AddParameter(QDialog):
+class AddComplexParameter(QDialog):
     def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -101,7 +101,7 @@ class AddParameter(QDialog):
                 "description": self.parameter_descriprion.toPlainText()
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(os.path.curdir + "/parameters/" + self.parameter_filename.text() + ".json", "w") as outfile:
+            with open(os.path.curdir + "/parameters/complex/" + self.parameter_filename.text() + ".json", "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
@@ -116,10 +116,7 @@ class AddParameter(QDialog):
     def message_box_success(self):
         self.close()
 
-            
-    
-   
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = AddParameter()
+    mainWindow = AddComplexParameter()
     sys.exit(mainApplication.exec_())

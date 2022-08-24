@@ -74,9 +74,40 @@
     "//": "Parameters Window",
     "parameters_window_title": "Parameters",
     "parameters_window_caption": "List of available parameters:",
-    "parameters_window_btn_refresh": "Refresh parameres list",
-   
+    "parameters_window_btn_refresh": "Refresh parameters list",
+    "parameters_window_btn_add_new": "Add new parameter",
+    "parameters_window_btn_delete": "Delete selected parameter",
+    "parameters_window_parameter_caption": "Parameters information:",
+    "parameters_window_parameter_filename": "Filename:",
+    "parameters_window_parameter_name": "Parameter name:",
+    "parameters_window_parameter_unit": "Parameter unit:",
+    "parameters_window_parameter_desc": "Parameter description:",
+    "parameters_window_parameter_btn_save": "Save changes",
+    "parameters_window_parameter_btn_cancel": "Cancel changes",
+    "parameters_window_btn_close": "Close",
+    "parameters_window_save_changes_message": "Parameter name or unit empty...",
+    "parameters_window_save_changes_message_caption": "Missing data...",
+    "parameters_window_save_message": "Parameter saved...",
+    "parameters_window_save_message_caption": "Successuful...",
 
-    
+    "//": "Add Parameter Window",
+    "add_parameter_window_title": "Add new parameter",
+    "add_parameter_window_caption": "Parameter information:",
+    "add_parameter_window_filename": "Filename:",
+    "add_parameter_window_filename_exp": "Text to be used as parameter filename.",
+    "add_parameter_window_name": "Parameter name:",
+    "add_parameter_window_name_exp": "Text to be used as parameter name in methods and computations.",
+    "add_parameter_window_unit": "Parameter unit:",
+    "add_parameter_window_unit_exp": "Unit to be used...",
+    "add_parameter_window_desc": "Parameter description:",
+    "add_parameter_window_desc_exp": "Text to be used for short explinations.",
+    "add_parameter_window_btn_add": "Save",
+    "add_parameter_window_btn_cancel": "Cancel",
+    "add_parameter_window_save_message": "Parameter name or unit empty...",
+    "add_parameter_window_save_message_caption": "Missing data...",
+    "add_parameter_window_saved_message": "Parameter saved...",
+    "add_parameter_window_saved_message_caption": "Successuful...",
+
+
     "":""
 }

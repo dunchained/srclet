@@ -3,8 +3,8 @@
     
     "//": "Main window:",
     "main_window_title": "Soil water circuLation and evapotranspiration model",
-    "menu_file": "File",
-    "menu_file_settings": "Settings",
+    "menu_file": "Datoteken",
+    "menu_file_settings": "Gefufna",
     "menu_file_exit": "Exit",
     "menu_project": "Project",
     "menu_project_new_project": "New project",
@@ -70,6 +70,12 @@
     "project_opened_widget_vizualization_options": "viz_options",
     "project_opened_widget_export_save_calc": "save_export_calc",
     "project_opened_widget_status_info": "status_info",
+
+    "//": "Parameters Window",
+    "parameters_window_title": "Parameters",
+    "parameters_window_caption": "List of available parameters:",
+    "parameters_window_btn_refresh": "Refresh parameres list",
+   
 
     
     "":""

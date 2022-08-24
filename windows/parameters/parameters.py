@@ -42,17 +42,17 @@ class ParametersWindow(QDialog):
     def createLeftGroupBox(self):
         LeftGroupBox = QGroupBox(self.language['parameters_window_caption'])
         self.list_widget = QListWidget()
-        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
         self.list_widget.addItems(self.file_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        buttonRefresh = QPushButton('Refresh parameter list')
+        buttonRefresh = QPushButton(self.language['parameters_window_btn_refresh'])
         buttonRefresh.clicked.connect(self.refresh_parameters_list)
-        buttonAddParameter = QPushButton('Add new parameter')
+        buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
         buttonAddParameter.clicked.connect(self.newParameterWindow)
-        buttonDelete = QPushButton('Delete selected parameter')
+        buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
         buttonDelete.clicked.connect(self.delete_parameter)
 
         layout = QVBoxLayout()
@@ -66,7 +66,7 @@ class ParametersWindow(QDialog):
         return LeftGroupBox
     
     def index_changed(self, i):
-        self.json_path = 'parameters/' + i.text() + '.json'
+        self.json_path = 'parameters/basic/' + i.text() + '.json'
        
         with open(self.json_path) as json_file:
             data = json.load(json_file)
@@ -80,10 +80,10 @@ class ParametersWindow(QDialog):
         if not list_items: return
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove('parameters/' + item.text() + '.json')
+        os.remove('parameters/basic/' + item.text() + '.json')
             
     def refresh_parameters_list(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
         self.file_list_update = []
         for file in get_files:
             if Path(file).stem in self.file_list:
@@ -94,21 +94,21 @@ class ParametersWindow(QDialog):
         self.list_widget.addItems(self.file_list_update)
     
     def createRightGroupBox(self):
-        RightGroupBox = QGroupBox('Parameters definition:')
-        self.text_parameter_filename = QLabel('Filename:')
+        RightGroupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
+        self.text_parameter_filename = QLabel(self.language['parameters_window_parameter_filename'])
         self.parameter_filename = QLineEdit()
         self.parameter_filename.setEnabled(False)
-        self.text_parameter_name = QLabel('Parameter name:')
+        self.text_parameter_name = QLabel(self.language['parameters_window_parameter_name'])
         self.parameter_name = QLineEdit()
-        self.text_parameter_unit = QLabel('Parameter unit:')
+        self.text_parameter_unit = QLabel(self.language['parameters_window_parameter_unit'])
         self.parameter_unit = QLineEdit()
 
-        self.text_parameter_descriprion = QLabel('Parameter description:')
+        self.text_parameter_descriprion = QLabel(self.language['parameters_window_parameter_desc'])
         self.parameter_descriprion = QTextEdit()
 
-        buttonSaveProject = QPushButton('Save changes')
+        buttonSaveProject = QPushButton(self.language['parameters_window_parameter_btn_save'])
         buttonSaveProject.clicked.connect(self.save_changes_parameter)
-        buttonCancel = QPushButton('Cancel')
+        buttonCancel = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
         buttonCancel.clicked.connect(self.close)
         
         layout = QVBoxLayout()
@@ -130,7 +130,7 @@ class ParametersWindow(QDialog):
     def createDownGroupBox(self):
         DownGroupBox = QGroupBox()
         
-        buttonClose = QPushButton('Close')
+        buttonClose = QPushButton(self.language['parameters_window_btn_close'])
         buttonClose.clicked.connect(self.close)
         
         layout = QHBoxLayout()
@@ -142,15 +142,15 @@ class ParametersWindow(QDialog):
         return DownGroupBox
     
     def newParameterWindow(self):
-        self.window = AddParameter()
+        self.window = AddParameter(self.language)
 
     def save_changes_parameter(self):
         if not self.parameter_filename and not self.parameter_name.text() and not self.parameter_unit.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Parameter name or unit empty...')
-            self.msg.setWindowTitle('Missing data...')
+            self.msg.setText(self.language['parameters_window_save_changes_message'])
+            self.msg.setWindowTitle(self.language['parameters_window_save_changes_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -163,20 +163,14 @@ class ParametersWindow(QDialog):
                 "description": self.parameter_descriprion.toPlainText()
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(os.path.curdir + "/parameters/" + self.parameter_filename.text() + ".json", "w") as outfile:
+            with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Parameter saved...')
-            self.msg.setWindowTitle('Successuful...')
+            self.msg.setText(self.language['parameters_window_save_message'])
+            self.msg.setWindowTitle(self.language['parameters_window_save_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             #self.msg.buttonClicked.connect(self.close)
             self.msg.show()
- 
-#obrisati nakon uvezivanja cijelog
-if __name__ == '__main__':
-    mainApplication = QApplication(sys.argv)
-    mainWindow = ParametersWindow()
-    sys.exit(mainApplication.exec_())

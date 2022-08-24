@@ -5,8 +5,8 @@ import sys, os, json
 from pathlib import Path
 
 # app modules and windows
-from css import css
-from windows.parameters.add_parameter import AddParameter
+#from css import css
+from windows.parameters.complex_paramateres import ComplexParametersWindow
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
@@ -15,7 +15,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 class ComplexParametersWindow(QDialog):
-    def __init__(self, language):
+    def __init__(self, language=):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
@@ -42,7 +42,7 @@ class ComplexParametersWindow(QDialog):
     def createLeftGroupBox(self):
         LeftGroupBox = QGroupBox('Parameters used for calucation:')
         self.list_widget = QListWidget()
-        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        get_files = next(os.walk(os.path.curdir + "/parameters/complex/"), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -66,7 +66,7 @@ class ComplexParametersWindow(QDialog):
         return LeftGroupBox
     
     def index_changed(self, i):
-        self.json_path = 'parameters/' + i.text() + '.json'
+        self.json_path = 'parameters/complex/' + i.text() + '.json'
        
         with open(self.json_path) as json_file:
             data = json.load(json_file)
@@ -80,10 +80,10 @@ class ComplexParametersWindow(QDialog):
         if not list_items: return
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove('parameters/' + item.text() + '.json')
+        os.remove('parameters/complex/' + item.text() + '.json')
             
     def refresh_parameters_list(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        get_files = next(os.walk(os.path.curdir + "/parameters/complex/"), (None, None, []))[2]
         self.file_list_update = []
         for file in get_files:
             if Path(file).stem in self.file_list:
@@ -142,7 +142,7 @@ class ComplexParametersWindow(QDialog):
         return DownGroupBox
     
     def newParameterWindow(self):
-        self.window = AddParameter()
+        self.window = ComplexParametersWindow(self.language)
 
     def save_changes_parameter(self):
         if not self.parameter_filename and not self.parameter_name.text() and not self.parameter_unit.text():
@@ -163,7 +163,7 @@ class ComplexParametersWindow(QDialog):
                 "description": self.parameter_descriprion.toPlainText()
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(os.path.curdir + "/parameters/" + self.parameter_filename.text() + ".json", "w") as outfile:
+            with open(os.path.curdir + "/parameters/complex/" + self.parameter_filename.text() + ".json", "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
@@ -178,5 +178,5 @@ class ComplexParametersWindow(QDialog):
 #obrisati nakon uvezivanja cijelog
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = ParametersWindow()
+    mainWindow = ComplexParametersWindow()
     sys.exit(mainApplication.exec_())

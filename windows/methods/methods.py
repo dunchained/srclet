@@ -73,11 +73,11 @@ class Methods(QDialog):
         grid_layout = QGridLayout()
         parameters_Groupbox.setLayout(grid_layout)
         
-        get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
+        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
           
-            with open('parameters/' + Path(file).stem + '.json') as jsonFile:
+            with open('parameters/basic/' + Path(file).stem + '.json') as jsonFile:
                 data = json.load(jsonFile)
                 jsonData = data['name']
                 self.file_list.append(jsonData)
