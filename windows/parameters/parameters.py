@@ -5,9 +5,8 @@ import sys, os, json
 from pathlib import Path
 
 # app modules and windows
-#from css import css
-import add_parameter
-#from windows.parameters.add_parameter import AddParameter
+from css import css
+from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
@@ -16,32 +15,13 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 class ParametersWindow(QWidget):
-    def __init__(self):
+    def __init__(self, language):
         super(ParametersWindow, self).__init__()
-        self.AddParameter = add_parameter.AddParameter()
+        self.language = language
+        self.AddParameter = AddParameter(self.language)
         self.AddParameter.hide()
         self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = {
-            "parameters_window_title": "Parameters",
-            "parameters_window_caption": "List of available parameters:",
-            "parameters_window_btn_refresh": "Refresh parameters list",
-            "parameters_window_btn_add_new": "Add new parameter",
-            "parameters_window_btn_delete": "Delete selected parameter",
-            "parameters_window_parameter_caption": "Parameters information:",
-            "parameters_window_parameter_filename": "Filename:",
-            "parameters_window_parameter_name": "Parameter name:",
-            "parameters_window_parameter_symbol": "Parameter symbol:",
-            "parameters_window_parameter_unit": "Parameter unit:",
-            "parameters_window_parameter_desc": "Parameter description:",
-            "parameters_window_parameter_btn_save": "Save changes",
-            "parameters_window_parameter_btn_cancel": "Cancel changes",
-            "parameters_window_btn_close": "Close",
-            "parameters_window_save_changes_message": "Parameter name or unit empty...",
-            "parameters_window_save_changes_message_caption": "Missing data...",
-            "parameters_window_save_message": "Parameter saved...",
-            "parameters_window_save_message_caption": "Successuful..."
-            }
         self.WindowGUI()
 
     def WindowGUI(self):
@@ -69,35 +49,24 @@ class ParametersWindow(QWidget):
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
-        
         self.list_widget.addItems(self.file_list)
-        
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        self.buttonRefresh = QPushButton(self.language['parameters_window_btn_refresh'])
-        self.buttonRefresh.clicked.connect(self.refresh_parameters_list)
-        
         self.buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
         self.buttonAddParameter.clicked.connect(self.newParameterWindow)
-        
         self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
         self.buttonDelete.clicked.connect(self.delete_parameter)
-
         layout = QVBoxLayout()
         layout.addWidget(self.list_widget)
-        #layout.addWidget(buttonRefresh)
         layout.addWidget(self.buttonAddParameter)
         layout.addWidget(self.buttonDelete)
         layout.addStretch(1)
         LeftGroupBox.setLayout(layout)
-        
         return LeftGroupBox
     
     def index_changed(self, i):
         self.json_path = 'parameters/basic/' + i.text() + '.json'
-       
         with open(self.json_path) as json_file:
             data = json.load(json_file)
-            print(data)
             if data['type'] == 'b':
                 self.parameter_filename.setText(i.text())
                 self.parameter_name.setEnabled(False)                
@@ -111,8 +80,6 @@ class ParametersWindow(QWidget):
                 self.buttonSaveProject.setEnabled(False)
                 self.buttonCancel.setEnabled(False)
                 self.buttonDelete.setEnabled(False)
-            
-                
             else:
                 self.parameter_filename.setText(i.text())
                 self.parameter_name.setText(data['name'])
@@ -126,7 +93,6 @@ class ParametersWindow(QWidget):
                 self.buttonSaveProject.setEnabled(True)
                 self.buttonCancel.setEnabled(True)
                 self.buttonDelete.setEnabled(True)
-                
             
     def refresh_parameters_list(self):
         get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
@@ -134,7 +100,6 @@ class ParametersWindow(QWidget):
         for file in get_files:
             if Path(file).stem not in self.file_list:
                 self.file_list_update.append(Path(file).stem)
-                #self.list_widget.clear()
         self.list_widget.addItems(self.file_list_update)
 
     def delete_parameter(self):
@@ -164,7 +129,7 @@ class ParametersWindow(QWidget):
         self.buttonSaveProject = QPushButton(self.language['parameters_window_parameter_btn_save'])
         self.buttonSaveProject.clicked.connect(self.save_changes_parameter)
         self.buttonCancel = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
-        self.buttonCancel.clicked.connect(self.close)
+        self.buttonCancel.clicked.connect(self.cancel)
         
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_filename)
@@ -183,7 +148,17 @@ class ParametersWindow(QWidget):
         RightGroupBox.setLayout(layout)
         
         return RightGroupBox
-    
+
+    def cancel(self):
+        self.json_path = 'parameters/basic/' + self.list_widget.currentItem().text() + '.json'
+        with open(self.json_path) as json_file:
+            data = json.load(json_file)
+            
+        self.parameter_name.setText(data['name'])
+        self.parameter_symbol.setText(data['symbol'])
+        self.parameter_unit.setText(data['unit'])
+        self.parameter_descriprion.setText(data['description'])
+
     def createDownGroupBox(self):
         DownGroupBox = QGroupBox()
         
@@ -199,7 +174,6 @@ class ParametersWindow(QWidget):
         return DownGroupBox
     
     def newParameterWindow(self):
-        #self.window = AddParameter()
         self.AddParameter.show()
 
     def save_changes_parameter(self):
@@ -213,8 +187,6 @@ class ParametersWindow(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            # ovdje treba još jedan uslov da provjeri da li ima već projekat sa istim imenom
-            # poruka da li želite otvoriti kreirani projekat
             parameter_dict = {
                 "name": self.parameter_name.text(),
                 "symbol": self.parameter_symbol.text(),
@@ -232,10 +204,4 @@ class ParametersWindow(QWidget):
             self.msg.setText(self.language['parameters_window_save_message'])
             self.msg.setWindowTitle(self.language['parameters_window_save_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
-            #self.msg.buttonClicked.connect(self.close)
             self.msg.show()
-
-if __name__ == '__main__':
-    mainApplication = QApplication(sys.argv)
-    mainWindow = ParametersWindow()
-    sys.exit(mainApplication.exec_())

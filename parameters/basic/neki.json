@@ -1,7 +1,7 @@
 {
     "name": "Novi parametar",
-    "unit": "e",
     "symbol": "samoniklica",
+    "unit": "e",
     "description": "eki",
     "type": "a"
 }
