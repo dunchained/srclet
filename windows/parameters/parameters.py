@@ -23,7 +23,7 @@ class ParametersWindow(QDialog):
 
     def WindowGUI(self):
         self.setFixedSize(800, 600)
-        self.setWindowTitle('Parameters')
+        self.setWindowTitle(self.language['parameters_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.createLeftGroupBox(), 0, 0, 1, 1)
@@ -40,7 +40,7 @@ class ParametersWindow(QDialog):
         self.move(qr.topLeft())
         
     def createLeftGroupBox(self):
-        LeftGroupBox = QGroupBox('Parameters used for calucation:')
+        LeftGroupBox = QGroupBox(self.language['parameters_window_caption'])
         self.list_widget = QListWidget()
         get_files = next(os.walk(os.path.curdir + "/parameters/"), (None, None, []))[2]
         self.file_list = []

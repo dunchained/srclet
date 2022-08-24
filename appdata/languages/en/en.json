@@ -71,6 +71,12 @@
     "project_opened_widget_export_save_calc": "save_export_calc",
     "project_opened_widget_status_info": "status_info",
 
+    "//": "Parameters Window",
+    "parameters_window_title": "Parameters",
+    "parameters_window_caption": "List of available parameters:",
+    "parameters_window_btn_refresh": "Refresh parameres list",
+   
+
     
     "":""
 }

@@ -8,7 +8,7 @@ from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
 from windows.parameters.parameters import ParametersWindow
-from windows.parameters.complex_paramateres import ComplexParamateresWindow
+from windows.parameters.complex_paramateres import ComplexParametersWindow
 from windows.methods.methods import Methods
 
 from PyQt5.QtGui import QIcon
