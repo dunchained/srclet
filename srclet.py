@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowState(QtCore.Qt.WindowMaximized)
         #self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.CustomizeWindowHint)
-        #self.setStyleSheet(css.window_background_image)
+        self.setStyleSheet(css.window_background_image)
         language_settings = open(cwd + '/appdata/languages/language.json')
         language_settings_data = json.load(language_settings)
         selected_language = language_settings_data['language']

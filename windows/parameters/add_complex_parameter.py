@@ -3,8 +3,7 @@ import sys, json, os
 from pathlib import Path
 
 # app modules and windows
-#from css import css
-#from parameters.ParametersWindow import *
+from css import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
@@ -14,36 +13,15 @@ from PyQt5.QtGui import QIcon
 
 class AddComplexParameter(QWidget):
     clicked = pyqtSignal()
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = {
-            "add_parameter_window_title": "Add new parameter",
-            "add_parameter_window_caption": "Parameter information:",
-            "add_parameter_window_filename": "Filename:",
-            "add_parameter_window_filename_exp": "Text to be used as parameter filename.",
-            "add_parameter_window_name": "Parameter name:",
-            "add_parameter_window_name_exp": "Text to be used as parameter short description",
-            "add_parameter_window_unit": "Parameter unit:",
-            "add_parameter_window_unit_exp": "Unit to be used...",
-            "add_parameter_window_symbol": "Parameter symbol:",
-            "add_parameter_window_symbol_exp": "Text to be used as parameter symbol in forulas.",
-            "add_parameter_window_desc": "Parameter description:",
-            "add_parameter_window_desc_exp": "Text to be used for short explinations.",
-            "add_parameter_window_btn_add": "Save",
-            "add_parameter_window_btn_cancel": "Cancel",
-            "add_parameter_window_save_message": "Parameter name or unit empty...",
-            "add_parameter_window_save_message_caption": "Missing data...",
-            "add_parameter_window_saved_message": "Parameter saved...",
-            "add_parameter_window_saved_message_caption": "Successuful...",
-            "add_parameter_window_filename_message": "Parameter with this filename already exists.",
-            "add_parameter_window_filename_message_caption": "Filename..."
-        }
+        self.language = language
         self.WindowGUI()
 
     def WindowGUI(self):
         self.setFixedSize(800, 600)
-        self.setWindowTitle(self.language['add_parameter_window_title'])
+        self.setWindowTitle(self.language['add_complex_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.addParameterGroupBox())
@@ -58,26 +36,26 @@ class AddComplexParameter(QWidget):
         self.move(qr.topLeft())
         
     def addParameterGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_caption'])
-        self.text_parameter_filename = QLabel(self.language['add_parameter_window_filename'])
-        self.text_parameter_filename1 = QLabel(self.language['add_parameter_window_filename_exp'])
+        groupBox = QGroupBox(self.language['add_complex_parameter_window_caption'])
+        self.text_parameter_filename = QLabel(self.language['add_complex_parameter_window_filename'])
+        self.text_parameter_filename1 = QLabel(self.language['add_complex_parameter_window_filename_exp'])
         self.parameter_filename = QLineEdit()
-        self.text_parameter_name = QLabel(self.language['add_parameter_window_name'])
-        self.text_parameter_name1 = QLabel(self.language['add_parameter_window_name_exp'])
+        self.text_parameter_name = QLabel(self.language['add_complex_parameter_window_name'])
+        self.text_parameter_name1 = QLabel(self.language['add_complex_parameter_window_name_exp'])
         self.parameter_name = QLineEdit()
-        self.text_parameter_symbol = QLabel(self.language['add_parameter_window_symbol'])
-        self.text_parameter_symbol1 = QLabel(self.language['add_parameter_window_symbol_exp'])
+        self.text_parameter_symbol = QLabel(self.language['add_complex_parameter_window_symbol'])
+        self.text_parameter_symbol1 = QLabel(self.language['add_complex_parameter_window_symbol_exp'])
         self.parameter_symbol = QLineEdit()
-        self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit'])
-        self.text_parameter_unit1 = QLabel(self.language['add_parameter_window_unit_exp'])
+        self.text_parameter_unit = QLabel(self.language['add_complex_parameter_window_unit'])
+        self.text_parameter_unit1 = QLabel(self.language['add_complex_parameter_window_unit_exp'])
         self.parameter_unit = QLineEdit()
-        self.text_parameter_descriprion = QLabel(self.language['add_parameter_window_desc'])
-        self.text_parameter_descriprion1 = QLabel(self.language['add_parameter_window_desc_exp'])
+        self.text_parameter_descriprion = QLabel(self.language['add_complex_parameter_window_desc'])
+        self.text_parameter_descriprion1 = QLabel(self.language['add_complex_parameter_window_desc_exp'])
         self.parameter_descriprion = QTextEdit()
         
-        buttonSaveProject = QPushButton(self.language['add_parameter_window_btn_add'])
+        buttonSaveProject = QPushButton(self.language['add_complex_parameter_window_btn_add'])
         buttonSaveProject.clicked.connect(self.add_parameter)
-        buttonCancel = QPushButton(self.language['add_parameter_window_btn_cancel'])
+        buttonCancel = QPushButton(self.language['add_complex_parameter_window_btn_cancel'])
         buttonCancel.clicked.connect(self.close)
         
         layout = QVBoxLayout()
@@ -105,7 +83,7 @@ class AddComplexParameter(QWidget):
         return groupBox
     
     def add_parameter(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        get_files = next(os.walk(os.path.curdir + "/parameters/complex/"), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -114,8 +92,8 @@ class AddComplexParameter(QWidget):
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_parameter_window_filename_message'])
-            self.msg.setWindowTitle(self.language['add_parameter_window_filename_message_caption'])
+            self.msg.setText(self.language['add_complex_parameter_window_filename_message'])
+            self.msg.setWindowTitle(self.language['add_complex_parameter_window_filename_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -124,8 +102,8 @@ class AddComplexParameter(QWidget):
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_parameter_window_save_message'])
-                self.msg.setWindowTitle(self.language['add_parameter_window_save_message_caption'])
+                self.msg.setText(self.language['add_complex_parameter_window_save_message'])
+                self.msg.setWindowTitle(self.language['add_complex_parameter_window_save_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
@@ -138,13 +116,13 @@ class AddComplexParameter(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
+                with open(os.path.curdir + "/parameters/complex/" + self.parameter_filename.text() + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_parameter_window_saved_message'])
-                self.msg.setWindowTitle(self.language['add_parameter_window_saved_message_caption'])
+                self.msg.setText(self.language['add_complex_parameter_window_saved_message'])
+                self.msg.setWindowTitle(self.language['add_complex_parameter_window_saved_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.clicked)
                 self.msg.buttonClicked.connect(self.message_box_success)
@@ -158,11 +136,3 @@ class AddComplexParameter(QWidget):
         self.parameter_unit.clear()
         self.parameter_descriprion.clear()
         self.close()
-
-        
-        
-        
-if __name__ == '__main__':
-    mainApplication = QApplication(sys.argv)
-    mainWindow = AddComplexParameter()
-    sys.exit(mainApplication.exec_())
