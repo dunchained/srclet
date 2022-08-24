@@ -13,10 +13,12 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, Q
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
+from PyQt5 import QtCore
 
 class ComplexParametersWindow(QWidget):
     def __init__(self, language):
         super(ComplexParametersWindow, self).__init__()
+        self.setWindowState(QtCore.Qt.WindowMaximized)
         self.language = language
         self.AddParameter = AddComplexParameter(self.language)
         self.AddParameter.hide()
@@ -25,7 +27,7 @@ class ComplexParametersWindow(QWidget):
         self.WindowGUI()
 
     def WindowGUI(self):
-        self.setFixedSize(800, 600)
+        #self.setFixedSize(800, 600)
         self.setWindowTitle(self.language['complex_parameters_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
@@ -75,6 +77,8 @@ class ComplexParametersWindow(QWidget):
                 self.parameter_symbol.setText(data['symbol'])
                 self.parameter_unit.setEnabled(False)
                 self.parameter_unit.setText(data['unit'])
+                self.parameter_formula.setEnabled(False)
+                self.parameter_formula.setText(data['formula'])
                 self.parameter_descriprion.setEnabled(False)
                 self.parameter_descriprion.setText(data['description'])
                 self.buttonSaveProject.setEnabled(False)
@@ -88,6 +92,8 @@ class ComplexParametersWindow(QWidget):
                 self.parameter_symbol.setEnabled(True)
                 self.parameter_unit.setText(data['unit'])
                 self.parameter_unit.setEnabled(True)
+                self.parameter_formula.setText(data['formula'])
+                self.parameter_formula.setEnabled(True)
                 self.parameter_descriprion.setText(data['description'])
                 self.parameter_descriprion.setEnabled(True)
                 self.buttonSaveProject.setEnabled(True)
@@ -123,6 +129,9 @@ class ComplexParametersWindow(QWidget):
         self.text_parameter_unit = QLabel(self.language['complex_parameters_window_parameter_unit'])
         self.parameter_unit = QLineEdit()
 
+        self.text_parameter_formula = QLabel(self.language['complex_parameters_window_parameter_formula'])
+        self.parameter_formula = QTextEdit()
+
         self.text_parameter_descriprion = QLabel(self.language['complex_parameters_window_parameter_desc'])
         self.parameter_descriprion = QTextEdit()
 
@@ -140,6 +149,8 @@ class ComplexParametersWindow(QWidget):
         layout.addWidget(self.parameter_symbol)
         layout.addWidget(self.text_parameter_unit)
         layout.addWidget(self.parameter_unit)
+        layout.addWidget(self.text_parameter_formula)
+        layout.addWidget(self.parameter_formula)
         layout.addWidget(self.text_parameter_descriprion)
         layout.addWidget(self.parameter_descriprion)
         layout.addWidget(self.buttonSaveProject)
@@ -157,6 +168,7 @@ class ComplexParametersWindow(QWidget):
         self.parameter_name.setText(data['name'])
         self.parameter_symbol.setText(data['symbol'])
         self.parameter_unit.setText(data['unit'])
+        self.parameter_formula.setText(data['formula'])
         self.parameter_descriprion.setText(data['description'])
 
     def createDownGroupBox(self):
@@ -177,7 +189,7 @@ class ComplexParametersWindow(QWidget):
         self.AddParameter.show()
 
     def save_changes_parameter(self):
-        if not self.parameter_filename and not self.parameter_name.text() and not self.parameter_unit.text():
+        if not self.parameter_filename or not self.parameter_name.text() or not self.parameter_unit.text() or not self.parameter_symbol.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
@@ -191,6 +203,7 @@ class ComplexParametersWindow(QWidget):
                 "name": self.parameter_name.text(),
                 "symbol": self.parameter_symbol.text(),
                 "unit": self.parameter_unit.text(),
+                "formula": self.parameter_formula.toPlainText(),
                 "description": self.parameter_descriprion.toPlainText(),
                 "type": "a"
                 }

@@ -49,6 +49,9 @@ class AddComplexParameter(QWidget):
         self.text_parameter_unit = QLabel(self.language['add_complex_parameter_window_unit'])
         self.text_parameter_unit1 = QLabel(self.language['add_complex_parameter_window_unit_exp'])
         self.parameter_unit = QLineEdit()
+        self.text_parameter_formula = QLabel(self.language['add_complex_parameter_window_formula'])
+        self.text_parameter_formula1 = QLabel(self.language['add_complex_parameter_window_formula_exp'])
+        self.parameter_formula = QTextEdit()
         self.text_parameter_descriprion = QLabel(self.language['add_complex_parameter_window_desc'])
         self.text_parameter_descriprion1 = QLabel(self.language['add_complex_parameter_window_desc_exp'])
         self.parameter_descriprion = QTextEdit()
@@ -71,6 +74,9 @@ class AddComplexParameter(QWidget):
         layout.addWidget(self.text_parameter_unit)
         layout.addWidget(self.text_parameter_unit1)
         layout.addWidget(self.parameter_unit)
+        layout.addWidget(self.text_parameter_formula)
+        layout.addWidget(self.text_parameter_formula1)
+        layout.addWidget(self.parameter_formula)
         layout.addWidget(self.text_parameter_descriprion)
         layout.addWidget(self.text_parameter_descriprion1)
         layout.addWidget(self.parameter_descriprion)
@@ -98,7 +104,7 @@ class AddComplexParameter(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            if not self.parameter_filename.text() or not self.parameter_unit.text() or not self.parameter_name.text():
+            if not self.parameter_formula.toPlainText() or not self.parameter_filename.text() or not self.parameter_unit.text() or not self.parameter_name.text() or not self.parameter_symbol:
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
@@ -112,6 +118,7 @@ class AddComplexParameter(QWidget):
                     "name": self.parameter_name.text(),
                     "unit": self.parameter_unit.text(),
                     "symbol": self.parameter_symbol.text(),
+                    "formula": self.parameter_formula.toPlainText(),
                     "description": self.parameter_descriprion.toPlainText(),
                     "type": "a"
                     }
@@ -134,5 +141,6 @@ class AddComplexParameter(QWidget):
         self.parameter_name.clear()
         self.parameter_symbol.clear()
         self.parameter_unit.clear()
+        self.parameter_formula.clear()
         self.parameter_descriprion.clear()
         self.close()

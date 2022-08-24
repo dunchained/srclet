@@ -2,6 +2,7 @@
     "name": "Novi parametar",
     "symbol": "samoniklica",
     "unit": "e",
+    "formula": "formula",
     "description": "eki",
     "type": "a"
 }
