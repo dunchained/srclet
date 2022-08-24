@@ -6,7 +6,7 @@ from pathlib import Path
 
 # app modules and windows
 #from css import css
-from windows.parameters.complex_paramateres import ComplexParametersWindow
+from windows.parameters.add_complex_parameter import AddComplexParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
@@ -15,7 +15,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 class ComplexParametersWindow(QDialog):
-    def __init__(self, language=):
+    def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
@@ -142,7 +142,7 @@ class ComplexParametersWindow(QDialog):
         return DownGroupBox
     
     def newParameterWindow(self):
-        self.window = ComplexParametersWindow(self.language)
+        self.window = AddComplexParameter(self.language)
 
     def save_changes_parameter(self):
         if not self.parameter_filename and not self.parameter_name.text() and not self.parameter_unit.text():

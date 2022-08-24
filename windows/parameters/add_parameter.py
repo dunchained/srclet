@@ -1,5 +1,6 @@
 # python standard modules
 import sys, json, os
+from pathlib import Path
 
 # app modules and windows
 from css import css
@@ -34,19 +35,16 @@ class AddParameter(QDialog):
         self.move(qr.topLeft())
         
     def addParameterGroupBox(self):
-        RightGroupBox = QGroupBox(self.language['add_parameter_window_caption'])
+        groupBox = QGroupBox(self.language['add_parameter_window_caption'])
         self.text_parameter_filename = QLabel(self.language['add_parameter_window_filename'])
         self.text_parameter_filename1 = QLabel(self.language['add_parameter_window_filename_exp'])
         self.parameter_filename = QLineEdit()
-        
         self.text_parameter_name = QLabel(self.language['add_parameter_window_name'])
         self.text_parameter_name1 = QLabel(self.language['add_parameter_window_name_exp'])
         self.parameter_name = QLineEdit()
-        
         self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit'])
         self.text_parameter_unit1 = QLabel(self.language['add_parameter_window_unit_exp'])
         self.parameter_unit = QLineEdit()
-        
         self.text_parameter_descriprion = QLabel(self.language['add_parameter_window_desc'])
         self.text_parameter_descriprion1 = QLabel(self.language['add_parameter_window_desc_exp'])
         self.parameter_descriprion = QTextEdit()
@@ -60,65 +58,67 @@ class AddParameter(QDialog):
         layout.addWidget(self.text_parameter_filename)
         layout.addWidget(self.text_parameter_filename1)
         layout.addWidget(self.parameter_filename)
-        
         layout.addWidget(self.text_parameter_name)
         layout.addWidget(self.text_parameter_name1)
         layout.addWidget(self.parameter_name)
-        
         layout.addWidget(self.text_parameter_unit)
         layout.addWidget(self.text_parameter_unit1)
         layout.addWidget(self.parameter_unit)
-        
         layout.addWidget(self.text_parameter_descriprion)
         layout.addWidget(self.text_parameter_descriprion1)
         layout.addWidget(self.parameter_descriprion)
-        
         layout.addWidget(buttonSaveProject)
         layout.addWidget(buttonCancel)
         layout.addStretch(1)
-        RightGroupBox.setLayout(layout)
         
-        return RightGroupBox
+        groupBox.setLayout(layout)
+        
+        return groupBox
     
     def add_parameter(self):
+        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        self.file_list = []
+        for file in get_files:
+            self.file_list.append(Path(file).stem)
         
-        if not self.parameter_filename.text() and not self.parameter_unit.text() and not self.parameter_name.text():
+        if self.parameter_filename.text() in self.file_list:
+            print('ima file')
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_parameter_window_save_message'])
-            self.msg.setWindowTitle(self.language['add_parameter_window_save_message_caption'])
+            self.msg.setText(self.language['add_parameter_window_filename_message'])
+            self.msg.setWindowTitle(self.language['add_parameter_window_filename_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            # ovdje treba još jedan uslov da provjeri da li ima već projekat sa istim imenom
-            # poruka da li želite otvoriti kreirani projekat
-            parameter_dict = {
-                "name": self.parameter_name.text(),
-                "unit": self.parameter_unit.text(),
-                "description": self.parameter_descriprion.toPlainText()
-                }
-            json_object = json.dumps(parameter_dict, indent = 4)
-            with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
-                outfile.write(json_object)
-                
-            self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_parameter_window_saved_message'])
-            self.msg.setWindowTitle(self.language['add_parameter_window_saved_message_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
-            self.msg.buttonClicked.connect(self.message_box_success)
-            self.msg.show()
+            if not self.parameter_filename.text() or not self.parameter_unit.text() or not self.parameter_name.text():
+                self.msg = QMessageBox()
+                self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+                self.msg.setIcon(QMessageBox.Information)
+                self.msg.setText(self.language['add_parameter_window_save_message'])
+                self.msg.setWindowTitle(self.language['add_parameter_window_save_message_caption'])
+                self.msg.setStandardButtons(QMessageBox.Ok)
+                self.msg.buttonClicked.connect(self.msg.close)
+                self.msg.show()
+            else:
+                parameter_dict = {
+                    "name": self.parameter_name.text(),
+                    "unit": self.parameter_unit.text(),
+                    "description": self.parameter_descriprion.toPlainText(),
+                    "type": "a"
+                    }
+                json_object = json.dumps(parameter_dict, indent = 4)
+                with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
+                    outfile.write(json_object)
+                self.msg = QMessageBox()
+                self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+                self.msg.setIcon(QMessageBox.Information)
+                self.msg.setText(self.language['add_parameter_window_saved_message'])
+                self.msg.setWindowTitle(self.language['add_parameter_window_saved_message_caption'])
+                self.msg.setStandardButtons(QMessageBox.Ok)
+                self.msg.buttonClicked.connect(self.message_box_success)
+                self.msg.show()
             
     def message_box_success(self):
         self.close()
-
-            
-    
-   
-if __name__ == '__main__':
-    mainApplication = QApplication(sys.argv)
-    mainWindow = AddParameter()
-    sys.exit(mainApplication.exec_())

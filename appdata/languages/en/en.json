@@ -107,6 +107,8 @@
     "add_parameter_window_save_message_caption": "Missing data...",
     "add_parameter_window_saved_message": "Parameter saved...",
     "add_parameter_window_saved_message_caption": "Successuful...",
+    "add_parameter_window_filename_message": "Parameter with this filename already exists.",
+    "add_parameter_window_filename_message_caption": "Filename...",
 
 
     "":""

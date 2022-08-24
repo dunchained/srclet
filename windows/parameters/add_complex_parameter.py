@@ -1,11 +1,9 @@
 # python standard modules
-import imp
-from re import I
 from sqlite3 import paramstyle
 import sys, json, os
 
 # app modules and windows
-#from css import css
+from css import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit

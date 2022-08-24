@@ -136,7 +136,7 @@ class MainWindow(QMainWindow):
         self.window = ParametersWindow(self.language)
         
     def complexParametersWindow(self):
-        self.window = ComplexParamateresWindow(self.language)
+        self.window = ComplexParametersWindow(self.language)
         
     def methodsWindow(self):
         self.window = Methods(self.language)
