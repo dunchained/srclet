@@ -9,12 +9,14 @@ from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
 from windows.parameters.parameters import ParametersWindow
 from windows.parameters.complex_paramateres import ComplexParametersWindow
-from windows.methods.methods import Methods
+from windows.methods.methods_eto import ETOMethodsWindow
+from windows.methods.methods_wb import WBMethodsWindow
+from windows.methods.methods_other import OtherMethodsWindow
 from widgets.random_widget import RandomWidget
 
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget
+from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget, QMenu
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -87,23 +89,42 @@ class MainWindow(QMainWindow):
         fileMenu = menubar.addMenu(self.language['menu_customize'])
         
         # Customize - Parameters:
-        parametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_parameters'], self)
-        parametersAct.setShortcut('Ctrl+P')
-        parametersAct.triggered.connect(self.parametersWindow)
-        fileMenu.addAction(parametersAct)
+        parameters_menu = QMenu(self.language['menu_customize_parameters'], self)
+        parameters_menu.setIcon(QIcon(css.menu_settings_icon))
         
-        # Customize - Complex paramateres:
+        parametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_basic_parameters'], self)
+        parametersAct.setShortcut('Ctrl+B')
+        parametersAct.triggered.connect(self.parametersWindow)
+        parameters_menu.addAction(parametersAct)
+        
         complexParametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_complex_parameters'], self)
         complexParametersAct.setShortcut('Ctrl+R')
         complexParametersAct.triggered.connect(self.complexParametersWindow)
-        fileMenu.addAction(complexParametersAct)
+        parameters_menu.addAction(complexParametersAct)
+
+        fileMenu.addMenu(parameters_menu)
         
         # Customize - Methods:
-        methodsAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods'], self)
-        methodsAct.setShortcut('Ctrl+M')
-        methodsAct.triggered.connect(self.methodsWindow)
-        fileMenu.addAction(methodsAct)
+        methods_menu = QMenu(self.language['menu_customize_methods'], self)
+        methods_menu.setIcon(QIcon(css.menu_settings_icon))
+                
+        etoAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods_eto'], self)
+        etoAct.triggered.connect(self.etoMethodsWindow)
+        etoAct.setShortcut('Ctrl+E')
+        methods_menu.addAction(etoAct)
 
+        wbAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods_wb'], self)
+        wbAct.triggered.connect(self.wbMethodsWindow)
+        wbAct.setShortcut('Ctrl+W')
+        methods_menu.addAction(wbAct)
+
+        otherAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods_others'], self)
+        otherAct.triggered.connect(self.otherMethodsWindow)
+        otherAct.setShortcut('Ctrl+T')
+        methods_menu.addAction(otherAct)
+        
+        fileMenu.addMenu(methods_menu)
+        
         # Help: 
         fileMenu = menubar.addMenu(self.language['menu_help'])
         
@@ -140,9 +161,15 @@ class MainWindow(QMainWindow):
     def complexParametersWindow(self):
         self.window = ComplexParametersWindow(self.language)
         
-    def methodsWindow(self):
-        self.window = Methods(self.language)
-        
+    def etoMethodsWindow(self):
+        self.window = ETOMethodsWindow(self.language)
+
+    def wbMethodsWindow(self):
+        self.window = WBMethodsWindow(self.language)
+
+    def otherMethodsWindow(self):
+        self.window = OtherMethodsWindow(self.language)
+
     # Help:
     def aboutWindow(self):
         self.window = AboutWindow(self.language)

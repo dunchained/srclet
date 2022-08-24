@@ -1,18 +1,22 @@
 # python standard modules
 import sys, os, json
 from pathlib import Path
+cwd = os.path.curdir
 
 # app modules and windows
-#ffrom css import css
+from css import css, var
 #from windows.methods.add_method import AddMethod
 
 # pyqt5 modules
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QSizePolicy, QLineEdit, QAbstractItemView, QCheckBox, QPlainTextEdit, QScrollArea
+from PyQt5.QtWidgets import QListWidget
+
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
-class Methods(QDialog):
+class Methods(QWidget):
     def __init__(self, language):
         super().__init__()
         self.setWindowState(Qt.WindowMaximized)
@@ -40,22 +44,49 @@ class Methods(QDialog):
         
     def createLeftGroupBox(self):
         LeftGroupBox = QGroupBox('Methods used for calucation:')
-        self.methods_list = QListView()
-        self.methods_list.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.list_widget = QListWidget()
+        get_files = next(os.walk(cwd + var.methods_folder), (None, None, []))[2]
+        self.file_list = []
+        for file in get_files:
+            self.file_list.append(Path(file).stem)
+        self.list_widget.addItems(self.file_list)
+
+        self.list_widget.currentItemChanged.connect(self.index_changed)
         
-        self.entries = ['FAO Penman-Monteith (1950)','Trajković (2008) ', 'Method 3', 'Method 4','Method 5', 'Method 6']
-        self.methods_entry_model = QStandardItemModel()
-        self.methods_list.setModel(self.methods_entry_model)
-        for i in self.entries:
-            item = QStandardItem(i)
-            self.methods_entry_model.appendRow(item)
-              
+        self.buttonAddMethod = QPushButton('add method')
+        self.buttonAddMethod.clicked.connect(self.add_method)
+        self.buttonDeleteMethod = QPushButton('delete method')
+        self.buttonDeletemethod.clicked.connect(self.delete_method)
+        
         layout = QVBoxLayout()
-        layout.addWidget(self.methods_list)
+        layout.addWidget(self.list_widget)
+        layout.addWidget(self.buttonAddParameter)
+        layout.addWidget(self.buttonDelete)
         layout.addStretch(1)
         LeftGroupBox.setLayout(layout)
+
+        #self.methods_list = QListView()
+        #self.methods_list.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        #self.entries = ['FAO Penman-Monteith (1950)','Trajković (2008) ', 'Method 3', 'Method 4','Method 5', 'Method 6']
+        #self.methods_entry_model = QStandardItemModel()
+        #self.methods_list.setModel(self.methods_entry_model)
+        #for i in self.entries:
+            #item = QStandardItem(i)
+            #self.methods_entry_model.appendRow(item)
+              
+        #layout = QVBoxLayout()
+        #layout.addWidget(self.methods_list)
+        #layout.addStretch(1)
+        #LeftGroupBox.setLayout(layout)
         
         return LeftGroupBox
+
+    def add_method(self):
+        pass
+
+    def delete_method(self):
+        pass
     
     def createRightGroupBox(self):
         RightGroupBox = QGroupBox('Method definition:')

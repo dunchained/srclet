@@ -48,6 +48,7 @@ class ParametersWindow(QWidget):
         self.list_widget = QListWidget()
         get_files = next(os.walk(cwd + var.parameters_folder), (None, None, []))[2]
         self.file_list = []
+        self.file_list_names = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
         self.list_widget.addItems(self.file_list)
