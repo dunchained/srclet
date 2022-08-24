@@ -5,8 +5,8 @@ import sys, os, json
 from pathlib import Path
 
 # app modules and windows
-from css import css
-from windows.parameters.add_parameter import AddParameter
+#from css import css
+#from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
@@ -15,10 +15,28 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 class ParametersWindow(QDialog):
-    def __init__(self, language):
+    def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = language
+        self.language = {
+            "parameters_window_title": "Parameters",
+            "parameters_window_caption": "List of available parameters:",
+            "parameters_window_btn_refresh": "Refresh parameters list",
+            "parameters_window_btn_add_new": "Add new parameter",
+            "parameters_window_btn_delete": "Delete selected parameter",
+            "parameters_window_parameter_caption": "Parameters information:",
+            "parameters_window_parameter_filename": "Filename:",
+            "parameters_window_parameter_name": "Parameter name:",
+            "parameters_window_parameter_unit": "Parameter unit:",
+            "parameters_window_parameter_desc": "Parameter description:",
+            "parameters_window_parameter_btn_save": "Save changes",
+            "parameters_window_parameter_btn_cancel": "Cancel changes",
+            "parameters_window_btn_close": "Close",
+            "parameters_window_save_changes_message": "Parameter name or unit empty...",
+            "parameters_window_save_changes_message_caption": "Missing data...",
+            "parameters_window_save_message": "Parameter saved...",
+            "parameters_window_save_message_caption": "Successuful..."
+            }
         self.WindowGUI()
 
     def WindowGUI(self):
@@ -46,12 +64,16 @@ class ParametersWindow(QDialog):
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
+        
         self.list_widget.addItems(self.file_list)
+        
         self.list_widget.currentItemChanged.connect(self.index_changed)
         buttonRefresh = QPushButton(self.language['parameters_window_btn_refresh'])
         buttonRefresh.clicked.connect(self.refresh_parameters_list)
+        
         buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
         buttonAddParameter.clicked.connect(self.newParameterWindow)
+        
         buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
         buttonDelete.clicked.connect(self.delete_parameter)
 
@@ -70,10 +92,44 @@ class ParametersWindow(QDialog):
        
         with open(self.json_path) as json_file:
             data = json.load(json_file)
-            self.parameter_filename.setText(i.text())
-            self.parameter_name.setText(data["name"])
-            self.parameter_unit.setText(data["unit"])
-            self.parameter_descriprion.setText(data["description"])
+            if data['type'] == 'b':
+                self.parameter_filename.setText(i.text())
+                self.parameter_name.setEnabled(False)                
+                self.parameter_name.setText(data['name'])
+                self.parameter_unit.setEnabled(False)
+                self.parameter_unit.setText(data['unit'])
+                self.parameter_descriprion.setEnabled(False)
+                self.parameter_descriprion.setText(data['description'])
+                self.buttonSaveProject.setEnabled(False)
+                self.buttonCancel.setEnabled(False)
+                
+            else:
+                self.parameter_filename.setText(i.text())
+                self.parameter_name.setText(data['name'])
+                self.parameter_unit.setText(data['unit'])
+                self.parameter_descriprion.setText(data['description'])
+                
+            
+    def refresh_parameters_list(self):
+        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        self.file_list_update = []
+        for file in get_files:
+            if Path(file).stem not in self.file_list:
+                self.file_list_update.append(Path(file).stem)
+        #self.list_widget.clear()
+        self.list_widget.addItems(self.file_list_update)
+        
+        
+        ##get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        #self.file_list_update = []
+        #for file in get_files:
+         #   if Path(file).stem in self.file_list:
+          #      pass
+           # else:
+            #    self.file_list_update.append(Path(file).stem)
+        
+        #self.list_widget.addItems(self.file_list_update)
+        #self.list_widget.addItems(self.file_list)
 
     def delete_parameter(self):
         list_items = self.list_widget.selectedItems()
@@ -82,16 +138,7 @@ class ParametersWindow(QDialog):
             self.list_widget.takeItem(self.list_widget.row(item))
         os.remove('parameters/basic/' + item.text() + '.json')
             
-    def refresh_parameters_list(self):
-        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
-        self.file_list_update = []
-        for file in get_files:
-            if Path(file).stem in self.file_list:
-                pass
-            else:
-                self.file_list_update.append(Path(file).stem)
-        
-        self.list_widget.addItems(self.file_list_update)
+    
     
     def createRightGroupBox(self):
         RightGroupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
@@ -106,10 +153,10 @@ class ParametersWindow(QDialog):
         self.text_parameter_descriprion = QLabel(self.language['parameters_window_parameter_desc'])
         self.parameter_descriprion = QTextEdit()
 
-        buttonSaveProject = QPushButton(self.language['parameters_window_parameter_btn_save'])
-        buttonSaveProject.clicked.connect(self.save_changes_parameter)
-        buttonCancel = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
-        buttonCancel.clicked.connect(self.close)
+        self.buttonSaveProject = QPushButton(self.language['parameters_window_parameter_btn_save'])
+        self.buttonSaveProject.clicked.connect(self.save_changes_parameter)
+        self.buttonCancel = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
+        self.buttonCancel.clicked.connect(self.close)
         
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_filename)
@@ -120,8 +167,8 @@ class ParametersWindow(QDialog):
         layout.addWidget(self.parameter_unit)
         layout.addWidget(self.text_parameter_descriprion)
         layout.addWidget(self.parameter_descriprion)
-        layout.addWidget(buttonSaveProject)
-        layout.addWidget(buttonCancel)
+        layout.addWidget(self.buttonSaveProject)
+        layout.addWidget(self.buttonCancel)
         layout.addStretch(1)
         RightGroupBox.setLayout(layout)
         
@@ -160,7 +207,8 @@ class ParametersWindow(QDialog):
             parameter_dict = {
                 "name": self.parameter_name.text(),
                 "unit": self.parameter_unit.text(),
-                "description": self.parameter_descriprion.toPlainText()
+                "description": self.parameter_descriprion.toPlainText(),
+                "type": "a"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
             with open(os.path.curdir + "/parameters/basic/" + self.parameter_filename.text() + ".json", "w") as outfile:
@@ -174,3 +222,8 @@ class ParametersWindow(QDialog):
             self.msg.setStandardButtons(QMessageBox.Ok)
             #self.msg.buttonClicked.connect(self.close)
             self.msg.show()
+
+if __name__ == '__main__':
+    mainApplication = QApplication(sys.argv)
+    mainWindow = ParametersWindow()
+    sys.exit(mainApplication.exec_())
