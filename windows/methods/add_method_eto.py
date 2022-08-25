@@ -101,6 +101,7 @@ class AddETOMethod(QWidget):
         self.parameters_list = []
         for file in get_parameters:
             self.parameters_list.append(Path(file).stem)
+            #abecedno urediti listu
         i = 0
         for item in range(0, len(self.parameters_list)):
             #for parameter in self.parameters_list:
@@ -128,15 +129,15 @@ class AddETOMethod(QWidget):
             label_desc_text = QLabel('Parameter Description:')
             label_desc = QLabel(parameter_data['name'])
             
-            layout.addWidget(label_name_text, 0, 0)
-            layout.addWidget(label_unit_text, 0, 1)
-            layout.addWidget(label_symbol_text, 0, 2)
-            layout.addWidget(label_name, 1, 0)
-            layout.addWidget(label_unit, 1, 1)
-            layout.addWidget(label_symbol, 1, 2)
+            #layout.addWidget(label_name_text, 0, 0)
+            #layout.addWidget(label_unit_text, 0, 1)
+            #layout.addWidget(label_symbol_text, 0, 2)
+            layout.addWidget(label_name, 0, 1)
+            #layout.addWidget(label_unit, 1, 1)
+            #layout.addWidget(label_symbol, 1, 2)
             
-            layout.addWidget(label_desc_text, 2, 0)
-            layout.addWidget(label_desc, 2, 1)
+            #layout.addWidget(label_desc_text, 0, 2)
+            layout.addWidget(label_desc, 0, 2)
             
             card.setLayout(layout)
             
