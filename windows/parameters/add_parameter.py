@@ -4,28 +4,68 @@ from pathlib import Path
 cwd = os.path.curdir
 
 # app modules and windows
-from css import css, var
+#from css import css, var
+
+language_folder = '/appdata/languages/'
+language_file = 'language.json'
+categories_file = 'parameter_types.json'
+projects_folder = '/projects/'
+parameters_folder = '/parameters/basic/'
+complex_parameters_folder = '/parameters/complex/'
+random_images_folder = '/appdata/images/random_image/'
+eto_methods_folder = '/methods/eto/'
+wb_methods_folder = '/methods/wb/'
+other_methods_folder = '/methods/others/'
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit
+from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
 class AddParameter(QWidget):
     clicked = pyqtSignal()
-    def __init__(self, language):
+    def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = language
+        self.language = {
+
+            "language_description": "en",
+
+
+            "//": "Add Parameter Window",
+            "add_parameter_window_title": "Add new parameter",
+            "add_parameter_window_caption": "Parameter information:",
+            "add_parameter_window_filename": "Filename:",
+            "add_parameter_window_filename_exp": "Text to be used as parameter filename.",
+            "add_parameter_window_category": "Parameter category:",
+            "add_parameter_window_category_exp": "Paremeter category...",
+            "add_parameter_window_name": "Parameter name:",
+            "add_parameter_window_name_exp": "Text to be used as parameter short description.",
+            "add_parameter_window_unit": "Parameter unit:",
+            "add_parameter_window_unit_exp": "Unit to be used...",
+            "add_parameter_window_symbol": "Parameter symbol:",
+            "add_parameter_window_symbol_exp": "Text to be used as parameter symbol in forulas.",
+            "add_parameter_window_desc": "Parameter description:",
+            "add_parameter_window_desc_exp": "Text to be used for short explinations.",
+            "add_parameter_window_btn_add": "Save",
+            "add_parameter_window_btn_cancel": "Cancel",
+            "add_parameter_window_save_message": "Parameter name or unit empty...",
+            "add_parameter_window_save_message_caption": "Missing data...",
+            "add_parameter_window_saved_message": "Parameter saved...",
+            "add_parameter_window_saved_message_caption": "Successuful...",
+            "add_parameter_window_filename_message": "Parameter with this filename already exists.",
+            "add_parameter_window_filename_message_caption": "Filename...",
+        }
         self.WindowGUI()
 
     def WindowGUI(self):
         self.setFixedSize(800, 600)
+        #self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['add_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
-        self.grid.addWidget(self.addParameterGroupBox())
+        self.grid.addWidget(self.centralGroupBox())
         self.setLayout(self.grid)
         self.centerUserInterface()
         self.show()
@@ -35,47 +75,129 @@ class AddParameter(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def centralGroupBox(self):
+        groupBox = QGroupBox()
+        grid = QGridLayout()
+        grid.addWidget(self.fileNameGroupBox(), 0, 0, 1, 1)
+        grid.addWidget(self.parameterCategoryGroupBox(), 0, 1, 1, 1)
+        grid.addWidget(self.parameterNameGroupBox(), 1, 0, 1, 1)
+        grid.addWidget(self.parameterSymbolGroupBox(), 1, 1, 1, 1)
+        grid.addWidget(self.parameterUnitGroupBox(), 2, 1, 1, 1)
+        grid.addWidget(self.parameterDescriptionGroupBox(), 2, 0, 2, 1)
+        grid.addWidget(self.buttonGroupBox(), 3, 1, 1, 1)
+        groupBox.setLayout(grid)
+        return groupBox
         
-    def addParameterGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_caption'])
-        self.text_parameter_filename = QLabel(self.language['add_parameter_window_filename'])
-        self.text_parameter_filename1 = QLabel(self.language['add_parameter_window_filename_exp'])
+
+    def fileNameGroupBox(self):
+        groupBox = QGroupBox(self.language['add_parameter_window_filename'])
+        self.text_parameter_filename = QLabel(self.language['add_parameter_window_filename_exp'])
         self.parameter_filename = QLineEdit()
-        self.text_parameter_name = QLabel(self.language['add_parameter_window_name'])
-        self.text_parameter_name1 = QLabel(self.language['add_parameter_window_name_exp'])
-        self.parameter_name = QLineEdit()
-        self.text_parameter_symbol = QLabel(self.language['add_parameter_window_symbol'])
-        self.text_parameter_symbol1 = QLabel(self.language['add_parameter_window_symbol_exp'])
-        self.parameter_symbol = QLineEdit()
-        self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit'])
-        self.text_parameter_unit1 = QLabel(self.language['add_parameter_window_unit_exp'])
-        self.parameter_unit = QLineEdit()
-        self.text_parameter_descriprion = QLabel(self.language['add_parameter_window_desc'])
-        self.text_parameter_descriprion1 = QLabel(self.language['add_parameter_window_desc_exp'])
-        self.parameter_descriprion = QTextEdit()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_filename)
+        layout.addWidget(self.parameter_filename)
+        layout.addStretch(1)
         
-        buttonSaveProject = QPushButton(self.language['add_parameter_window_btn_add'])
-        buttonSaveProject.clicked.connect(self.add_parameter)
+        groupBox.setLayout(layout)
+
+        return groupBox
+    
+    def parameterCategoryGroupBox(self):
+        categoriess_file = 'parameter_types.json'
+        groupBox = QGroupBox(self.language['add_parameter_window_category'])
+        self.text_parameter_category = QLabel(self.language['add_parameter_window_category_exp'])
+        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
+        self.categories_file_data = json.load(categories_file)
+        self.categories_list = []
+        for category in self.categories_file_data:
+            self.categories_list.append(self.categories_file_data[category])
+        self.comboBox = QComboBox()
+        self.comboBox.addItems(self.categories_list)
+        self.comboBox.currentTextChanged.connect(self.on_combo_change)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_category)
+        layout.addWidget(self.comboBox)
+        layout.addStretch(1)
+
+        groupBox.setLayout(layout)
+
+        return groupBox
+
+    def on_combo_change(self, value):
+        print(value)
+        print(list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(value)])  # Prints george
+
+      
+    def parameterNameGroupBox(self):
+        groupBox = QGroupBox(self.language['add_parameter_window_name'])
+        self.text_parameter_name = QLabel(self.language['add_parameter_window_name_exp'])
+        self.parameter_name = QLineEdit()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_name)
+        layout.addWidget(self.parameter_name)
+        layout.addStretch(1)
+        
+        groupBox.setLayout(layout)
+
+        return groupBox
+
+    def parameterSymbolGroupBox(self):
+        groupBox = QGroupBox(self.language['add_parameter_window_symbol'])
+        self.text_parameter_symbol = QLabel(self.language['add_parameter_window_symbol_exp'])
+        self.parameter_symbol = QLineEdit()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_symbol)
+        layout.addWidget(self.parameter_symbol)
+        layout.addStretch(1)
+        
+        groupBox.setLayout(layout)
+
+        return groupBox
+
+    def parameterUnitGroupBox(self):
+        groupBox = QGroupBox(self.language['add_parameter_window_unit'])
+        self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit_exp'])
+        self.parameter_unit = QLineEdit()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_unit)
+        layout.addWidget(self.parameter_unit)
+        layout.addStretch(1)
+        
+        groupBox.setLayout(layout)
+
+        return groupBox
+
+    def parameterDescriptionGroupBox(self):
+        groupBox = QGroupBox(self.language['add_parameter_window_desc'])
+        self.text_parameter_descriprion = QLabel(self.language['add_parameter_window_desc_exp'])
+        self.parameter_descriprion = QTextEdit()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_descriprion)
+        layout.addWidget(self.parameter_descriprion)
+        layout.addStretch(1)
+        
+        groupBox.setLayout(layout)
+
+        return groupBox
+        
+    def buttonGroupBox(self):
+        groupBox = QGroupBox()
+        
+        buttonSaveParameter = QPushButton(self.language['add_parameter_window_btn_add'])
+        buttonSaveParameter.clicked.connect(self.add_parameter)
         buttonCancel = QPushButton(self.language['add_parameter_window_btn_cancel'])
         buttonCancel.clicked.connect(self.close)
         
         layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_filename)
-        layout.addWidget(self.text_parameter_filename1)
-        layout.addWidget(self.parameter_filename)
-        layout.addWidget(self.text_parameter_name)
-        layout.addWidget(self.text_parameter_name1)
-        layout.addWidget(self.parameter_name)
-        layout.addWidget(self.text_parameter_symbol)
-        layout.addWidget(self.text_parameter_symbol1)
-        layout.addWidget(self.parameter_symbol)
-        layout.addWidget(self.text_parameter_unit)
-        layout.addWidget(self.text_parameter_unit1)
-        layout.addWidget(self.parameter_unit)
-        layout.addWidget(self.text_parameter_descriprion)
-        layout.addWidget(self.text_parameter_descriprion1)
-        layout.addWidget(self.parameter_descriprion)
-        layout.addWidget(buttonSaveProject)
+
+        layout.addWidget(buttonSaveParameter)
         layout.addWidget(buttonCancel)
         layout.addStretch(1)
         
@@ -84,7 +206,7 @@ class AddParameter(QWidget):
         return groupBox
     
     def add_parameter(self):
-        get_files = next(os.walk(cwd + var.parameters_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -111,13 +233,14 @@ class AddParameter(QWidget):
             else:
                 parameter_dict = {
                     "name": self.parameter_name.text(),
+                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.comboBox.currentText())],
                     "unit": self.parameter_unit.text(),
                     "symbol": self.parameter_symbol.text(),
                     "description": self.parameter_descriprion.toPlainText(),
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + var.parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
+                with open(cwd + parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -137,3 +260,8 @@ class AddParameter(QWidget):
         self.parameter_unit.clear()
         self.parameter_descriprion.clear()
         self.close()
+
+if __name__ == '__main__':
+    mainApplication = QApplication(sys.argv)
+    mainWindow = AddParameter()
+    sys.exit(mainApplication.exec_())

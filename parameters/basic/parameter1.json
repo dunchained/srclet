@@ -1,0 +1,8 @@
+{
+    "name": "Temperatura",
+    "category": "temperature",
+    "unit": "0C",
+    "symbol": "Tmean",
+    "description": "Neki opis, ne\u0161to.",
+    "type": "a"
+}
