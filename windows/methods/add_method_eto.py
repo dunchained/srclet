@@ -13,16 +13,39 @@ complex_parameters_folder = '/parameters/complex/'
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QCheckBox
-from PyQt5.QtWidgets import QScrollArea, QFormLayout, QBoxLayout
+from PyQt5.QtWidgets import QScrollArea, QFormLayout, QBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
 class AddETOMethod(QWidget):
     clicked = pyqtSignal()
-    def __init__(self, language):
+    def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = language
+        self.language = {
+            "//": "Add ETO methods Window",
+            "add_eto_methods_window_title": "Add new ETO method",
+            "add_eto_methods_window_caption": "Method information:",
+            "add_eto_methods_window_filename": "Filename:",
+            "add_eto_methods_window_filename_exp": "Text to be used as method filename.",
+            "add_eto_methods_window_name": "Method name:",
+            "add_eto_methods_window_name_exp": "Text to be used as method short description.",
+            "add_eto_methods_window_conditions": "Method conditions:",
+            "add_eto_methods_window_conditions_exp": "Conditions to be used...",
+            "add_eto_methods_window_formula": "Method formula:",
+            "add_eto_methods_window_formula_exp": "Formula used to calculate method...",
+            "add_eto_methods_window_desc": "Method description:",
+            "add_eto_methods_window_desc_exp": "Text to be used for short explinations.",
+            "add_eto_methods_window_btn_add": "Save",
+            "add_eto_methods_window_btn_cancel": "Cancel",
+            "add_eto_methods_window_save_message": "Method name or unit empty...",
+            "add_eto_methods_window_save_message_caption": "Missing data...",
+            "add_eto_methods_window_saved_message": "Method saved...",
+            "add_eto_methods_window_saved_message_caption": "Successuful...",
+            "add_eto_methods_window_filename_message": "Method with this filename already exists.",
+            "add_eto_methods_window_filename_message_caption": "Filename...",
+            "":""
+        }
         self.WindowGUI()
 
     def WindowGUI(self):
@@ -47,6 +70,10 @@ class AddETOMethod(QWidget):
         
     def addMethodGroupBoxLeft(self):
         groupBox = QGroupBox(self.language['add_eto_methods_window_caption'])
+        
+        ###
+        self.groupBox_name_and_filename = QGroupBox('Name and filename of the method:')
+        
         self.text_method_filename = QLabel(self.language['add_eto_methods_window_filename'])
         self.text_method_filename1 = QLabel(self.language['add_eto_methods_window_filename_exp'])
         self.method_filename = QLineEdit()
@@ -55,39 +82,87 @@ class AddETOMethod(QWidget):
         self.text_method_name1 = QLabel(self.language['add_eto_methods_window_name_exp'])
         self.method_name = QLineEdit()
         
-        #####
-        self.formLayout = QVBoxLayout()
-        self.parameters_GroupBox = QGroupBox('GroupBox')
-        #self.parameters_GroupBox.setFixedHeight(200)
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.text_method_filename)
+        self.layout.addWidget(self.text_method_filename1)
+        self.layout.addWidget(self.method_filename)
+        self.layout.addWidget(self.text_method_name)
+        self.layout.addWidget(self.text_method_name1)
+        self.layout.addWidget(self.method_name)
+        self.groupBox_name_and_filename.setLayout(self.layout)
+        ###
         
-        parameters = ['Temp', 'Hum', 'Tmin', 'Tmax', 'n', 'Ta', 'kg', 'cm', 'ta', 'Don\'t use', 'Temp', 'Hum', 'Tmin', 'Tmax', 'n', 'Ta', 'kg', 'cm', 'ta', 'Don\'t use', 'Temp', 'Hum', 'Tmin', 'Tmax', 'n', 'Ta', 'kg', 'cm', 'ta', 'Don\'t use', 'Temp', 'Hum', 'Tmin', 'Tmax', 'n', 'Ta', 'kg', 'cm', 'ta', 'Don\'t use']
+        ###
+        self.groupBox_basic_parameters = QGroupBox('Basic parameters to be used by method:')
+        self.scrollLayout = QVBoxLayout()
+        self.parameters_scroll = QWidget()
+        
+        get_parameters = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+        self.parameters_list = []
+        for file in get_parameters:
+            self.parameters_list.append(Path(file).stem)
         i = 0
-        for item in range(0, len(parameters)):
-            #print(item)
-            #print(f'{parameters[item]}')
-            button = QCheckBox(f'{parameters[item]}', self)
-            self.formLayout.addWidget(button)
-        
-        self.parameters_GroupBox.setLayout(self.formLayout)
+        for item in range(0, len(self.parameters_list)):
+            #for parameter in self.parameters_list:
+            print(f'{self.parameters_list[item]}')
+            self.json_path = cwd + parameters_folder + f'{self.parameters_list[item]}' + '.json'
+            print(self.json_path)
+            with open(self.json_path) as json_file:
+                parameter_data = json.load(json_file)
+            
+            card = QGroupBox(f'{self.parameters_list[item]}')
+            card.setCheckable(True)
+            card.setChecked(False)
+            layout = QGridLayout()
+            label = QLabel(parameter_data['name'])
+            
+            layout.addWidget(label, 0, 0)
+            card.setLayout(layout)
+            
+            button = QCheckBox(f'{self.parameters_list[item]}', self)
+            #self.scrollLayout.addWidget(button)
+            self.scrollLayout.addWidget(card)
+        self.parameters_scroll.setLayout(self.scrollLayout)
         
         scroll = QScrollArea()
-        scroll.setWidget(self.parameters_GroupBox)
+        scroll.setWidget(self.parameters_scroll)
         scroll.setWidgetResizable(1)
-                
+
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(scroll)
+        self.groupBox_basic_parameters.setLayout(self.layout)
+        ###
+        
+        ###
+        self.groupBox_complex_parameters = QGroupBox('Complex parameters to be used by method:')
+        self.scrollLayout = QVBoxLayout()
+        self.parameters_scroll = QWidget()
+        
+        get_parameters = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+        self.parameters_list = []
+        for file in get_parameters:
+            self.parameters_list.append(Path(file).stem)
+        i = 0
+        for item in range(0, len(self.parameters_list)):
+            button = QCheckBox(f'{self.parameters_list[item]}', self)
+            self.scrollLayout.addWidget(button)
+        self.parameters_scroll.setLayout(self.scrollLayout)
+        
+        scroll = QScrollArea()
+        scroll.setWidget(self.parameters_scroll)
+        scroll.setWidgetResizable(1)
+
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(scroll)
+        self.groupBox_complex_parameters.setLayout(self.layout)
+        ###
+               
         layout = QVBoxLayout()
-        #layout.addWidget(self.text_method_filename)
-        #layout.addWidget(self.text_method_filename1)
-        #layout.addWidget(self.method_filename)
-        #layout.addWidget(self.text_method_name)
-        #layout.addWidget(self.text_method_name1)
-        #layout.addWidget(self.method_name)
-        #layout.addWidget(self.parameters_GroupBox)
-        layout.addWidget(scroll)
-        #layout.addWidget(self.complex_parameters_GroupBox)
+        layout.addWidget(self.groupBox_name_and_filename)
+        layout.addWidget(self.groupBox_basic_parameters)
+        layout.addWidget(self.groupBox_complex_parameters)
         layout.addStretch(1)
-        
         groupBox.setLayout(layout)
-        
         return groupBox
     
     def addMethodGroupBoxRight(self):
@@ -196,3 +271,8 @@ class AddETOMethod(QWidget):
         self.method_unit.clear()
         self.method_descriprion.clear()
         self.close()
+        
+if __name__ == '__main__':
+    mainApplication = QApplication(sys.argv)
+    mainWindow = AddETOMethod()
+    sys.exit(mainApplication.exec_())
