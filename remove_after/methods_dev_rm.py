@@ -85,6 +85,8 @@ class Methods(QDialog):
                 i += 1
                 if i == len_list: break
         ###
+        
+        
         conditions_Groupbox = QGroupBox('Calculation conditions (; separeated):')
         grid_layout = QGridLayout()
         condition_text_area = QPlainTextEdit()
