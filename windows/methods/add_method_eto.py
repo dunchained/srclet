@@ -96,7 +96,7 @@ class AddETOMethod(QWidget):
         self.groupBox_basic_parameters = QGroupBox('Basic parameters to be used by method:')
         self.scrollLayout = QVBoxLayout()
         self.parameters_scroll = QWidget()
-        
+        self.basic_parameters_list = []
         get_parameters = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         self.parameters_list = []
         for file in get_parameters:
@@ -104,22 +104,43 @@ class AddETOMethod(QWidget):
         i = 0
         for item in range(0, len(self.parameters_list)):
             #for parameter in self.parameters_list:
-            print(f'{self.parameters_list[item]}')
+            #print(f'{self.parameters_list[item]}')
             self.json_path = cwd + parameters_folder + f'{self.parameters_list[item]}' + '.json'
-            print(self.json_path)
+            #print(self.json_path)
             with open(self.json_path) as json_file:
                 parameter_data = json.load(json_file)
             
             card = QGroupBox(f'{self.parameters_list[item]}')
             card.setCheckable(True)
             card.setChecked(False)
+            card.clicked.connect(self.onStateChangeBasicParameters)
             layout = QGridLayout()
-            label = QLabel(parameter_data['name'])
             
-            layout.addWidget(label, 0, 0)
+            label_name_text = QLabel('Parameter name:')
+            label_name = QLabel(parameter_data['name'])
+           
+            label_unit_text = QLabel('Parameter unit:')
+            label_unit = QLabel(parameter_data['unit'])
+            
+            label_symbol_text = QLabel('Parameter symbol:')
+            label_symbol = QLabel(parameter_data['name'])
+            
+            label_desc_text = QLabel('Parameter Description:')
+            label_desc = QLabel(parameter_data['name'])
+            
+            layout.addWidget(label_name_text, 0, 0)
+            layout.addWidget(label_unit_text, 0, 1)
+            layout.addWidget(label_symbol_text, 0, 2)
+            layout.addWidget(label_name, 1, 0)
+            layout.addWidget(label_unit, 1, 1)
+            layout.addWidget(label_symbol, 1, 2)
+            
+            layout.addWidget(label_desc_text, 2, 0)
+            layout.addWidget(label_desc, 2, 1)
+            
             card.setLayout(layout)
             
-            button = QCheckBox(f'{self.parameters_list[item]}', self)
+            #button = QCheckBox(f'{self.parameters_list[item]}', self)
             #self.scrollLayout.addWidget(button)
             self.scrollLayout.addWidget(card)
         self.parameters_scroll.setLayout(self.scrollLayout)
@@ -164,6 +185,17 @@ class AddETOMethod(QWidget):
         layout.addStretch(1)
         groupBox.setLayout(layout)
         return groupBox
+    
+    def onStateChangeBasicParameters(self):
+        change = self.sender().title()
+        #change = change.title()
+        if change not in self.basic_parameters_list:
+            self.basic_parameters_list.append(change)
+        else:
+            if change in self.basic_parameters_list:
+                self.basic_parameters_list.remove(change)
+        
+        print(self.basic_parameters_list)
     
     def addMethodGroupBoxRight(self):
         groupBox = QGroupBox(self.language['add_eto_methods_window_caption'])
