@@ -160,5 +160,15 @@
     "add_complex_parameter_window_filename_message": "Complex arameter with this filename already exists.",
     "add_complex_parameter_window_filename_message_caption": "Filename...",
 
+    "//": "ETO Methods Window",
+    "add_complex_parameter_window_title": "Add new complex parameter",
+    "add_complex_parameter_window_caption": "Parameter information:",
+
+    "//": "Add ETO methods Window",
+    "add_complex_parameter_window_title": "Add new complex parameter",
+    "add_complex_parameter_window_caption": "Parameter information:",
+
+
+
     "":""
 }
