@@ -12,7 +12,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy
 from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
-from PyQt5.QtWidgets import QMessageBox, QMenuBar
+from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea
 # data manipulation modules
 import numpy
 import pandas as pd 
@@ -32,11 +32,14 @@ class TableWidget(QTableWidget):
     def __init__(self, *args, **kwargs):
         super(TableWidget, self).__init__(*args, **kwargs)
         self.verticalHeader().hide()
+        #self.columnWidth(250)
         self.horizontalHeader().hide()
+        #self.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        #self.resetHorizontalScrollMode()
+        #self.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContentsOnFirstShow)
+        #self.horizontalHeader().sizeHintForColumn(200)
         
-        #header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-
-        self.rowAt(2)
+        #self.rowAt(2)
 
     def scrollContentsBy(self, dx, dy):
         super(TableWidget, self).scrollContentsBy(dx, dy)
@@ -68,6 +71,10 @@ class CheckDataTypeWidget(TableWidget):
         for i, row_values in enumerate(self.data):
             for j, value in enumerate(row_values):
                 self.table.setItem(i, j, QTableWidgetItem(str(value)))
+        self.table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContentsOnFirstShow)
+        #self.table.horizontalHeader().setStretchLastSection(True)
+        for col in range(0, self.table.columnCount()):
+            self.table.setColumnWidth(col, 200)
 
     def saveData(self):
         
@@ -152,6 +159,7 @@ class CheckDataTypeWidget(TableWidget):
         for i in range(0, self.table.columnCount()):
             button = QPushButton('Click to enter data type')
             button.columnIndex = i
+            #button.setMinimumWidth(200)
             self.buttons.append(button)
             self.table.setCellWidget(0, i, self.buttons[self.buttons.__len__() - 1])
             self.menu_kat = QMenu()
