@@ -1,6 +1,7 @@
 # python standard modules
 import os, sys, json
 from pathlib import Path
+cwd = os.path.curdir
 
 
 # app modules and windows
@@ -11,10 +12,21 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy
 from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QMenuBar
 # data manipulation modules
 import numpy
 import pandas as pd 
+
+language_folder = '/appdata/languages/'
+language_file = 'language.json'
+categories_file = 'parameter_types.json'
+projects_folder = '/projects/'
+parameters_folder = '/parameters/basic/'
+complex_parameters_folder = '/parameters/complex/'
+random_images_folder = '/appdata/images/random_image/'
+eto_methods_folder = '/methods/eto/'
+wb_methods_folder = '/methods/wb/'
+other_methods_folder = '/methods/others/'
 
 class TableWidget(QTableWidget):
     def __init__(self, *args, **kwargs):
@@ -121,6 +133,14 @@ class CheckDataTypeWidget(TableWidget):
 
     def createDataType(self):
 
+        categoriess_file = 'parameter_types.json'
+        categories_file = open(os.path.join(cwd + language_folder + 'en' + '/' + categoriess_file))
+        self.categories_file_data = json.load(categories_file)
+        self.categories_list = []
+        for category in self.categories_file_data:
+            self.categories_list.append(self.categories_file_data[category])
+        print(self.categories_list)
+
         get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
@@ -129,6 +149,7 @@ class CheckDataTypeWidget(TableWidget):
                 data = json.load(jsonFile)
                 jsonData = data['name']
                 self.file_list.append(jsonData)
+        print(self.file_list)
             
         self.buttons
         for i in range(0, self.table.columnCount()):
@@ -136,13 +157,16 @@ class CheckDataTypeWidget(TableWidget):
             button.columnIndex = i
             self.buttons.append(button)
             self.table.setCellWidget(0, i, self.buttons[self.buttons.__len__() - 1])
-            self.menu = QMenu(self)
-            #self.menu.addMenu('Parametri')
-            for parameter in sorted(self.file_list):
-                self.menu_action = self.menu.addAction(parameter)
-                self.menu_action.triggered.connect(self.buttonClicked)
-            self.buttons[i].setMenu(self.menu)
-            self.menu.columnIndex = i
+            self.menu_kat = QMenu()
+            for kategorija in self.categories_list:
+                self.menu_action = self.menu_kat.addAction(kategorija)
+                #self.menu_param = QMenu()
+                for parameter in self.file_list:
+                    self.menu_action = self.menu_kat.addAction(parameter)
+                    #self.menu_action2.triggered.connect(self.buttonClicked)
+                    #self.menu_kat.addMenu(self.menu_param)
+            self.buttons[i].setMenu(self.menu_kat)
+            self.menu_kat.columnIndex = i
 
     def buttonClicked(self, ):
         
