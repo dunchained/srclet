@@ -77,7 +77,7 @@
 
     "//": "Parameters Window",
     "parameters_window_title": "Parameters",
-    "parameters_window_caption": "List of available parameters:",
+    "parameters_window_caption": "List of available parameters in this category:",
     "parameters_window_btn_add_new": "Add new parameter",
     "parameters_window_btn_delete": "Delete selected parameter",
     "parameters_window_parameter_caption": "Parameters information:",

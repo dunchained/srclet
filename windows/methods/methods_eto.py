@@ -6,7 +6,7 @@ cwd = os.path.curdir
 # app modules and windows
 #from css import css, var
 #from windows.methods.add_method import AddMethod
-from add_method_eto import AddETOMethod
+#from add_method_eto import AddETOMethod
 eto_methods_folder = '/methods/eto/'
 parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
