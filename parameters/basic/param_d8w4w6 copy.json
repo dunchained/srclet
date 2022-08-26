@@ -1,8 +1,8 @@
 {
-    "name": "Temperathgfdsura1",
+    "name": "Temperaturne Razlike",
     "category": "temperature",
-    "unit": "nnn",
-    "symbol": "nnn",
+    "unit": "\u2109",
+    "symbol": "\u00B0C",
     "description": "neki opis",
-    "type": "b"
+    "type": "a"
 }

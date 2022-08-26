@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # python standard modules
 from concurrent.futures import process
 from importlib.resources import path

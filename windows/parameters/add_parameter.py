@@ -95,13 +95,17 @@ class AddParameter(QWidget):
                 'a','s','d','d','f','g','h','j','k','l',
                 'y','x','c','v','b','n','m']
 
-        prvi = random.choice(lista)
-        drugi = str(random.choice(range(0,9)))
-        treci = random.choice(lista)
-        cetvrti = str(random.choice(range(0,9)))
-        peti = random.choice(lista)
-        sesti = str(random.choice(range(0,9)))
-        filename = 'param' + '_' + prvi + drugi + treci +  cetvrti + peti + sesti
+        p = random.choice(lista)
+        d = str(random.choice(range(0,9)))
+        t = random.choice(lista)
+        c = str(random.choice(range(0,9)))
+        p2 = random.choice(lista)
+        s = str(random.choice(range(0,9)))
+        p3 = random.choice(lista)
+        d2 = str(random.choice(range(0,9)))
+
+
+        filename = p + d + t + c + p2 + s + p3 + d2
         
         return filename
         
