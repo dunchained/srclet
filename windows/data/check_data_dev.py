@@ -92,7 +92,7 @@ class CheckDataTypeWidget(TableWidget):
         print(self.project_path + '/data.xlsx')
         rt.to_excel(self.project_path + "/data.xlsx")
 
-        if not self.line_weather_station.text() and not self.line_weather_station_country.text() and not self.line_weather_station_elevation.text() and not self.line_weather_station_latitude.text() and not self.line_weather_station_longitude.text():
+        if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
@@ -139,17 +139,14 @@ class CheckDataTypeWidget(TableWidget):
         self.categories_list = []
         for category in self.categories_file_data:
             self.categories_list.append(self.categories_file_data[category])
-        print(self.categories_list)
 
-        get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+        self.get_files = next(os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
         self.file_list = []
-        for file in get_files:
-          
+        for file in self.get_files:
             with open('parameters/basic/' + Path(file).stem + '.json') as jsonFile:
                 data = json.load(jsonFile)
                 jsonData = data['name']
                 self.file_list.append(jsonData)
-        print(self.file_list)
             
         self.buttons
         for i in range(0, self.table.columnCount()):
@@ -159,12 +156,17 @@ class CheckDataTypeWidget(TableWidget):
             self.table.setCellWidget(0, i, self.buttons[self.buttons.__len__() - 1])
             self.menu_kat = QMenu()
             for kategorija in self.categories_list:
-                self.menu_action = self.menu_kat.addAction(kategorija)
-                #self.menu_param = QMenu()
-                for parameter in self.file_list:
-                    self.menu_action = self.menu_kat.addAction(parameter)
-                    #self.menu_action2.triggered.connect(self.buttonClicked)
-                    #self.menu_kat.addMenu(self.menu_param)
+                self.menu_param = self.menu_kat.addMenu(kategorija)
+                self.category_list = []
+                self.kategorija_code = list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(kategorija)]
+                for file in self.get_files:
+                    self.file_to_load = open(os.path.join(cwd + parameters_folder + file))
+                    self.file_data = json.load(self.file_to_load)
+                    if self.kategorija_code == self.file_data['category']:
+                        self.category_list.append(self.file_data['name'])
+                for parameter in self.category_list:
+                    self.menu_action = self.menu_param.addAction(parameter)
+                    self.menu_action.triggered.connect(self.buttonClicked)
             self.buttons[i].setMenu(self.menu_kat)
             self.menu_kat.columnIndex = i
 
@@ -172,7 +174,7 @@ class CheckDataTypeWidget(TableWidget):
         
         sender = self.sender()
         sender_text = sender.text()
-        self.buttons[sender.parent().columnIndex].setText(sender_text)
+        self.buttons[sender.parent().parent().columnIndex].setText(sender_text)
         return sender
 
     def createOptions(self):
