@@ -1,5 +1,6 @@
 # python standard modules
-import sys, json, os
+from fileinput import filename
+import sys, json, os, random
 from pathlib import Path
 cwd = os.path.curdir
 
@@ -19,7 +20,7 @@ other_methods_folder = '/methods/others/'
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox
+from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
@@ -60,7 +61,7 @@ class AddParameter(QWidget):
         self.WindowGUI()
 
     def WindowGUI(self):
-        self.setFixedSize(800, 600)
+        self.setFixedSize(800, 800)
         #self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['add_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
@@ -79,30 +80,31 @@ class AddParameter(QWidget):
     def centralGroupBox(self):
         groupBox = QGroupBox()
         grid = QGridLayout()
-        grid.addWidget(self.fileNameGroupBox(), 0, 0, 1, 1)
+        grid.addWidget(self.parameterNameGroupBox(), 0, 0, 1, 1)
         grid.addWidget(self.parameterCategoryGroupBox(), 0, 1, 1, 1)
-        grid.addWidget(self.parameterNameGroupBox(), 1, 0, 1, 1)
-        grid.addWidget(self.parameterSymbolGroupBox(), 1, 1, 1, 1)
-        grid.addWidget(self.parameterUnitGroupBox(), 2, 1, 1, 1)
-        grid.addWidget(self.parameterDescriptionGroupBox(), 2, 0, 2, 1)
-        grid.addWidget(self.buttonGroupBox(), 3, 1, 1, 1)
+        grid.addWidget(self.parameterSymbolGroupBox(), 1, 0, 1, 1)
+        grid.addWidget(self.parameterUnitGroupBox(), 1, 1, 1, 1)
+        grid.addWidget(self.parameterDescriptionGroupBox(), 2, 0, 2, 2)
+        grid.addWidget(self.buttonGroupBox(), 4, 0, 1, 2)
         groupBox.setLayout(grid)
         return groupBox
         
 
-    def fileNameGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_filename'])
-        self.text_parameter_filename = QLabel(self.language['add_parameter_window_filename_exp'])
-        self.parameter_filename = QLineEdit()
+    def file_name(self):
+        lista = ['q','w','e','r','t','z','u','i','o','p',
+                'a','s','d','d','f','g','h','j','k','l',
+                'y','x','c','v','b','n','m']
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_filename)
-        layout.addWidget(self.parameter_filename)
-        layout.addStretch(1)
+        prvi = random.choice(lista)
+        drugi = str(random.choice(range(0,9)))
+        treci = random.choice(lista)
+        cetvrti = str(random.choice(range(0,9)))
+        peti = random.choice(lista)
+        sesti = str(random.choice(range(0,9)))
+        filename = 'param' + '_' + prvi + drugi + treci +  cetvrti + peti + sesti
         
-        groupBox.setLayout(layout)
-
-        return groupBox
+        return filename
+        
     
     def parameterCategoryGroupBox(self):
         categoriess_file = 'parameter_types.json'
@@ -115,7 +117,6 @@ class AddParameter(QWidget):
             self.categories_list.append(self.categories_file_data[category])
         self.comboBox = QComboBox()
         self.comboBox.addItems(self.categories_list)
-        self.comboBox.currentTextChanged.connect(self.on_combo_change)
 
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_category)
@@ -126,11 +127,6 @@ class AddParameter(QWidget):
 
         return groupBox
 
-    def on_combo_change(self, value):
-        print(value)
-        print(list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(value)])  # Prints george
-
-      
     def parameterNameGroupBox(self):
         groupBox = QGroupBox(self.language['add_parameter_window_name'])
         self.text_parameter_name = QLabel(self.language['add_parameter_window_name_exp'])
@@ -195,23 +191,23 @@ class AddParameter(QWidget):
         buttonCancel = QPushButton(self.language['add_parameter_window_btn_cancel'])
         buttonCancel.clicked.connect(self.close)
         
-        layout = QVBoxLayout()
+        layout = QHBoxLayout()
 
         layout.addWidget(buttonSaveParameter)
         layout.addWidget(buttonCancel)
-        layout.addStretch(1)
         
         groupBox.setLayout(layout)
         
         return groupBox
     
     def add_parameter(self):
+        self.file_name_to_save = self.file_name()
         get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
         
-        if self.parameter_filename.text() in self.file_list:
+        if self.file_name_to_save in self.file_list:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
@@ -221,7 +217,7 @@ class AddParameter(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            if not self.parameter_symbol.text() or not self.parameter_filename.text() or not self.parameter_unit.text() or not self.parameter_name.text():
+            if not self.parameter_symbol.text() or not self.parameter_unit.text() or not self.parameter_name.text():
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
@@ -240,7 +236,7 @@ class AddParameter(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
+                with open(cwd + parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -254,7 +250,6 @@ class AddParameter(QWidget):
                 self.msg.show()
             
     def message_box_success(self):
-        self.parameter_filename.clear()
         self.parameter_name.clear()
         self.parameter_symbol.clear()
         self.parameter_unit.clear()

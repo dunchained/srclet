@@ -1,8 +1,0 @@
-{
-    "name": "Relative Humidity",
-    "category": "humidity",
-    "unit": "%",
-    "symbol": "Rh",
-    "description": "Neki opis, ne\u0161to.\t",
-    "type": "a"
-}
