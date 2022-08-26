@@ -12,7 +12,7 @@ from add_parameter import AddParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
@@ -137,7 +137,10 @@ class ParametersWindow(QWidget):
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.show()
 
-class ParametersCategoryTabs(QWidget):
+    def close_me(self):
+        self.close()
+
+class ParametersCategoryTabs(QDialog):
     def __init__(self, language):
         super().__init__()
         self.language = language
@@ -301,8 +304,8 @@ class ParametersWidget(QWidget):
         
         return groupBox
     
-    def close_window(self):
-        ParametersWindow.close()
+    def close_window(ParametersWindow):
+        quit()
         
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
