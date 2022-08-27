@@ -13,7 +13,7 @@ from windows.parameters.complex_paramateres import ComplexParametersWindow
 from windows.methods.methods_eto import ETOMethodsWindow
 from windows.methods.methods_wb import WBMethodsWindow
 from windows.methods.methods_other import OtherMethodsWindow
-from widgets.random_widget import RandomWidget
+from widgets.image_widget import ImageWidget
 
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
@@ -52,12 +52,12 @@ class MainWindow(QMainWindow):
 
     def WindowGUI(self):
 
-        self.setMinimumSize(800, 600)
+        self.setMinimumSize(1024, 768)
         self.setWindowIcon(QIcon(css.srclet_icon))
         self.setWindowTitle(self.language['main_window_title'])
         self.fileMenu()
         self.centerUserInterface()
-        self.central_widget = RandomWidget()
+        self.central_widget = ImageWidget()
         self.setCentralWidget(self.central_widget)
         self.show()
 
