@@ -1,9 +1,9 @@
 {
-    "temperature": "Temperature",
-    "humidity": "Humidity",
-    "wind": "Wind",
-    "radiation": "Sunshine / Radiation",
+    "temperature": "Temperatura",
+    "humidity": "Vlažnost",
+    "wind": "Vjetar",
+    "radiation": "Sunce / Radijacija",
     "ET0": "ET0",
-    "rain": "Rain",
-    "other": "Other"
+    "rain": "Kiša",
+    "other": "Sejdić i Finci"
 }
