@@ -27,7 +27,7 @@ class MyProxyStyle(QProxyStyle):
     def pixelMetric(self, QStyle_PixelMetric, option=None, widget=None):
 
         if QStyle_PixelMetric == QStyle.PM_SmallIconSize:
-            return 40
+            return 32
         else:
             return QProxyStyle.pixelMetric(self, QStyle_PixelMetric, option, widget)
 
@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
     def WindowGUI(self):
 
         self.setMinimumSize(800, 600)
-        self.setWindowIcon(QIcon(css.srclet_main_window_icon))
+        self.setWindowIcon(QIcon(css.srclet_icon))
         self.setWindowTitle(self.language['main_window_title'])
         self.fileMenu()
         self.centerUserInterface()
