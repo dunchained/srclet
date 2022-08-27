@@ -1,3 +1,7 @@
+font_size = 12
+
+
+
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
 projects_folder = '/projects/'

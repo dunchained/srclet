@@ -70,13 +70,13 @@ class MainWindow(QMainWindow):
     def fileMenu(self):
         menubar = self.menuBar()
         font = menubar.font()
-        font.setPointSize(14)
+        font.setPointSize(var.font_size)
         menubar.setFont(font)
         
         # File:        
         fileMenu = menubar.addMenu(self.language['menu_file'])
         font = fileMenu.font()
-        font.setPointSize(14)
+        font.setPointSize(var.font_size)
         fileMenu.setFont(font)
 
         # File - Settings:
@@ -87,7 +87,7 @@ class MainWindow(QMainWindow):
         
         fileMenu.addSeparator()
         font = fileMenu.font()
-        font.setPointSize(14)
+        font.setPointSize(var.font_size)
         fileMenu.setFont(font)
 
         # File - Exit:
@@ -99,7 +99,7 @@ class MainWindow(QMainWindow):
         # Project:
         fileMenu = menubar.addMenu(self.language['menu_project'])
         font = fileMenu.font()
-        font.setPointSize(14)
+        font.setPointSize(var.font_size)
         fileMenu.setFont(font)
 
         # Project - New project:
@@ -117,12 +117,15 @@ class MainWindow(QMainWindow):
         # Customize:
         fileMenu = menubar.addMenu(self.language['menu_customize'])
         font = fileMenu.font()
-        font.setPointSize(14)
+        font.setPointSize(var.font_size)
         fileMenu.setFont(font)
 
         # Customize - Parameters:
         parameters_menu = QMenu(self.language['menu_customize_parameters'], self)
         parameters_menu.setIcon(QIcon(css.parameters_icon))
+        font = parameters_menu.font()
+        font.setPointSize(var.font_size)
+        parameters_menu.setFont(font)
         
         parametersAct = QAction(QIcon(css.parameters_basic_icon), self.language['menu_customize_basic_parameters'], self)
         parametersAct.setShortcut('Ctrl+B')
@@ -139,6 +142,9 @@ class MainWindow(QMainWindow):
         # Customize - Methods:
         methods_menu = QMenu(self.language['menu_customize_methods'], self)
         methods_menu.setIcon(QIcon(css.methods_icon))
+        font = methods_menu.font()
+        font.setPointSize(var.font_size)
+        methods_menu.setFont(font)
                 
         etoAct = QAction(QIcon(css.methods_eto_icon), self.language['menu_customize_methods_eto'], self)
         etoAct.triggered.connect(self.etoMethodsWindow)
@@ -160,7 +166,7 @@ class MainWindow(QMainWindow):
         # Help: 
         fileMenu = menubar.addMenu(self.language['menu_help'])
         font = fileMenu.font()
-        font.setPointSize(14)
+        font.setPointSize(var.font_size)
         fileMenu.setFont(font)
 
         # Help - About:
