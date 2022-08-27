@@ -1,7 +1,7 @@
 import os
 cwd = os.path.curdir
 
-from css import css, var
+from variables import css, var
 from windows.project.new_project_2 import NewProjectWindow2
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox

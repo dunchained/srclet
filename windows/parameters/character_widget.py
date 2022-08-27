@@ -51,7 +51,7 @@ class AddETOMethod(QWidget):
     def addMethodGroupBoxLeft(self):
         self.scrollLayout = QGridLayout()
         self.parameters_scroll = QWidget()
-        self.json_path = os.path.join(cwd + '/appdata/characters/special_characters.json')
+        self.json_path = os.path.join(cwd + '/srclet/characters/special_characters.json')
         with open(self.json_path) as json_file:
             characters = json.load(json_file)
         

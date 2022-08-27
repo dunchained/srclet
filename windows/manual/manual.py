@@ -1,7 +1,7 @@
 # python standard modules
 
 # app modules and windows
-from css import css
+from variables import css
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget

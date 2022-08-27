@@ -6,7 +6,7 @@ from pathlib import Path
 cwd = os.path.curdir
 
 # app modules and windows
-from css import css, var
+from variables import css, var
 from windows.parameters.add_parameter import AddParameter
 
 # pyqt5 modules

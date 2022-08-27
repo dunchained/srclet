@@ -4,7 +4,7 @@ from pathlib import Path
 cwd = os.path.curdir
 
 # app modules and windows
-from css import css, var
+from variables import css, var
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit

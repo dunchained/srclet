@@ -2,7 +2,7 @@
 import json
 import os
 # app modules and windows
-from css import css, var
+from variables import css, var
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QGroupBox, QVBoxLayout, QComboBox

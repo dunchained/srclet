@@ -7,13 +7,13 @@ cwd = os.path.curdir
 # app modules and windows
 #from css import css, var
 
-language_folder = '/appdata/languages/'
+language_folder = '/srclet/languages/'
 language_file = 'language.json'
 categories_file = 'parameter_types.json'
 projects_folder = '/projects/'
 parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/appdata/images/random_image/'
+random_images_folder = '/srclet/images/random_image/'
 eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'

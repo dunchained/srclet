@@ -1,7 +1,7 @@
 import sys, json, os
 cwd = os.path.curdir
 
-from css import css, var
+from variables import css, var
 from windows.project.new_project import NewProjectWindow
 from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow

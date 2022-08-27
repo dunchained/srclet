@@ -1,7 +1,7 @@
 import os, json
 cwd = os.path.curdir
 
-from css import css, var
+from variables import css, var
 from windows.data.check_data import CheckDataTypeWidget
 from windows.project.project_opened import ProjectWindow
 

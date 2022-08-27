@@ -1,7 +1,7 @@
 import os, random
 cwd = os.path.curdir
 
-from css import var
+from variables import var
 from pathlib import Path
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget, QLabel
