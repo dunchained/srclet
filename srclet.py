@@ -52,10 +52,16 @@ class MainWindow(QMainWindow):
 
     def fileMenu(self):
         menubar = self.menuBar()
+        font = menubar.font()
+        font.setPointSize(14)
+        menubar.setFont(font)
         
         # File:        
         fileMenu = menubar.addMenu(self.language['menu_file'])
-        
+        font = fileMenu.font()
+        font.setPointSize(14)
+        fileMenu.setFont(font)
+
         # File - Settings:
         settingsAct = QAction(QIcon(css.settings_icon), self.language['menu_file_settings'], self)
         settingsAct.setShortcut('Ctrl+S')
@@ -63,7 +69,10 @@ class MainWindow(QMainWindow):
         fileMenu.addAction(settingsAct) 
         
         fileMenu.addSeparator()
-        
+        font = fileMenu.font()
+        font.setPointSize(14)
+        fileMenu.setFont(font)
+
         # File - Exit:
         exitAct = QAction(QIcon(css.exit_icon), self.language['menu_file_exit'], self)
         exitAct.setShortcut('Ctrl+Q')
@@ -72,7 +81,10 @@ class MainWindow(QMainWindow):
         
         # Project:
         fileMenu = menubar.addMenu(self.language['menu_project'])
-        
+        font = fileMenu.font()
+        font.setPointSize(14)
+        fileMenu.setFont(font)
+
         # Project - New project:
         newProjectAct = QAction(QIcon((css.new_project_icon)), self.language['menu_project_new_project'], self)
         newProjectAct.setShortcut('Ctrl+N')
@@ -87,7 +99,10 @@ class MainWindow(QMainWindow):
         
         # Customize:
         fileMenu = menubar.addMenu(self.language['menu_customize'])
-        
+        font = fileMenu.font()
+        font.setPointSize(14)
+        fileMenu.setFont(font)
+
         # Customize - Parameters:
         parameters_menu = QMenu(self.language['menu_customize_parameters'], self)
         parameters_menu.setIcon(QIcon(css.parameters_icon))
@@ -127,7 +142,10 @@ class MainWindow(QMainWindow):
         
         # Help: 
         fileMenu = menubar.addMenu(self.language['menu_help'])
-        
+        font = fileMenu.font()
+        font.setPointSize(14)
+        fileMenu.setFont(font)
+
         # Help - About:
         aboutAct = QAction(QIcon(css.about_icon), self.language['menu_help_about'], self)
         aboutAct.setShortcut('Ctrl+A')
