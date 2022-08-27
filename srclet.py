@@ -1,3 +1,4 @@
+from lzma import FILTER_ARM
 import sys, json, os
 cwd = os.path.curdir
 
@@ -17,6 +18,22 @@ from widgets.random_widget import RandomWidget
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget, QMenu
+from PyQt5.QtWidgets import QProxyStyle, QStyle
+
+# Create a custom "QProxyStyle" to enlarge the QMenu icons
+#-----------------------------------------------------------
+class MyProxyStyle(QProxyStyle):
+    pass
+    def pixelMetric(self, QStyle_PixelMetric, option=None, widget=None):
+
+        if QStyle_PixelMetric == QStyle.PM_SmallIconSize:
+            return 40
+        else:
+            return QProxyStyle.pixelMetric(self, QStyle_PixelMetric, option, widget)
+
+
+# This is the main window class (with a simple QMenu implemented)
+# ------------------------------------------------------------------
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -197,5 +214,8 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
+    myStyle = MyProxyStyle('Fusion')    # The proxy style should be based on an existing style,
+                                        # like 'Windows', 'Motif', 'Plastique', 'Fusion', ...
+    mainApplication.setStyle(myStyle)
     mainWindow = MainWindow()
     sys.exit(mainApplication.exec_())
