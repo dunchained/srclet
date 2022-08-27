@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         fileMenu = menubar.addMenu(self.language['menu_file'])
         
         # File - Settings:
-        settingsAct = QAction(QIcon(css.menu_manual_icon), self.language['menu_file_settings'], self)
+        settingsAct = QAction(QIcon(css.settings_icon), self.language['menu_file_settings'], self)
         settingsAct.setShortcut('Ctrl+S')
         settingsAct.triggered.connect(self.settingsWindow)
         fileMenu.addAction(settingsAct) 
@@ -65,7 +65,7 @@ class MainWindow(QMainWindow):
         fileMenu.addSeparator()
         
         # File - Exit:
-        exitAct = QAction(QIcon(css.menu_manual_icon), self.language['menu_file_exit'], self)
+        exitAct = QAction(QIcon(css.exit_icon), self.language['menu_file_exit'], self)
         exitAct.setShortcut('Ctrl+Q')
         exitAct.triggered.connect(self.exitSrclet)
         fileMenu.addAction(exitAct)
@@ -74,13 +74,13 @@ class MainWindow(QMainWindow):
         fileMenu = menubar.addMenu(self.language['menu_project'])
         
         # Project - New project:
-        newProjectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_new_project'], self)
+        newProjectAct = QAction(QIcon((css.new_project_icon)), self.language['menu_project_new_project'], self)
         newProjectAct.setShortcut('Ctrl+N')
         newProjectAct.triggered.connect(self.newProjectWindow)
         fileMenu.addAction(newProjectAct)
         
         # Project - Open existing project:
-        openProjectAct = QAction(QIcon((css.menu_project_icon)), self.language['menu_project_open_project'], self)
+        openProjectAct = QAction(QIcon((css.open_project_icon)), self.language['menu_project_open_project'], self)
         openProjectAct.setShortcut('Ctrl+O')
         openProjectAct.triggered.connect(self.openProjectWindow)
         fileMenu.addAction(openProjectAct)
@@ -90,14 +90,14 @@ class MainWindow(QMainWindow):
         
         # Customize - Parameters:
         parameters_menu = QMenu(self.language['menu_customize_parameters'], self)
-        parameters_menu.setIcon(QIcon(css.menu_settings_icon))
+        parameters_menu.setIcon(QIcon(css.parameters_icon))
         
-        parametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_basic_parameters'], self)
+        parametersAct = QAction(QIcon(css.parameters_basic_icon), self.language['menu_customize_basic_parameters'], self)
         parametersAct.setShortcut('Ctrl+B')
         parametersAct.triggered.connect(self.parametersWindow)
         parameters_menu.addAction(parametersAct)
         
-        complexParametersAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_complex_parameters'], self)
+        complexParametersAct = QAction(QIcon(css.parameters_complex_icon), self.language['menu_customize_complex_parameters'], self)
         complexParametersAct.setShortcut('Ctrl+R')
         complexParametersAct.triggered.connect(self.complexParametersWindow)
         parameters_menu.addAction(complexParametersAct)
@@ -106,19 +106,19 @@ class MainWindow(QMainWindow):
         
         # Customize - Methods:
         methods_menu = QMenu(self.language['menu_customize_methods'], self)
-        methods_menu.setIcon(QIcon(css.menu_settings_icon))
+        methods_menu.setIcon(QIcon(css.methods_icon))
                 
-        etoAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods_eto'], self)
+        etoAct = QAction(QIcon(css.methods_eto_icon), self.language['menu_customize_methods_eto'], self)
         etoAct.triggered.connect(self.etoMethodsWindow)
         etoAct.setShortcut('Ctrl+E')
         methods_menu.addAction(etoAct)
 
-        wbAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods_wb'], self)
+        wbAct = QAction(QIcon(css.methods_wb_icon), self.language['menu_customize_methods_wb'], self)
         wbAct.triggered.connect(self.wbMethodsWindow)
         wbAct.setShortcut('Ctrl+W')
         methods_menu.addAction(wbAct)
 
-        otherAct = QAction(QIcon(css.menu_settings_icon), self.language['menu_customize_methods_others'], self)
+        otherAct = QAction(QIcon(css.methods_others_icon), self.language['menu_customize_methods_others'], self)
         otherAct.triggered.connect(self.otherMethodsWindow)
         otherAct.setShortcut('Ctrl+T')
         methods_menu.addAction(otherAct)
@@ -129,13 +129,13 @@ class MainWindow(QMainWindow):
         fileMenu = menubar.addMenu(self.language['menu_help'])
         
         # Help - About:
-        aboutAct = QAction(QIcon(css.menu_about_icon), self.language['menu_help_about'], self)
+        aboutAct = QAction(QIcon(css.about_icon), self.language['menu_help_about'], self)
         aboutAct.setShortcut('Ctrl+A')
         aboutAct.triggered.connect(self.aboutWindow)
         fileMenu.addAction(aboutAct)
         
         # Help - Manual:
-        helpAct = QAction(QIcon(css.menu_manual_icon), self.language['menu_help_manual'], self)
+        helpAct = QAction(QIcon(css.manual_icon), self.language['menu_help_manual'], self)
         helpAct.setShortcut('F1')
         helpAct.triggered.connect(self.manualWindow)
         fileMenu.addAction(helpAct)
