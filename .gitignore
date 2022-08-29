@@ -27866,3 +27866,9 @@ windows/methods/__pycache__/methods_wb.cpython-310.pyc
 .gitignore
 windows/project/__pycache__/project_opened_widget.cpython-310.pyc
 .gitignore
+mortys/__pycache__/__init__.cpython-310.pyc
+mortys/__pycache__/language_morty.cpython-310.pyc
+mortys/__pycache__/messenger_morty.cpython-310.pyc
+mortys/__pycache__/font_morty.cpython-310.pyc
+mortys/__pycache__/icon_morty.cpython-310.pyc
+windows/settings/__pycache__/settings.cpython-310.pyc
