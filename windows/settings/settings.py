@@ -22,7 +22,7 @@ class SettingsWindow(QWidget):
         self.setWindowIcon(QIcon(css.settings_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.list_of_languages(), 0, 0)
-        #self.grid.addWidget(self.font_sizes(), 0, 1)
+        self.grid.addWidget(self.font_sizes(), 0, 1)
         self.setLayout(self.grid)
         self.center_user_interface()
         self.show()
@@ -64,11 +64,7 @@ class SettingsWindow(QWidget):
         groupBox = QGroupBox(self.language['settings_window_language'])
         self.combo_box = QComboBox()
         self.combo_box.addItems(next(os.walk(os.path.curdir + var.language_folder))[1])
-        self.language_settings = open(os.path.join(cwd + var.language_folder + var.language_file))
-        self.language_settings_data = json.load(self.language_settings)
-        self.selected_language = self.language_settings_data['language']
-        self.combo_box.setCurrentText(self.selected_language)
-        self.language_settings.close()
+        self.combo_box.setCurrentText(read_language())
         vbox = QVBoxLayout()
 
         self.buttonSave = QPushButton(self.language['settings_window_language_save'])
