@@ -10,6 +10,15 @@ def read_menu_font_size():
     settings.close()
     return int(settings_data['menu_font_size'])
 
+def update_fonts(menu_font_size):
+    settings = open(cwf)
+    settings_data = json.load(settings)
+    update = {'menu_font_size': menu_font_size}
+    settings_data.update(update)
+    settings.close()
+    with open(cwf, "w") as outfile:
+            json.dump(settings_data, outfile)
+
 #mport os, json
 #cwd = os.path.curdir
 
