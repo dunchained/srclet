@@ -21,7 +21,7 @@ class OpenProjectWindow(QWidget):
     def WindowGUI(self):
         self.setFixedSize(400, 300)
         self.setWindowTitle(self.language['open_project_title'])
-        self.setWindowIcon(QIcon(css.menu_about_icon))
+        self.setWindowIcon(QIcon(css.open_project_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.listOfProjects())
         self.grid.addWidget(self.doSomethingWithProject())

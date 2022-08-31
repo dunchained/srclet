@@ -69,7 +69,6 @@ class MainWindow(QMainWindow):
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
-
         # File - Settings:
         settingsAct = QAction(QIcon(css.settings_icon), self.language['menu_file_settings'], self)
         settingsAct.setShortcut('Ctrl+S')
@@ -224,8 +223,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    myStyle = MyProxyStyle('Plastique')    # The proxy style should be based on an existing style,
-                                        # like 'Windows', 'Motif', 'Plastique', 'Fusion', ...
+    myStyle = MyProxyStyle('Plastique') # The proxy style should be based on an existing style, like 'Windows', 'Motif', 'Plastique', 'Fusion', ...
     mainApplication.setStyle(myStyle)
     mainWindow = MainWindow()
     sys.exit(mainApplication.exec_())

@@ -18,7 +18,7 @@ class ProjectWindow(QMainWindow):
         self.showMaximized()
         self.project_title = self.project_path.split('/')[-1]
         self.setWindowTitle(self.language['project_opened_title'] + self.project_title)
-        self.setWindowIcon(QIcon(css.srclet_main_window_icon))
+        self.setWindowIcon(QIcon(css.open_project_icon))
         self.centerUserInterface()
         self.fileMenu()
         self.central_widget = CalculateWidget(project_path=self.project_path, language=language)
