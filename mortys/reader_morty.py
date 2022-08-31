@@ -44,8 +44,6 @@ def load_json_data_and_check(font_size):
 
     return font_size_text_to_combo
 
-
-
 def read_menu_font_size_current_text():
     return load_json_data_and_check(font_size=read_menu_font_size())
     

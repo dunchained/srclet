@@ -123,10 +123,19 @@ class SettingsWindow(QWidget):
         return self.fontsGroupBox
 
     def save_fonts(self):
-        self.menu_font_size = read_font_size_key(font_size_text=self.menu_font_sizeComboBox.currentText())
-        self.text_font_size = read_font_size_key(font_size_text=self.text_font_sizeComboBox.currentText())
-        self.input_font_size = read_font_size_key(font_size_text=self.input_font_sizeComboBox.currentText())
-        update_fonts(menu_font_size=self.menu_font_size, text_font_size=self.text_font_size, input_font_size=self.input_font_size)
+        update_fonts(
+            menu_font_size=read_font_size_key(font_size_text=self.menu_font_sizeComboBox.currentText()),
+            text_font_size=read_font_size_key(font_size_text=self.text_font_sizeComboBox.currentText()),
+            input_font_size=read_font_size_key(font_size_text=self.input_font_sizeComboBox.currentText())
+            )
+        self.msg = QMessageBox()
+        self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.msg.setIcon(QMessageBox.Information)
+        self.msg.setText('Font sizes have been updated.')
+        self.msg.setWindowTitle('Fonts...')
+        self.msg.setStandardButtons(QMessageBox.Ok)
+        self.msg.buttonClicked.connect(self.msg.close)
+        self.msg.show()
 
     
     def closeLanguage(self):

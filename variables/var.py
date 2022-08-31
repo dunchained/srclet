@@ -3,8 +3,8 @@ settings_window_widith = 800
 settings_window_height = 600
 
 # New Project Window Sizes:
-new_project_window_widith = 315
-new_project_window_height = 175
+new_project_window_widith = 400
+new_project_window_height = 200
 
 
 language_folder = '/srclet/languages/'

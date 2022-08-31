@@ -21,65 +21,26 @@ def read_input_font_size():
     settings.close()
     return int(settings_data['input_text_size'])
 
-def update_fonts(menu_font_size, text_font_size, input_font_size):
-    if menu_font_size == 'large':
-        menu_font_size_to_write = var.font_size_large
-    elif menu_font_size == 'medium':
-        menu_font_size_to_write = var.font_size_medium
-    elif menu_font_size == 'small':
-        menu_font_size_to_write = var.font_size_small
+def condition_check(font_size):
+    if font_size == 'large':
+        font_size_to_write = var.font_size_large
+    elif font_size == 'medium':
+        font_size_to_write = var.font_size_medium
+    elif font_size == 'small':
+        font_size_to_write = var.font_size_small
     else:
-        menu_font_size_to_write = var.font_size_medium
-
-    if text_font_size == 'large':
-        text_font_size_to_write = var.font_size_large
-    elif text_font_size == 'medium':
-        text_font_size_to_write = var.font_size_medium
-    elif text_font_size == 'small':
-        text_font_size_to_write = var.font_size_small
-    else:
-        text_font_size_to_write = var.font_size_medium
-
-    if input_font_size == 'large':
-        input_font_size_to_write = var.font_size_large
-    elif input_font_size == 'medium':
-        input_font_size_to_write = var.font_size_medium
-    elif input_font_size == 'small':
-        input_font_size_to_write = var.font_size_small
-    else:
-        input_font_size_to_write = var.font_size_medium
+        font_size_to_write = var.font_size_medium
+    return font_size_to_write
     
+def update_fonts(menu_font_size, text_font_size, input_font_size):
     settings = open(cwf)
     settings_data = json.load(settings)
     update = {
-        'menu_font_size': menu_font_size_to_write,
-        'text_font_size': text_font_size_to_write,
-        'input_text_size': input_font_size_to_write
+        'menu_font_size': condition_check(menu_font_size),
+        'text_font_size': condition_check(text_font_size),
+        'input_text_size': condition_check(input_font_size)
         }
     settings_data.update(update)
     settings.close()
     with open(cwf, "w") as outfile:
             json.dump(settings_data, outfile)
-
-#mport os, json
-#cwd = os.path.curdir
-
-#settings_folder = '/srclet/settings/'
-#settings_file = 'settings.json'
-
-#def read_fonts():
-    #settings = open(os.path.join(cwd + settings_folder + settings_file))
-    #settings_data = json.load(settings)
-    #settings.close()
-    #return int(settings_data['menu_font_size'])
-
-#def update_fonts(menu_font_size):
-    #settings = open(os.path.join(cwd + settings_folder + settings_file))
-    #settings_data = json.load(settings)
-    #update = {'menu_font_size': menu_font_size}
-    #settings_data.update(update)
-    #settings.close()
-    #with open(os.path.curdir + settings_folder + settings_file, "w") as outfile:
-    #        json.dump(settings_data, outfile)
-
-#update_fonts(14)
