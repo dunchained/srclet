@@ -22,12 +22,39 @@ def read_input_font_size():
     return int(settings_data['input_text_size'])
 
 def update_fonts(menu_font_size, text_font_size, input_font_size):
+    if menu_font_size == 'large':
+        menu_font_size_to_write = var.font_size_large
+    elif menu_font_size == 'medium':
+        menu_font_size_to_write = var.font_size_medium
+    elif menu_font_size == 'small':
+        menu_font_size_to_write = var.font_size_small
+    else:
+        menu_font_size_to_write = var.font_size_medium
+
+    if text_font_size == 'large':
+        text_font_size_to_write = var.font_size_large
+    elif text_font_size == 'medium':
+        text_font_size_to_write = var.font_size_medium
+    elif text_font_size == 'small':
+        text_font_size_to_write = var.font_size_small
+    else:
+        text_font_size_to_write = var.font_size_medium
+
+    if input_font_size == 'large':
+        input_font_size_to_write = var.font_size_large
+    elif input_font_size == 'medium':
+        input_font_size_to_write = var.font_size_medium
+    elif input_font_size == 'small':
+        input_font_size_to_write = var.font_size_small
+    else:
+        input_font_size_to_write = var.font_size_medium
+    
     settings = open(cwf)
     settings_data = json.load(settings)
     update = {
-        'menu_font_size': menu_font_size,
-        'text_font_size': text_font_size,
-        'input_text_size': input_font_size
+        'menu_font_size': menu_font_size_to_write,
+        'text_font_size': text_font_size_to_write,
+        'input_text_size': input_font_size_to_write
         }
     settings_data.update(update)
     settings.close()
