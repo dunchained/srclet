@@ -4,6 +4,13 @@ language_file = 'language.json'
 settings_folder = '/srclet/settings/'
 settings_file = 'settings.json'
 
+font_sizes_file = 'font_sizes.json'
+
+font_size_large = 16
+font_size_medium = 14
+font_size_small = 12
+
+
 
 projects_folder = '/projects/'
 parameters_folder = '/parameters/basic/'
