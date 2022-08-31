@@ -19,7 +19,7 @@ class SettingsWindow(QWidget):
         self.window_gui()
 
     def window_gui(self):
-        self.setFixedSize(var.settings_window_height, var.settings_window_height)
+        self.setFixedSize(var.settings_window_widith, var.settings_window_height)
         self.setWindowTitle(self.language['settings_window_title'])
         self.setWindowIcon(QIcon(css.settings_icon))
         self.grid = QGridLayout()

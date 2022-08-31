@@ -15,7 +15,7 @@ def read_text_font_size():
     settings.close()
     return int(settings_data['text_font_size'])
 
-def read_input_text_size():
+def read_input_font_size():
     settings = open(cwf)
     settings_data = json.load(settings)
     settings.close()

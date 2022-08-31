@@ -2,6 +2,7 @@ import os
 cwd = os.path.curdir
 
 from variables import css, var
+from mortys.font_morty import read_text_font_size, read_input_font_size
 from windows.project.new_project_2 import NewProjectWindow2
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox
@@ -18,7 +19,7 @@ class NewProjectWindow(QWidget):
         self.WindowGUI()
 
     def WindowGUI(self):
-        self.setFixedSize(300, 150)
+        self.setFixedSize(var.new_project_window_widith, var.new_project_window_height)
         self.setWindowTitle(self.language['new_project_title'])
         self.setWindowIcon(QIcon(css.new_project_icon))
         self.grid = QGridLayout()
@@ -35,8 +36,14 @@ class NewProjectWindow(QWidget):
 
     def createNewProject(self):
         groupBox = QGroupBox()
+        font_text = groupBox.font()
+        font_text.setPointSize(read_text_font_size())
+        groupBox.setFont(font_text)
         self.text_save_project = QLabel(self.language['new_project_caption'])
         self.project_name = QLineEdit()
+        font_input = self.project_name.font()
+        font_input.setPointSize(read_input_font_size())
+        self.project_name.setFont(font_input)
         buttonSaveProject = QPushButton(self.language['new_project_btn_create'])
         buttonSaveProject.clicked.connect(self.createProject)
         buttonCancel = QPushButton(self.language['new_project_btn_cancel'])
