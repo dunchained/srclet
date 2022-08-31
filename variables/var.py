@@ -1,3 +1,8 @@
+# Settings Window Sizes:
+settings_window_height = 800
+settings_window_widith = 600
+
+
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
 

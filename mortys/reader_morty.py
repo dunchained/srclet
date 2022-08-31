@@ -3,7 +3,7 @@ from variables import var
 from mortys.language_morty import read_language
 cwd = os.path.curdir
 
-def read_font_sizes():
+def read_font_size_text():
     selected_language = read_language()
     font_sizes_file = cwd + var.language_folder + selected_language + '/' + var.font_sizes_file
     font_sizes = open(font_sizes_file)

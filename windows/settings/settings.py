@@ -3,7 +3,8 @@ import json, os
 cwd = os.path.curdir
 from variables import css, var
 from mortys.language_morty import read_language, update_language
-from mortys.reader_morty import read_font_sizes
+from mortys.reader_morty import read_font_size_text
+from mortys.font_morty import read_text_font_size
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QGroupBox, QVBoxLayout, QComboBox
 from PyQt5.QtWidgets import QGridLayout, QPushButton, QMessageBox, QHBoxLayout
 from PyQt5.QtGui import QIcon
@@ -18,7 +19,7 @@ class SettingsWindow(QWidget):
         self.window_gui()
 
     def window_gui(self):
-        self.setFixedSize(400, 300)
+        self.setFixedSize(var.settings_window_height, var.settings_window_height)
         self.setWindowTitle(self.language['settings_window_title'])
         self.setWindowIcon(QIcon(css.settings_icon))
         self.grid = QGridLayout()
@@ -39,7 +40,7 @@ class SettingsWindow(QWidget):
         self.combo_box = QComboBox()
         self.combo_box.addItems(next(os.walk(os.path.curdir + var.language_folder))[1])
         self.combo_box.setCurrentText(read_language())
-        vbox = QVBoxLayout()
+        vbox = QHBoxLayout()
 
         self.buttonSave = QPushButton(self.language['settings_window_language_save'])
         self.buttonSave.clicked.connect(self.save_language)
@@ -62,10 +63,13 @@ class SettingsWindow(QWidget):
         #self.hide()
 
     def font_sizes(self):
-        self.font_sizes_list = read_font_sizes()
-        
+        self.font_sizes_list = read_font_size_text()
         ##########
-        self.menu_font_sizeGroupBox = QGroupBox()
+        self.menu_font_sizeGroupBox = QGroupBox('Menu font size:')
+        self.font = self.menu_font_sizeGroupBox.font()
+        self.font.setPointSize(read_text_font_size())
+        self.menu_font_sizeGroupBox.setFont(self.font)
+
         self.menu_font_sizeGroupBoxLayout = QVBoxLayout()
         self.menu_font_sizeComboBox = QComboBox()
         self.menu_font_sizeComboBox.addItems(self.font_sizes_list)
@@ -74,7 +78,8 @@ class SettingsWindow(QWidget):
         self.menu_font_sizeGroupBox.setLayout(self.menu_font_sizeGroupBoxLayout)
         
         ##########
-        self.text_font_sizeGroupBox = QGroupBox()
+        self.text_font_sizeGroupBox = QGroupBox('Text font size:')
+        self.text_font_sizeGroupBox.setFont(self.font)
         self.text_font_sizeGroupBoxLayout = QVBoxLayout()
         self.text_font_sizeComboBox = QComboBox()
         self.text_font_sizeComboBox.addItems(self.font_sizes_list)
@@ -83,7 +88,8 @@ class SettingsWindow(QWidget):
         self.text_font_sizeGroupBox.setLayout(self.text_font_sizeGroupBoxLayout)
         
         ##########
-        self.input_font_sizeGroupBox = QGroupBox()
+        self.input_font_sizeGroupBox = QGroupBox('Inputs text size:')
+        self.input_font_sizeGroupBox.setFont(self.font)
         self.input_font_sizeGroupBoxLayout = QVBoxLayout()
         self.input_font_sizeComboBox = QComboBox()
         self.input_font_sizeComboBox.addItems(self.font_sizes_list)
@@ -93,12 +99,17 @@ class SettingsWindow(QWidget):
         
         ##########
         self.fontsGroupBox = QGroupBox(self.language['settings_window_language'])
+        self.fontsGroupBox.setFont(self.font)
         
         self.fontsGroupBoxLayout = QHBoxLayout()
+        
+        self.buttonSave = QPushButton(self.language['settings_window_language_save'])
+        self.buttonSave.clicked.connect(self.save_language)
 
         self.fontsGroupBoxLayout.addWidget(self.menu_font_sizeGroupBox)
         self.fontsGroupBoxLayout.addWidget(self.text_font_sizeGroupBox)
         self.fontsGroupBoxLayout.addWidget(self.input_font_sizeGroupBox)
+        self.fontsGroupBoxLayout.addWidget(self.buttonSave)
         
         
         self.fontsGroupBox.setLayout(self.fontsGroupBoxLayout)
