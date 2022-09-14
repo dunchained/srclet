@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QProgressBar
 from PyQt5.QtCore import Qt
 
 #from plambas.the_constructor import SrcletEngine
-
+#
 class CalculateWidget(QWidget):
     
     def __init__(self, project_path, language):

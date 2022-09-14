@@ -2,7 +2,7 @@ import os, json
 from variables import var
 cwd = os.path.curdir
 cwf = os.path.join(cwd + var.settings_folder + var.settings_file)
-
+#
 def read_menu_font_size():
     settings = open(cwf)
     settings_data = json.load(settings)

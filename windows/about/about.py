@@ -2,7 +2,7 @@
 
 # app modules and windows
 from variables import css
-
+#
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
 from PyQt5.QtGui import QIcon

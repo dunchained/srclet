@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox,
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 
-
+#
 class NewProjectWindow2(QWidget):
     
     def __init__(self, name_of_project, language):

@@ -9,7 +9,7 @@ cwd = os.path.curdir
 #from css import css, var
 #from windows.parameters.add_parameter import AddParameter
 from add_parameter import AddParameter
-
+#
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget

@@ -6,7 +6,7 @@ cwd = os.path.curdir
 # app modules and windows
 from variables import css, var
 from windows.parameters.add_complex_parameter import AddComplexParameter
-
+#
 # pyqt5 modules
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget

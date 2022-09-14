@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import QMessageBox
 # data manipulation modules
 import numpy
 import pandas as pd 
-
+#
 class TableWidget(QTableWidget):
     def __init__(self, *args, **kwargs):
         super(TableWidget, self).__init__(*args, **kwargs)

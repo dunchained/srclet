@@ -4,7 +4,7 @@ from importlib.resources import path
 import sys, os, json
 from pathlib import Path
 cwd = os.path.curdir
-
+#
 # app modules and windows
 from variables import css, var
 from windows.parameters.add_parameter import AddParameter

@@ -6,7 +6,7 @@ from mortys.language_morty import read_language, update_language
 from mortys.reader_morty import read_font_size_text, read_font_size_key, read_menu_font_size_current_text
 from mortys.reader_morty import read_text_font_size_current_text, read_input_font_size_current_text
 from mortys.font_morty import read_text_font_size, update_fonts
-
+#
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QGroupBox, QVBoxLayout, QComboBox
 from PyQt5.QtWidgets import QGridLayout, QPushButton, QMessageBox, QHBoxLayout
 from PyQt5.QtGui import QIcon

@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox,
 from PyQt5.QtWidgets import QMessageBox, QWidget, QTextEdit
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
-
+#
 class AddComplexParameter(QWidget):
     clicked = pyqtSignal()
     def __init__(self, language):

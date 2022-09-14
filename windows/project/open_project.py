@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel
 from PyQt5.QtWidgets import QMessageBox, QComboBox, QDesktopWidget
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QLineF, Qt
-
+#
 class OpenProjectWindow(QWidget):
     def __init__(self, language):
         super().__init__()

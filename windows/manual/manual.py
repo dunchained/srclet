@@ -7,7 +7,7 @@ from variables import css
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
-
+#
 class ManualWindow(QWidget):
     def __init__(self, language):
         super().__init__()

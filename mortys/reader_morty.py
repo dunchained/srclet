@@ -6,7 +6,7 @@ from mortys.language_morty import read_language
 from mortys.font_morty import read_menu_font_size, read_text_font_size, read_input_font_size
 cwd = os.path.curdir
 cwf = os.path.join(cwd + var.settings_folder + var.settings_file)
-
+#
 def read_font_size_text():
     selected_language = read_language()
     font_sizes_file = cwd + var.language_folder + selected_language + '/' + var.font_sizes_file

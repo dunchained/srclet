@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit,
 from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea
 import numpy
 import pandas as pd 
-
+#
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
 categories_file = 'parameter_types.json'

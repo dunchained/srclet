@@ -6,7 +6,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget
 from PyQt5.QtWidgets import QPushButton, QGridLayout, QListWidget, QGroupBox
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QLineEdit
-
+#
 from windows.project.project_opened_widget import CalculateWidget
 
 class ProjectWindow(QMainWindow):
