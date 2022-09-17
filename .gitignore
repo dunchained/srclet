@@ -129,3 +129,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 widgets/__pycache__/__init__.cpython-310.pyc
+mortys/__pycache__/__init__.cpython-39.pyc
