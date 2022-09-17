@@ -1,6 +1,4 @@
 import os, json
-from tkinter import font
-from xxlimited import foo
 from variables import var
 from mortys.language_morty import read_language
 from mortys.font_morty import read_menu_font_size, read_text_font_size, read_input_font_size
