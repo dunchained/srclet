@@ -3,6 +3,7 @@
 *.py[cod]
 *$py.class
 **/__pycache__/*
+__pycache__/
 
 # C extensions
 *.so
@@ -130,3 +131,4 @@ dmypy.json
 .pyre/
 widgets/__pycache__/__init__.cpython-310.pyc
 mortys/__pycache__/__init__.cpython-39.pyc
+windows/__pycache__/__init__.cpython-39.pyc
