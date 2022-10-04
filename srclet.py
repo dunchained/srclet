@@ -1,6 +1,6 @@
 import sys, json, os
 cwd = os.path.curdir
-#fedora style
+#fedora style odavde
 
 from variables import css, var
 from windows.project.new_project import NewProjectWindow
