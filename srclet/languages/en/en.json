@@ -1,20 +1,22 @@
 {   
     "Language_name": "English",
-    
     "language_description": "en",
     
-    "//": "Main window:",
+    "//": "srclet.py:",
     "main_window_title": "Soil water circuLation and evapotranspiration model",
+    
     "menu_file": "&File",
     "menu_file_settings": "Settings",
     "menu_file_settings_tooltip": "Tooltip Settings",
     "menu_file_exit": "Exit",
     "menu_file_exit_tooltip": "Tooltip Exit",
+    
     "menu_project": "&Project",
     "menu_project_new_project": "New project",
     "menu_project_new_project_tooltip": "Tooltip New project",
     "menu_project_open_project": "Open existing project",
     "menu_project_open_project_tooltip": "Tooltip Open existing project",
+    
     "menu_customize": "&Customize",
     "menu_customize_parameters": "&Parameters",
     "menu_customize_basic_parameters": "Basic arameters",
@@ -28,6 +30,7 @@
     "menu_customize_methods_wb_tooltip": "Tooltip Water balance methods",
     "menu_customize_methods_others": "Other methods",
     "menu_customize_methods_others_tooltip": "Tooltip Other methods",
+    
     "menu_help": "&Help",
     "menu_help_about": "About",
     "menu_help_about_tooltip": "Tooltip About",
@@ -35,14 +38,19 @@
     "menu_help_manual_tooltip": "Tooltip Manual",
 
 
-    "//": "Settings Window",
+    "//": "settings.py",
     "settings_window_title": "Settings",
-    "settings_window_language": "List of available languages:",
-    "settings_window_language_save": "Save",
-    "settings_window_message": "Language has been succssufully changed.",
-    "settings_window_message_caption": "Language...",
+    "settings_window_menu_font": "Menu font size:",
+    "settings_window_text_font": "Text font size:",
+    "settings_window_input_font": "Input font size:",    
+    "settings_window_language": "Select language:",
+    "settings_window_btn_save": "Save",
+    "settings_window_btn_close": "Close",
+    "settings_window_groupbox": "Available settings:",
+    "settings_window_message": "Settings have been succssufully changed. Changes will take effect next time you start srclet.",
+    "settings_window_message_caption": "Settings...",
 
-    "//": "New project Window",
+    "//": "new_project.py",
     "new_project_title": "Create new project...",
     "new_project_caption": "Enter new project name:",
     "new_project_btn_create": "Create project",
@@ -52,17 +60,27 @@
     "new_project_message_empty_title": "Project name...",
     "new_project_message_empty": "Project name can not be empty...",
 
-    "//": "New project Window 2",
-    "new_project_2_title": "Create new project: ",
+    "//": "new_project_2.py",
+    "new_project_2_title": "Create new project:",
     "new_project_2_data_caption": "Project data file:",
     "new_project_2_btn_browse": "Browse",
     "new_project_2_label_browse": "No file selected.",
     "new_project_2_btn_loadandcheck": "Load file and check data",
     "new_project_2_label_loadandcheck": "File not checked.",
+    "new_project_2_file_dialog": "Open data file...",
+    "new_project_2_load_message": "Please select data file...",
+    "new_project_2_load_message_caption": "Data file...",
+
     "new_project_2_description_caption": "Short project description:",
+    "new_project_2_description_initial": "Provide some short description of the project.",
+    
     "new_project_2_btn_save_and_exit": "Save project and exit",
+    "new_project_2_btn_save_and_exit_tooltip": "Save project and exit",
     "new_project_2_btn_save_and_open": "Save and open project",
+    "new_project_2_btn_save_and_open_tooltip": "Save and open project",
     "new_project_2_btn_cancel": "Cancel",
+    "new_project_2_btn_cancel_tooltip": "Cancel",
+
     "new_project_2_save_and_exit_message_caption": "Success!",
     "new_project_2_save_and_exit_message": "Project saved...",
     "new_project_2_save_and_open_message_caption": "Success!",

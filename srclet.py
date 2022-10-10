@@ -1,6 +1,5 @@
 import sys, json, os
 cwd = os.path.curdir
-#fedora style odavde
 
 from variables import css, var
 from windows.project.new_project import NewProjectWindow
@@ -38,20 +37,19 @@ class MainWindow(QMainWindow):
         self.setWindowState(QtCore.Qt.WindowMaximized)
         #self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.CustomizeWindowHint)
         self.language = language()
-        self.WindowGUI()
+        self.window_gui()
 
-    def WindowGUI(self):
-
-        self.setMinimumSize(1024, 768)
+    def window_gui(self):
+        self.setMinimumSize(var.srclet_window_min_widith, var.srclet_window_min_height)
         self.setWindowIcon(QIcon(css.srclet_icon))
         self.setWindowTitle(self.language['main_window_title'])
         self.fileMenu()
-        self.centerUserInterface()
+        self.center_gui()
         self.central_widget = ImageWidget()
         self.setCentralWidget(self.central_widget)
         self.show()
 
-    def centerUserInterface(self):
+    def center_gui(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
@@ -74,7 +72,7 @@ class MainWindow(QMainWindow):
         settingsAct = QAction(QIcon(css.settings_icon), self.language['menu_file_settings'], self)
         settingsAct.setShortcut('Ctrl+S')
         settingsAct.setToolTip(self.language['menu_file_settings_tooltip'])
-        settingsAct.triggered.connect(self.settingsWindow)
+        settingsAct.triggered.connect(self.settings_window)
         fileMenu.addAction(settingsAct) 
         
         fileMenu.addSeparator()
@@ -83,7 +81,7 @@ class MainWindow(QMainWindow):
         exitAct = QAction(QIcon(css.exit_icon), self.language['menu_file_exit'], self)
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setToolTip(self.language['menu_file_exit_tooltip'])
-        exitAct.triggered.connect(self.exitSrclet)
+        exitAct.triggered.connect(self.exit_srclet)
         fileMenu.addAction(exitAct)
         
         # Project:
@@ -97,14 +95,14 @@ class MainWindow(QMainWindow):
         newProjectAct = QAction(QIcon((css.new_project_icon)), self.language['menu_project_new_project'], self)
         newProjectAct.setShortcut('Ctrl+N')
         newProjectAct.setToolTip(self.language['menu_project_new_project_tooltip'])
-        newProjectAct.triggered.connect(self.newProjectWindow)
+        newProjectAct.triggered.connect(self.new_project_window)
         fileMenu.addAction(newProjectAct)
         
         # Project - Open existing project:
         openProjectAct = QAction(QIcon((css.open_project_icon)), self.language['menu_project_open_project'], self)
         openProjectAct.setShortcut('Ctrl+O')
         openProjectAct.setToolTip(self.language['menu_project_open_project_tooltip'])
-        openProjectAct.triggered.connect(self.openProjectWindow)
+        openProjectAct.triggered.connect(self.open_project_window)
         fileMenu.addAction(openProjectAct)
         
         # Customize:
@@ -125,13 +123,13 @@ class MainWindow(QMainWindow):
         parametersAct = QAction(QIcon(css.parameters_basic_icon), self.language['menu_customize_basic_parameters'], self)
         parametersAct.setShortcut('Ctrl+B')
         parametersAct.setToolTip(self.language['menu_customize_basic_parameters_tooltip'])
-        parametersAct.triggered.connect(self.parametersWindow)
+        parametersAct.triggered.connect(self.basic_parameters_window)
         parameters_menu.addAction(parametersAct)
         
         complexParametersAct = QAction(QIcon(css.parameters_complex_icon), self.language['menu_customize_complex_parameters'], self)
         complexParametersAct.setShortcut('Ctrl+R')
         complexParametersAct.setToolTip(self.language['menu_customize_complex_parameters_tooltip'])
-        complexParametersAct.triggered.connect(self.complexParametersWindow)
+        complexParametersAct.triggered.connect(self.complex_parameters_window)
         parameters_menu.addAction(complexParametersAct)
 
         fileMenu.addMenu(parameters_menu)
@@ -145,19 +143,19 @@ class MainWindow(QMainWindow):
         methods_menu.setToolTipsVisible(True)
                 
         etoAct = QAction(QIcon(css.methods_eto_icon), self.language['menu_customize_methods_eto'], self)
-        etoAct.triggered.connect(self.etoMethodsWindow)
+        etoAct.triggered.connect(self.eto_methods_window)
         etoAct.setShortcut('Ctrl+E')
         etoAct.setToolTip(self.language['menu_customize_methods_eto_tooltip'])
         methods_menu.addAction(etoAct)
 
         wbAct = QAction(QIcon(css.methods_wb_icon), self.language['menu_customize_methods_wb'], self)
-        wbAct.triggered.connect(self.wbMethodsWindow)
+        wbAct.triggered.connect(self.wb_methods_window)
         wbAct.setShortcut('Ctrl+W')
         wbAct.setToolTip(self.language['menu_customize_methods_wb_tooltip'])
         methods_menu.addAction(wbAct)
 
         otherAct = QAction(QIcon(css.methods_others_icon), self.language['menu_customize_methods_others'], self)
-        otherAct.triggered.connect(self.otherMethodsWindow)
+        otherAct.triggered.connect(self.other_methods_window)
         otherAct.setShortcut('Ctrl+T')
         otherAct.setToolTip(self.language['menu_customize_methods_others_tooltip'])
         methods_menu.addAction(otherAct)
@@ -175,56 +173,58 @@ class MainWindow(QMainWindow):
         aboutAct = QAction(QIcon(css.about_icon), self.language['menu_help_about'], self)
         aboutAct.setShortcut('Ctrl+A')
         aboutAct.setToolTip(self.language['menu_help_about_tooltip'])
-        aboutAct.triggered.connect(self.aboutWindow)
+        aboutAct.triggered.connect(self.about_window)
         fileMenu.addAction(aboutAct)
         
         # Help - Manual:
         helpAct = QAction(QIcon(css.manual_icon), self.language['menu_help_manual'], self)
         helpAct.setShortcut('F1')
         helpAct.setToolTip(self.language['menu_help_manual_tooltip'])
-        helpAct.triggered.connect(self.manualWindow)
+        helpAct.triggered.connect(self.manual_window)
         fileMenu.addAction(helpAct)
 
     # File:
-    def settingsWindow(self):
+    def settings_window(self):
         self.window = SettingsWindow(self.language)   
 
-    def exitSrclet(self):
+    def exit_srclet(self):
         self.close()
         
     # Project:
-    def newProjectWindow(self):
+    def new_project_window(self):
         self.window = NewProjectWindow(self.language)
 
-    def openProjectWindow(self):
+    def open_project_window(self):
         self.window = OpenProjectWindow(self.language)
         
     # Customize:
-    def parametersWindow(self):
+    def basic_parameters_window(self):
         self.window = ParametersWindow(self.language)
         
-    def complexParametersWindow(self):
+    def complex_parameters_window(self):
         self.window = ComplexParametersWindow(self.language)
         
-    def etoMethodsWindow(self):
+    def eto_methods_window(self):
         self.window = ETOMethodsWindow(self.language)
 
-    def wbMethodsWindow(self):
+    def wb_methods_window(self):
         self.window = WBMethodsWindow(self.language)
 
-    def otherMethodsWindow(self):
+    def other_methods_window(self):
         self.window = OtherMethodsWindow(self.language)
 
     # Help:
-    def aboutWindow(self):
+    def about_window(self):
         self.window = AboutWindow(self.language)
 
-    def manualWindow(self):
+    def manual_window(self):
         self.window = ManualWindow(self.language)  
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    myStyle = MyProxyStyle('Plastique') # The proxy style should be based on an existing style, like 'Windows', 'Motif', 'Plastique', 'Fusion', ...
+    myStyle = MyProxyStyle('Plastique') 
+    # The proxy style should be based on an existing style, like 'Windows', 
+    # 'Motif', 'Plastique', 'Fusion', ...
     mainApplication.setStyle(myStyle)
     mainWindow = MainWindow()
     sys.exit(mainApplication.exec_())

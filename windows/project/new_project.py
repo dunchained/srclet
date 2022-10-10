@@ -11,53 +11,57 @@ from PyQt5.QtCore import Qt
 #
 
 class NewProjectWindow(QWidget):
-    
     def __init__(self, language):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
-        self.WindowGUI()
+        self.window_gui()
 
-    def WindowGUI(self):
+    def window_gui(self):
         self.setFixedSize(var.new_project_window_widith, var.new_project_window_height)
         self.setWindowTitle(self.language['new_project_title'])
         self.setWindowIcon(QIcon(css.new_project_icon))
         self.grid = QGridLayout()
-        self.grid.addWidget(self.createNewProject())
+        self.grid.addWidget(self.create_new_project())
         self.setLayout(self.grid)
-        self.centerUserInterface()
+        self.center_gui()
         self.show()
         
-    def centerUserInterface(self):
+    def center_gui(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def createNewProject(self):
-        groupBox = QGroupBox()
-        font_text = groupBox.font()
-        font_text.setPointSize(read_text_font_size())
-        groupBox.setFont(font_text)
+    def create_new_project(self):
+        self.groupBox = QGroupBox()
+        self.font_text = self.groupBox.font()
+        self.font_text.setPointSize(read_text_font_size())
+        self.groupBox.setFont(self.font_text)
+        
         self.text_save_project = QLabel(self.language['new_project_caption'])
         self.project_name = QLineEdit()
-        font_input = self.project_name.font()
-        font_input.setPointSize(read_input_font_size())
-        self.project_name.setFont(font_input)
-        buttonSaveProject = QPushButton(self.language['new_project_btn_create'])
-        buttonSaveProject.clicked.connect(self.createProject)
-        buttonCancel = QPushButton(self.language['new_project_btn_cancel'])
-        buttonCancel.clicked.connect(self.close)
-        vbox = QVBoxLayout()
-        vbox.addWidget(self.text_save_project)
-        vbox.addWidget(self.project_name)
-        vbox.addWidget(buttonSaveProject)
-        vbox.addWidget(buttonCancel)
-        vbox.addStretch(1)
-        groupBox.setLayout(vbox)
-        return groupBox
+        
+        self.font_input = self.project_name.font()
+        self.font_input.setPointSize(read_input_font_size())
+        self.project_name.setFont(self.font_input)
+        
+        self.buttonSaveProject = QPushButton(self.language['new_project_btn_create'])
+        self.buttonSaveProject.clicked.connect(self.create_project)
+        
+        self.buttonCancel = QPushButton(self.language['new_project_btn_cancel'])
+        self.buttonCancel.clicked.connect(self.close)
+        
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.text_save_project)
+        self.vbox.addWidget(self.project_name)
+        self.vbox.addWidget(self.buttonSaveProject)
+        self.vbox.addWidget(self.buttonCancel)
+        self.vbox.addStretch(1)
+        self.groupBox.setLayout(self.vbox)
+        return self.groupBox
 
-    def createProject(self):
+    def create_project(self):
         self.lista_projekata = os.listdir(cwd + var.projects_folder)
         if self.project_name.text() in self.lista_projekata:
             self.msg = QMessageBox()

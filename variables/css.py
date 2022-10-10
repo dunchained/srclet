@@ -1,23 +1,22 @@
 import os
-cwd_icons = os.path.curdir + '/srclet/images/icons/'
-print(cwd_icons)
+cwd = os.path.curdir + '/srclet/images/icons/'
 
 # Icons:
-about_icon = cwd_icons + 'about.ico'
-exit_icon = cwd_icons + 'exit.ico'
-manual_icon = cwd_icons + 'manual.ico'
-methods_eto_icon = cwd_icons + 'methods_eto.ico'
-methods_others_icon = cwd_icons + 'methods_others.ico'
-methods_wb_icon = cwd_icons + 'methods_wb.ico'
-methods_icon = cwd_icons + 'methods.ico'
-new_project_icon = cwd_icons + 'new_project.ico'
-open_project_icon = cwd_icons + 'open_project.ico'
-parameters_basic_icon = cwd_icons + 'parameters_basic.ico'
-parameters_complex_icon = cwd_icons + 'parameters_complex.ico'
-parameters_icon = cwd_icons + 'parameters.ico'
-settings_icon = cwd_icons + 'settings.ico'
-srclet_icon = cwd_icons + 'srclet.ico'
-srclet_caption = cwd_icons + 'srclet_caption.png'
+about_icon = cwd + 'about.ico'
+exit_icon = cwd + 'exit.ico'
+manual_icon = cwd + 'manual.ico'
+methods_eto_icon = cwd + 'methods_eto.ico'
+methods_others_icon = cwd + 'methods_others.ico'
+methods_wb_icon = cwd + 'methods_wb.ico'
+methods_icon = cwd + 'methods.ico'
+new_project_icon = cwd + 'new_project.ico'
+open_project_icon = cwd + 'open_project.ico'
+parameters_basic_icon = cwd + 'parameters_basic.ico'
+parameters_complex_icon = cwd + 'parameters_complex.ico'
+parameters_icon = cwd + 'parameters.ico'
+settings_icon = cwd + 'settings.ico'
+srclet_icon = cwd + 'srclet.ico'
+srclet_caption = cwd + 'srclet_caption.png'
 
 
 
@@ -33,7 +32,7 @@ window_background_image =   "background-image : url(srclet/images/icons/srclet.p
                             "background-repeat: no-repeat; background-position: center;"
 menu_background_image = "background-image : url(srclet/images/icons/srclet_menu.png); position: relative;" \
                         "background-repeat: repeat;"
-srclet_main_window_icon = cwd_icons + '/srclet/images/icons/icon_AuM_icon.ico'
+srclet_main_window_icon = cwd + '/srclet/images/icons/icon_AuM_icon.ico'
 
 # MainMenu settings:
 menu_exit_icon = 'srclet/images/icons/logout.png'
