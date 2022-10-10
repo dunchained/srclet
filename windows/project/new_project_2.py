@@ -90,12 +90,14 @@ class NewProjectWindow2(QWidget):
         self.font.setPointSize(read_text_font_size())
         self.groupBox.setFont(self.font)
         
-        self.textDescription = QTextEdit(self.language['new_project_2_description_initial'])
+        self.text_project_description = QTextEdit(self.language['new_project_2_description_initial'])
         
         self.vbox = QVBoxLayout()
-        self.vbox.addWidget(self.textDescription)
+        self.vbox.addWidget(self.text_project_description)
         self.vbox.addStretch(1)
+        
         self.groupBox.setLayout(self.vbox)
+        
         return self.groupBox
 
     def save_project(self):
@@ -154,5 +156,6 @@ class NewProjectWindow2(QWidget):
         self.next_window.show()
         
     def cancel(self):
-        # izbrisati direktorij projekta i poruku zadat
-        pass
+        os.rmdir(os.path.join(cwd + var.projects_folder + self.project_name))
+        self.hide()
+     

@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit,
 from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea
 import numpy
 import pandas as pd 
+
 #
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
@@ -123,8 +124,7 @@ class CheckDataTypeWidget(TableWidget):
         self.close()
 
     def createDataType(self):
-        categoriess_file = 'parameter_types.json'
-        categories_file = open(os.path.join(cwd + language_folder + 'en' + '/' + categoriess_file))
+        categories_file = open(os.path.join(cwd + language_folder + 'en' + '/' + 'parameter_types.json'))
         self.categories_file_data = json.load(categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -156,18 +156,42 @@ class CheckDataTypeWidget(TableWidget):
                         self.category_list.append(self.file_data['name'])
                 for parameter in self.category_list:
                     self.menu_action = self.menu_param.addAction(parameter)
-                    self.menu_action.triggered.connect(self.buttonClicked)
+                    self.menu_action.triggered.connect(self.set_column_value)
             self.buttons[i].setMenu(self.menu_kat)
             self.menu_kat.columnIndex = i
+            self.menu_kat.addSeparator()
+            self.year_action = self.menu_kat.addAction('Year')
+            self.year_action.triggered.connect(self.remove_zeroes)
+            self.month_action = self.menu_kat.addAction('Month')
+            self.month_action.triggered.connect(self.remove_zeroes)
+            self.menu_kat.addSeparator()
+            self.dont_use_action = self.menu_kat.addAction('Do not use')
+            self.dont_use_action.triggered.connect(self.do_not_use)
+            
+    def do_not_use(self):
+        sender = self.sender()
+        sender_text = sender.text()
+        self.buttons[sender.parent().columnIndex].setText(sender_text)
+        return sender
+            
+    def remove_zeroes(self):
+        sender = self.sender()
+        sender_text = sender.text()
+        self.buttons[sender.parent().columnIndex].setText(sender_text)
+        self.nrows = self.table.rowCount()
+        for row in range(0, self.nrows):
+            cell = self.table.item(row, sender.parent().columnIndex).text()
+            x = cell.split('.')
+            self.table.item(row, sender.parent().columnIndex).setText(x[0])
+        return sender
 
-    def buttonClicked(self, ):
+    def set_column_value(self, ):
         sender = self.sender()
         sender_text = sender.text()
         self.buttons[sender.parent().parent().columnIndex].setText(sender_text)
         return sender
 
     def createOptions(self):
-
         self.groupBox = QGroupBox('Data options:')
         self.groupBoxLayout = QGridLayout()
 
