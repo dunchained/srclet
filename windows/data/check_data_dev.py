@@ -8,8 +8,7 @@ from PyQt5.QtCore import Qt, QDateTime
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
 from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
 from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea, QVBoxLayout, QFormLayout, QHBoxLayout
-import numpy
-import pandas as pd 
+import numpy, pandas
 
 #
 language_folder = '/srclet/languages/'
@@ -253,13 +252,7 @@ class CheckDataTypeWidget(TableWidget):
         
         self.label_check_done = QLabel()
         self.flay_check.addRow(self.label_check_done)
-        
-        
-        self.nako = QLabel('ENTERNA')
-        self.datum = QDateEdit(calendarPopup=True)
 
-        self.groupBoxCheckLayout.addWidget(self.nako)
-        self.groupBoxCheckLayout.addWidget(self.datum)
         
         self.groupBoxCheck.setLayout(self.flay_check)       
         
@@ -280,32 +273,40 @@ class CheckDataTypeWidget(TableWidget):
         return self.groupBoxDataOptions
     
     def check_data(self):
-        self.label_check_done.setText('Data OK.')
+        table_data = self.read_table()
+        
+        for column in range(table_data.shape[1]):
+            #print(table_data[column].values[0])
+            if table_data[column].values[0] == 'Year':
+                print('imagodina')
+        
+        #print(table_data.head())
+        #print(table_data[0].values[-1])
+        #print(table_data.shape[1])
+        self.label_check_done.setText('huehue')
         self.buttonSave.setEnabled(True)
     
-    
-    
-    
-    def save_data(self):
-        nrows = self.table.rowCount()
-        ncols = self.table.columnCount()
-        lista = []
-
-        for column in range(0, ncols):
-            print(self.buttons[column].text())
-            pucad = self.buttons[column].text()
-            lista2 = []
-            lista2.append(pucad)
-            for row in range(0, nrows):
+    def read_table(self):
+        self.number_of_rows = self.table.rowCount()
+        self.number_of_columns = self.table.columnCount()
+        self.lista = []
+        
+        for column in range(self.number_of_columns):
+            self.dugmad = self.buttons[column].text()
+            self.lista2 = []
+            self.lista2.append(self.dugmad)
+            for row in range(self.number_of_rows):
                 item = self.table.item(row, column)
                 item_text = item.text()
-                lista2.append(item_text)
-            lista.append(lista2)
-        pd.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
-
-        pprf = pd.DataFrame(lista)
-        rt = pprf.transpose()
-        print(self.project_path + '/data.xlsx')
+                self.lista2.append(item_text)
+            self.lista.append(self.lista2)
+        #pandas.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
+        data_frame = pandas.DataFrame(self.lista)
+        return data_frame.transpose()
+        
+            
+    def save_data(self):
+        rt = self.read_table()
         rt.to_excel(self.project_path + "/data.xlsx")
 
         if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
