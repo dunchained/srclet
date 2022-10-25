@@ -86,6 +86,10 @@
     "new_project_2_save_and_open_message_caption": "Success!",
     "new_project_2_save_and_open_message": "Project saved...",
 
+    "//": "check_data.py",
+    "check_data_title": "Open existing project...",
+    
+
     "//": "Open project Window",
     "open_project_title": "Open existing project...",
     "open_project_caption": "Select project from the list:",

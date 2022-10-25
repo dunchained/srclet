@@ -1,12 +1,13 @@
+from calendar import calendar
 import os, sys, json
 from pathlib import Path
 cwd = os.path.curdir
 #from css import css
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy
+from PyQt5.QtCore import Qt, QDateTime
+from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
 from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
-from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea
+from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea, QVBoxLayout, QFormLayout, QHBoxLayout
 import numpy
 import pandas as pd 
 
@@ -25,105 +26,59 @@ other_methods_folder = '/methods/others/'
 class TableWidget(QTableWidget):
     def __init__(self, *args, **kwargs):
         super(TableWidget, self).__init__(*args, **kwargs)
-        self.verticalHeader().hide()
+        #self.verticalHeader().hide()
         self.horizontalHeader().hide()
         #self.rowAt(2)
 
-    def scrollContentsBy(self, dx, dy):
-        super(TableWidget, self).scrollContentsBy(dx, dy)
+    def scroll_contents_by(self, dx, dy):
+        super(TableWidget, self).scroll_contents_by(dx, dy)
 
 class CheckDataTypeWidget(TableWidget):
     def __init__(self, file_path='data.txt', project_path='/projects/hu'):
     #def __init__(self, file_path, project_path):
         super(CheckDataTypeWidget, self).__init__()
-        #self.language = language
+        self.language = {
+            "//": "check_data.py",
+            "check_data_title": "Check for data file: ",
+            "check_data_select": "Click to enter data type",
+            "check_data_select_donotuse": "Do not use...",
+            "check_data_select_year": "Year",
+            "check_data_select_month": "Month",
+            
+            "check_data_message": "Fill the missing data...",
+            "check_data_caption": "Missing data...",
+            "check_data_message1": "Data saved...",
+            "check_data_caption1": "Successful..."
+            }
+        
         self.file_path = file_path
         self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.buttons = []
         self.data = numpy.loadtxt(file_path, skiprows=1)
-        self.createTable()
-        self.createOptions()
-        self.createDataType()
+        
+        self.create_table()
+        self.create_options()
+        self.create_data_type()
+        
         self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         layout = QGridLayout(self)
         layout.addWidget(self.table, 0, 0)
-        layout.addWidget(self.groupBox, 1, 0)
+        layout.addWidget(self.groupBoxDataOptions, 1, 0)
         self.setLayout(layout)
         #self.setWindowIcon(QIcon(css.srclet_main_window_icon))
-        self.setWindowTitle('Check for data...')
+        self.setWindowTitle(self.language['check_data_title'] + file_path)
         self.showMaximized()
 
-    def createTable(self):
+    def create_table(self):
         self.table = TableWidget(*self.data.shape)
         for i, row_values in enumerate(self.data):
             for j, value in enumerate(row_values):
                 self.table.setItem(i, j, QTableWidgetItem(str(value)))
         for col in range(0, self.table.columnCount()):
             self.table.setColumnWidth(col, 200)
-
-    def saveData(self):
-        nrows = self.table.rowCount()
-        ncols = self.table.columnCount()
-        lista = []
-
-        for column in range(0, ncols):
-            print(self.buttons[column].text())
-            pucad = self.buttons[column].text()
-            lista2 = []
-            lista2.append(pucad)
-            for row in range(0, nrows):
-                item = self.table.item(row, column)
-                item_text = item.text()
-                lista2.append(item_text)
-            lista.append(lista2)
-        pd.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
-
-        pprf = pd.DataFrame(lista)
-        rt = pprf.transpose()
-        print(self.project_path + '/data.xlsx')
-        rt.to_excel(self.project_path + "/data.xlsx")
-
-        if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
-            self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Fill missing data')
-            self.msg.setWindowTitle('Missing data...')
-            self.msg.setStandardButtons(QMessageBox.Ok)
-            self.msg.buttonClicked.connect(self.msg.close)
-            self.msg.show()
-        else:
-            parameter_dict = {
-                "weather_station": self.line_weather_station.text(),
-                "weather_station_country": self.line_weather_station_country.text(),
-                "weather_station_elevation": self.line_weather_station_elevation.text(),
-                "weather_station_latitude": self.line_weather_station_latitude.text(),
-                "weather_station_longitude": self.line_weather_station_longitude.text(),
-                "anamometer_height": self.line_anamometer_height.text(),
-                "wind_speed": self.line_wind_speed.text(),
-                "krs_factor": self.line_krs_factor.text(),
-                "skip_rows": self.line_skip_rows.text(),
-                "missing_data": self.line_missing_data.text()
-                }
-            json_object = json.dumps(parameter_dict, indent = 4)
-            self.ambalage = self.project_path + "/data.json"
-            with open(self.ambalage, "w") as outfile:
-                outfile.write(json_object)
-                
-            self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Data saved...')
-            self.msg.setWindowTitle('Successuful...')
-            self.msg.setStandardButtons(QMessageBox.Ok)
-            self.msg.buttonClicked.connect(self.closeSelf)
-            self.msg.show()
-    
-    def closeSelf(self):
-        self.close()
-
-    def createDataType(self):
+        
+    def create_data_type(self):
         categories_file = open(os.path.join(cwd + language_folder + 'en' + '/' + 'parameter_types.json'))
         self.categories_file_data = json.load(categories_file)
         self.categories_list = []
@@ -140,7 +95,7 @@ class CheckDataTypeWidget(TableWidget):
             
         self.buttons
         for i in range(0, self.table.columnCount()):
-            button = QPushButton('Click to enter data type')
+            button = QPushButton(self.language['check_data_select'])
             button.columnIndex = i
             self.buttons.append(button)
             self.table.setCellWidget(0, i, self.buttons[self.buttons.__len__() - 1])
@@ -160,12 +115,12 @@ class CheckDataTypeWidget(TableWidget):
             self.buttons[i].setMenu(self.menu_kat)
             self.menu_kat.columnIndex = i
             self.menu_kat.addSeparator()
-            self.year_action = self.menu_kat.addAction('Year')
+            self.year_action = self.menu_kat.addAction(self.language['check_data_select_year'])
             self.year_action.triggered.connect(self.remove_zeroes)
-            self.month_action = self.menu_kat.addAction('Month')
+            self.month_action = self.menu_kat.addAction(self.language['check_data_select_month'])
             self.month_action.triggered.connect(self.remove_zeroes)
             self.menu_kat.addSeparator()
-            self.dont_use_action = self.menu_kat.addAction('Do not use')
+            self.dont_use_action = self.menu_kat.addAction(self.language['check_data_select_donotuse'])
             self.dont_use_action.triggered.connect(self.do_not_use)
             
     def do_not_use(self):
@@ -191,77 +146,210 @@ class CheckDataTypeWidget(TableWidget):
         self.buttons[sender.parent().parent().columnIndex].setText(sender_text)
         return sender
 
-    def createOptions(self):
-        self.groupBox = QGroupBox('Data options:')
-        self.groupBoxLayout = QGridLayout()
+       
+    def create_options(self):
+        # Glavni box:
+        self.groupBoxDataOptions = QGroupBox('Data options:')
+        self.groupBoxDataOptionsLayout = QGridLayout()
 
+        # Options box:
         self.groupBoxOptions = QGroupBox()
-        self.groupBoxOptionsLayout = QGridLayout()
+        self.groupBoxOptionsLayout = QVBoxLayout()
+        self.flay = QFormLayout()
 
-        self.label_weather_station = QLabel('Weather station name:')
+        self.label_weather_station = QLabel('Weather station name: ')
         self.line_weather_station = QLineEdit()
+        self.flay.addRow(self.label_weather_station, self.line_weather_station)
+        
         self.label_weather_station_country = QLabel('Country:')
         self.line_weather_station_country = QLineEdit()
-        self.label_weather_station_elevation = QLabel('Weather station elevation (z) in meters:')
+        self.flay.addRow(self.label_weather_station_country, self.line_weather_station_country)
+        
+        self.label_weather_station_elevation = QLabel('Weather station elevation (z): ')
+        self.label_weather_station_elevation1 = QLabel('meters.')
         self.line_weather_station_elevation = QLineEdit()
-        self.label_weather_station_latitude = QLabel('Weather station latitude (fi) in decimal degrees:')
+        self.hlay_elevation = QHBoxLayout()
+        self.hlay_elevation.addWidget(self.label_weather_station_elevation)
+        self.hlay_elevation.addWidget(self.line_weather_station_elevation)
+        self.hlay_elevation.addWidget(self.label_weather_station_elevation1)
+        self.flay.addRow(self.hlay_elevation)
+        
+        self.label_weather_station_latitude = QLabel('Weather station latitude (fi): ')
+        self.label_weather_station_latitude1 = QLabel('decimal degrees.')
         self.line_weather_station_latitude = QLineEdit()
-        self.label_weather_station_longitude = QLabel('Weather station longitude (fi) in decimal degrees:')
+        self.hlay_latitude = QHBoxLayout()
+        self.hlay_latitude.addWidget(self.label_weather_station_latitude)
+        self.hlay_latitude.addWidget(self.line_weather_station_latitude)
+        self.hlay_latitude.addWidget(self.label_weather_station_latitude1)
+        self.flay.addRow(self.hlay_latitude)
+        
+        self.label_weather_station_longitude = QLabel('Weather station longitude (fi): ')
+        self.label_weather_station_longitude1 = QLabel('decimal degrees.')
         self.line_weather_station_longitude = QLineEdit()
-
-
-        self.label_anamometer_height = QLabel('The anamometer height (zu) in meters:')
+        self.hlay_longitude = QHBoxLayout()
+        self.hlay_longitude.addWidget(self.label_weather_station_longitude)
+        self.hlay_longitude.addWidget(self.line_weather_station_longitude)
+        self.hlay_longitude.addWidget(self.label_weather_station_longitude1)
+        self.flay.addRow(self.hlay_longitude)
+        
+        self.label_anamometer_height = QLabel('The anamometer height (zu): ')
+        self.label_anamometer_height1 = QLabel('meters.')
         self.line_anamometer_height = QLineEdit('10')
-        self.label_wind_speed = QLabel('Value of wind speed if missing (u2) in m/s:')
+        self.hlay_anamometer = QHBoxLayout()
+        self.hlay_anamometer.addWidget(self.label_anamometer_height)
+        self.hlay_anamometer.addWidget(self.line_anamometer_height)
+        self.hlay_anamometer.addWidget(self.label_anamometer_height1)
+        self.flay.addRow(self.hlay_anamometer)
+        
+        self.label_wind_speed = QLabel('Value of wind speed if missing (u2): ')
+        self.label_wind_speed1 = QLabel('m/s.')
         self.line_wind_speed = QLineEdit('2')
+        self.hlay_wind_speed = QHBoxLayout()
+        self.hlay_wind_speed.addWidget(self.label_wind_speed)
+        self.hlay_wind_speed.addWidget(self.line_wind_speed)
+        self.hlay_wind_speed.addWidget(self.label_wind_speed1)
+        self.flay.addRow(self.hlay_wind_speed)
+        
         self.label_krs_factor = QLabel('Value of krs factor:')
         self.line_krs_factor = QLineEdit('0.162')
-
+        self.flay.addRow(self.label_krs_factor, self.line_krs_factor)
+        
         self.label_skip_rows = QLabel('Skip number of rows:')
         self.line_skip_rows = QLineEdit('1')
+        self.flay.addRow(self.label_skip_rows, self.line_skip_rows)
+        
         self.label_missing_data = QLabel('Code for missing data:')
         self.line_missing_data = QLineEdit('-999')
-
-
-
-
-        self.groupBoxOptionsLayout.addWidget(self.label_weather_station, 0, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_weather_station, 0, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_country, 1, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_country, 1, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_elevation, 2, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_elevation, 2, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_latitude, 3, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_longitude, 3, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_weather_station_longitude, 4, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_weather_station_latitude, 4, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_anamometer_height, 5, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_anamometer_height, 5, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_wind_speed, 6, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_wind_speed, 6, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_krs_factor, 7, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_krs_factor, 7, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_skip_rows, 8, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_skip_rows, 8, 1)
-        self.groupBoxOptionsLayout.addWidget(self.label_missing_data, 9, 0)
-        self.groupBoxOptionsLayout.addWidget(self.line_missing_data, 9, 1)
-
-
-        self.groupBoxOptions.setLayout(self.groupBoxOptionsLayout)
- 
-       
-        self.buttonSave = QPushButton('Save Project Data')
-        self.buttonSave.clicked.connect(self.saveData)
-        self.buttonClose = QPushButton('Cancel')
-        self.buttonClose.clicked.connect(self.closeSelf)
-
-        self.groupBoxLayout.addWidget(self.groupBoxOptions, 0, 0)
-        self.groupBoxLayout.addWidget(self.buttonSave, 1, 0)
-        self.groupBoxLayout.addWidget(self.buttonClose, 2, 0)
+        self.flay.addRow(self.label_missing_data, self.line_missing_data)
         
-        self.groupBox.setLayout(self.groupBoxLayout)
+        self.groupBoxOptions.setLayout(self.flay)
+ 
+        # Check box:
+        self.groupBoxCheck = QGroupBox()
+        self.groupBoxCheckLayout = QGridLayout()
+        self.flay_check = QFormLayout()
+        
+        self.label_date_begining = QLabel('Data begining date: ')
+        self.date_date_begining = QDateEdit(calendarPopup=True)
+        self.date_date_begining.setDateTime(QDateTime.currentDateTime())
+        self.flay_check.addRow(self.label_date_begining, self.date_date_begining)
+        
+        self.label_date_end = QLabel('Data end date: ')
+        self.date_date_end = QDateEdit(calendarPopup=True)
+        self.date_date_end.setDateTime(QDateTime.currentDateTime())
+        self.flay_check.addRow(self.label_date_end, self.date_date_end)
+        
+        self.label_number_of_rows = QLabel('Number of rows: ')
+        self.label_number_of_rows_num = QLabel('/')
+        self.flay_check.addRow(self.label_number_of_rows, self.label_number_of_rows_num)
+        
+        self.label_number_of_selected_columns = QLabel('Number of selected columns: ')
+        self.label_number_of_selected_columns_num = QLabel('/')
+        self.flay_check.addRow(self.label_number_of_selected_columns, self.label_number_of_selected_columns_num)
+        
+        self.button_data_check = QPushButton('Check data')
+        self.button_data_check.clicked.connect(self.check_data)
+        self.flay_check.addRow(self.button_data_check)
+        
+        self.label_check_done = QLabel()
+        self.flay_check.addRow(self.label_check_done)
+        
+        
+        self.nako = QLabel('ENTERNA')
+        self.datum = QDateEdit(calendarPopup=True)
 
-        return self.groupBox
+        self.groupBoxCheckLayout.addWidget(self.nako)
+        self.groupBoxCheckLayout.addWidget(self.datum)
+        
+        self.groupBoxCheck.setLayout(self.flay_check)       
+        
+        # Postavka svega na DataOptionsGroupBox:
+        self.buttonSave = QPushButton('Save data')
+        self.buttonSave.setEnabled(False)
+        self.buttonSave.clicked.connect(self.save_data)
+        self.buttonClose = QPushButton('Cancel')
+        self.buttonClose.clicked.connect(self.close_self)
+
+        self.groupBoxDataOptionsLayout.addWidget(self.groupBoxOptions, 0, 0, 1, 1)
+        self.groupBoxDataOptionsLayout.addWidget(self.groupBoxCheck, 0, 1, 1, 1)
+        self.groupBoxDataOptionsLayout.addWidget(self.buttonSave, 1, 0, 1, 2)
+        self.groupBoxDataOptionsLayout.addWidget(self.buttonClose, 2, 0, 1, 2)
+        
+        self.groupBoxDataOptions.setLayout(self.groupBoxDataOptionsLayout)
+
+        return self.groupBoxDataOptions
+    
+    def check_data(self):
+        self.label_check_done.setText('Data OK.')
+        self.buttonSave.setEnabled(True)
+    
+    
+    
+    
+    def save_data(self):
+        nrows = self.table.rowCount()
+        ncols = self.table.columnCount()
+        lista = []
+
+        for column in range(0, ncols):
+            print(self.buttons[column].text())
+            pucad = self.buttons[column].text()
+            lista2 = []
+            lista2.append(pucad)
+            for row in range(0, nrows):
+                item = self.table.item(row, column)
+                item_text = item.text()
+                lista2.append(item_text)
+            lista.append(lista2)
+        pd.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
+
+        pprf = pd.DataFrame(lista)
+        rt = pprf.transpose()
+        print(self.project_path + '/data.xlsx')
+        rt.to_excel(self.project_path + "/data.xlsx")
+
+        if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
+            self.msg = QMessageBox()
+            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText(self.language['check_data_message'])
+            self.msg.setWindowTitle(self.language['check_data_caption'])
+            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.buttonClicked.connect(self.msg.close)
+            self.msg.show()
+        else:
+            parameter_dict = {
+                "weather_station": self.line_weather_station.text(),
+                "weather_station_country": self.line_weather_station_country.text(),
+                "weather_station_elevation": self.line_weather_station_elevation.text(),
+                "weather_station_latitude": self.line_weather_station_latitude.text(),
+                "weather_station_longitude": self.line_weather_station_longitude.text(),
+                "anamometer_height": self.line_anamometer_height.text(),
+                "wind_speed": self.line_wind_speed.text(),
+                "krs_factor": self.line_krs_factor.text(),
+                "skip_rows": self.line_skip_rows.text(),
+                "missing_data": self.line_missing_data.text()
+                }
+            json_object = json.dumps(parameter_dict, indent = 4)
+            self.ambalage = self.project_path + "/data.json"
+            with open(self.ambalage, "w") as outfile:
+                outfile.write(json_object)
+                
+            self.msg = QMessageBox()
+            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText(self.language['check_data_message1'])
+            self.msg.setWindowTitle(self.language['check_data_caption1'])
+            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.buttonClicked.connect(self.closeSelf)
+            self.msg.show()
+    
+    def close_self(self):
+        self.close()
+
+    
+
+    
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
