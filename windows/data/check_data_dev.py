@@ -4,7 +4,7 @@ from pathlib import Path
 cwd = os.path.curdir
 #from css import css
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt, QDateTime
+from PyQt5.QtCore import Qt, QDateTime, QDate
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
 from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
 from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea, QVBoxLayout, QFormLayout, QHBoxLayout
@@ -251,7 +251,11 @@ class CheckDataTypeWidget(TableWidget):
         self.flay_check.addRow(self.button_data_check)
         
         self.label_check_done = QLabel()
+        self.label_check_done1 = QLabel()
+        self.label_check_done2 = QLabel()
         self.flay_check.addRow(self.label_check_done)
+        self.flay_check.addRow(self.label_check_done1)
+        self.flay_check.addRow(self.label_check_done2)
 
         
         self.groupBoxCheck.setLayout(self.flay_check)       
@@ -274,17 +278,36 @@ class CheckDataTypeWidget(TableWidget):
     
     def check_data(self):
         table_data = self.read_table()
+        self.begining_year = 2022
+        self.end_year = 2022
+        self.begining_month = 1
+        self.end_month = 12
+        self.list_of_selected_columns =[]
         
         for column in range(table_data.shape[1]):
-            #print(table_data[column].values[0])
-            if table_data[column].values[0] == 'Year':
-                print('imagodina')
-        
-        #print(table_data.head())
-        #print(table_data[0].values[-1])
-        #print(table_data.shape[1])
-        self.label_check_done.setText('huehue')
-        self.buttonSave.setEnabled(True)
+            if table_data[column].values[0] == self.language['check_data_select_year']:
+                self.begining_year = int(table_data[column].values[1])
+                self.end_year = int(table_data[column].values[-1])
+            if table_data[column].values[0] == self.language['check_data_select_month']:
+                self.begining_month = int(table_data[column].values[1])
+                self.end_month = int(table_data[column].values[-1])
+            if table_data[column].values[0] != self.language['check_data_select'] and table_data[column].values[0] != self.language['check_data_select_donotuse']:
+                self.list_of_selected_columns.append(column)
+        self.date_date_begining.setDate(QDate(self.begining_year, self.begining_month, 1))
+        self.date_date_end.setDate(QDate(self.end_year, self.end_month, 1))
+        self.label_number_of_rows_num.setText(str(table_data.shape[0] - int(self.line_skip_rows.text())))
+        self.label_number_of_selected_columns_num.setText(str(len(self.list_of_selected_columns)))
+        broj_redova = int(self.label_number_of_rows_num.text())
+        if broj_redova % 12 == 0:
+            self.label_check_done.setText('Number of rows and months ratio: OK')
+            self.label_check_done1.setText('Data shape: ' + self.label_number_of_rows_num.text() + 'x' + self.label_number_of_selected_columns_num.text())
+            self.label_check_done2.setText('Good to go...')
+            self.buttonSave.setEnabled(True)
+        else:
+            self.label_check_done.setText('Number of rows and months ratio: NOT OK')
+            self.label_check_done1.setText('Data shape: ' + self.label_number_of_rows_num.text() + 'x' + self.label_number_of_selected_columns_num.text())
+            self.label_check_done2.setText('Skiping the rows can help...')
+            self.buttonSave.setEnabled(False)
     
     def read_table(self):
         self.number_of_rows = self.table.rowCount()
