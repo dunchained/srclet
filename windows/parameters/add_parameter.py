@@ -1,5 +1,4 @@
 # python standard modules
-from fileinput import filename
 import sys, json, os, random
 from pathlib import Path
 cwd = os.path.curdir

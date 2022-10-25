@@ -23,12 +23,14 @@ font_sizes_file = 'font_sizes.json'
 font_size_large = 16
 font_size_medium = 14
 font_size_small = 12
+
 projects_folder = '/projects/'
+categories_file = 'parameter_types.json'
+parameters_folder = 'parameters/basic/'
+complex_parameters_folder = '/parameters/complex/'
 
 
 
-
-parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
 random_images_folder = '/srclet/images/random_image/'
 eto_methods_folder = '/methods/eto/'

@@ -87,7 +87,16 @@
     "new_project_2_save_and_open_message": "Project saved...",
 
     "//": "check_data.py",
-    "check_data_title": "Open existing project...",
+    "check_data_title": "Check for data file: ",
+    "check_data_select": "Click to enter data type",
+    "check_data_select_donotuse": "Do not use...",
+    "check_data_select_year": "Year",
+    "check_data_select_month": "Month",
+    
+    "check_data_message": "Fill the missing data...",
+    "check_data_caption": "Missing data...",
+    "check_data_message1": "Data saved...",
+    "check_data_caption1": "Successful...",
     
 
     "//": "Open project Window",

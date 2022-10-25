@@ -1,4 +1,5 @@
 import os, json
+from tkinter.tix import Tree
 cwd = os.path.curdir
 
 from variables import css, var
@@ -38,7 +39,12 @@ class NewProjectWindow2(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())    
-
+        
+    def refresh_after_data_check(self):
+        print('signal ima')
+        self.buttonSaveAndExit.setEnabled(True)
+        self.buttonSaveAndOpen.setEnabled(True)
+        
     def load_and_check_data(self):
         self.groupBox = QGroupBox(self.language['new_project_2_data_caption'])
         self.font = self.groupBox.font()
@@ -80,9 +86,10 @@ class NewProjectWindow2(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            self.window = CheckDataTypeWidget(file_path=self.text_data_selected.text(), 
-                                              project_path=self.project_path, 
-                                              language=self.language)
+            self.window = CheckDataTypeWidget(file_path=self.text_data_selected.text(),
+                                                   project_path=self.project_path,
+                                                   language=self.language)
+            self.window.clicked.connect(self.refresh_after_data_check)
         
     def project_description(self):
         self.groupBox = QGroupBox(self.language['new_project_2_description_caption'])
