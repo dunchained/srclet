@@ -40,10 +40,9 @@ class NewProjectWindow2(QWidget):
         self.move(qr.topLeft())    
         
     def refresh_after_data_check(self):
-        print('signal ima')
         self.buttonSaveAndExit.setEnabled(True)
         self.buttonSaveAndOpen.setEnabled(True)
-        self.text_data_status.setText('Data file: OK')
+        self.text_data_status.setText(self.language['new_project_2_label_loaded'])
         
     def load_and_check_data(self):
         self.groupBox = QGroupBox(self.language['new_project_2_data_caption'])

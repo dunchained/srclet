@@ -67,6 +67,7 @@
     "new_project_2_label_browse": "No file selected.",
     "new_project_2_btn_loadandcheck": "Load file and check data",
     "new_project_2_label_loadandcheck": "File not checked.",
+    "new_project_2_label_loaded": "Data file: OK",
     "new_project_2_file_dialog": "Open data file...",
     "new_project_2_load_message": "Please select data file...",
     "new_project_2_load_message_caption": "Data file...",
