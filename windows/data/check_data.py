@@ -38,7 +38,7 @@ class CheckDataTypeWidget(TableWidget):
         self.language = language        
         self.file_path = file_path
         self.project_path = project_path
-        self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.buttons = []
         self.data = numpy.loadtxt(file_path, skiprows=1)
         

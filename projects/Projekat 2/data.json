@@ -1,0 +1,12 @@
+{
+    "weather_station": "Sarajevo",
+    "weather_station_country": "BiH",
+    "weather_station_elevation": "98",
+    "weather_station_latitude": "99",
+    "weather_station_longitude": "89",
+    "anamometer_height": "10",
+    "wind_speed": "2",
+    "krs_factor": "0.162",
+    "skip_rows": "1",
+    "missing_data": "-999"
+}

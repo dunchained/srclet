@@ -1,5 +1,4 @@
-import os, json
-from tkinter.tix import Tree
+import os, shutil
 cwd = os.path.curdir
 
 from variables import css, var
@@ -16,7 +15,7 @@ from PyQt5.QtCore import Qt
 class NewProjectWindow2(QWidget):
     def __init__(self, name_of_project, language):
         super().__init__()
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.language = language
         self.project_name = name_of_project
         self.project_path = cwd + var.projects_folder + name_of_project
@@ -44,6 +43,7 @@ class NewProjectWindow2(QWidget):
         print('signal ima')
         self.buttonSaveAndExit.setEnabled(True)
         self.buttonSaveAndOpen.setEnabled(True)
+        self.text_data_status.setText('Data file: OK')
         
     def load_and_check_data(self):
         self.groupBox = QGroupBox(self.language['new_project_2_data_caption'])
@@ -114,11 +114,11 @@ class NewProjectWindow2(QWidget):
         self.groupBox.setFont(self.font)
                 
         self.buttonSaveAndExit = QPushButton(self.language['new_project_2_btn_save_and_exit'])
-        self.buttonSaveAndExit.clicked.connect(self.saveAndExit)
+        self.buttonSaveAndExit.clicked.connect(self.save_and_exit)
         self.buttonSaveAndExit.setEnabled(False)
         
         self.buttonSaveAndOpen = QPushButton(self.language['new_project_2_btn_save_and_open'])
-        self.buttonSaveAndOpen.clicked.connect(self.saveAndOpen)
+        self.buttonSaveAndOpen.clicked.connect(self.save_and_open)
         self.buttonSaveAndOpen.setEnabled(False)
         self.buttonCancel = QPushButton(self.language['new_project_2_btn_cancel'])
         self.buttonCancel.clicked.connect(self.cancel)
@@ -132,7 +132,7 @@ class NewProjectWindow2(QWidget):
         self.groupBox.setLayout(self.vbox)
         return self.groupBox
 
-    def saveAndExit(self):
+    def save_and_exit(self):
         # provjeriti je li sve upisano i mesege         
         # snimiti project description   
         self.msg = QMessageBox()
@@ -145,7 +145,7 @@ class NewProjectWindow2(QWidget):
         self.msg.show()
         
 
-    def saveAndOpen(self):
+    def save_and_open(self):
         # provjeriti je li sve upisano    
         # snimiti project description        
         self.msg = QMessageBox()
@@ -154,15 +154,16 @@ class NewProjectWindow2(QWidget):
         self.msg.setText(self.language['new_project_2_save_and_open_message'])
         self.msg.setWindowTitle(self.language['new_project_2_save_and_open_message_caption'])
         self.msg.setStandardButtons(QMessageBox.Ok)
-        self.msg.buttonClicked.connect(self.messageClose)
+        self.msg.buttonClicked.connect(self.message_close)
         self.msg.show()
 
-    def messageClose(self):
+    def message_close(self):
         self.hide()
         self.next_window = ProjectWindow(project_path=self.project_path, language=self.language)
         self.next_window.show()
         
     def cancel(self):
-        os.rmdir(os.path.join(cwd + var.projects_folder + self.project_name))
+        shutil.rmtree(os.path.join(cwd + var.projects_folder + self.project_name), ignore_errors=True)	
+        #os.rmdir(os.path.join(cwd + var.projects_folder + self.project_name))
         self.hide()
      

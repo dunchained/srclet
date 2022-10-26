@@ -61,7 +61,7 @@
     "new_project_message_empty": "Project name can not be empty...",
 
     "//": "new_project_2.py",
-    "new_project_2_title": "Create new project:",
+    "new_project_2_title": "Create new project: ",
     "new_project_2_data_caption": "Project data file:",
     "new_project_2_btn_browse": "Browse",
     "new_project_2_label_browse": "No file selected.",
