@@ -4,7 +4,7 @@ import sys
 #
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QDialog, QTabWidget
-from PyQt5.QtWidgets import QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 
@@ -20,12 +20,10 @@ class AboutWindow(QWidget):
             "version_date": "October 2022",
             "version_dev": "Developed by:",
             "version_dev_by": "Sabrija Čadro and Mirza Uzunović",
-            "version_contact": "",
-            "version_contact_mail": "",
-            "version_web": "",
-            "version_web_location": "",
-            "": "",
-            "": "",
+            "version_contact": "Contact:",
+            "version_contact_mail": "meet.jeanmonnet@gmail.com",
+            "version_web": "Web:",
+            "version_web_location": "https://meet.motherlandia.org/srclet/"
         }
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -68,10 +66,21 @@ class MyTabWidget(QWidget):
         self.tabs.addTab(self.tab_disclamair, self.language['disclamair'])
   
         # Create tab version
-        self.tab_version.layout = QVBoxLayout(self)
-        self.l = QLabel()
-        self.l.setText("Version")
-        self.tab_version.layout.addWidget(self.l)
+        self.tab_version.layout = QGridLayout()
+        #self.tab_version.layout = QVBoxLayout(self)
+        
+        self.version_ver = QLabel(self.language['version_ver'])
+        self.tab_version.layout.addWidget(self.version_ver)
+        
+        self.version_date = QLabel(self.language['version_date'])
+        self.tab_version.layout.addWidget(self.version_date)
+        
+        self.version_dev = QLabel(self.language['version_dev'])
+        self.tab_version.layout.addWidget(self.version_dev)
+        
+        self.version_dev_by = QLabel(self.language['version_dev_by'])
+        self.tab_version.layout.addWidget(self.version_dev_by)
+        
         self.tab_version.setLayout(self.tab_version.layout)
         
         # Create tab development
