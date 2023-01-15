@@ -176,7 +176,7 @@ class MyTabWidget(QWidget):
         
         
         # Create tab copyright
-        self.tab_copyright.layout = QVBoxLayout(self)
+        self.tab_copyright.layout = QGridLayout(self)
         self.groupbox3 = QGroupBox()
         self.font = self.groupbox3.font()
         self.font.setPointSize(14)
