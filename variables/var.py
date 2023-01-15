@@ -12,7 +12,7 @@ new_project_window_height = 200
 
 # new_project_window_2:
 new_project_window_2_widith = 800
-new_project_window_2_height = 600
+new_project_window_2_height = 400
 
 # general:
 language_folder = '/srclet/languages/'

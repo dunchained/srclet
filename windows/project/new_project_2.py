@@ -5,6 +5,7 @@ from variables import css, var
 from windows.data.check_data import CheckDataTypeWidget
 from windows.project.project_opened import ProjectWindow
 from mortys.font_morty import read_text_font_size, read_input_font_size
+from mortys.project_description_morty import update_project_description
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
@@ -52,6 +53,7 @@ class NewProjectWindow2(QWidget):
         
         self.buttonBrowse = QPushButton(self.language['new_project_2_btn_browse'])
         self.text_data_selected = QLabel()
+        self.text_data_selected.setWordWrap(True)
         self.text_data_selected.setText(self.language['new_project_2_label_browse'])
         self.buttonBrowse.clicked.connect(self.browse)
         
@@ -67,6 +69,7 @@ class NewProjectWindow2(QWidget):
         self.vbox.addWidget(self.text_data_status)
         self.vbox.addStretch(1)
         self.groupBox.setLayout(self.vbox)
+        self.groupBox.setFixedWidth(400)
         
         return self.groupBox
     
@@ -85,15 +88,13 @@ class NewProjectWindow2(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            self.window = CheckDataTypeWidget(file_path=self.text_data_selected.text(),
-                                                   project_path=self.project_path,
-                                                   language=self.language)
+            self.window = CheckDataTypeWidget(file_path=self.text_data_selected.text(), project_path=self.project_path, language=self.language)
             self.window.clicked.connect(self.refresh_after_data_check)
         
     def project_description(self):
         self.groupBox = QGroupBox(self.language['new_project_2_description_caption'])
         self.font = self.groupBox.font()
-        self.font.setPointSize(read_text_font_size())
+        self.font.setPointSize(read_input_font_size())
         self.groupBox.setFont(self.font)
         
         self.text_project_description = QTextEdit(self.language['new_project_2_description_initial'])
@@ -132,8 +133,8 @@ class NewProjectWindow2(QWidget):
         return self.groupBox
 
     def save_and_exit(self):
-        # provjeriti je li sve upisano i mesege         
-        # snimiti project description   
+        self.file_path = self.project_path + '/' + 'data.json'
+        update_project_description(data_file_path=self.file_path, updated_data=self.text_project_description.toPlainText())
         self.msg = QMessageBox()
         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.msg.setIcon(QMessageBox.Information)
@@ -145,8 +146,8 @@ class NewProjectWindow2(QWidget):
         
 
     def save_and_open(self):
-        # provjeriti je li sve upisano    
-        # snimiti project description        
+        self.file_path = self.project_path + '/' + 'data.json'
+        update_project_description(data_file_path=self.file_path, updated_data=self.text_project_description.toPlainText())
         self.msg = QMessageBox()
         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.msg.setIcon(QMessageBox.Information)
@@ -163,6 +164,5 @@ class NewProjectWindow2(QWidget):
         
     def cancel(self):
         shutil.rmtree(os.path.join(cwd + var.projects_folder + self.project_name), ignore_errors=True)	
-        #os.rmdir(os.path.join(cwd + var.projects_folder + self.project_name))
         self.hide()
      

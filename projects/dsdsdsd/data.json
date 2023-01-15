@@ -1,0 +1,13 @@
+{
+    "weather_station": "dsds",
+    "weather_station_country": "dsds",
+    "weather_station_elevation": "dsds",
+    "weather_station_latitude": "dsds",
+    "weather_station_longitude": "dsdsds",
+    "anamometer_height": "10",
+    "wind_speed": "2",
+    "krs_factor": "0.162",
+    "skip_rows": "1",
+    "missing_data": "-999",
+    "project_description": "project_description"
+}

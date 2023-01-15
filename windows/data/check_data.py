@@ -338,7 +338,8 @@ class CheckDataTypeWidget(TableWidget):
                 "wind_speed": self.line_wind_speed.text(),
                 "krs_factor": self.line_krs_factor.text(),
                 "skip_rows": self.line_skip_rows.text(),
-                "missing_data": self.line_missing_data.text()
+                "missing_data": self.line_missing_data.text(),
+                "project_description": "project_description"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
             self.ambalage = self.project_path + "/data.json"
