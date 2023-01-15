@@ -75,7 +75,7 @@ class NewProjectWindow2(QWidget):
         self.text_data_selected.setText(self.fileName)
         
     def load_file(self):
-        if not self.text_data_selected.text() or self.text_data_selected.text() == 'No file selected.':
+        if not self.text_data_selected.text() or self.text_data_selected.text() == self.language['new_project_2_label_browse']:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)

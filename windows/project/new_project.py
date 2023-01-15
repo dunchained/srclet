@@ -4,7 +4,7 @@ cwd = os.path.curdir
 from variables import css, var
 from mortys.font_morty import read_text_font_size, read_input_font_size
 from windows.project.new_project_2 import NewProjectWindow2
-from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
+from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QWidget, QGridLayout, QLabel
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
