@@ -1,7 +1,4 @@
 import sys, os
-# app modules and windows
-#from variables import css
-# pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QDialog, QTabWidget
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QGroupBox
 from PyQt5.QtWidgets import QFormLayout
@@ -84,8 +81,8 @@ class MyTabWidget(QWidget):
         self.flay = QFormLayout()
         
         self.label_photo = QLabel()
-        self.pixmap = QPixmap('srclet/images/icons/srclet_cap.png')
-        self.pixmap = self.pixmap.scaled(350, 300, Qt.KeepAspectRatio)
+        self.pixmap = QPixmap('srclet/images/icons/srclet_caption.png')
+        self.pixmap = self.pixmap.scaled(700, 400, Qt.KeepAspectRatio)
         self.label_photo.setPixmap(self.pixmap)
         self.flay.addRow(self.label_photo)
         
@@ -113,9 +110,12 @@ class MyTabWidget(QWidget):
         self.right_groupbox.setFlat(True)
         
 
-        self.tab_version.layout.addWidget(self.left_groupbox, 0, 0)
+        #self.tab_version.layout.addWidget(self.left_groupbox, 0, 0)
         self.tab_version.layout.addWidget(self.right_groupbox, 0, 1)
         self.tab_version.setLayout(self.tab_version.layout)
+        
+        
+        
         
         # Create tab development
         self.tab_development.layout = QGridLayout()
@@ -142,6 +142,9 @@ class MyTabWidget(QWidget):
         self.tab_development.layout.addWidget(self.desni_groupbox, 0, 1) 
         self.tab_development.setLayout(self.tab_development.layout)
         
+        
+        
+        
         # Create tab copyright
         self.tab_copyright.layout = QVBoxLayout(self)
         self.l = QLabel()
@@ -149,12 +152,18 @@ class MyTabWidget(QWidget):
         self.tab_copyright.layout.addWidget(self.l)
         self.tab_copyright.setLayout(self.tab_copyright.layout)
         
+        
+        
+        
         # Create tab disclamair
         self.tab_disclamair.layout = QVBoxLayout(self)
         self.l = QLabel()
         self.l.setText("Version")
         self.tab_disclamair.layout.addWidget(self.l)
         self.tab_disclamair.setLayout(self.tab_disclamair.layout)
+  
+  
+  
   
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
