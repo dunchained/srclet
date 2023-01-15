@@ -98,6 +98,7 @@ class MyTabWidget(QWidget):
         self.flay.addRow(self.label_date, self.label_date_date)
         
         self.right_groupbox.setLayout(self.flay)
+        self.right_groupbox.setFlat(True)
         
 
         self.tab_version.layout.addWidget(self.left_groupbox, 0, 0)
