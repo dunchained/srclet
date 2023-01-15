@@ -97,6 +97,14 @@ class MyTabWidget(QWidget):
         self.label_date_date = QLabel(self.language['version_date_date'])
         self.flay.addRow(self.label_date, self.label_date_date)
         
+        self.label_developed = QLabel(self.language['version_dev_text'])
+        self.label_dev_by = QLabel(self.language['version_dev_by'])
+        self.flay.addRow(self.label_developed, self.label_dev_by)
+        
+        self.label_contact = QLabel(self.language['version_contact'])
+        self.label_contact_contact = QLabel(self.language['version_contact_mail'])
+        self.flay.addRow(self.label_contact, self.label_contact_contact)
+        
         self.right_groupbox.setLayout(self.flay)
         self.right_groupbox.setFlat(True)
         
