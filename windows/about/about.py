@@ -21,7 +21,7 @@ class AboutWindow(QWidget):
             "version_date_text": "Released:",
             "version_date_date": "October 2022",
             "version_dev_text": "Developed by:",
-            "version_dev_by": "Sabrija Čadro and Mirza Uzunović",
+            "version_dev_by": "Sabrija Čadro, Mirza Uzunović",
             "version_contact": "Contact:",
             "version_contact_mail": "meet.jeanmonnet@gmail.com",
             "version_web": "Web:",
@@ -104,6 +104,10 @@ class MyTabWidget(QWidget):
         self.label_contact = QLabel(self.language['version_contact'])
         self.label_contact_contact = QLabel(self.language['version_contact_mail'])
         self.flay.addRow(self.label_contact, self.label_contact_contact)
+        
+        self.label_web = QLabel(self.language['version_web'])
+        self.label_web_location = QLabel(self.language['version_web_location'])
+        self.flay.addRow(self.label_web, self.label_web_location)
         
         self.right_groupbox.setLayout(self.flay)
         self.right_groupbox.setFlat(True)
