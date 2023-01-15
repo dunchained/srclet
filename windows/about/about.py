@@ -22,7 +22,19 @@ class AboutWindow(QWidget):
             "version_contact": "Contact:",
             "version_contact_mail": "meet.jeanmonnet@gmail.com",
             "version_web": "Web:",
-            "version_web_location": "https://meet.motherlandia.org/srclet/"
+            "version_web_location": "https://meet.motherlandia.org/srclet/",
+            "development_text1": "Text text1",
+            "development_text2": "Text text2",
+            "development_text3": "Text text3",
+            "copyright_text1": "All rights reserved.",
+            "copyright_text2": "Reproduction and dissemination of material related to this computer software for educational, research or other non-commercial purposes are authorized without any prior written permission from the copyright holders provided the source is fully acknowledged.",
+            "copyright_text3": "The authors hope that this software tool, with God's help, will be useful to all people.",
+            "copyright_text4": "Reproduction of material in this information product for resale or other commercial purposes is prohibited without written permission of the copyright holders.",
+            "copyright_text5": "Applications for such permission should be addressed to the softwere developer Mirza Uzunović by e-mail meet.jeanmonnet@gmail.com",
+            "copyright_text6": "Authors [2022]",
+            "disclamair_text1": "Authors decline all responsibility for errors or deficiencies in the database or in the files and documents that come with the SRCLET softwere.",
+            "disclamair_text2": "Authors also declines any responsibility for updating the data and assumes no responsibility for errors and omissions in the data provided. Users are, however, kindly asked to report any errors or deficiencies at: meet.jeanmonnet@gmail.com.",
+            "disclamair_text3": "The European Commission support for the production of this prodact does not constitute an endorsement of the contents which reflects the views only of the authors, and the Commission cannot be held responsible for any use which may be made of the information contained therein."
         }
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -62,22 +74,12 @@ class MyTabWidget(QWidget):
   
         # Create tab version
         self.tab_version.layout = QGridLayout()
-        
-        self.left_groupbox = QGroupBox()
-        self.left_groupbox.layout = QVBoxLayout()
-        self.label_photo = QLabel()
-        self.pixmap = QPixmap('srclet/images/icons/srclet_drop.png')
-        self.pixmap = self.pixmap.scaled(300, 300, Qt.KeepAspectRatio)
-        self.label_photo.setPixmap(self.pixmap)
-        self.left_groupbox.layout.addWidget(self.label_photo, alignment=Qt.AlignCenter)
-        self.left_groupbox.setLayout(self.left_groupbox.layout)
-        self.left_groupbox.setFlat(True)
-        
-        self.right_groupbox = QGroupBox()
-        self.font =self.right_groupbox.font()
+                
+        self.groupbox = QGroupBox()
+        self.font = self.groupbox.font()
         self.font.setPointSize(14)
-        self.right_groupbox.setFont(self.font)
-        self.right_groupbox.layout = QGridLayout()
+        self.groupbox.setFont(self.font)
+        self.groupbox.layout = QGridLayout()
         self.flay = QFormLayout()
         
         self.label_photo = QLabel()
@@ -106,12 +108,10 @@ class MyTabWidget(QWidget):
         self.label_web_location = QLabel(self.language['version_web_location'])
         self.flay.addRow(self.label_web, self.label_web_location)
         
-        self.right_groupbox.setLayout(self.flay)
-        self.right_groupbox.setFlat(True)
+        self.groupbox.setLayout(self.flay)
+        self.groupbox.setFlat(True)
         
-
-        #self.tab_version.layout.addWidget(self.left_groupbox, 0, 0)
-        self.tab_version.layout.addWidget(self.right_groupbox, 0, 1)
+        self.tab_version.layout.addWidget(self.groupbox)
         self.tab_version.setLayout(self.tab_version.layout)
         
         
@@ -119,27 +119,57 @@ class MyTabWidget(QWidget):
         
         # Create tab development
         self.tab_development.layout = QGridLayout()
+                
+        self.groupbox2 = QGroupBox()
+        self.font = self.groupbox2.font()
+        self.font.setPointSize(14)
+        self.groupbox2.setFont(self.font)
+        self.groupbox2.layout = QGridLayout()
         
-        self.lijevi_groupbox = QGroupBox()
-        self.lijevi_groupbox.layout = QVBoxLayout()
-        self.label_slika = QLabel()
-        self.pixmap = QPixmap('srclet/images/icons/srclet_drop.png')
-        self.pixmap = self.pixmap.scaled(500, 400, Qt.KeepAspectRatio)
-        self.label_slika.setPixmap(self.pixmap)
-        self.lijevi_groupbox.layout.addWidget(self.label_slika, alignment=Qt.AlignCenter)
-        self.lijevi_groupbox.setLayout(self.lijevi_groupbox.layout)
-        self.lijevi_groupbox.setFlat(True)
+        self.label_photo = QLabel()
+        self.pixmap = QPixmap('srclet/images/icons/eu_logo.jpg')
+        self.pixmap = self.pixmap.scaled(400, 100, Qt.KeepAspectRatio)
+        self.label_photo.setPixmap(self.pixmap)
         
-        self.desni_groupbox = QGroupBox()
-        self.desni_groupbox.layout = QVBoxLayout()
-        self.label_slika1 = QLabel()
-        self.pixmap1 = QPixmap('srclet/images/icons/srclet_drop.png')
-        self.label_slika1.setPixmap(self.pixmap1)
-        self.desni_groupbox.layout.addWidget(self.label_slika1, alignment=Qt.AlignCenter)
-        self.desni_groupbox.setLayout(self.desni_groupbox.layout)
+        self.label_photo2 = QLabel()
+        self.pixmap2 = QPixmap('srclet/images/icons/eu_logo.jpg')
+        self.pixmap2 = self.pixmap2.scaled(400, 100, Qt.KeepAspectRatio)
+        self.label_photo2.setPixmap(self.pixmap2)
         
-        self.tab_development.layout.addWidget(self.lijevi_groupbox, 0, 0)
-        self.tab_development.layout.addWidget(self.desni_groupbox, 0, 1) 
+        self.label_photo3 = QLabel()
+        self.pixmap3 = QPixmap('srclet/images/icons/unsa_logo.png')
+        self.pixmap3 = self.pixmap3.scaled(200, 100, Qt.KeepAspectRatio)
+        self.label_photo3.setPixmap(self.pixmap3)
+        
+        self.label_photo4 = QLabel()
+        self.pixmap4 = QPixmap('srclet/images/icons/ppf_logo.png')
+        self.pixmap4 = self.pixmap4.scaled(200, 100, Qt.KeepAspectRatio)
+        self.label_photo4.setPixmap(self.pixmap4)
+        
+        self.label_photo5 = QLabel()
+        self.pixmap5 = QPixmap('srclet/images/icons/bih_location.png')
+        self.pixmap5 = self.pixmap5.scaled(300, 100, Qt.KeepAspectRatio)
+        self.label_photo5.setPixmap(self.pixmap5)
+        
+        self.label1 = QLabel(self.language['development_text1'])
+        self.label2 = QLabel(self.language['development_text2'])
+        self.label3 = QLabel(self.language['development_text3'])
+        
+        
+        
+        self.groupbox2.layout.addWidget(self.label_photo, 0, 0, 1, 1)
+        self.groupbox2.layout.addWidget(self.label_photo2, 0, 1, 1, 1)
+        self.groupbox2.layout.addWidget(self.label_photo3, 1, 0, 1, 1)
+        self.groupbox2.layout.addWidget(self.label_photo4, 1, 1, 1, 1)
+        self.groupbox2.layout.addWidget(self.label_photo5, 2, 0, 1, 2)
+        self.groupbox2.layout.addWidget(self.label1, 3, 0, 1, 2)
+        self.groupbox2.layout.addWidget(self.label2, 4, 0, 1, 2)
+        self.groupbox2.layout.addWidget(self.label3, 5, 0, 1, 2)
+
+        self.groupbox2.setLayout(self.groupbox2.layout)
+        self.groupbox2.setFlat(True)
+        
+        self.tab_development.layout.addWidget(self.groupbox2)
         self.tab_development.setLayout(self.tab_development.layout)
         
         
@@ -147,19 +177,63 @@ class MyTabWidget(QWidget):
         
         # Create tab copyright
         self.tab_copyright.layout = QVBoxLayout(self)
-        self.l = QLabel()
-        self.l.setText("Version")
-        self.tab_copyright.layout.addWidget(self.l)
+        self.groupbox3 = QGroupBox()
+        self.font = self.groupbox3.font()
+        self.font.setPointSize(14)
+        self.groupbox3.setFont(self.font)
+        self.groupbox3.layout = QGridLayout()
+        
+        self.label1 = QLabel(self.language['copyright_text1'])
+        self.label1.setWordWrap(True)
+        self.label2 = QLabel(self.language['copyright_text2'])
+        self.label2.setWordWrap(True)
+        self.label3 = QLabel(self.language['copyright_text3'])
+        self.label3.setWordWrap(True)
+        self.label4 = QLabel(self.language['copyright_text4'])
+        self.label4.setWordWrap(True)
+        self.label5 = QLabel(self.language['copyright_text5'])
+        self.label5.setWordWrap(True)
+        self.label6 = QLabel(self.language['copyright_text6'])
+        self.label6.setWordWrap(True)
+        
+        
+        self.groupbox3.layout.addWidget(self.label1, 0, 0)
+        self.groupbox3.layout.addWidget(self.label2, 1, 0)
+        self.groupbox3.layout.addWidget(self.label3, 2, 0)
+        self.groupbox3.layout.addWidget(self.label4, 3, 0)
+        self.groupbox3.layout.addWidget(self.label5, 4, 0)
+        self.groupbox3.layout.addWidget(self.label6, 5, 0)
+
+        self.groupbox3.setLayout(self.groupbox3.layout)
+        self.groupbox3.setFlat(True)
+        self.tab_copyright.layout.addWidget(self.groupbox3)
         self.tab_copyright.setLayout(self.tab_copyright.layout)
         
         
         
         
         # Create tab disclamair
-        self.tab_disclamair.layout = QVBoxLayout(self)
-        self.l = QLabel()
-        self.l.setText("Version")
-        self.tab_disclamair.layout.addWidget(self.l)
+        self.tab_disclamair.layout = QGridLayout(self)
+        self.groupbox4 = QGroupBox()
+        self.font = self.groupbox4.font()
+        self.font.setPointSize(14)
+        self.groupbox4.setFont(self.font)
+        self.groupbox4.layout = QGridLayout()
+                      
+        self.label1 = QLabel(self.language['disclamair_text1'])
+        self.label1.setWordWrap(True)
+        self.label2 = QLabel(self.language['disclamair_text2'])
+        self.label2.setWordWrap(True)
+        self.label3 = QLabel(self.language['disclamair_text3'])
+        self.label3.setWordWrap(True)
+        
+        self.groupbox4.layout.addWidget(self.label1, 0, 0)
+        self.groupbox4.layout.addWidget(self.label2, 1, 0)
+        self.groupbox4.layout.addWidget(self.label3, 2, 0)
+        
+        self.groupbox4.setLayout(self.groupbox4.layout)
+        self.groupbox4.setFlat(True)
+        self.tab_disclamair.layout.addWidget(self.groupbox4)
         self.tab_disclamair.setLayout(self.tab_disclamair.layout)
   
   
