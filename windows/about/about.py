@@ -1,11 +1,11 @@
-import sys
+import sys, os
 # app modules and windows
 #from variables import css
-#
 # pyqt5 modules
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QDialog, QTabWidget
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QGroupBox
+from PyQt5.QtWidgets import QFormLayout
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt
 
 class AboutWindow(QWidget):
@@ -16,7 +16,8 @@ class AboutWindow(QWidget):
             "development": "Development",
             "copyright": "Copyright",
             "disclamair": "Disclamair",
-            "version_ver": "Version 1.0",
+            "version_ver": "Version:",
+            "version_version": "1.0",
             "version_date": "October 2022",
             "version_dev": "Developed by:",
             "version_dev_by": "Sabrija Čadro and Mirza Uzunović",
@@ -51,15 +52,11 @@ class MyTabWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.language = language
         self.layout = QVBoxLayout(self)
-  
-        # Initialize tab screen
         self.tabs = QTabWidget()
         self.tab_version = QWidget()
         self.tab_development = QWidget()
         self.tab_copyright = QWidget()
         self.tab_disclamair = QWidget()
-          
-        # Add tabs
         self.tabs.addTab(self.tab_version, self.language['version'])
         self.tabs.addTab(self.tab_development, self.language['development'])
         self.tabs.addTab(self.tab_copyright, self.language['copyright'])
@@ -67,27 +64,64 @@ class MyTabWidget(QWidget):
   
         # Create tab version
         self.tab_version.layout = QGridLayout()
-        #self.tab_version.layout = QVBoxLayout(self)
         
-        self.version_ver = QLabel(self.language['version_ver'])
-        self.tab_version.layout.addWidget(self.version_ver)
+        self.left_groupbox = QGroupBox()
+        self.left_groupbox.layout = QVBoxLayout()
+        self.label_photo = QLabel()
+        self.pixmap = QPixmap('srclet/images/icons/srclet_drop.png')
+        self.pixmap = self.pixmap.scaled(300, 300, Qt.KeepAspectRatio)
+        self.label_photo.setPixmap(self.pixmap)
+        self.left_groupbox.layout.addWidget(self.label_photo, alignment=Qt.AlignCenter)
+        self.left_groupbox.setLayout(self.left_groupbox.layout)
+        self.left_groupbox.setFlat(True)
         
-        self.version_date = QLabel(self.language['version_date'])
-        self.tab_version.layout.addWidget(self.version_date)
+        self.right_groupbox = QGroupBox()
+        self.font =self.right_groupbox.font()
+        self.font.setPointSize(14)
+        self.right_groupbox.setFont(self.font)
+        self.right_groupbox.layout = QGridLayout()
+        self.flay = QFormLayout()
         
-        self.version_dev = QLabel(self.language['version_dev'])
-        self.tab_version.layout.addWidget(self.version_dev)
+        self.label_photo = QLabel()
+        self.pixmap = QPixmap('srclet/images/icons/srclet_cap.png')
+        self.pixmap = self.pixmap.scaled(350, 300, Qt.KeepAspectRatio)
+        self.label_photo.setPixmap(self.pixmap)
+        self.flay.addRow(self.label_photo)
         
-        self.version_dev_by = QLabel(self.language['version_dev_by'])
-        self.tab_version.layout.addWidget(self.version_dev_by)
+        self.label_version = QLabel(self.language['version_ver'])
+        self.label_version_ver = QLabel(self.language['version_version'])
+        self.flay.addRow(self.label_version, self.label_version_ver)
         
+        self.right_groupbox.setLayout(self.flay)
+        
+
+        self.tab_version.layout.addWidget(self.left_groupbox, 0, 0)
+        self.tab_version.layout.addWidget(self.right_groupbox, 0, 1)
         self.tab_version.setLayout(self.tab_version.layout)
         
         # Create tab development
-        self.tab_development.layout = QVBoxLayout(self)
-        self.l = QLabel()
-        self.l.setText("Version")
-        self.tab_development.layout.addWidget(self.l)
+        self.tab_development.layout = QGridLayout()
+        
+        self.lijevi_groupbox = QGroupBox()
+        self.lijevi_groupbox.layout = QVBoxLayout()
+        self.label_slika = QLabel()
+        self.pixmap = QPixmap('srclet/images/icons/srclet_drop.png')
+        self.pixmap = self.pixmap.scaled(500, 400, Qt.KeepAspectRatio)
+        self.label_slika.setPixmap(self.pixmap)
+        self.lijevi_groupbox.layout.addWidget(self.label_slika, alignment=Qt.AlignCenter)
+        self.lijevi_groupbox.setLayout(self.lijevi_groupbox.layout)
+        self.lijevi_groupbox.setFlat(True)
+        
+        self.desni_groupbox = QGroupBox()
+        self.desni_groupbox.layout = QVBoxLayout()
+        self.label_slika1 = QLabel()
+        self.pixmap1 = QPixmap('srclet/images/icons/srclet_drop.png')
+        self.label_slika1.setPixmap(self.pixmap1)
+        self.desni_groupbox.layout.addWidget(self.label_slika1, alignment=Qt.AlignCenter)
+        self.desni_groupbox.setLayout(self.desni_groupbox.layout)
+        
+        self.tab_development.layout.addWidget(self.lijevi_groupbox, 0, 0)
+        self.tab_development.layout.addWidget(self.desni_groupbox, 0, 1) 
         self.tab_development.setLayout(self.tab_development.layout)
         
         # Create tab copyright
