@@ -18,8 +18,9 @@ class AboutWindow(QWidget):
             "disclamair": "Disclamair",
             "version_ver": "Version:",
             "version_version": "1.0",
-            "version_date": "October 2022",
-            "version_dev": "Developed by:",
+            "version_date_text": "Released:",
+            "version_date_date": "October 2022",
+            "version_dev_text": "Developed by:",
             "version_dev_by": "Sabrija Čadro and Mirza Uzunović",
             "version_contact": "Contact:",
             "version_contact_mail": "meet.jeanmonnet@gmail.com",
@@ -91,6 +92,10 @@ class MyTabWidget(QWidget):
         self.label_version = QLabel(self.language['version_ver'])
         self.label_version_ver = QLabel(self.language['version_version'])
         self.flay.addRow(self.label_version, self.label_version_ver)
+        
+        self.label_date = QLabel(self.language['version_date_text'])
+        self.label_date_date = QLabel(self.language['version_date_date'])
+        self.flay.addRow(self.label_date, self.label_date_date)
         
         self.right_groupbox.setLayout(self.flay)
         
