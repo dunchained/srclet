@@ -15,30 +15,31 @@ class ProjectWindow(QMainWindow):
         self.language = language
         self.project_path = project_path
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.showMaximized()
+        self.setFixedSize(800, 600)
+        #self.showMaximized()
         self.project_title = self.project_path.split('/')[-1]
         self.setWindowTitle(self.language['project_opened_title'] + self.project_title)
-        self.setWindowIcon(QIcon(css.open_project_icon))
-        self.centerUserInterface()
-        self.fileMenu()
+        #self.setWindowIcon(QIcon(css.open_project_icon))
+        self.center_gui()
+        self.file_menu()
         self.central_widget = CalculateWidget(project_path=self.project_path, language=language)
         self.setCentralWidget(self.central_widget)
         self.show()
 
-    def centerUserInterface(self):
+    def center_gui(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def fileMenu(self):
+    def file_menu(self):
         menubar = self.menuBar()
         #menubar.setStyleSheet(css.menu_background_image)
         fileMenu = menubar.addMenu(self.language['project_opened_menu_file'])
         exitAct = QAction(QIcon(css.menu_exit_icon), self.language['project_opened_menu_exit'], self)
         exitAct.setShortcut('Ctrl+Q')
-        exitAct.triggered.connect(self.exitProject)
+        exitAct.triggered.connect(self.exit_project)
         fileMenu.addAction(exitAct)
 
-    def exitProject(self):
+    def exit_project(self):
         self.hide()

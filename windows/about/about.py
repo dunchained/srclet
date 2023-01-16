@@ -1,4 +1,5 @@
 from variables import css, var
+from mortys.font_morty import read_text_font_size
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QTabWidget, QFormLayout
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QGroupBox
 from PyQt5.QtGui import QIcon, QPixmap
@@ -46,7 +47,7 @@ class MyTabWidget(QWidget):
         self.tab_version.layout = QGridLayout()
         self.groupbox = QGroupBox()
         self.font = self.groupbox.font()
-        self.font.setPointSize(14)
+        self.font.setPointSize(read_text_font_size())
         self.groupbox.setFont(self.font)
         self.groupbox.layout = QGridLayout()
         self.flay = QFormLayout()
@@ -79,7 +80,7 @@ class MyTabWidget(QWidget):
         self.tab_development.layout = QGridLayout()
         self.groupbox2 = QGroupBox()
         self.font = self.groupbox2.font()
-        self.font.setPointSize(14)
+        self.font.setPointSize(read_text_font_size())
         self.groupbox2.setFont(self.font)
         self.groupbox2.layout = QGridLayout()
         self.label_photo = QLabel()
@@ -105,7 +106,7 @@ class MyTabWidget(QWidget):
         self.tab_copyright.layout = QGridLayout(self)
         self.groupbox3 = QGroupBox()
         self.font = self.groupbox3.font()
-        self.font.setPointSize(14)
+        self.font.setPointSize(read_text_font_size())
         self.groupbox3.setFont(self.font)
         self.groupbox3.layout = QGridLayout()
         self.label1 = QLabel(self.language['copyright_text1'])
@@ -135,7 +136,7 @@ class MyTabWidget(QWidget):
         self.tab_disclamair.layout = QGridLayout(self)
         self.groupbox4 = QGroupBox()
         self.font = self.groupbox4.font()
-        self.font.setPointSize(14)
+        self.font.setPointSize(read_text_font_size())
         self.groupbox4.setFont(self.font)
         self.groupbox4.layout = QGridLayout()
         self.label1 = QLabel(self.language['disclamair_text1'])
