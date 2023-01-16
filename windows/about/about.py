@@ -14,7 +14,7 @@ class AboutWindow(QWidget):
     def window_gui(self):
         self.setFixedSize(800, 600)
         self.setWindowTitle(self.language['about_window_title'])
-        self.setWindowIcon(QIcon(css.menu_about_icon))
+        self.setWindowIcon(QIcon(css.about_icon))
         self.center_gui()
         self.tabovi = MyTabWidget(self, language=self.language)
         self.tabovi.resize(800, 600)
