@@ -1,4 +1,4 @@
-from variables import css
+from variables import css, var
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QTabWidget, QFormLayout
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QGroupBox
 from PyQt5.QtGui import QIcon, QPixmap
@@ -12,12 +12,12 @@ class AboutWindow(QWidget):
         self.window_gui()
 
     def window_gui(self):
-        self.setFixedSize(800, 600)
+        self.setFixedSize(var.about_window_widith, var.about_window_height)
         self.setWindowTitle(self.language['about_window_title'])
         self.setWindowIcon(QIcon(css.about_icon))
         self.center_gui()
         self.tabovi = MyTabWidget(self, language=self.language)
-        self.tabovi.resize(800, 600)
+        self.tabovi.resize(var.about_window_widith, var.about_window_height)
         self.show()
         
     def center_gui(self):
@@ -51,7 +51,7 @@ class MyTabWidget(QWidget):
         self.groupbox.layout = QGridLayout()
         self.flay = QFormLayout()
         self.label_photo = QLabel()
-        self.pixmap = QPixmap('srclet/images/icons/srclet_caption.png')
+        self.pixmap = QPixmap(css.about_window_image_srclet)
         self.pixmap = self.pixmap.scaled(700, 400, Qt.KeepAspectRatio)
         self.label_photo.setPixmap(self.pixmap)
         self.flay.addRow(self.label_photo)
@@ -83,7 +83,7 @@ class MyTabWidget(QWidget):
         self.groupbox2.setFont(self.font)
         self.groupbox2.layout = QGridLayout()
         self.label_photo = QLabel()
-        self.pixmap = QPixmap('srclet/images/icons/eu_logo.jpg')
+        self.pixmap = QPixmap(css.about_window_image_development)
         self.pixmap = self.pixmap.scaled(400, 100, Qt.KeepAspectRatio)
         self.label_photo.setPixmap(self.pixmap)
         self.label1 = QLabel(self.language['development_text1'])

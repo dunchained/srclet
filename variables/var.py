@@ -14,6 +14,11 @@ new_project_window_height = 200
 new_project_window_2_widith = 800
 new_project_window_2_height = 500
 
+# about.py:
+about_window_widith = 800
+about_window_height = 600
+
+
 # general:
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
