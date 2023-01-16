@@ -216,5 +216,33 @@
 
 
 
-    "":""
+    "//":"about.py",
+    "about_window_title": "Abouta SRCLET",
+    "version": "Version",
+    "development": "Development",
+    "copyright": "Copyright",
+    "disclamair": "Disclamair",
+    "version_ver": "Version:",
+    "version_version": "1.0",
+    "version_date_text": "Released:",
+    "version_date_date": "October 2022",
+    "version_dev_text": "Developed by:",
+    "version_dev_by": "Sabrija Čadro, Mirza Uzunović",
+    "version_contact": "Contact:",
+    "version_contact_mail": "meet.jeanmonnet@gmail.com",
+    "version_web": "Web:",
+    "version_web_location": "https://meet.motherlandia.org/srclet/",
+    "development_text1": "SRCLET 1.0 was developed as part of Jean Monnet project Modern techniques to ensure environmental sustainability in Eastern Europe - MEET (Project Reference: 621118-EPP-1-2020-1-BA-EPPJMO-MODULE) with the support of the Erasmus+ Programme of the European Union.",
+    "development_text2": "Authors: Sabrija Čadro and Mirza Uzunović, University of Sarajevo (https://www.unsa.ba/), Faculty of Agriculture and Food scenes (https://www.ppf.unsa.ba/), Bosnia and Herzegovina",
+    "development_text3": "Procedures, methods, algorithms and documentation were developed and/or tested by Mirza Uzunović, Sabrija Čadro, Ognjen Žurovec, Monika Marković and Milan Gocić.",
+    "copyright_text1": "All rights reserved.",
+    "copyright_text2": "Reproduction and dissemination of material related to this computer software for educational, research or other non-commercial purposes are authorized without any prior written permission from the copyright holders provided the source is fully acknowledged.",
+    "copyright_text3": "The authors hope that this software tool, with God's help, will be useful to all people.",
+    "copyright_text4": "Reproduction of material in this information product for resale or other commercial purposes is prohibited without written permission of the copyright holders.",
+    "copyright_text5": "Applications for such permission should be addressed to the softwere developer Mirza Uzunović by e-mail meet.jeanmonnet@gmail.com",
+    "copyright_text6": "Authors [2022]",
+    "disclamair_text1": "Authors decline all responsibility for errors or deficiencies in the database or in the files and documents that come with the SRCLET softwere.",
+    "disclamair_text2": "Authors also declines any responsibility for updating the data and assumes no responsibility for errors and omissions in the data provided. Users are, however, kindly asked to report any errors or deficiencies at: meet.jeanmonnet@gmail.com.",
+    "disclamair_text3": "The European Commission support for the production of this prodact does not constitute an endorsement of the contents which reflects the views only of the authors, and the Commission cannot be held responsible for any use which may be made of the information contained therein."
+
 }
