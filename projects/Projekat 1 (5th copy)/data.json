@@ -1,0 +1,13 @@
+{
+    "weather_station": "Emisija1",
+    "weather_station_country": "BiH",
+    "weather_station_elevation": "nema",
+    "weather_station_latitude": "ima",
+    "weather_station_longitude": "bice",
+    "anamometer_height": "10",
+    "wind_speed": "2",
+    "krs_factor": "0.162",
+    "skip_rows": "1",
+    "missing_data": "-999",
+    "project_description": "Samo nam je ljubav potrebna!"
+}
