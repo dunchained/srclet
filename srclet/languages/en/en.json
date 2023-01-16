@@ -120,7 +120,7 @@
     "project_opened_menu_exit": "Exit",
 
     "//": "Opened project Widget",
-    "project_opened_widget_project_info": "project_info",
+    "project_opened_widget_project_info": "Project info: ",
     "project_opened_widget_data_info": "data_info",
     "project_opened_widget_methods_info": "methods_info",
     "project_opened_widget_vizualization_options": "viz_options",
