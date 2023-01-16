@@ -103,10 +103,16 @@
     "//": "Open project Window",
     "open_project_title": "Open existing project...",
     "open_project_caption": "Select project from the list:",
+    "open_project_description_caption": "Short project description:",
     "open_project_btn_caption": "Do something with selected project...",
     "open_project_btn_open": "Open selected project...",
     "open_project_btn_delete": "Delete selected project...",
     "open_project_btn_cancel": "Cancel",
+    "open_project_delete_message": "Are you sure you vant to delete project:",
+    "open_project_delete_message_title": "Delete project?",
+    "open_project_delete_ok": "Yes",
+    "open_project_delete_cancel": "No",
+
 
     "//": "Opened project Window",
     "project_opened_title": "Working with project: ",
