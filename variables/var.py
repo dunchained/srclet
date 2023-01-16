@@ -22,6 +22,10 @@ about_window_height = 600
 open_project_widith = 800
 open_project_height = 500
 
+# project_opened.py
+project_opened_window_widith = 800
+project_opened_window_height = 600
+
 
 # general:
 language_folder = '/srclet/languages/'

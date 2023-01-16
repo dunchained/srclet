@@ -1,11 +1,8 @@
-import sys, os, json
-from pathlib import Path
-from variables import css
+from variables import css, var
+from mortys.font_morty import read_menu_font_size
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget
-from PyQt5.QtWidgets import QPushButton, QGridLayout, QListWidget, QGroupBox
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QLineEdit
+from PyQt5.QtWidgets import QAction, QMainWindow, QDesktopWidget
 #
 from windows.project.project_opened_widget import CalculateWidget
 
@@ -15,11 +12,11 @@ class ProjectWindow(QMainWindow):
         self.language = language
         self.project_path = project_path
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.setFixedSize(800, 600)
+        self.setFixedSize(var.project_opened_window_widith, var.project_opened_window_height)
         #self.showMaximized()
         self.project_title = self.project_path.split('/')[-1]
         self.setWindowTitle(self.language['project_opened_title'] + self.project_title)
-        #self.setWindowIcon(QIcon(css.open_project_icon))
+        self.setWindowIcon(QIcon(css.srclet_icon))
         self.center_gui()
         self.file_menu()
         self.central_widget = CalculateWidget(project_path=self.project_path, language=language)
@@ -34,9 +31,15 @@ class ProjectWindow(QMainWindow):
 
     def file_menu(self):
         menubar = self.menuBar()
-        #menubar.setStyleSheet(css.menu_background_image)
+        font = menubar.font()
+        font.setPointSize(read_menu_font_size())
+        menubar.setFont(font)
+        
         fileMenu = menubar.addMenu(self.language['project_opened_menu_file'])
-        exitAct = QAction(QIcon(css.menu_exit_icon), self.language['project_opened_menu_exit'], self)
+        font = fileMenu.font()
+        font.setPointSize(read_menu_font_size())
+        fileMenu.setFont(font)
+        exitAct = QAction(QIcon(css.exit_icon), self.language['project_opened_menu_exit'], self)
         exitAct.setShortcut('Ctrl+Q')
         exitAct.triggered.connect(self.exit_project)
         fileMenu.addAction(exitAct)
