@@ -7,7 +7,7 @@ from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
-from windows.parameters.parameters import ParametersWindow
+from windows.parameters.basic_parameters import ParametersWindow
 from windows.parameters.complex_paramateres import ComplexParametersWindow
 from windows.methods.methods_eto import ETOMethodsWindow
 from windows.methods.methods_wb import WBMethodsWindow

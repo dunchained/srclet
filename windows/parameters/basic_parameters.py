@@ -6,8 +6,8 @@ from pathlib import Path
 cwd = os.path.curdir
 
 # app modules and windows
-from variables import css, var
-from windows.parameters.add_parameter import AddParameter
+#from variables import css, var
+#from windows.parameters.add_basic_parameter import AddParameter
 #from add_parameter import AddParameter
 #
 # pyqt5 modules
@@ -28,12 +28,32 @@ wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
 class ParametersWindow(QWidget):
-    def __init__(self, language):
+    def __init__(self):
         super(ParametersWindow, self).__init__()
-        self.language = language
-        self.AddParameter = AddParameter()
-        self.AddParameter.hide()
-        self.AddParameter.clicked.connect(self.refresh_parameters_list)
+        self.language = {
+                        "language_description": "en",
+                         "//": "Parameters Window",
+                        "parameters_window_title": "Parameters",
+                        "parameters_window_caption": "List of available parameters in this category:",
+                        "parameters_window_btn_add_new": "Add new parameter",
+                        "parameters_window_btn_delete": "Delete selected parameter",
+                        "parameters_window_parameter_caption": "Parameters information:",
+                        "parameters_window_parameter_filename": "Filename:",
+                        "parameters_window_parameter_name": "Parameter name:",
+                        "parameters_window_parameter_symbol": "Parameter symbol:",
+                        "parameters_window_parameter_unit": "Parameter unit:",
+                        "parameters_window_parameter_desc": "Parameter description:",
+                        "parameters_window_parameter_btn_save": "Save changes",
+                        "parameters_window_parameter_btn_cancel": "Cancel changes",
+                        "parameters_window_btn_close": "Close",
+                        "parameters_window_save_changes_message": "Parameter name or unit empty...",
+                        "parameters_window_save_changes_message_caption": "Missing data...",
+                        "parameters_window_save_message": "Parameter saved...",
+                        "parameters_window_save_message_caption": "Successuful..."
+                         }
+        #self.AddParameter = AddParameter()
+        #self.AddParameter.hide()
+        #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.WindowGUI()
 
