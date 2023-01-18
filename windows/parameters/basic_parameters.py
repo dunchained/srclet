@@ -8,8 +8,9 @@ cwd = os.path.curdir
 # app modules and windows
 #from variables import css, var
 #from windows.parameters.add_basic_parameter import AddParameter
+#from add_basic_parameter import AddParameter
 #from add_parameter import AddParameter
-#
+#from mortys.parameters_morty import read_parameter_categories_list
 # pyqt5 modules
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
@@ -55,9 +56,9 @@ class ParametersWindow(QWidget):
         #self.AddParameter.hide()
         #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.WindowGUI()
+        self.window_gui()
 
-    def WindowGUI(self):
+    def window_gui(self):
         #self.setFixedSize(800, 600)
         self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['parameters_window_title'])
@@ -67,87 +68,26 @@ class ParametersWindow(QWidget):
         self.grid.addWidget(self.central_widget)
         #self.grid.addWidget(self.centralGroupBox())
         self.setLayout(self.grid)
-        self.centerUserInterface()
+        self.center_gui()
         self.show()
         
-    def centerUserInterface(self):
+    def center_gui(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-            
-    def refresh_parameters_list(self):
-        get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
-        self.file_list_update = []
-        for file in get_files:
-            if Path(file).stem not in self.file_list:
-                self.file_list_update.append(Path(file).stem)
-        self.list_widget.addItems(self.file_list_update)
 
-    def delete_parameter(self):
-        list_items = self.list_widget.selectedItems()
-        if not list_items: return
-        for item in list_items:
-            self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove(cwd + parameters_folder + item.text() + '.json')
-    
-
-    def cancel(self):
-        self.json_path = cwd + parameters_folder + self.list_widget.currentItem().text() + '.json'
-        with open(self.json_path) as json_file:
-            data = json.load(json_file)
-            
-        self.parameter_name.setText(data['name'])
-        self.parameter_symbol.setText(data['symbol'])
-        self.parameter_unit.setText(data['unit'])
-        self.parameter_descriprion.setText(data['description'])
-    
-    def newParameterWindow(self):
-        self.AddParameter.show()
-
-    def save_changes_parameter(self):
-        if not self.parameter_filename and not self.parameter_name.text() and not self.parameter_unit.text():
-            self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['parameters_window_save_changes_message'])
-            self.msg.setWindowTitle(self.language['parameters_window_save_changes_message_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
-            self.msg.buttonClicked.connect(self.msg.close)
-            self.msg.show()
-        else:
-            parameter_dict = {
-                "name": self.parameter_name.text(),
-                "symbol": self.parameter_symbol.text(),
-                "unit": self.parameter_unit.text(),
-                "description": self.parameter_descriprion.toPlainText(),
-                "type": "a"
-                }
-            json_object = json.dumps(parameter_dict, indent = 4)
-            with open(cwd + parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
-                outfile.write(json_object)
-                
-            self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['parameters_window_save_message'])
-            self.msg.setWindowTitle(self.language['parameters_window_save_message_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
-            self.msg.show()
-
-    def close_me(self):
-        self.close()
 
 class ParametersCategoryTabs(QDialog):
     def __init__(self, language):
         super().__init__()
         self.language = language
-        self.tabWidget()
+        self.tab_widget()
         self.show()
 
-    def tabWidget(self):
+    def tab_widget(self):
         self.categories_tabs = QTabWidget()
-        categoriess_file = 'parameter_types.json'
+        categoriess_file = 'parameter_types.json' ### import iz var
         categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
         self.categories_file_data = json.load(categories_file)
         self.categories_list = []
@@ -155,15 +95,12 @@ class ParametersCategoryTabs(QDialog):
             self.categories_list.append(self.categories_file_data[category])
         for tabName in self.categories_list:
             self.category = list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(tabName)]
-
             tabWidget = QWidget()
             listWidget = ParametersWidget(self.category, self.language)
             tabLayout = QGridLayout()
             tabLayout.addWidget(listWidget)
             tabWidget.setLayout(tabLayout)
-
             self.categories_tabs.addTab(tabWidget, tabName)
-
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.categories_tabs)
         self.setLayout(mainLayout)
@@ -181,19 +118,18 @@ class ParametersWidget(QWidget):
             if self.category == self.file_data['category']:
                 self.category_list.append(self.file_data['name'])
         self.grid = QGridLayout()
-        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0)
-        self.grid.addWidget(self.create_parameter_widget(), 0, 1)
-        self.grid.addWidget(self.close_button(), 1, 0)
+        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
+        self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
+        self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
         self.setLayout(self.grid)
 
     def create_list_widget(self, category_list):
         self.category_list = category_list
-
         groupBox = QGroupBox(self.language['parameters_window_caption'])
         self.list_widget = QListWidget()
         self.list_widget.addItems(self.category_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        
+
         self.buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
         self.buttonAddParameter.clicked.connect(self.new_parameter_window)
 
@@ -210,13 +146,12 @@ class ParametersWidget(QWidget):
 
     def index_changed(self, i):
         self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
-        self.file_to_load = ''
+        #self.file_to_load = ''
         for file in self.get_files:
             self.file_to_read = open(os.path.join(cwd + parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if i.text() == self.file_data['name']:
                 self.file_to_load = file
-
         self.json_path = cwd + parameters_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
@@ -231,6 +166,7 @@ class ParametersWidget(QWidget):
     def delete_parameter(self):
         pass
     
+    ### desna strana
     def create_parameter_widget(self):
         groupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
 

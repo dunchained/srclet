@@ -1,5 +1,4 @@
 # python standard modules
-from fileinput import filename
 import sys, json, os, random
 from pathlib import Path
 cwd = os.path.curdir
@@ -57,7 +56,6 @@ class AddParameter(QWidget):
             "add_parameter_window_saved_message_caption": "Successuful...",
             "add_parameter_window_filename_message": "Parameter with this filename already exists.",
             "add_parameter_window_filename_message_caption": "Filename...",
-            "add_parameter_window_insert_special": "Insert special character"
         }
         self.WindowGUI()
 
@@ -137,37 +135,23 @@ class AddParameter(QWidget):
         self.text_parameter_name = QLabel(self.language['add_parameter_window_name_exp'])
         self.parameter_name = QLineEdit()
 
-        self.insert_special_character = QPushButton(self.language['add_parameter_window_insert_special'])
-        self.insert_special_character.clicked.connect(self.insert_character)
-
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_name)
         layout.addWidget(self.parameter_name)
-        layout.addWidget(self.insert_special_character)
         layout.addStretch(1)
         
         groupBox.setLayout(layout)
 
         return groupBox
-    
-    def insert_character(self):
-        #u = chr(40960) + 'abcd' + chr(1972)
-        #>>> u.encode('utf-8')
-        text = '\u2109'
-        self.parameter_name.setText(self.parameter_name.text() + '\u2109')
 
     def parameterSymbolGroupBox(self):
         groupBox = QGroupBox(self.language['add_parameter_window_symbol'])
         self.text_parameter_symbol = QLabel(self.language['add_parameter_window_symbol_exp'])
         self.parameter_symbol = QLineEdit()
 
-        self.insert_special_character = QPushButton(self.language['add_parameter_window_insert_special'])
-        self.insert_special_character.clicked.connect(self.insert_character)
-
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_symbol)
         layout.addWidget(self.parameter_symbol)
-        layout.addWidget(self.insert_special_character)
         layout.addStretch(1)
         
         groupBox.setLayout(layout)
@@ -179,13 +163,9 @@ class AddParameter(QWidget):
         self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit_exp'])
         self.parameter_unit = QLineEdit()
 
-        self.insert_special_character = QPushButton(self.language['add_parameter_window_insert_special'])
-        self.insert_special_character.clicked.connect(self.insert_character)
-
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_unit)
         layout.addWidget(self.parameter_unit)
-        layout.addWidget(self.insert_special_character)
         layout.addStretch(1)
         
         groupBox.setLayout(layout)

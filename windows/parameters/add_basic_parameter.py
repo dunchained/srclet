@@ -1,4 +1,5 @@
 # python standard modules
+from fileinput import filename
 import sys, json, os, random
 from pathlib import Path
 cwd = os.path.curdir
@@ -18,10 +19,11 @@ wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
 # pyqt5 modules
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
+from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
+from character_widget import CharacterWidget
 
 class AddParameter(QWidget):
     clicked = pyqtSignal()
@@ -34,59 +36,162 @@ class AddParameter(QWidget):
 
 
             "//": "Add Parameter Window",
-            "add_parameter_window_title": "Add new parameter",
-            "add_parameter_window_caption": "Parameter information:",
-            "add_parameter_window_filename": "Filename:",
-            "add_parameter_window_filename_exp": "Text to be used as parameter filename.",
-            "add_parameter_window_category": "Parameter category:",
-            "add_parameter_window_category_exp": "Paremeter category...",
-            "add_parameter_window_name": "Parameter name:",
-            "add_parameter_window_name_exp": "Text to be used as parameter short description.",
-            "add_parameter_window_unit": "Parameter unit:",
-            "add_parameter_window_unit_exp": "Unit to be used...",
-            "add_parameter_window_symbol": "Parameter symbol:",
-            "add_parameter_window_symbol_exp": "Text to be used as parameter symbol in forulas.",
-            "add_parameter_window_desc": "Parameter description:",
-            "add_parameter_window_desc_exp": "Text to be used for short explinations.",
-            "add_parameter_window_btn_add": "Save",
-            "add_parameter_window_btn_cancel": "Cancel",
-            "add_parameter_window_save_message": "Parameter name or unit empty...",
-            "add_parameter_window_save_message_caption": "Missing data...",
-            "add_parameter_window_saved_message": "Parameter saved...",
-            "add_parameter_window_saved_message_caption": "Successuful...",
-            "add_parameter_window_filename_message": "Parameter with this filename already exists.",
-            "add_parameter_window_filename_message_caption": "Filename...",
+            "add_basic_parameter_window_title": "Add new basic parameter",
+            "add_basic_parameter_window_caption": "Parameter information:",
+            "add_basic_parameter_window_filename": "Filename:",
+            "add_basic_parameter_window_filename_exp": "Text to be used as parameter filename.",
+            "add_basic_parameter_window_category": "Parameter category:",
+            "add_basic_parameter_window_category_exp": "Paremeter category...",
+            "add_basic_parameter_window_name": "Parameter name:",
+            "add_basic_parameter_window_name_exp": "Text to be used as parameter short description.",
+            "add_basic_parameter_window_unit": "Parameter unit:",
+            "add_basic_parameter_window_unit_exp": "Unit to be used...",
+            "add_basic_parameter_window_symbol": "Parameter symbol:",
+            "add_basic_parameter_window_symbol_exp": "Text to be used as parameter symbol in forulas.",
+            "add_basic_parameter_window_desc": "Parameter description:",
+            "add_basic_parameter_window_desc_exp": "Text to be used for short explinations.",
+            "add_basic_parameter_window_btn_add": "Save",
+            "add_basic_parameter_window_btn_cancel": "Cancel",
+            "add_basic_parameter_window_save_message": "Parameter name or unit empty...",
+            "add_basic_parameter_window_save_message_caption": "Missing data...",
+            "add_basic_parameter_window_saved_message": "Parameter saved...",
+            "add_basic_parameter_window_saved_message_caption": "Successuful...",
+            "add_basic_parameter_window_filename_message": "Parameter with this filename already exists.",
+            "add_basic_parameter_window_filename_message_caption": "Filename...",
+            "add_basic_parameter_window_insert_special": "Insert special character",
+            "add_basic_parameter_window_sc": "Input special character:",
+            "add_basic_parameter_window_sc_exp" : "Use to input special character"
         }
-        self.WindowGUI()
+        self.window_gui()
 
-    def WindowGUI(self):
-        self.setFixedSize(800, 800)
+    def window_gui(self):
+        self.setFixedSize(1200, 800)
         #self.setWindowState(Qt.WindowMaximized)
-        self.setWindowTitle(self.language['add_parameter_window_title'])
+        self.setWindowTitle(self.language['add_basic_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
-        self.grid.addWidget(self.centralGroupBox())
+        #self.grid.addWidget(self.centralGroupBox())
+        self.grid.addWidget(self.pb_name_groupbox(), 0, 0, 1, 1)
+        self.grid.addWidget(self.pb_category_groupbox(), 0, 1, 1, 1)
+        self.grid.addWidget(self.pb_symbol_groupbox(), 1, 0, 1, 1)
+        self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
+        self.grid.addWidget(self.pb_description_groupbox(), 2, 0, 1, 2)
+        self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
+        self.grid.addWidget(self.button_groupbox(), 3, 0, 1, 3)
         self.setLayout(self.grid)
-        self.centerUserInterface()
+        self.center_gui()
         self.show()
         
-    def centerUserInterface(self):
+    def center_gui(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+        
+    def pb_name_groupbox(self):
+        self.pbn_groupbox = QGroupBox(self.language['add_basic_parameter_window_name'])
+        self.text_parameter_name = QLabel(self.language['add_basic_parameter_window_name_exp'])
+        self.parameter_name = QLineEdit()
+        self.pbn_groupbox.layout = QVBoxLayout()
+        self.pbn_groupbox.layout.addWidget(self.text_parameter_name)
+        self.pbn_groupbox.layout.addWidget(self.parameter_name)
+        self.pbn_groupbox.layout.addStretch(1)
+        self.pbn_groupbox.setLayout(self.pbn_groupbox.layout)
+        return self.pbn_groupbox
+    
+    def pb_category_groupbox(self):
+        categoriess_file = 'parameter_types.json'
+        self.pbc_groupbox = QGroupBox(self.language['add_basic_parameter_window_category'])
+        self.text_parameter_category = QLabel(self.language['add_basic_parameter_window_category_exp'])
+        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
+        self.categories_file_data = json.load(categories_file)
+        self.categories_list = []
+        for category in self.categories_file_data:
+            self.categories_list.append(self.categories_file_data[category])
+        self.comboBox = QComboBox()
+        self.comboBox.addItems(self.categories_list)
+        self.pbc_groupbox.layout = QVBoxLayout()
+        self.pbc_groupbox.layout.addWidget(self.text_parameter_category)
+        self.pbc_groupbox.layout.addWidget(self.comboBox)
+        self.pbc_groupbox.layout.addStretch(1)
+        self.pbc_groupbox.setLayout(self.pbc_groupbox.layout)
+        return self.pbc_groupbox
+    
+    def pb_symbol_groupbox(self):
+        self.pbs_groupbox = QGroupBox(self.language['add_basic_parameter_window_symbol'])
+        self.text_parameter_symbol = QLabel(self.language['add_basic_parameter_window_symbol_exp'])
+        self.parameter_symbol = QLineEdit()
+        self.pbs_groupbox.layout = QVBoxLayout()
+        self.pbs_groupbox.layout.addWidget(self.text_parameter_symbol)
+        self.pbs_groupbox.layout.addWidget(self.parameter_symbol)
+        self.pbs_groupbox.layout.addStretch(1)
+        self.pbs_groupbox.setLayout(self.pbs_groupbox.layout)
+        return self.pbs_groupbox
+    
+    def pb_unit_groupbox(self):
+        self.pbu_groupbox = QGroupBox(self.language['add_basic_parameter_window_unit'])
+        self.text_parameter_unit = QLabel(self.language['add_basic_parameter_window_unit_exp'])
+        self.parameter_unit = QLineEdit()
+        self.pbu_groupbox.layout = QVBoxLayout()
+        self.pbu_groupbox.layout.addWidget(self.text_parameter_unit)
+        self.pbu_groupbox.layout.addWidget(self.parameter_unit)
+        self.pbu_groupbox.layout.addStretch(1)
+        self.pbu_groupbox.setLayout(self.pbu_groupbox.layout)
+        return self.pbu_groupbox
 
-    def centralGroupBox(self):
-        groupBox = QGroupBox()
-        grid = QGridLayout()
-        grid.addWidget(self.parameterNameGroupBox(), 0, 0, 1, 1)
-        grid.addWidget(self.parameterCategoryGroupBox(), 0, 1, 1, 1)
-        grid.addWidget(self.parameterSymbolGroupBox(), 1, 0, 1, 1)
-        grid.addWidget(self.parameterUnitGroupBox(), 1, 1, 1, 1)
-        grid.addWidget(self.parameterDescriptionGroupBox(), 2, 0, 2, 2)
-        grid.addWidget(self.buttonGroupBox(), 4, 0, 1, 2)
-        groupBox.setLayout(grid)
-        return groupBox
+    def pb_description_groupbox(self):
+        self.pbd_groupbox = QGroupBox(self.language['add_basic_parameter_window_desc'])
+        self.text_parameter_descriprion = QLabel(self.language['add_basic_parameter_window_desc_exp'])
+        self.parameter_descriprion = QTextEdit()
+        self.pbd_groupbox.layout = QVBoxLayout()
+        self.pbd_groupbox.layout.addWidget(self.text_parameter_descriprion)
+        self.pbd_groupbox.layout.addWidget(self.parameter_descriprion)
+        self.pbd_groupbox.layout.addStretch(1)
+        self.pbd_groupbox.setLayout(self.pbd_groupbox.layout)
+        return self.pbd_groupbox
+    
+    def special_character_groupbox(self):
+        self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
+        self.text_parameter_descriprion = QLabel(self.language['add_basic_parameter_window_sc_exp'])
+        
+        self.scrollLayout = QGridLayout()
+        self.parameters_to_scroll = QWidget()
+        
+        self.scrollLayout.addWidget(CharacterWidget())
+        self.scrollLayout.addWidget(CharacterWidget())
+        
+        self.parameters_to_scroll.setLayout(self.scrollLayout)
+        
+        scroll = QScrollArea()
+        scroll.setWidget(self.parameters_to_scroll)
+        scroll.setWidgetResizable(1)
+        
+        self.sc_groupbox.layout = QVBoxLayout()
+        self.sc_groupbox.layout.addWidget(scroll)       
+ 
+        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
+        
+        return self.sc_groupbox
+        
+    def button_groupbox(self):
+        self.btn_groupbox = QGroupBox()
+        self.buttonSaveParameter = QPushButton(self.language['add_basic_parameter_window_btn_add'])
+        self.buttonSaveParameter.clicked.connect(self.add_parameter)
+        self.buttonCancel = QPushButton(self.language['add_basic_parameter_window_btn_cancel'])
+        self.buttonCancel.clicked.connect(self.close)
+        self.btn_groupbox.layout = QHBoxLayout()
+        self.btn_groupbox.layout.addWidget(self.buttonSaveParameter)
+        self.btn_groupbox.layout.addWidget(self.buttonCancel)
+        self.btn_groupbox.setLayout(self.btn_groupbox.layout)
+        return self.btn_groupbox
+    
+    
+    
+    
+    
+    
+    
+
         
 
     def file_name(self):
@@ -107,101 +212,38 @@ class AddParameter(QWidget):
         filename = p + d + t + c + p2 + s + p3 + d2
         
         return filename
-        
     
-    def parameterCategoryGroupBox(self):
-        categoriess_file = 'parameter_types.json'
-        groupBox = QGroupBox(self.language['add_parameter_window_category'])
-        self.text_parameter_category = QLabel(self.language['add_parameter_window_category_exp'])
-        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
-        self.categories_file_data = json.load(categories_file)
-        self.categories_list = []
-        for category in self.categories_file_data:
-            self.categories_list.append(self.categories_file_data[category])
-        self.comboBox = QComboBox()
-        self.comboBox.addItems(self.categories_list)
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_category)
-        layout.addWidget(self.comboBox)
-        layout.addStretch(1)
-
-        groupBox.setLayout(layout)
-
-        return groupBox
-
-    def parameterNameGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_name'])
-        self.text_parameter_name = QLabel(self.language['add_parameter_window_name_exp'])
+    def character_widget_groupbox(self):
+        groupBox = QGroupBox(self.language['add_basic_parameter_window_name'])
+        self.text_parameter_name = QLabel(self.language['add_basic_parameter_window_name_exp'])
         self.parameter_name = QLineEdit()
+
+        self.insert_special_character = QPushButton(self.language['add_basic_parameter_window_insert_special'])
+        self.insert_special_character.clicked.connect(self.insert_character)
 
         layout = QVBoxLayout()
         layout.addWidget(self.text_parameter_name)
         layout.addWidget(self.parameter_name)
-        layout.addStretch(1)
-        
-        groupBox.setLayout(layout)
-
-        return groupBox
-
-    def parameterSymbolGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_symbol'])
-        self.text_parameter_symbol = QLabel(self.language['add_parameter_window_symbol_exp'])
-        self.parameter_symbol = QLineEdit()
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_symbol)
-        layout.addWidget(self.parameter_symbol)
-        layout.addStretch(1)
-        
-        groupBox.setLayout(layout)
-
-        return groupBox
-
-    def parameterUnitGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_unit'])
-        self.text_parameter_unit = QLabel(self.language['add_parameter_window_unit_exp'])
-        self.parameter_unit = QLineEdit()
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_unit)
-        layout.addWidget(self.parameter_unit)
-        layout.addStretch(1)
-        
-        groupBox.setLayout(layout)
-
-        return groupBox
-
-    def parameterDescriptionGroupBox(self):
-        groupBox = QGroupBox(self.language['add_parameter_window_desc'])
-        self.text_parameter_descriprion = QLabel(self.language['add_parameter_window_desc_exp'])
-        self.parameter_descriprion = QTextEdit()
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_descriprion)
-        layout.addWidget(self.parameter_descriprion)
+        layout.addWidget(self.insert_special_character)
         layout.addStretch(1)
         
         groupBox.setLayout(layout)
 
         return groupBox
         
-    def buttonGroupBox(self):
-        groupBox = QGroupBox()
-        
-        buttonSaveParameter = QPushButton(self.language['add_parameter_window_btn_add'])
-        buttonSaveParameter.clicked.connect(self.add_parameter)
-        buttonCancel = QPushButton(self.language['add_parameter_window_btn_cancel'])
-        buttonCancel.clicked.connect(self.close)
-        
-        layout = QHBoxLayout()
+    
+    
 
-        layout.addWidget(buttonSaveParameter)
-        layout.addWidget(buttonCancel)
-        
-        groupBox.setLayout(layout)
-        
-        return groupBox
+    
+    
+    def insert_character(self):
+        #u = chr(40960) + 'abcd' + chr(1972)
+        #>>> u.encode('utf-8')
+        text = '\u2109'
+        self.parameter_name.setText(self.parameter_name.text() + '\u2109')
+
+
+    
     
     def add_parameter(self):
         self.file_name_to_save = self.file_name()
@@ -214,8 +256,8 @@ class AddParameter(QWidget):
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_parameter_window_filename_message'])
-            self.msg.setWindowTitle(self.language['add_parameter_window_filename_message_caption'])
+            self.msg.setText(self.language['add_basic_parameter_window_filename_message'])
+            self.msg.setWindowTitle(self.language['add_basic_parameter_window_filename_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -224,8 +266,8 @@ class AddParameter(QWidget):
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_parameter_window_save_message'])
-                self.msg.setWindowTitle(self.language['add_parameter_window_save_message_caption'])
+                self.msg.setText(self.language['add_basic_parameter_window_save_message'])
+                self.msg.setWindowTitle(self.language['add_basic_parameter_window_save_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
@@ -244,8 +286,8 @@ class AddParameter(QWidget):
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_parameter_window_saved_message'])
-                self.msg.setWindowTitle(self.language['add_parameter_window_saved_message_caption'])
+                self.msg.setText(self.language['add_basic_parameter_window_saved_message'])
+                self.msg.setWindowTitle(self.language['add_basic_parameter_window_saved_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.clicked)
                 self.msg.buttonClicked.connect(self.message_box_success)

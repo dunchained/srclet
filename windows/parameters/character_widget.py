@@ -2,53 +2,32 @@
 import sys, json, os
 from pathlib import Path
 cwd = os.path.curdir
-
-# app modules and windows
-#from css import css, var
-eto_methods_folder = '/methods/eto/'
-parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-#
-
 # pyqt5 modules
 from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
-class AddETOMethod(QWidget):
+class CharacterWidget(QWidget):
     clicked = pyqtSignal()
     def __init__(self):
         super().__init__()
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = {
             "//": "Insert Special Character Window",
             "insert_character_window_title": "Insert special character...",
             "insert_character_window_btn_cancel": "Close",
             "":""
         }
-        self.WindowGUI()
+        self.window_gui()
 
-    def WindowGUI(self):
-        self.setFixedSize(600, 400)
-        self.setWindowState(Qt.WindowMaximized)
+    def window_gui(self):
         self.setWindowTitle(self.language['insert_character_window_title'])
-        #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
-        self.grid.addWidget(self.addMethodGroupBoxLeft(), 0, 0)
-        self.grid.addWidget(self.addMethodGroupBoxDown(), 1, 0, 1, 2)
-        #self.grid.addWidget(a0, row, column, rowSpan, columnSpan)
+        self.grid.addWidget(self.insert_special_character_widget(), 0, 0)
         self.setLayout(self.grid)
-        self.centerUserInterface()
         self.show()
         
-    def centerUserInterface(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
-        
-    def addMethodGroupBoxLeft(self):
+    def insert_special_character_widget(self):
         self.scrollLayout = QGridLayout()
         self.parameters_scroll = QWidget()
         self.json_path = os.path.join(cwd + '/srclet/characters/special_characters.json')
@@ -92,22 +71,8 @@ class AddETOMethod(QWidget):
                 self.basic_parameters_list.remove(change)
         
         print(self.basic_parameters_list)
-    
-    def addMethodGroupBoxDown(self):
-        groupBox = QGroupBox()
-        buttonCancel = QPushButton(self.language['insert_character_window_btn_cancel'])
-        buttonCancel.clicked.connect(self.close)
-        
-        layout = QVBoxLayout()
-        
-        layout.addWidget(buttonCancel)
-        layout.addStretch(1)
-        
-        groupBox.setLayout(layout)
-        
-        return groupBox
            
-if __name__ == '__main__':
-    mainApplication = QApplication(sys.argv)
-    mainWindow = AddETOMethod()
-    sys.exit(mainApplication.exec_())
+#if __name__ == '__main__':
+   #mainApplication = QApplication(sys.argv)
+   #mainWindow = CharacterWidget()
+   #sys.exit(mainApplication.exec_())
