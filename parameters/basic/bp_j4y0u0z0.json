@@ -1,0 +1,8 @@
+{
+    "name": "Temperature \u00b0C",
+    "category": "temperature",
+    "unit": "\u00b0C",
+    "symbol": "temperature_celzius",
+    "description": "Temperature in Celzius degrees.",
+    "type": "b"
+}

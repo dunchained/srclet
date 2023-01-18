@@ -1,17 +1,9 @@
 # python standard modules
-from concurrent.futures import process
-from importlib.resources import path
-import sys, os, json
-from pathlib import Path
+import sys, os, json, shutil
 cwd = os.path.curdir
-
-# app modules and windows
 #from variables import css, var
 #from windows.parameters.add_basic_parameter import AddParameter
-#from add_basic_parameter import AddParameter
-#from add_parameter import AddParameter
-#from mortys.parameters_morty import read_parameter_categories_list
-# pyqt5 modules
+from add_basic_parameter import AddParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
 from PyQt5.QtCore import Qt
@@ -52,8 +44,8 @@ class ParametersWindow(QWidget):
                         "parameters_window_save_message": "Parameter saved...",
                         "parameters_window_save_message_caption": "Successuful..."
                          }
-        #self.AddParameter = AddParameter()
-        #self.AddParameter.hide()
+        self.AddParameter = AddParameter()
+        self.AddParameter.hide()
         #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.window_gui()
@@ -134,7 +126,7 @@ class ParametersWidget(QWidget):
         self.buttonAddParameter.clicked.connect(self.new_parameter_window)
 
         self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
-        self.buttonDelete.clicked.connect(self.delete_parameter)
+        self.buttonDelete.clicked.connect(self.delete_procedure)
 
         layout = QVBoxLayout()
         layout.addWidget(self.list_widget)
@@ -161,10 +153,42 @@ class ParametersWidget(QWidget):
                 self.update_labels(state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
 
     def new_parameter_window(self):
-        pass
+        self.window = AddParameter()
+        
+    def delete_procedure(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText('sigurno zelis obrisati')
+        msgBox.setWindowTitle('brisanje parametra')
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        buttonOK = msgBox.button(QMessageBox.Ok)
+        buttonOK.setText('da')
+        buttonCancel = msgBox.button(QMessageBox.Cancel)
+        buttonCancel.setText('odustani')
+        msgBox.buttonClicked.connect(self.delete_parameter)
 
-    def delete_parameter(self):
-        pass
+        returnValue = msgBox.exec()
+        #if returnValue == QMessageBox.Ok:
+            #self.delete_project()
+
+    def delete_parameter(self, value):
+        if value.text() == 'da':
+            #print(self.list_widget.currentItem().text())
+            self.get_list_of_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+            #print(self.get_list_of_files)
+            for self.file_to_delete in self.get_list_of_files:
+                self.path_to_file_to_delete = open(os.path.join(cwd + parameters_folder + self.file_to_delete))
+                self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
+                if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
+                    print(os.path.join(cwd + parameters_folder + self.file_to_delete))
+                    shutil.rmtree(os.path.join(cwd + parameters_folder + self.file_to_delete), ignore_errors=True)
+        
+    #def refresh_project_list(self):
+        #item_to_remove = self.project_list.selectedItems()
+        #if not item_to_remove: return
+        #for item in item_to_remove:
+            #self.project_list.takeItem(self.project_list.row(item))
+    
     
     ### desna strana
     def create_parameter_widget(self):

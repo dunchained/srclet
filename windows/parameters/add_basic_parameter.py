@@ -1,4 +1,3 @@
-from fileinput import filename
 import sys, json, os, random
 from pathlib import Path
 cwd = os.path.curdir
@@ -88,7 +87,12 @@ class AddParameter(QWidget):
     def special_character_clicked(self, i):
         sender = self.sender()
         sender_text = sender.text()
-        self.on_focused_change.setText(self.on_focused_change.text() + sender_text)
+        if self.on_focused_change.__class__.__name__ == 'QTextEdit':
+            self.on_focused_change.setPlainText(self.on_focused_change.toPlainText() + sender_text)
+        elif self.on_focused_change.__class__.__name__ == 'QLineEdit':
+            self.on_focused_change.setText(self.on_focused_change.text() + sender_text)
+        else:
+            pass
         
     def pb_name_groupbox(self):
         self.pbn_groupbox = QGroupBox(self.language['add_basic_parameter_window_name'])
@@ -158,8 +162,8 @@ class AddParameter(QWidget):
         self.sc_scroll = QWidget()
         self.lista_fajlova = next(os.walk(cwd + '/srclet/characters/'), (None, None, []))[2]
         self.button_list = []
-        for self.file_name in self.lista_fajlova:
-            self.json_path = os.path.join(cwd + '/srclet/characters/' + self.file_name)
+        for self.file_names in self.lista_fajlova:
+            self.json_path = os.path.join(cwd + '/srclet/characters/' + self.file_names)
             with open(self.json_path) as json_file:
                 characters = json.load(json_file)
             for key, value in characters.items():
@@ -199,15 +203,7 @@ class AddParameter(QWidget):
         self.btn_groupbox.setLayout(self.btn_groupbox.layout)
         return self.btn_groupbox
     
-    
-    
-    
-    
-    
-    
-
-        
-
+    ### Kod uvezivanja izvući u mortije
     def file_name(self):
         lista = ['q','w','e','r','t','z','u','i','o','p',
                 'a','s','d','d','f','g','h','j','k','l',
@@ -223,42 +219,10 @@ class AddParameter(QWidget):
         d2 = str(random.choice(range(0,9)))
 
 
-        filename = p + d + t + c + p2 + s + p3 + d2
+        filename = 'bp_' + p + d + t + c + p2 + s + p3 + d2
         
         return filename
-    
-    def character_widget_groupbox(self):
-        groupBox = QGroupBox(self.language['add_basic_parameter_window_name'])
-        self.text_parameter_name = QLabel(self.language['add_basic_parameter_window_name_exp'])
-        self.parameter_name = QLineEdit()
-
-        self.insert_special_character = QPushButton(self.language['add_basic_parameter_window_insert_special'])
-        self.insert_special_character.clicked.connect(self.insert_character)
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_parameter_name)
-        layout.addWidget(self.parameter_name)
-        layout.addWidget(self.insert_special_character)
-        layout.addStretch(1)
-        
-        groupBox.setLayout(layout)
-
-        return groupBox
-        
-    
-    
-
-    
-    
-    def insert_character(self):
-        #u = chr(40960) + 'abcd' + chr(1972)
-        #>>> u.encode('utf-8')
-        text = '\u2109'
-        self.parameter_name.setText(self.parameter_name.text() + '\u2109')
-
-
-    
-    
+      
     def add_parameter(self):
         self.file_name_to_save = self.file_name()
         get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
@@ -305,7 +269,6 @@ class AddParameter(QWidget):
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.clicked)
                 self.msg.buttonClicked.connect(self.message_box_success)
-
                 self.msg.show()
             
     def message_box_success(self):
