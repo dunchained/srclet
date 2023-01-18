@@ -1,11 +1,7 @@
-# python standard modules
 from fileinput import filename
 import sys, json, os, random
 from pathlib import Path
 cwd = os.path.curdir
-
-# app modules and windows
-#from css import css, var
 #
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
@@ -18,12 +14,10 @@ eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
-# pyqt5 modules
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
-from character_widget import CharacterWidget
 
 class AddParameter(QWidget):
     clicked = pyqtSignal()
@@ -59,13 +53,12 @@ class AddParameter(QWidget):
             "add_basic_parameter_window_filename_message": "Parameter with this filename already exists.",
             "add_basic_parameter_window_filename_message_caption": "Filename...",
             "add_basic_parameter_window_insert_special": "Insert special character",
-            "add_basic_parameter_window_sc": "Input special character:",
-            "add_basic_parameter_window_sc_exp" : "Use to input special character"
+            "add_basic_parameter_window_sc": "Input special character:"
         }
         self.window_gui()
 
     def window_gui(self):
-        self.setFixedSize(1200, 800)
+        self.setFixedSize(1200, 600)
         #self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['add_basic_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
@@ -79,6 +72,7 @@ class AddParameter(QWidget):
         self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
         self.grid.addWidget(self.button_groupbox(), 3, 0, 1, 3)
         self.setLayout(self.grid)
+        QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.center_gui()
         self.show()
         
@@ -87,6 +81,14 @@ class AddParameter(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+        
+    def on_focus_changed(self, widget):
+        self.on_focused_change = widget
+        
+    def special_character_clicked(self, i):
+        sender = self.sender()
+        sender_text = sender.text()
+        self.on_focused_change.setText(self.on_focused_change.text() + sender_text)
         
     def pb_name_groupbox(self):
         self.pbn_groupbox = QGroupBox(self.language['add_basic_parameter_window_name'])
@@ -152,25 +154,37 @@ class AddParameter(QWidget):
     
     def special_character_groupbox(self):
         self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
-        self.text_parameter_descriprion = QLabel(self.language['add_basic_parameter_window_sc_exp'])
-        
-        self.scrollLayout = QGridLayout()
-        self.parameters_to_scroll = QWidget()
-        
-        self.scrollLayout.addWidget(CharacterWidget())
-        self.scrollLayout.addWidget(CharacterWidget())
-        
-        self.parameters_to_scroll.setLayout(self.scrollLayout)
-        
-        scroll = QScrollArea()
-        scroll.setWidget(self.parameters_to_scroll)
-        scroll.setWidgetResizable(1)
-        
+        self.sc_layout = QGridLayout()
+        self.sc_scroll = QWidget()
+        self.lista_fajlova = next(os.walk(cwd + '/srclet/characters/'), (None, None, []))[2]
+        self.button_list = []
+        for self.file_name in self.lista_fajlova:
+            self.json_path = os.path.join(cwd + '/srclet/characters/' + self.file_name)
+            with open(self.json_path) as json_file:
+                characters = json.load(json_file)
+            for key, value in characters.items():
+                self.button_list.append(value)
+        self.columns = 5
+        if len(self.button_list) % 5 == 0:
+            self.rows = len(self.button_list) // 5
+        else:
+            self.rows = len(self.button_list) // 5 + 1
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                button = QPushButton(f'{self.button_list[i]}', self)
+                button.clicked.connect(self.special_character_clicked)
+                self.sc_layout.addWidget(button, row+1, column)
+                i += 1
+                if i == len(self.button_list): break
+        self.sc_scroll.setLayout(self.sc_layout)
+        sc = QScrollArea()
+        sc.setFixedWidth(500)
+        sc.setWidget(self.sc_scroll)
+        sc.setWidgetResizable(1)
         self.sc_groupbox.layout = QVBoxLayout()
-        self.sc_groupbox.layout.addWidget(scroll)       
- 
+        self.sc_groupbox.layout.addWidget(sc)
         self.sc_groupbox.setLayout(self.sc_groupbox.layout)
-        
         return self.sc_groupbox
         
     def button_groupbox(self):
