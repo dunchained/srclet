@@ -1,8 +1,0 @@
-{
-    "name": "laik",
-    "category": "humidity",
-    "unit": "%",
-    "symbol": "rel_hum",
-    "description": "Relative humidity.",
-    "type": "a"
-}

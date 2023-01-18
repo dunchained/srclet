@@ -1,0 +1,8 @@
+{
+    "name": "www",
+    "category": "temperature",
+    "unit": "w",
+    "symbol": "ww",
+    "description": "w",
+    "type": "a"
+}

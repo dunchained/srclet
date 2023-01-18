@@ -7,7 +7,7 @@ from add_basic_parameter import AddParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
 from PyQt5.QtCore import Qt, QCoreApplication
-from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem, QRegion
 
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
@@ -68,14 +68,17 @@ class ParametersWindow(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+        
+    
 
-
-class ParametersCategoryTabs(QDialog):
+class ParametersCategoryTabs(QWidget):
     def __init__(self, language):
         super().__init__()
         self.language = language
         self.tab_widget()
         self.show()
+    
+   
 
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
@@ -155,11 +158,6 @@ class ParametersWidget(QWidget):
         self.window = AddParameter()
         self.window.clicked.connect(self.refresh_parameters_list_after_addition)
         
-    def refresh_parameters_list_after_addition(self, passed_parameter_name):
-        print(passed_parameter_name)
-        self.list_widget.addItem(passed_parameter_name)
-        
-        
     def delete_procedure(self):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Information)
@@ -184,14 +182,25 @@ class ParametersWidget(QWidget):
                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
                     os.remove(os.path.join(cwd + parameters_folder + self.file_to_delete))
-        self.refresh_parameters_list_after_deletion()
+            self.refresh_parameters_list_after_deletion()
+            
         
     def refresh_parameters_list_after_deletion(self):
         self.item_to_remove = self.list_widget.selectedItems()
         if not self.item_to_remove: return
         for item in self.item_to_remove:
             self.list_widget.takeItem(self.list_widget.row(item))
-    
+            
+    def refresh_parameters_list_after_addition(self):
+        #print(passed_parameter_name)
+        #self.list_widget.addItem(passed_parameter_name)
+        #self.updated_window = ParametersCategoryTabs(self.language)
+        #self.updated_window.update(self)
+        #ParametersCategoryTabs.update(self)
+        print('prošo')
+        #self.window = ParametersWindow()
+        #self.window.hide()
+        
     
     ### desna strana
     def create_parameter_widget(self):
