@@ -1,5 +1,6 @@
 import sys, json, os, random
 from pathlib import Path
+from functools import partial
 cwd = os.path.curdir
 #
 language_folder = '/srclet/languages/'
@@ -19,7 +20,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
 class AddParameter(QWidget):
-    clicked = pyqtSignal()
+    clicked = pyqtSignal(str)
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -267,11 +268,12 @@ class AddParameter(QWidget):
                 self.msg.setText(self.language['add_basic_parameter_window_saved_message'])
                 self.msg.setWindowTitle(self.language['add_basic_parameter_window_saved_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
-                self.msg.buttonClicked.connect(self.clicked)
+                #self.msg.buttonClicked.connect(partial(self.clicked, parameter=self.parameter_name))
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()
             
     def message_box_success(self):
+        self.clicked.emit(self.parameter_name.text())
         self.parameter_name.clear()
         self.parameter_symbol.clear()
         self.parameter_unit.clear()

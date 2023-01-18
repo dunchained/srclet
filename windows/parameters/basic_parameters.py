@@ -6,7 +6,7 @@ cwd = os.path.curdir
 from add_basic_parameter import AddParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 language_folder = '/srclet/languages/'
@@ -138,7 +138,6 @@ class ParametersWidget(QWidget):
 
     def index_changed(self, i):
         self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
-        #self.file_to_load = ''
         for file in self.get_files:
             self.file_to_read = open(os.path.join(cwd + parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
@@ -154,6 +153,12 @@ class ParametersWidget(QWidget):
 
     def new_parameter_window(self):
         self.window = AddParameter()
+        self.window.clicked.connect(self.refresh_parameters_list_after_addition)
+        
+    def refresh_parameters_list_after_addition(self, passed_parameter_name):
+        print(passed_parameter_name)
+        self.list_widget.addItem(passed_parameter_name)
+        
         
     def delete_procedure(self):
         msgBox = QMessageBox()
@@ -173,21 +178,19 @@ class ParametersWidget(QWidget):
 
     def delete_parameter(self, value):
         if value.text() == 'da':
-            #print(self.list_widget.currentItem().text())
             self.get_list_of_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
-            #print(self.get_list_of_files)
             for self.file_to_delete in self.get_list_of_files:
                 self.path_to_file_to_delete = open(os.path.join(cwd + parameters_folder + self.file_to_delete))
                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-                    print(os.path.join(cwd + parameters_folder + self.file_to_delete))
-                    shutil.rmtree(os.path.join(cwd + parameters_folder + self.file_to_delete), ignore_errors=True)
+                    os.remove(os.path.join(cwd + parameters_folder + self.file_to_delete))
+        self.refresh_parameters_list_after_deletion()
         
-    #def refresh_project_list(self):
-        #item_to_remove = self.project_list.selectedItems()
-        #if not item_to_remove: return
-        #for item in item_to_remove:
-            #self.project_list.takeItem(self.project_list.row(item))
+    def refresh_parameters_list_after_deletion(self):
+        self.item_to_remove = self.list_widget.selectedItems()
+        if not self.item_to_remove: return
+        for item in self.item_to_remove:
+            self.list_widget.takeItem(self.list_widget.row(item))
     
     
     ### desna strana
