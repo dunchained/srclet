@@ -360,9 +360,6 @@ class CheckDataTypeWidget(TableWidget):
     def close_self(self):
         self.hide()
     
-
-    
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = CheckDataTypeWidget()

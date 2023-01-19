@@ -20,7 +20,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon
 
 class AddParameter(QWidget):
-    clicked = pyqtSignal()
+    clicked = pyqtSignal(str, str)
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -273,7 +273,7 @@ class AddParameter(QWidget):
                 self.msg.show()
             
     def message_box_success(self):
-        self.clicked.emit()
+        self.clicked.emit(self.parameter_name.text(), self.comboBox.currentText())
         self.parameter_name.clear()
         self.parameter_symbol.clear()
         self.parameter_unit.clear()

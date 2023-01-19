@@ -200,7 +200,13 @@ class MainWindow(QMainWindow):
     # Customize:
     def basic_parameters_window(self):
         self.window = ParametersWindow(self.language)
+        #self.window.clicked.connect(self.close)
+        self.window.clicked.connect(self.refresh_parameters_window)
         
+    def refresh_parameters_window(self):
+        print('PROSO DO KRAJA')
+        #self.window = ParametersWindow(self.language)
+                
     def complex_parameters_window(self):
         self.window = ComplexParametersWindow(self.language)
         

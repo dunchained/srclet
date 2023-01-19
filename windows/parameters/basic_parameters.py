@@ -1,12 +1,11 @@
-# python standard modules
 import sys, os, json, shutil
 cwd = os.path.curdir
 #from variables import css, var
-#from windows.parameters.add_basic_parameter import AddParameter
-from add_basic_parameter import AddParameter
+from windows.parameters.add_basic_parameter import AddParameter
+#from add_basic_parameter import AddParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
-from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess
+from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess, pyqtSignal
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem, QRegion
 
 language_folder = '/srclet/languages/'
@@ -20,30 +19,11 @@ eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
-class ParametersWindow(QWidget):
-    def __init__(self):
+class ParametersWindow(QMainWindow):
+    clicked = pyqtSignal()
+    def __init__(self, language):
         super(ParametersWindow, self).__init__()
-        self.language = {
-                        "language_description": "en",
-                         "//": "Parameters Window",
-                        "parameters_window_title": "Parameters",
-                        "parameters_window_caption": "List of available parameters in this category:",
-                        "parameters_window_btn_add_new": "Add new parameter",
-                        "parameters_window_btn_delete": "Delete selected parameter",
-                        "parameters_window_parameter_caption": "Parameters information:",
-                        "parameters_window_parameter_filename": "Filename:",
-                        "parameters_window_parameter_name": "Parameter name:",
-                        "parameters_window_parameter_symbol": "Parameter symbol:",
-                        "parameters_window_parameter_unit": "Parameter unit:",
-                        "parameters_window_parameter_desc": "Parameter description:",
-                        "parameters_window_parameter_btn_save": "Save changes",
-                        "parameters_window_parameter_btn_cancel": "Cancel changes",
-                        "parameters_window_btn_close": "Close",
-                        "parameters_window_save_changes_message": "Parameter name or unit empty...",
-                        "parameters_window_save_changes_message_caption": "Missing data...",
-                        "parameters_window_save_message": "Parameter saved...",
-                        "parameters_window_save_message_caption": "Successuful..."
-                         }
+        self.language = language
         self.AddParameter = AddParameter()
         self.AddParameter.hide()
         #self.AddParameter.clicked.connect(self.refresh_parameters_list)
@@ -57,9 +37,7 @@ class ParametersWindow(QWidget):
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.central_widget = ParametersCategoryTabs(self.language)
-        self.grid.addWidget(self.central_widget)
-        #self.grid.addWidget(self.centralGroupBox())
-        self.setLayout(self.grid)
+        self.setCentralWidget(self.central_widget)
         self.center_gui()
         self.show()
         
@@ -68,9 +46,7 @@ class ParametersWindow(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-        
     
-
 class ParametersCategoryTabs(QWidget):
     def __init__(self, language, parent=None):
         super(ParametersCategoryTabs, self).__init__(parent)
@@ -88,21 +64,23 @@ class ParametersCategoryTabs(QWidget):
             self.categories_list.append(self.categories_file_data[category])
         for tabName in self.categories_list:
             self.category = list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(tabName)]
-            tabWidget = QWidget()
-            listWidget = ParametersWidget(self.category, self.language)
-            tabLayout = QGridLayout()
-            tabLayout.addWidget(listWidget)
-            tabWidget.setLayout(tabLayout)
-            self.categories_tabs.addTab(tabWidget, tabName)
+            self.tabWidget = QWidget()
+            self.listWidget = ParametersWidget(self.category, self.language)
+            self.tabLayout = QGridLayout()
+            self.tabLayout.addWidget(self.listWidget)
+            self.tabWidget.setLayout(self.tabLayout)
+            self.categories_tabs.addTab(self.tabWidget, tabName)
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.categories_tabs)
         self.setLayout(mainLayout)
 
 class ParametersWidget(QWidget):
+    clicked = pyqtSignal()
     def __init__(self, category, language):
         super().__init__()
         self.category = category
         self.language = language
+        
         self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         self.category_list = []
         for file in self.get_files:
@@ -129,12 +107,12 @@ class ParametersWidget(QWidget):
         self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
         self.buttonDelete.clicked.connect(self.delete_procedure)
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.list_widget)
-        layout.addWidget(self.buttonAddParameter)
-        layout.addWidget(self.buttonDelete)
-        layout.addStretch(1)
-        groupBox.setLayout(layout)
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.list_widget)
+        self.layout.addWidget(self.buttonAddParameter)
+        self.layout.addWidget(self.buttonDelete)
+        self.layout.addStretch(1)
+        groupBox.setLayout(self.layout)
         return groupBox
 
     def index_changed(self, i):
@@ -167,10 +145,7 @@ class ParametersWidget(QWidget):
         buttonCancel = msgBox.button(QMessageBox.Cancel)
         buttonCancel.setText('odustani')
         msgBox.buttonClicked.connect(self.delete_parameter)
-
         returnValue = msgBox.exec()
-        #if returnValue == QMessageBox.Ok:
-            #self.delete_project()
 
     def delete_parameter(self, value):
         if value.text() == 'da':
@@ -189,18 +164,16 @@ class ParametersWidget(QWidget):
         for item in self.item_to_remove:
             self.list_widget.takeItem(self.list_widget.row(item))
             
-    def refresh_parameters_list_after_addition(self):
+    def refresh_parameters_list_after_addition(self, parameter_name, kategorija):
+        print(ParametersWindow.__class__.__name__)
+        #sender = sender().text()
+        #print(sender)
+        self.klit = ParametersWindow(self.language)
+        #self.klit.close()
+        self.klit.clicked
         print('Signal prošao, trebaš update')
-        #self.grid.removeWidget(self.create_list_widget(self.category_list))
-        #self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
-        #self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
-        #self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
-        #self.window = ParametersWidget(self.category, self.language)
-        #self.window.update()
-        QApplication.processEvents()
-        ParametersWindow.repaint(self)
         
-    
+        
     ### desna strana
     def create_parameter_widget(self):
         groupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
@@ -273,10 +246,11 @@ class ParametersWidget(QWidget):
         
         return groupBox
     
-    def close_window(ParametersWindow):
-        quit()
+    def close_window(self, ParametersWindow):
+        self.quit()
+        #quit()
         
-if __name__ == '__main__':
-    mainApplication = QApplication(sys.argv)
-    mainWindow = ParametersWindow()
-    sys.exit(mainApplication.exec_())
+#if __name__ == '__main__':
+   # mainApplication = QApplication(sys.argv)
+   # mainWindow = ParametersWindow()
+   # sys.exit(mainApplication.exec_())
