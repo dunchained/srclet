@@ -6,7 +6,7 @@ cwd = os.path.curdir
 from add_basic_parameter import AddParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
-from PyQt5.QtCore import Qt, QCoreApplication
+from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem, QRegion
 
 language_folder = '/srclet/languages/'
@@ -72,14 +72,12 @@ class ParametersWindow(QWidget):
     
 
 class ParametersCategoryTabs(QWidget):
-    def __init__(self, language):
-        super().__init__()
+    def __init__(self, language, parent=None):
+        super(ParametersCategoryTabs, self).__init__(parent)
         self.language = language
         self.tab_widget()
         self.show()
-    
-   
-
+ 
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
         categoriess_file = 'parameter_types.json' ### import iz var
@@ -192,14 +190,15 @@ class ParametersWidget(QWidget):
             self.list_widget.takeItem(self.list_widget.row(item))
             
     def refresh_parameters_list_after_addition(self):
-        #print(passed_parameter_name)
-        #self.list_widget.addItem(passed_parameter_name)
-        #self.updated_window = ParametersCategoryTabs(self.language)
-        #self.updated_window.update(self)
-        #ParametersCategoryTabs.update(self)
-        print('prošo')
-        #self.window = ParametersWindow()
-        #self.window.hide()
+        print('Signal prošao, trebaš update')
+        #self.grid.removeWidget(self.create_list_widget(self.category_list))
+        #self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
+        #self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
+        #self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
+        #self.window = ParametersWidget(self.category, self.language)
+        #self.window.update()
+        QApplication.processEvents()
+        ParametersWindow.repaint(self)
         
     
     ### desna strana
