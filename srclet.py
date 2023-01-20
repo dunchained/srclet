@@ -7,7 +7,8 @@ from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
-from windows.parameters.basic_parameters import ParametersWindow #Signals
+from windows.parameters.basic_parameters import BasicParametersWindow
+from windows.parameters.communication import Communicate
 from windows.parameters.complex_paramateres import ComplexParametersWindow
 from windows.methods.methods_eto import ETOMethodsWindow
 from windows.methods.methods_wb import WBMethodsWindow
@@ -200,11 +201,15 @@ class MainWindow(QMainWindow):
         
     # Customize:
     def basic_parameters_window(self):
-        self.window = ParametersWindow(self.language)
-        #self.sig.asignal.connect(self.refresh_bp_window)
+        self.window = BasicParametersWindow()
+        self.signali = Communicate()
+        self.signali.refresh_signal.connect(self.refresh_bp_window)
+        #self.window.signale.connect(self.refresh_bp_window)
         
-    def refresh_bp_window_(self):
-        print('PROšO DO KRAJA')
+    def refresh_bp_window(self):
+        print('prošo')
+        
+        self.window = BasicParametersWindow()
                 
     def complex_parameters_window(self):
         self.window = ComplexParametersWindow(self.language)

@@ -1,8 +1,10 @@
 import sys, os, json, shutil
 cwd = os.path.curdir
 #from variables import css, var
-#from windows.parameters.add_basic_parameter import AddParameter
+from windows.parameters.add_basic_parameter import AddParameter
+from windows.parameters.communication import Communicate
 #from add_basic_parameter import AddParameter
+#from communication import Communicate
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QMainWindow, QDialog
 from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess, pyqtSignal
@@ -19,8 +21,7 @@ eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
-class BasicParametersWindow(QMainWindow):
-    signale = pyqtSignal()
+class BasicParametersWindow(QWidget):
     def __init__(self):
         super(BasicParametersWindow, self).__init__()
         self.language = {
@@ -55,14 +56,11 @@ class BasicParametersWindow(QMainWindow):
         self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['parameters_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
-        #self.grid = QGridLayout()
-        #self.grid.addWidget(self.tab_widget())
-        #self.setLayout(self.grid)
-        self.central_widget = QWidget()
-        self.central_widget.layout = QVBoxLayout()
-        self.central_widget.layout.addWidget(self.tab_widget())
-        self.central_widget.setLayout(self.central_widget.layout)
-        self.setCentralWidget(self.central_widget)
+        self.grid = QGridLayout()
+        self.central_widget = ParametersCategoryTabs(self.language)
+        self.grid.addWidget(self.central_widget)
+        #self.grid.addWidget(self.centralGroupBox())
+        self.setLayout(self.grid)
         self.center_gui()
         self.show()
         
@@ -71,98 +69,74 @@ class BasicParametersWindow(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-        
-        
+    
+class ParametersCategoryTabs(QWidget):
+    def __init__(self, language):
+        super().__init__()
+        self.language = language
+        self.tab_widget()
+        self.show()
+ 
     def tab_widget(self):
-        self.tab_widget = QTabWidget()
-        self.cat_file = 'parameter_types.json' ### import iz var
-        self.cat_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + self.cat_file))
-        self.cat_file_data = json.load(self.cat_file)
-        self.cat_list = []
-        for category in self.cat_file_data:
-            self.cat_list.append(self.cat_file_data[category])
-        for tabName in self.cat_list:
-            self.category = list(self.cat_file_data.keys())[list(self.cat_file_data.values()).index(tabName)]
-            self.tab = QWidget()
-            self.tab_layout = QGridLayout()
-            self.tab_layout.addWidget(self.create_list_widget(self.category), 0, 0, 1, 1)
-            self.tab_layout.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
-            self.tab_layout.addWidget(self.create_close_buttons_widget(), 1, 0, 1, 2)
-            self.tab.setLayout(self.tab_layout)
-            self.tab_widget.addTab(self.tab, tabName)
-        self.mainLayout = QVBoxLayout()
-        self.mainLayout.addWidget(self.tab_widget)
-        self.setLayout(self.mainLayout)
+        self.categories_tabs = QTabWidget()
+        categoriess_file = 'parameter_types.json' ### import iz var
+        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
+        self.categories_file_data = json.load(categories_file)
+        self.categories_list = []
+        for category in self.categories_file_data:
+            self.categories_list.append(self.categories_file_data[category])
+        for tabName in self.categories_list:
+            self.category = list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(tabName)]
+            self.tabWidget = QWidget()
+            self.listWidget = ParametersWidget(self.category, self.language)
+            self.tabLayout = QGridLayout()
+            self.tabLayout.addWidget(self.listWidget)
+            self.tabWidget.setLayout(self.tabLayout)
+            self.categories_tabs.addTab(self.tabWidget, tabName)
+        mainLayout = QVBoxLayout()
+        mainLayout.addWidget(self.categories_tabs)
+        self.setLayout(mainLayout)
+
+class ParametersWidget(QWidget):
+    def __init__(self, category, language):
+        super().__init__()
+        self.category = category
+        self.language = language
         
-        self.tab_groupbox = QGroupBox()
-        self.tab_groupbox.layout = QVBoxLayout()
-        self.tab_groupbox.layout.addWidget(self.tab_widget)
-        self.tab_groupbox.setLayout(self.tab_groupbox.layout)
-        
-        return self.tab_widget
-    
-    def create_list_widget(self, category):
-        self.parameter_category = category
-        self.get_parameters = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         self.category_list = []
-        for self.parameter_file in self.get_parameters:
-            self.parameter_file_to_load = open(os.path.join(cwd + parameters_folder + self.parameter_file))
-            self.parameter_file_data = json.load(self.parameter_file_to_load)
-            if self.parameter_category == self.parameter_file_data['category']:
-                self.category_list.append(self.parameter_file_data['name'])
-        self.clw_groupbox = QGroupBox('Lista parametara:')
-        self.clw_list_widget = QListWidget()
-        self.clw_list_widget.addItems(self.category_list)
-        self.clw_list_widget.currentItemChanged.connect(self.index_changed)
-        self.btn_add_parameter = QPushButton('Add parameter')
-        self.btn_add_parameter.clicked.connect(self.add_parameter)
-        self.btn_delete_parameter = QPushButton('Delete parameter')
-        self.btn_delete_parameter.clicked.connect(self.delete_procedure)
-        self.clw_groupbox.layout = QVBoxLayout()
-        self.clw_groupbox.layout.addWidget(self.clw_list_widget)
-        self.clw_groupbox.layout.addWidget(self.btn_add_parameter)
-        self.clw_groupbox.layout.addWidget(self.btn_delete_parameter)
-        self.clw_groupbox.setLayout(self.clw_groupbox.layout)
-        return self.clw_groupbox
-    
-    def add_parameter(self):
-        pass
-    
-    def delete_procedure(self):
-        pass
-    
-    def delete_parameter(self):
-        pass
-    
-    def create_parameter_widget(self):
-        self.cpw_gruopbox = QGroupBox(self.language['parameters_window_parameter_caption'])
-        self.text_parameter_name = QLabel(self.language['parameters_window_parameter_name'])
-        self.parameter_name = QLineEdit('Parameter name')
-        self.parameter_name.setUpdatesEnabled(True)
-        self.text_parameter_symbol = QLabel(self.language['parameters_window_parameter_symbol'])
-        self.parameter_symbol = QLineEdit()
-        self.text_parameter_unit = QLabel(self.language['parameters_window_parameter_unit'])
-        self.parameter_unit = QLineEdit()
-        self.text_parameter_descriprion = QLabel(self.language['parameters_window_parameter_desc'])
-        self.parameter_descriprion = QTextEdit()
-        self.btn_save_parameter_changes = QPushButton(self.language['parameters_window_parameter_btn_save'])
-        self.btn_save_parameter_changes.clicked.connect(self.save_parameter_changes)
-        self.btn_cancel_parameter_changes = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
-        self.btn_cancel_parameter_changes.clicked.connect(self.cancel_parameter_changes)
-        self.cpw_gruopbox.layout = QVBoxLayout()
-        self.cpw_gruopbox.layout.addWidget(self.text_parameter_name)
-        self.cpw_gruopbox.layout.addWidget(self.parameter_name)
-        self.cpw_gruopbox.layout.addWidget(self.text_parameter_symbol)
-        self.cpw_gruopbox.layout.addWidget(self.parameter_symbol)
-        self.cpw_gruopbox.layout.addWidget(self.text_parameter_unit)
-        self.cpw_gruopbox.layout.addWidget(self.parameter_unit)
-        self.cpw_gruopbox.layout.addWidget(self.text_parameter_descriprion)
-        self.cpw_gruopbox.layout.addWidget(self.parameter_descriprion)
-        self.cpw_gruopbox.layout.addWidget(self.btn_save_parameter_changes)
-        self.cpw_gruopbox.layout.addWidget(self.btn_cancel_parameter_changes)
-        self.cpw_gruopbox.setLayout(self.cpw_gruopbox.layout)
-        return self.cpw_gruopbox
-    
+        for file in self.get_files:
+            self.file_to_load = open(os.path.join(cwd + parameters_folder + file))
+            self.file_data = json.load(self.file_to_load)
+            if self.category == self.file_data['category']:
+                self.category_list.append(self.file_data['name'])
+        self.grid = QGridLayout()
+        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
+        self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
+        self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
+        self.setLayout(self.grid)
+        
+    def create_list_widget(self, category_list):
+        self.category_list = category_list
+        groupBox = QGroupBox(self.language['parameters_window_caption'])
+        self.list_widget = QListWidget()
+        self.list_widget.addItems(self.category_list)
+        self.list_widget.currentItemChanged.connect(self.index_changed)
+
+        self.buttonAddParameter = QPushButton(self.language['parameters_window_btn_add_new'])
+        self.buttonAddParameter.clicked.connect(self.new_parameter_window)
+
+        self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
+        self.buttonDelete.clicked.connect(self.delete_procedure)
+
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.list_widget)
+        self.layout.addWidget(self.buttonAddParameter)
+        self.layout.addWidget(self.buttonDelete)
+        self.layout.addStretch(1)
+        groupBox.setLayout(self.layout)
+        return groupBox
+
     def index_changed(self, i):
         self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         for file in self.get_files:
@@ -174,27 +148,90 @@ class BasicParametersWindow(QMainWindow):
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
-                self.parameter_name.setText('huehue')
-                print(self.parameter_name.text())
-                self.parameter_name.update()
-                #self.update_labels(state=False, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
+                self.update_labels(state=False, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
             else:
-                self.parameter_name.setText('ima')
-                print(self.parameter_name.text())
-                print(self.tab_widget.currentIndex())
-                kika = self.tab_widget.tabText(self.tab_widget.currentIndex())
-                
-                #print(self.tab_widget.__dir__())
-                
-                lineEdits = self.tab_widget.findChildren(QLineEdit)
-                for line in lineEdits:
-                    print(line.objectName())
-                #print(self.tab_widget.parameters_name.text())
-                #for x in self.tab_widget:
-                    #print(self.tab_widget.widget(x).parameter_name.text())
-                #self.tab_widget.currentIndex().parameters_name.setText('huehue')
-                #self.update_labels(state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
-                
+                self.update_labels(state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
+
+    def new_parameter_window(self):
+        self.window = AddParameter()
+        self.signal = Communicate()
+        self.window.clicked.connect(self.signal.refresh_signal)
+        
+    def delete_procedure(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText('sigurno zelis obrisati')
+        msgBox.setWindowTitle('brisanje parametra')
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        buttonOK = msgBox.button(QMessageBox.Ok)
+        buttonOK.setText('da')
+        buttonCancel = msgBox.button(QMessageBox.Cancel)
+        buttonCancel.setText('odustani')
+        msgBox.buttonClicked.connect(self.delete_parameter)
+        returnValue = msgBox.exec()
+
+    def delete_parameter(self, value):
+        if value.text() == 'da':
+            self.get_list_of_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+            for self.file_to_delete in self.get_list_of_files:
+                self.path_to_file_to_delete = open(os.path.join(cwd + parameters_folder + self.file_to_delete))
+                self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
+                if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
+                    os.remove(os.path.join(cwd + parameters_folder + self.file_to_delete))
+            self.refresh_parameters_list_after_deletion()
+            
+        
+    def refresh_parameters_list_after_deletion(self):
+        self.item_to_remove = self.list_widget.selectedItems()
+        if not self.item_to_remove: return
+        for item in self.item_to_remove:
+            self.list_widget.takeItem(self.list_widget.row(item))
+            
+    def refresh_parameters_list_after_addition(self):
+        print('Prošo ParametersWindow')
+        
+        #self.kenozoik.signale
+        print('šalje')
+        #self.close_window()
+        
+    ### desna strana
+    def create_parameter_widget(self):
+        groupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
+
+        self.text_parameter_name = QLabel(self.language['parameters_window_parameter_name'])
+        self.parameter_name = QLineEdit()
+        
+        self.text_parameter_symbol = QLabel(self.language['parameters_window_parameter_symbol'])
+        self.parameter_symbol = QLineEdit()
+        
+        self.text_parameter_unit = QLabel(self.language['parameters_window_parameter_unit'])
+        self.parameter_unit = QLineEdit()
+
+        self.text_parameter_descriprion = QLabel(self.language['parameters_window_parameter_desc'])
+        self.parameter_descriprion = QTextEdit()
+
+        self.buttonSave = QPushButton(self.language['parameters_window_parameter_btn_save'])
+        self.buttonSave.clicked.connect(self.save_changes_parameter)
+        
+        self.buttonCancel = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
+        self.buttonCancel.clicked.connect(self.cancel)
+        
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_parameter_name)
+        layout.addWidget(self.parameter_name)
+        layout.addWidget(self.text_parameter_symbol)
+        layout.addWidget(self.parameter_symbol)
+        layout.addWidget(self.text_parameter_unit)
+        layout.addWidget(self.parameter_unit)
+        layout.addWidget(self.text_parameter_descriprion)
+        layout.addWidget(self.parameter_descriprion)
+        layout.addWidget(self.buttonSave)
+        layout.addWidget(self.buttonCancel)
+        layout.addStretch(1)
+        groupBox.setLayout(layout)
+        
+        return groupBox
+
     def update_labels(self, name, state, symbol, unit, description):
         self.parameter_name.setText(name)
         self.parameter_name.setEnabled(state)
@@ -204,84 +241,33 @@ class BasicParametersWindow(QMainWindow):
         self.parameter_unit.setEnabled(state)
         self.parameter_descriprion.setText(description)
         self.parameter_descriprion.setEnabled(state)
-        self.btn_save_parameter_changes.setEnabled(state)
-        self.btn_delete_parameter.setEnabled(state)
-        self.btn_cancel_parameter_changes.setEnabled(state)
-        
-    def save_parameter_changes(self):
+        self.buttonSave.setEnabled(state)
+        self.buttonDelete.setEnabled(state)
+        self.buttonCancel.setEnabled(state)
+        # Dodati pucad ovdje
+
+    def save_changes_parameter(self):
         pass
-    
-    def cancel_parameter_changes(self):
+
+    def cancel(self):
         pass
+
+    def close_button(self):
+        groupBox = QGroupBox()
+        
+        buttonClose = QPushButton(self.language['parameters_window_btn_close'])
+        buttonClose.clicked.connect(self.close_window)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(buttonClose)
+        layout.setAlignment(Qt.AlignRight)
+        layout.addStretch(1)
+        groupBox.setLayout(layout)
+        
+        return groupBox
     
-    def create_close_buttons_widget(self):
-        self.ccbw_groupbox = QGroupBox()
-        self.btn_close_window = QPushButton(self.language['parameters_window_btn_close'])
-        self.btn_close_window.clicked.connect(self.close_window)
-        self.ccbw_groupbox.layout = QHBoxLayout()
-        self.ccbw_groupbox.layout.addWidget(self.btn_close_window)
-        self.ccbw_groupbox.setLayout(self.ccbw_groupbox.layout)
-        return self.ccbw_groupbox
-        
-    def close_window(self):
-        self.close()
-
-#     def new_parameter_window(self):
-#         self.window = AddParameter()
-#         self.window.clicked.connect(self.refresh_parameters_list_after_addition)
-        
-#     def delete_procedure(self):
-#         msgBox = QMessageBox()
-#         msgBox.setIcon(QMessageBox.Information)
-#         msgBox.setText('sigurno zelis obrisati')
-#         msgBox.setWindowTitle('brisanje parametra')
-#         msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-#         buttonOK = msgBox.button(QMessageBox.Ok)
-#         buttonOK.setText('da')
-#         buttonCancel = msgBox.button(QMessageBox.Cancel)
-#         buttonCancel.setText('odustani')
-#         msgBox.buttonClicked.connect(self.delete_parameter)
-#         returnValue = msgBox.exec()
-
-#     def delete_parameter(self, value):
-#         if value.text() == 'da':
-#             self.get_list_of_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
-#             for self.file_to_delete in self.get_list_of_files:
-#                 self.path_to_file_to_delete = open(os.path.join(cwd + parameters_folder + self.file_to_delete))
-#                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
-#                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-#                     os.remove(os.path.join(cwd + parameters_folder + self.file_to_delete))
-#             self.refresh_parameters_list_after_deletion()
-            
-        
-#     def refresh_parameters_list_after_deletion(self):
-#         self.item_to_remove = self.list_widget.selectedItems()
-#         if not self.item_to_remove: return
-#         for item in self.item_to_remove:
-#             self.list_widget.takeItem(self.list_widget.row(item))
-            
-#     def refresh_parameters_list_after_addition(self):
-#         print('Prošo ParametersWindow')
-#         #self.kenozoik = ParametersWindow(self.language)
-#         #self.kenozoik.signale
-#         self.signali = Signals()
-#         self.signali.do_something()
-#         print(self.parent.__str__)
-#         print('šalje')
-#         #self.close_window()
-        
-#     
-
-#     def save_changes_parameter(self):
-#         pass
-
-#     def cancel(self):
-#         pass
-
-
-    
-#     def close_window(ParametersWindow):
-#         quit()
+    def close_window(ParametersWindow):
+        quit()
         
 if __name__ == '__main__':
    mainApplication = QApplication(sys.argv)
