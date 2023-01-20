@@ -13,8 +13,10 @@ from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWid
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess, pyqtSignal
 
 class ComplexParametersWindow(QWidget):
+    signal = pyqtSignal()
     def __init__(self, language):
         super(ComplexParametersWindow, self).__init__()
         self.setWindowState(QtCore.Qt.WindowMaximized)
@@ -174,6 +176,7 @@ class ComplexParametersWindow(QWidget):
         DownGroupBox = QGroupBox()
         
         buttonClose = QPushButton(self.language['complex_parameters_window_btn_close'])
+        buttonClose.clicked.connect(self.signal)
         buttonClose.clicked.connect(self.close)
         
         layout = QHBoxLayout()

@@ -19,8 +19,18 @@ eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
-class ParametersWindow(QMainWindow):
-    clicked = pyqtSignal()
+class Signals(QObject):
+    asignal = pyqtSignal()
+
+    def __init__(self):
+        super(Signals, self).__init__()
+        self.do_something()
+
+    def do_something(self):
+        self.asignal.emit()
+
+class ParametersWindow(QWidget):
+    signale = pyqtSignal()
     def __init__(self, language):
         super(ParametersWindow, self).__init__()
         self.language = language
@@ -29,6 +39,7 @@ class ParametersWindow(QMainWindow):
         #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.window_gui()
+        print(self.parent.__class__.__name__)
 
     def window_gui(self):
         #self.setFixedSize(800, 600)
@@ -37,7 +48,9 @@ class ParametersWindow(QMainWindow):
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
         self.central_widget = ParametersCategoryTabs(self.language)
-        self.setCentralWidget(self.central_widget)
+        self.grid.addWidget(self.central_widget)
+        #self.grid.addWidget(self.centralGroupBox())
+        self.setLayout(self.grid)
         self.center_gui()
         self.show()
         
@@ -48,8 +61,8 @@ class ParametersWindow(QMainWindow):
         self.move(qr.topLeft())
     
 class ParametersCategoryTabs(QWidget):
-    def __init__(self, language, parent=None):
-        super(ParametersCategoryTabs, self).__init__(parent)
+    def __init__(self, language):
+        super().__init__()
         self.language = language
         self.tab_widget()
         self.show()
@@ -75,7 +88,6 @@ class ParametersCategoryTabs(QWidget):
         self.setLayout(mainLayout)
 
 class ParametersWidget(QWidget):
-    clicked = pyqtSignal()
     def __init__(self, category, language):
         super().__init__()
         self.category = category
@@ -93,7 +105,7 @@ class ParametersWidget(QWidget):
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
         self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
         self.setLayout(self.grid)
-
+        
     def create_list_widget(self, category_list):
         self.category_list = category_list
         groupBox = QGroupBox(self.language['parameters_window_caption'])
@@ -164,15 +176,15 @@ class ParametersWidget(QWidget):
         for item in self.item_to_remove:
             self.list_widget.takeItem(self.list_widget.row(item))
             
-    def refresh_parameters_list_after_addition(self, parameter_name, kategorija):
-        print(ParametersWindow.__class__.__name__)
-        #sender = sender().text()
-        #print(sender)
-        self.klit = ParametersWindow(self.language)
-        #self.klit.close()
-        self.klit.clicked
-        print('Signal prošao, trebaš update')
-        
+    def refresh_parameters_list_after_addition(self):
+        print('Prošo ParametersWindow')
+        #self.kenozoik = ParametersWindow(self.language)
+        #self.kenozoik.signale
+        self.signali = Signals()
+        self.signali.do_something()
+        print(self.parent.__str__)
+        print('šalje')
+        #self.close_window()
         
     ### desna strana
     def create_parameter_widget(self):
@@ -246,11 +258,10 @@ class ParametersWidget(QWidget):
         
         return groupBox
     
-    def close_window(self, ParametersWindow):
-        self.quit()
-        #quit()
+    def close_window(ParametersWindow):
+        quit()
         
 #if __name__ == '__main__':
-   # mainApplication = QApplication(sys.argv)
-   # mainWindow = ParametersWindow()
-   # sys.exit(mainApplication.exec_())
+   #mainApplication = QApplication(sys.argv)
+   #mainWindow = ParametersWindow()
+   #sys.exit(mainApplication.exec_())
