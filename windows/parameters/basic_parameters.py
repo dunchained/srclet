@@ -19,10 +19,10 @@ eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
-class ParametersWindow(QMainWindow):
+class BasicParametersWindow(QMainWindow):
     signale = pyqtSignal()
     def __init__(self):
-        super(ParametersWindow, self).__init__()
+        super(BasicParametersWindow, self).__init__()
         self.language = {
                         "language_description": "en",
                          "//": "Parameters Window",
@@ -55,6 +55,9 @@ class ParametersWindow(QMainWindow):
         self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['parameters_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
+        #self.grid = QGridLayout()
+        #self.grid.addWidget(self.tab_widget())
+        #self.setLayout(self.grid)
         self.central_widget = QWidget()
         self.central_widget.layout = QVBoxLayout()
         self.central_widget.layout.addWidget(self.tab_widget())
@@ -90,6 +93,11 @@ class ParametersWindow(QMainWindow):
         self.mainLayout = QVBoxLayout()
         self.mainLayout.addWidget(self.tab_widget)
         self.setLayout(self.mainLayout)
+        
+        self.tab_groupbox = QGroupBox()
+        self.tab_groupbox.layout = QVBoxLayout()
+        self.tab_groupbox.layout.addWidget(self.tab_widget)
+        self.tab_groupbox.setLayout(self.tab_groupbox.layout)
         
         return self.tab_widget
     
@@ -173,6 +181,18 @@ class ParametersWindow(QMainWindow):
             else:
                 self.parameter_name.setText('ima')
                 print(self.parameter_name.text())
+                print(self.tab_widget.currentIndex())
+                kika = self.tab_widget.tabText(self.tab_widget.currentIndex())
+                
+                #print(self.tab_widget.__dir__())
+                
+                lineEdits = self.tab_widget.findChildren(QLineEdit)
+                for line in lineEdits:
+                    print(line.objectName())
+                #print(self.tab_widget.parameters_name.text())
+                #for x in self.tab_widget:
+                    #print(self.tab_widget.widget(x).parameter_name.text())
+                #self.tab_widget.currentIndex().parameters_name.setText('huehue')
                 #self.update_labels(state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
                 
     def update_labels(self, name, state, symbol, unit, description):
@@ -265,5 +285,5 @@ class ParametersWindow(QMainWindow):
         
 if __name__ == '__main__':
    mainApplication = QApplication(sys.argv)
-   mainWindow = ParametersWindow()
+   mainWindow = BasicParametersWindow()
    sys.exit(mainApplication.exec_())
