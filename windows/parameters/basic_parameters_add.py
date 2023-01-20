@@ -1,6 +1,5 @@
 import sys, json, os, random
 from pathlib import Path
-from functools import partial
 cwd = os.path.curdir
 #
 language_folder = '/srclet/languages/'
@@ -16,11 +15,10 @@ other_methods_folder = '/methods/others/'
 
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
-class AddParameter(QWidget):
-    clicked = pyqtSignal()
+class AddBasicParameter(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -284,5 +282,5 @@ class AddParameter(QWidget):
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = AddParameter()
+    mainWindow = AddBasicParameter()
     sys.exit(mainApplication.exec_())
