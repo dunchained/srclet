@@ -4,26 +4,58 @@ from pathlib import Path
 cwd = os.path.curdir
 
 # app modules and windows
-from variables import css, var
-from windows.parameters.add_complex_parameter import AddComplexParameter
+#from variables import css, var
+#from windows.parameters.add_complex_parameter import AddComplexParameter
 #
 # pyqt5 modules
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess, pyqtSignal
 
+language_folder = '/srclet/languages/'
+language_file = 'language.json'
+categories_file = 'parameter_types.json'
+projects_folder = '/projects/'
+parameters_folder = '/parameters/basic/'
+complex_parameters_folder = '/parameters/complex/'
+random_images_folder = '/srclet/images/random_image/'
+eto_methods_folder = '/methods/eto/'
+wb_methods_folder = '/methods/wb/'
+other_methods_folder = '/methods/others/'
+
+
 class ComplexParametersWindow(QWidget):
     signal = pyqtSignal()
-    def __init__(self, language):
+    def __init__(self):
         super(ComplexParametersWindow, self).__init__()
         self.setWindowState(QtCore.Qt.WindowMaximized)
-        self.language = language
-        self.AddParameter = AddComplexParameter(self.language)
-        self.AddParameter.hide()
-        self.AddParameter.clicked.connect(self.refresh_parameters_list)
+        self.language = {
+                         "//": "Complex Parameters Window",
+    "complex_parameters_window_title": "Complex Parameters",
+    "complex_parameters_window_caption": "List of available complex parameters:",
+    "complex_parameters_window_btn_add_new": "Add new complex parameter",
+    "complex_parameters_window_btn_delete": "Delete selected complex parameter",
+    "complex_parameters_window_parameter_caption": "Parameters information:",
+    "complex_parameters_window_parameter_filename": "Filename:",
+    "complex_parameters_window_parameter_name": "Parameter name:",
+    "complex_parameters_window_parameter_symbol": "Parameter symbol:",
+    "complex_parameters_window_parameter_unit": "Parameter unit:",
+    "complex_parameters_window_parameter_formula": "Calculation foruma:",
+    "complex_parameters_window_parameter_desc": "Parameter description:",
+    "complex_parameters_window_parameter_btn_save": "Save changes",
+    "complex_parameters_window_parameter_btn_cancel": "Cancel changes",
+    "complex_parameters_window_btn_close": "Close",
+    "complex_parameters_window_save_changes_message": "Parameter name, symbol or unit empty...",
+    "complex_parameters_window_save_changes_message_caption": "Missing data...",
+    "complex_parameters_window_save_message": "Complex Parameter saved...",
+    "complex_parameters_window_save_message_caption": "Successuful..."
+                         }
+        #self.AddParameter = AddComplexParameter(self.language)
+        #self.AddParameter.hide()
+        #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.WindowGUI()
 
@@ -48,7 +80,7 @@ class ComplexParametersWindow(QWidget):
     def createLeftGroupBox(self):
         LeftGroupBox = QGroupBox(self.language['complex_parameters_window_caption'])
         self.list_widget = QListWidget()
-        get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_list.append(Path(file).stem)
@@ -67,7 +99,7 @@ class ComplexParametersWindow(QWidget):
         return LeftGroupBox
     
     def index_changed(self, i):
-        self.json_path = cwd + var.complex_parameters_folder + i.text() + '.json'
+        self.json_path = cwd + complex_parameters_folder + i.text() + '.json'
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
@@ -102,7 +134,7 @@ class ComplexParametersWindow(QWidget):
                 self.buttonDelete.setEnabled(True)
             
     def refresh_parameters_list(self):
-        get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
         self.file_list_update = []
         for file in get_files:
             if Path(file).stem not in self.file_list:
@@ -114,7 +146,7 @@ class ComplexParametersWindow(QWidget):
         if not list_items: return
         for item in list_items:
             self.list_widget.takeItem(self.list_widget.row(item))
-        os.remove(cwd + var.complex_parameters_folder + item.text() + '.json')
+        os.remove(cwd + complex_parameters_folder + item.text() + '.json')
     
     def createRightGroupBox(self):
         RightGroupBox = QGroupBox(self.language['complex_parameters_window_parameter_caption'])
@@ -162,7 +194,7 @@ class ComplexParametersWindow(QWidget):
         return RightGroupBox
 
     def cancel(self):
-        self.json_path = cwd + var.complex_parameters_folder + self.list_widget.currentItem().text() + '.json'
+        self.json_path = cwd + complex_parameters_folder + self.list_widget.currentItem().text() + '.json'
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             
@@ -210,7 +242,7 @@ class ComplexParametersWindow(QWidget):
                 "type": "a"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(cwd + var.complex_parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
+            with open(cwd + complex_parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
@@ -220,3 +252,8 @@ class ComplexParametersWindow(QWidget):
             self.msg.setWindowTitle(self.language['complex_parameters_window_save_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.show()
+            
+if __name__ == '__main__':
+    mainApplication = QApplication(sys.argv)
+    mainWindow = ComplexParametersWindow()
+    sys.exit(mainApplication.exec_())
