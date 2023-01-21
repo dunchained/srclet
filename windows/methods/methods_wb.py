@@ -7,7 +7,7 @@ cwd = os.path.curdir
 #
 # app modules and windows
 from variables import css, var
-from windows.parameters.basic_parameters_add import AddParameter
+#Sfrom windows.parameters.basic_parameters_add import AddParameter
 
 # pyqt5 modules
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QListView, QPushButton, QApplication
@@ -19,9 +19,9 @@ class WBMethodsWindow(QWidget):
     def __init__(self, language):
         super(WBMethodsWindow, self).__init__()
         self.language = language
-        self.AddParameter = AddParameter(self.language)
-        self.AddParameter.hide()
-        self.AddParameter.clicked.connect(self.refresh_parameters_list)
+        #self.AddParameter = AddParameter(self.language)
+        #self.AddParameter.hide()
+        #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.WindowGUI()
 

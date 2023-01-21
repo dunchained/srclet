@@ -1,0 +1,1 @@
+# Izvući sve vezano za metode kad napraviš za paramtere 

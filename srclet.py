@@ -7,7 +7,7 @@ from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
-from windows.parameters.bp_save_zadnje import BasicParametersWindow, TabWidget
+from windows.parameters.basic_parameters import BasicParameters
 from windows.parameters.complex_paramateres import ComplexParametersWindow
 from windows.methods.methods_eto import ETOMethodsWindow
 from windows.methods.methods_wb import WBMethodsWindow
@@ -200,14 +200,7 @@ class MainWindow(QMainWindow):
         
     # Customize:
     def basic_parameters_window(self):
-        self.window = BasicParametersWindow()
-        self.window.signale.connect(self.refresh_bp_window)
-        #self.window.signale.connect(self.refresh_bp_window)
-        
-    def refresh_bp_window(self):
-        print('prošo')
-        
-        self.window = BasicParametersWindow()
+        self.window = BasicParameters()
                 
     def complex_parameters_window(self):
         self.window = ComplexParametersWindow(self.language)

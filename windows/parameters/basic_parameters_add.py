@@ -14,7 +14,8 @@ wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
+from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QTabWidget
+from parameters_morty import read_characters, get_filename
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
@@ -30,10 +31,8 @@ class AddBasicParameter(QWidget):
             "//": "Add Parameter Window",
             "add_basic_parameter_window_title": "Add new basic parameter",
             "add_basic_parameter_window_caption": "Parameter information:",
-            "add_basic_parameter_window_filename": "Filename:",
-            "add_basic_parameter_window_filename_exp": "Text to be used as parameter filename.",
             "add_basic_parameter_window_category": "Parameter category:",
-            "add_basic_parameter_window_category_exp": "Paremeter category...",
+            "add_basic_parameter_window_category_exp": "Paremeter category.",
             "add_basic_parameter_window_name": "Parameter name:",
             "add_basic_parameter_window_name_exp": "Text to be used as parameter short description.",
             "add_basic_parameter_window_unit": "Parameter unit:",
@@ -56,8 +55,7 @@ class AddBasicParameter(QWidget):
         self.window_gui()
 
     def window_gui(self):
-        self.setFixedSize(1200, 600)
-        #self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowMaximized)
         self.setWindowTitle(self.language['add_basic_parameter_window_title'])
         #self.setWindowIcon(QIcon(css.menu_about_icon))
         self.grid = QGridLayout()
@@ -157,21 +155,14 @@ class AddBasicParameter(QWidget):
     
     def special_character_groupbox(self):
         self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
+        
+        self.tabs = QTabWidget()
+        self.tab_special_characters = QWidget()
+        
+        self.tabs.addTab(self.tab_special_characters, 'Special characters')
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.lista_fajlova = next(os.walk(cwd + '/srclet/characters/'), (None, None, []))[2]
-        self.button_list = []
-        for self.file_names in self.lista_fajlova:
-            self.json_path = os.path.join(cwd + '/srclet/characters/' + self.file_names)
-            with open(self.json_path) as json_file:
-                characters = json.load(json_file)
-            for key, value in characters.items():
-                self.button_list.append(value)
-        self.columns = 5
-        if len(self.button_list) % 5 == 0:
-            self.rows = len(self.button_list) // 5
-        else:
-            self.rows = len(self.button_list) // 5 + 1
+        self.button_list, self.rows, self.columns = read_characters('/srclet/inputs/characters/')
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -180,16 +171,42 @@ class AddBasicParameter(QWidget):
                 self.sc_layout.addWidget(button, row+1, column)
                 i += 1
                 if i == len(self.button_list): break
+                
         self.sc_scroll.setLayout(self.sc_layout)
-        sc = QScrollArea()
-        sc.setFixedWidth(500)
-        sc.setWidget(self.sc_scroll)
-        sc.setWidgetResizable(1)
+        self.sc = QScrollArea()
+        self.sc.setWidget(self.sc_scroll)
+        self.sc.setWidgetResizable(1)
         self.sc_groupbox.layout = QVBoxLayout()
-        self.sc_groupbox.layout.addWidget(sc)
-        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
-        return self.sc_groupbox
+        self.sc_groupbox.layout.addWidget(self.sc)
         
+        
+        # self.sc_groupbox.setLayout(self.sc_groupbox.layout)
+        return self.sc_groupbox
+    
+    # def special_character_groupbox(self):
+    #     self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
+    #     self.sc_layout = QGridLayout()
+    #     self.sc_scroll = QWidget()
+    #     self.button_list, self.rows, self.columns = read_characters('/srclet/inputs/characters/')
+    #     i = 0
+    #     for row in range(self.rows):
+    #         for column in range(self.columns):
+    #             button = QPushButton(f'{self.button_list[i]}', self)
+    #             button.clicked.connect(self.special_character_clicked)
+    #             self.sc_layout.addWidget(button, row+1, column)
+    #             i += 1
+    #             if i == len(self.button_list): break
+                
+    #     self.sc_scroll.setLayout(self.sc_layout)
+    #     sc = QScrollArea()
+    #     #sc.setFixedWidth(500)
+    #     sc.setWidget(self.sc_scroll)
+    #     sc.setWidgetResizable(1)
+    #     self.sc_groupbox.layout = QVBoxLayout()
+    #     self.sc_groupbox.layout.addWidget(sc)
+    #     self.sc_groupbox.setLayout(self.sc_groupbox.layout)
+    #     return self.sc_groupbox
+         
     def button_groupbox(self):
         self.btn_groupbox = QGroupBox()
         self.buttonSaveParameter = QPushButton(self.language['add_basic_parameter_window_btn_add'])
@@ -202,28 +219,8 @@ class AddBasicParameter(QWidget):
         self.btn_groupbox.setLayout(self.btn_groupbox.layout)
         return self.btn_groupbox
     
-    ### Kod uvezivanja izvući u mortije
-    def file_name(self):
-        lista = ['q','w','e','r','t','z','u','i','o','p',
-                'a','s','d','d','f','g','h','j','k','l',
-                'y','x','c','v','b','n','m']
-
-        p = random.choice(lista)
-        d = str(random.choice(range(0,9)))
-        t = random.choice(lista)
-        c = str(random.choice(range(0,9)))
-        p2 = random.choice(lista)
-        s = str(random.choice(range(0,9)))
-        p3 = random.choice(lista)
-        d2 = str(random.choice(range(0,9)))
-
-
-        filename = 'bp_' + p + d + t + c + p2 + s + p3 + d2
-        
-        return filename
-      
     def add_parameter(self):
-        self.file_name_to_save = self.file_name()
+        self.file_name_to_save = get_filename('bp')
         get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
@@ -266,14 +263,10 @@ class AddBasicParameter(QWidget):
                 self.msg.setText(self.language['add_basic_parameter_window_saved_message'])
                 self.msg.setWindowTitle(self.language['add_basic_parameter_window_saved_message_caption'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
-                self.msg.buttonClicked.connect(self.clicked)
-                #self.clicked.emit(self.parameter_name.text(), self.comboBox.currentText())
-                #self.msg.buttonClicked.connect(partial(self.clicked, parameter=self.parameter_name))
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()
             
     def message_box_success(self):
-        #self.clicked.emit(self.parameter_name.text(), self.comboBox.currentText())
         self.parameter_name.clear()
         self.parameter_symbol.clear()
         self.parameter_unit.clear()

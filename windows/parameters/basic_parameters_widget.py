@@ -67,13 +67,7 @@ class ParametersCategoryTabs(QWidget):
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.categories_tabs)
         self.setLayout(mainLayout)
-        
-    def refresh(self):
-        self.category_list.append('name')
-        print(self.category_list)
-        #self.grid.removeWidget(self.close_button())
-        #self.show()
-        #print(self.category_list)
+
 
 class ParametersWidget(QWidget):
     def __init__(self, category, language):
@@ -91,7 +85,7 @@ class ParametersWidget(QWidget):
         self.grid = QGridLayout()
         self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
-        self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
+        #self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
         
         self.setLayout(self.grid)
         
@@ -107,16 +101,12 @@ class ParametersWidget(QWidget):
 
         self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
         self.buttonDelete.clicked.connect(self.delete_procedure)
+        self.buttonDelete.setEnabled(False)
         
-        self.refresh_btn = QPushButton('refresh')
-        self.refresh_btn.clicked.connect(self.refresh_parameters_list_after_addition)
-
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.list_widget)
         self.layout.addWidget(self.buttonAddBasicParameter)
         self.layout.addWidget(self.buttonDelete)
-        self.layout.addWidget(self.refresh_btn)
-        self.layout.addStretch(1)
         groupBox.setLayout(self.layout)
         return groupBox
 
@@ -137,7 +127,6 @@ class ParametersWidget(QWidget):
 
     def new_parameter_window(self):
         self.window = AddBasicParameter()
-        self.window.clicked.connect(self.refresh_parameters_list_after_addition)
         
     def delete_procedure(self):
         msgBox = QMessageBox()
@@ -168,10 +157,6 @@ class ParametersWidget(QWidget):
         if not self.item_to_remove: return
         for item in self.item_to_remove:
             self.list_widget.takeItem(self.list_widget.row(item))
-            
-    def refresh_parameters_list_after_addition(self):
-        print('prošo signal refresha')
-        ParametersCategoryTabs.refresh(self)
         
     ### desna strana
     def create_parameter_widget(self):
@@ -206,7 +191,6 @@ class ParametersWidget(QWidget):
         layout.addWidget(self.parameter_descriprion)
         layout.addWidget(self.buttonSave)
         layout.addWidget(self.buttonCancel)
-        layout.addStretch(1)
         groupBox.setLayout(layout)
         
         return groupBox
@@ -239,14 +223,12 @@ class ParametersWidget(QWidget):
         
         layout = QHBoxLayout()
         layout.addWidget(buttonClose)
-        layout.setAlignment(Qt.AlignRight)
-        layout.addStretch(1)
         groupBox.setLayout(layout)
         
         return groupBox
     
-    def close_window(ParametersWindow):
-        quit()
+    def close_window(self):
+        self.quit()
         
 if __name__ == '__main__':
    mainApplication = QApplication(sys.argv)
