@@ -17,11 +17,11 @@ from mortys.language_morty import language
 from mortys.font_morty import read_menu_font_size
 from mortys.icon_morty import icon_size
 
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget, QMenu
 from PyQt5.QtWidgets import QProxyStyle, QStyle, QToolTip
-from PyQt5.QtCore import Qt, QCoreApplication, QObject, QProcess, pyqtSignal
+from PyQt5.QtCore import QUrl
 
 class MyProxyStyle(QProxyStyle):
     pass
@@ -220,7 +220,8 @@ class MainWindow(QMainWindow):
         self.window = AboutWindow(self.language)
 
     def manual_window(self):
-        self.window = ManualWindow(self.language)  
+        #self.window = ManualWindow(self.language)
+        QDesktopServices.openUrl(QUrl('https://www.youtube.com/watch?v=9ee673JBm3A'))
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)

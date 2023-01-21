@@ -9,7 +9,6 @@ from PyQt5.QtCore import Qt
 #from plambas.the_constructor import SrcletEngine
 #
 class CalculateWidget(QWidget):
-    
     def __init__(self, project_path, language):
         self.project_path = project_path
         self.language = language
@@ -39,19 +38,15 @@ class CalculateWidget(QWidget):
         self.project_data_info_groupbox = QGroupBox(self.language['project_opened_widget_project_info'] + self.project_title)
         self.project_data_info_groupbox.layout = QVBoxLayout()
         self.flay = QFormLayout()
-        
         self.label_weather_station = QLabel('weather_station:')
         self.label_weather_station_read = QLabel('value')
         self.flay.addRow(self.label_weather_station, self.label_weather_station_read)
-        
         self.label_weather_station_elevation = QLabel('weather_station_elevation')
         self.label_weather_station_elevation_read = QLabel('value')
         self.flay.addRow(self.label_weather_station_elevation, self.label_weather_station_elevation_read)
-        
         self.label_weather_station_latitude = QLabel('weather_station_latitude:')
         self.label_weather_station_latitude_read = QLabel('value')
         self.flay.addRow(self.label_weather_station_latitude, self.label_weather_station_latitude_read)
-        
         self.project_data_info_groupbox.setLayout(self.flay)
         return self.project_data_info_groupbox
 
