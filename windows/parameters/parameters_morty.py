@@ -3,10 +3,10 @@ cwd = os.path.curdir
 
 categories_file = 'parameter_types.json'
 language_folder = '/srclet/languages/'
+basic_parameters_folder = '/parameters/basic/'
 
 def read_characters(character_type):
     lista_fajlova = next(os.walk(cwd + character_type), (None, None, []))[2]
-    print(character_type)
     button_list = []
     for file_names in lista_fajlova:
         json_path = os.path.join(cwd + character_type + file_names)
@@ -19,6 +19,22 @@ def read_characters(character_type):
         rows = len(button_list) // 5
     else:
         rows = len(button_list) // 5 + 1
+    return button_list, rows, columns
+
+def read_basic_parameters():
+    lista_fajlova = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
+    button_list = []
+    for file_names in lista_fajlova:
+        json_path = os.path.join(cwd + basic_parameters_folder + file_names)
+        with open(json_path) as json_file:
+                characters = json.load(json_file)
+                value = characters['symbol']
+                button_list.append(value)
+    columns = 3
+    if len(button_list) % 3 == 0:
+        rows = len(button_list) // 3
+    else:
+        rows = len(button_list) // 3 + 1
     return button_list, rows, columns
 
 def get_filename(patameter_type):

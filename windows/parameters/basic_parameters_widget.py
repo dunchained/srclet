@@ -26,32 +26,33 @@ class ParametersCategoryTabs(QWidget):
         self.setUpdatesEnabled(True)
         self.language = {
                         "language_description": "en",
-                         "//": "Parameters Window",
-                        "parameters_window_title": "Parameters",
-                        "parameters_window_caption": "List of available parameters in this category:",
-                        "parameters_window_btn_add_new": "Add new parameter",
-                        "parameters_window_btn_delete": "Delete selected parameter",
-                        "parameters_window_parameter_caption": "Parameters information:",
-                        "parameters_window_parameter_filename": "Filename:",
-                        "parameters_window_parameter_name": "Parameter name:",
-                        "parameters_window_parameter_symbol": "Parameter symbol:",
-                        "parameters_window_parameter_unit": "Parameter unit:",
-                        "parameters_window_parameter_desc": "Parameter description:",
-                        "parameters_window_parameter_btn_save": "Save changes",
-                        "parameters_window_parameter_btn_cancel": "Cancel changes",
-                        "parameters_window_btn_close": "Close",
-                        "parameters_window_save_changes_message": "Parameter name or unit empty...",
-                        "parameters_window_save_changes_message_caption": "Missing data...",
-                        "parameters_window_save_message": "Parameter saved...",
-                        "parameters_window_save_message_caption": "Successuful..."
+                         "//": "Basic Parameters Widget",
+                        "basic_parameters_widget_title": "Parameters",
+                        "basic_parameters_widget_caption": "List of available parameters in this category:",
+                        "basic_parameters_widget_btn_add_new": "Add new parameter",
+                        "basic_parameters_widget_btn_delete": "Delete selected parameter",
+                        "basic_parameters_widget_parameter_caption": "Parameters information:",
+                        "basic_parameters_widget_parameter_filename": "Filename:",
+                        "basic_parameters_widget_parameter_name": "Parameter name:",
+                        "basic_parameters_widget_parameter_symbol": "Parameter symbol:",
+                        "basic_parameters_widget_parameter_unit": "Parameter unit:",
+                        "basic_parameters_widget_parameter_desc": "Parameter description:",
+                        "basic_parameters_widget_parameter_btn_save": "Save changes",
+                        "basic_parameters_widget_parameter_btn_cancel": "Cancel changes",
+                        "basic_parameters_widget_save_changes_message": "Parameter name or unit empty...",
+                        "basic_parameters_widget_save_changes_message_caption": "Missing data...",
+                        "basic_parameters_widget_save_message": "Parameter saved...",
+                        "basic_parameters_widget_save_message_caption": "Successuful...",
+                        "basic_parameters_wisget_delete_msg_title": "Delete parameter?",
+                        "basic_parameters_wisget_delete_msg_message": "Are you sure you want to delete parameter?",
+                        "basic_parameters_wisget_delete_msg_yes": "Yes",
+                        "basic_parameters_wisget_delete_msg_cancel": "Cancel"
                          }
-        self.tab_widget()
-        self.show()
  
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
-        categoriess_file = 'parameter_types.json' ### import iz var
-        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
+        cat_file = 'parameter_types.json' ### import iz var
+        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + cat_file))
         self.categories_file_data = json.load(categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -85,21 +86,20 @@ class ParametersWidget(QWidget):
         self.grid = QGridLayout()
         self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
-        #self.grid.addWidget(self.close_button(), 1, 0, 1, 2)
         
         self.setLayout(self.grid)
         
     def create_list_widget(self, category_list):
         self.category_list = category_list
-        groupBox = QGroupBox(self.language['parameters_window_caption'])
+        groupBox = QGroupBox(self.language['basic_parameters_widget_caption'])
         self.list_widget = QListWidget()
         self.list_widget.addItems(self.category_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
 
-        self.buttonAddBasicParameter = QPushButton(self.language['parameters_window_btn_add_new'])
+        self.buttonAddBasicParameter = QPushButton(self.language['basic_parameters_widget_btn_add_new'])
         self.buttonAddBasicParameter.clicked.connect(self.new_parameter_window)
 
-        self.buttonDelete = QPushButton(self.language['parameters_window_btn_delete'])
+        self.buttonDelete = QPushButton(self.language['basic_parameters_widget_btn_delete'])
         self.buttonDelete.clicked.connect(self.delete_procedure)
         self.buttonDelete.setEnabled(False)
         
@@ -131,13 +131,13 @@ class ParametersWidget(QWidget):
     def delete_procedure(self):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText('sigurno zelis obrisati')
-        msgBox.setWindowTitle('brisanje parametra')
+        msgBox.setText(self.language['basic_parameters_wisget_delete_msg_title'])
+        msgBox.setWindowTitle(self.language['basic_parameters_wisget_delete_msg_message'])
         msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         buttonOK = msgBox.button(QMessageBox.Ok)
-        buttonOK.setText('da')
+        buttonOK.setText(self.language['basic_parameters_wisget_delete_msg_yes'])
         buttonCancel = msgBox.button(QMessageBox.Cancel)
-        buttonCancel.setText('odustani')
+        buttonCancel.setText(self.language['basic_parameters_wisget_delete_msg_cancel'])
         msgBox.buttonClicked.connect(self.delete_parameter)
         returnValue = msgBox.exec()
 
@@ -151,7 +151,6 @@ class ParametersWidget(QWidget):
                     os.remove(os.path.join(cwd + parameters_folder + self.file_to_delete))
             self.refresh_parameters_list_after_deletion()
             
-        
     def refresh_parameters_list_after_deletion(self):
         self.item_to_remove = self.list_widget.selectedItems()
         if not self.item_to_remove: return
@@ -160,24 +159,24 @@ class ParametersWidget(QWidget):
         
     ### desna strana
     def create_parameter_widget(self):
-        groupBox = QGroupBox(self.language['parameters_window_parameter_caption'])
+        groupBox = QGroupBox(self.language['basic_parameters_widget_parameter_caption'])
 
-        self.text_parameter_name = QLabel(self.language['parameters_window_parameter_name'])
+        self.text_parameter_name = QLabel(self.language['basic_parameters_widget_parameter_name'])
         self.parameter_name = QLineEdit()
         
-        self.text_parameter_symbol = QLabel(self.language['parameters_window_parameter_symbol'])
+        self.text_parameter_symbol = QLabel(self.language['basic_parameters_widget_parameter_symbol'])
         self.parameter_symbol = QLineEdit()
         
-        self.text_parameter_unit = QLabel(self.language['parameters_window_parameter_unit'])
+        self.text_parameter_unit = QLabel(self.language['basic_parameters_widget_parameter_unit'])
         self.parameter_unit = QLineEdit()
 
-        self.text_parameter_descriprion = QLabel(self.language['parameters_window_parameter_desc'])
+        self.text_parameter_descriprion = QLabel(self.language['basic_parameters_widget_parameter_desc'])
         self.parameter_descriprion = QTextEdit()
 
-        self.buttonSave = QPushButton(self.language['parameters_window_parameter_btn_save'])
+        self.buttonSave = QPushButton(self.language['basic_parameters_widget_parameter_btn_save'])
         self.buttonSave.clicked.connect(self.save_changes_parameter)
         
-        self.buttonCancel = QPushButton(self.language['parameters_window_parameter_btn_cancel'])
+        self.buttonCancel = QPushButton(self.language['basic_parameters_widget_parameter_btn_cancel'])
         self.buttonCancel.clicked.connect(self.cancel)
         
         layout = QVBoxLayout()
@@ -207,28 +206,12 @@ class ParametersWidget(QWidget):
         self.buttonSave.setEnabled(state)
         self.buttonDelete.setEnabled(state)
         self.buttonCancel.setEnabled(state)
-        # Dodati pucad ovdje
 
     def save_changes_parameter(self):
         pass
 
     def cancel(self):
         pass
-
-    def close_button(self):
-        groupBox = QGroupBox()
-        
-        buttonClose = QPushButton(self.language['parameters_window_btn_close'])
-        buttonClose.clicked.connect(self.close_window)
-        
-        layout = QHBoxLayout()
-        layout.addWidget(buttonClose)
-        groupBox.setLayout(layout)
-        
-        return groupBox
-    
-    def close_window(self):
-        self.quit()
         
 if __name__ == '__main__':
    mainApplication = QApplication(sys.argv)

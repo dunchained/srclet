@@ -6,7 +6,7 @@ language_folder = '/srclet/languages/'
 language_file = 'language.json'
 categories_file = 'parameter_types.json'
 projects_folder = '/projects/'
-parameters_folder = '/parameters/basic/'
+basic_parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
 random_images_folder = '/srclet/images/random_image/'
 eto_methods_folder = '/methods/eto/'
@@ -29,7 +29,7 @@ class AddBasicParameter(QWidget):
 
 
             "//": "Add Parameter Window",
-            "add_basic_parameter_window_title": "Add new basic parameter",
+            "add_basic_parameter_window_title": "Add basic parameter",
             "add_basic_parameter_window_caption": "Parameter information:",
             "add_basic_parameter_window_category": "Parameter category:",
             "add_basic_parameter_window_category_exp": "Paremeter category.",
@@ -38,7 +38,7 @@ class AddBasicParameter(QWidget):
             "add_basic_parameter_window_unit": "Parameter unit:",
             "add_basic_parameter_window_unit_exp": "Unit to be used...",
             "add_basic_parameter_window_symbol": "Parameter symbol:",
-            "add_basic_parameter_window_symbol_exp": "Text to be used as parameter symbol in forulas.",
+            "add_basic_parameter_window_symbol_exp": "Text to be used as parameter symbol in formulas.",
             "add_basic_parameter_window_desc": "Parameter description:",
             "add_basic_parameter_window_desc_exp": "Text to be used for short explinations.",
             "add_basic_parameter_window_btn_add": "Save",
@@ -47,19 +47,21 @@ class AddBasicParameter(QWidget):
             "add_basic_parameter_window_save_message_caption": "Missing data...",
             "add_basic_parameter_window_saved_message": "Parameter saved...",
             "add_basic_parameter_window_saved_message_caption": "Successuful...",
-            "add_basic_parameter_window_filename_message": "Parameter with this filename already exists.",
-            "add_basic_parameter_window_filename_message_caption": "Filename...",
-            "add_basic_parameter_window_insert_special": "Insert special character",
+            "add_basic_parameter_window_ename_message": "Parameter with this name already exists.",
+            "add_basic_parameter_window_name_message_caption": "Filename...",
             "add_basic_parameter_window_sc": "Input special character:"
         }
         self.window_gui()
 
     def window_gui(self):
+        font = self.font()
+        font.setPointSize(14) # učitati font iz mortija
+        self.setFont(font)
         self.setWindowState(Qt.WindowMaximized)
+        self.setMinimumSize(1200, 600)
         self.setWindowTitle(self.language['add_basic_parameter_window_title'])
-        #self.setWindowIcon(QIcon(css.menu_about_icon))
+        #self.setWindowIcon(QIcon(css.parameters_basic_icon))
         self.grid = QGridLayout()
-        #self.grid.addWidget(self.centralGroupBox())
         self.grid.addWidget(self.pb_name_groupbox(), 0, 0, 1, 1)
         self.grid.addWidget(self.pb_category_groupbox(), 0, 1, 1, 1)
         self.grid.addWidget(self.pb_symbol_groupbox(), 1, 0, 1, 1)
@@ -103,7 +105,7 @@ class AddBasicParameter(QWidget):
         return self.pbn_groupbox
     
     def pb_category_groupbox(self):
-        categoriess_file = 'parameter_types.json'
+        categoriess_file = 'parameter_types.json' # uvezati iz var
         self.pbc_groupbox = QGroupBox(self.language['add_basic_parameter_window_category'])
         self.text_parameter_category = QLabel(self.language['add_basic_parameter_window_category_exp'])
         categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
@@ -155,12 +157,9 @@ class AddBasicParameter(QWidget):
     
     def special_character_groupbox(self):
         self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
-        
-        
-        
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/')
+        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -169,42 +168,15 @@ class AddBasicParameter(QWidget):
                 self.sc_layout.addWidget(button, row+1, column)
                 i += 1
                 if i == len(self.button_list): break
-                
         self.sc_scroll.setLayout(self.sc_layout)
         sc = QScrollArea()
-        #sc.setFixedWidth(500)
         sc.setWidget(self.sc_scroll)
         sc.setWidgetResizable(1)
         self.sc_groupbox.layout = QVBoxLayout()
         self.sc_groupbox.layout.addWidget(sc)
-        
         self.sc_groupbox.setLayout(self.sc_groupbox.layout)
         return self.sc_groupbox
-    
-    # def special_character_groupbox(self):
-    #     self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
-    #     self.sc_layout = QGridLayout()
-    #     self.sc_scroll = QWidget()
-    #     self.button_list, self.rows, self.columns = read_characters('/srclet/inputs/characters/')
-    #     i = 0
-    #     for row in range(self.rows):
-    #         for column in range(self.columns):
-    #             button = QPushButton(f'{self.button_list[i]}', self)
-    #             button.clicked.connect(self.special_character_clicked)
-    #             self.sc_layout.addWidget(button, row+1, column)
-    #             i += 1
-    #             if i == len(self.button_list): break
-                
-    #     self.sc_scroll.setLayout(self.sc_layout)
-    #     sc = QScrollArea()
-    #     #sc.setFixedWidth(500)
-    #     sc.setWidget(self.sc_scroll)
-    #     sc.setWidgetResizable(1)
-    #     self.sc_groupbox.layout = QVBoxLayout()
-    #     self.sc_groupbox.layout.addWidget(sc)
-    #     self.sc_groupbox.setLayout(self.sc_groupbox.layout)
-    #     return self.sc_groupbox
-         
+            
     def button_groupbox(self):
         self.btn_groupbox = QGroupBox()
         self.buttonSaveParameter = QPushButton(self.language['add_basic_parameter_window_btn_add'])
@@ -219,17 +191,20 @@ class AddBasicParameter(QWidget):
     
     def add_parameter(self):
         self.file_name_to_save = get_filename('bp')
-        get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
-            self.file_list.append(Path(file).stem)
-        
-        if self.file_name_to_save in self.file_list:
+            self.file_to_read = open(os.path.join(cwd + basic_parameters_folder + file))
+            self.file_data = json.load(self.file_to_read)
+            if self.parameter_name.text() == self.file_data['name']:
+                self.file_list.append(file)
+                        
+        if self.file_list:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_basic_parameter_window_filename_message'])
-            self.msg.setWindowTitle(self.language['add_basic_parameter_window_filename_message_caption'])
+            self.msg.setText(self.language['add_basic_parameter_window_name_message'])
+            self.msg.setWindowTitle(self.language['add_basic_parameter_window_name_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -253,7 +228,7 @@ class AddBasicParameter(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
+                with open(cwd + basic_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)

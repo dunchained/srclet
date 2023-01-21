@@ -1,8 +1,0 @@
-{
-    "name": "Temperature Mean",
-    "unit": "oC",
-    "symbol": "Tmean",
-    "formula": "formula",
-    "description": "Opis neki.",
-    "type": "b"
-}
