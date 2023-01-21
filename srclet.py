@@ -8,10 +8,10 @@ from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
 from windows.parameters.basic_parameters import BasicParameters
-from windows.parameters.complex_parameters import ComplexParameters
-from windows.methods.methods_eto import ETOMethodsWindow
-from windows.methods.methods_wb import WBMethodsWindow
-from windows.methods.methods_other import OtherMethodsWindow
+#from windows.parameters.complex_parameters import ComplexParameters
+from remove_after.methods_eto import ETOMethodsWindow
+from remove_after.methods_wb import WBMethodsWindow
+from remove_after.methods_other import OtherMethodsWindow
 from widgets.image_widget import ImageWidget
 from mortys.language_morty import language
 from mortys.font_morty import read_menu_font_size

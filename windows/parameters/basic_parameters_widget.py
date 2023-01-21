@@ -175,6 +175,7 @@ class ParametersWidget(QWidget):
         self.buttonSave.clicked.connect(self.save_changes_parameter)
         self.buttonCancel = QPushButton(self.language['basic_parameters_widget_parameter_btn_cancel'])
         self.buttonCancel.clicked.connect(self.cancel)
+        self.buttonCancel.setEnabled(False)
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.text_parameter_name)
         self.layout.addWidget(self.parameter_name)

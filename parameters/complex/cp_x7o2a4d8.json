@@ -1,0 +1,9 @@
+{
+    "name": "Temperatura 1",
+    "symbol": "temp_c",
+    "category": "temperature",
+    "unit": "1",
+    "description": "1",
+    "formula": "1",
+    "type": "a"
+}

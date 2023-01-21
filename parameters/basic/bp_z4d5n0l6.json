@@ -1,0 +1,8 @@
+{
+    "name": "Temperatura 1",
+    "symbol": "temp",
+    "category": "temperature",
+    "unit": "1",
+    "description": "1",
+    "type": "a"
+}

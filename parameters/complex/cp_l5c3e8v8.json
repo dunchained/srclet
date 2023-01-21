@@ -1,0 +1,9 @@
+{
+    "name": "Vjetar 1",
+    "category": "wind",
+    "unit": "1",
+    "symbol": "wind_c",
+    "formula": "1",
+    "description": "1",
+    "type": "a"
+}

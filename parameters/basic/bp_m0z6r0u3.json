@@ -1,8 +1,0 @@
-{
-    "name": "Relative Humidity",
-    "symbol": "rel_hum",
-    "category": "temperature",
-    "unit": "%",
-    "description": "Relative humidity.",
-    "type": "a"
-}

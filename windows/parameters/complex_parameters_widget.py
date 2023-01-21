@@ -1,11 +1,13 @@
 import sys, os, json, shutil
 cwd = os.path.curdir
 #from variables import css, var
-from windows.parameters.complex_parameters_add import AddComplexParameter
-#from complex_parameters_add import AddComplexParameter
+#from windows.parameters.complex_parameters_add import AddComplexParameter
+from complex_parameters_add import AddComplexParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QScrollArea
 from PyQt5.QtCore import Qt
+from parameters_morty import read_characters, get_filename, read_basic_parameters
+#from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
 
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
@@ -49,10 +51,14 @@ class ParametersCategoryTabs(QWidget):
                         "complex_parameters_widget_save_changes_message": "Parameter must have name...",
                         "complex_parameters_widget_save_changes_message_caption": "Changes",
                         "complex_parameters_widget_save_message": "Changes saved...",
-                        "complex_parameters_widget_save_message_caption": "Changes"
+                        "complex_parameters_widget_save_message_caption": "Changes",
+                        "complex_parameters_widget_sc": "Input special character:",
+                        "complex_parameters_widget_bp": "Input basic parameter:"
                          }
         self.tab_widget()
         self.show()
+        
+    
  
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
@@ -78,6 +84,7 @@ class ParametersCategoryTabs(QWidget):
 class ParametersWidget(QWidget):
     def __init__(self, category, language):
         super().__init__()
+        QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.category = category
         self.language = language
         self.get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
@@ -90,8 +97,68 @@ class ParametersWidget(QWidget):
         self.grid = QGridLayout()
         self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
+        self.grid.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
+        self.grid.addWidget(self.basic_parameters_groupbox(), 1, 1, 1, 1)
+        
         
         self.setLayout(self.grid)
+        
+    def on_focus_changed(self, widget):
+        self.on_focused_change = widget
+        
+    def special_character_clicked(self, i):
+        sender = self.sender()
+        sender_text = sender.text()
+        if self.on_focused_change.__class__.__name__ == 'QTextEdit':
+            self.on_focused_change.setPlainText(self.on_focused_change.toPlainText() + sender_text)
+        elif self.on_focused_change.__class__.__name__ == 'QLineEdit':
+            self.on_focused_change.setText(self.on_focused_change.text() + sender_text)
+        else:
+            pass
+        
+    def special_character_groupbox(self):
+        self.sc_groupbox = QGroupBox(self.language['complex_parameters_widget_sc'])
+        self.sc_layout = QGridLayout()
+        self.sc_scroll = QWidget()
+        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                button = QPushButton(f'{self.button_list[i]}', self)
+                button.clicked.connect(self.special_character_clicked)
+                self.sc_layout.addWidget(button, row+1, column)
+                i += 1
+                if i == len(self.button_list): break
+        self.sc_scroll.setLayout(self.sc_layout)
+        sc = QScrollArea()
+        sc.setWidget(self.sc_scroll)
+        sc.setWidgetResizable(1)
+        self.sc_groupbox.layout = QVBoxLayout()
+        self.sc_groupbox.layout.addWidget(sc)
+        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
+        return self.sc_groupbox
+    
+    def basic_parameters_groupbox(self):
+        self.bp_groupbox = QGroupBox(self.language['complex_parameters_widget_bp'])
+        self.bp_layout = QGridLayout()
+        self.bp_scroll = QWidget()
+        self.button_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                button = QPushButton(f'{self.button_list[i]}', self)
+                button.clicked.connect(self.special_character_clicked)
+                self.bp_layout.addWidget(button, row+1, column)
+                i += 1
+                if i == len(self.button_list): break
+        self.bp_scroll.setLayout(self.bp_layout)
+        bp = QScrollArea()
+        bp.setWidget(self.bp_scroll)
+        bp.setWidgetResizable(1)
+        self.bp_groupbox.layout = QVBoxLayout()
+        self.bp_groupbox.layout.addWidget(bp)
+        self.bp_groupbox.setLayout(self.bp_groupbox.layout)
+        return self.bp_groupbox
         
     def create_list_widget(self, category_list):
         self.category_list = category_list
@@ -178,6 +245,7 @@ class ParametersWidget(QWidget):
         self.buttonSave.clicked.connect(self.save_changes_parameter)
         self.buttonCancel = QPushButton(self.language['complex_parameters_widget_parameter_btn_cancel'])
         self.buttonCancel.clicked.connect(self.cancel)
+        self.buttonCancel.setEnabled(False)
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.text_parameter_name)
         self.layout.addWidget(self.parameter_name)

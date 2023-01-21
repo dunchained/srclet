@@ -3,11 +3,11 @@ cwd = os.path.curdir
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
-from variables import css
+#from variables import css
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-from windows.parameters.complex_parameters_widget import ParametersCategoryTabs
+#from windows.parameters.complex_parameters_widget import ParametersCategoryTabs
 #from mortys.font_morty import read_menu_font_size
-#from complex_parameters_widget import ParametersCategoryTabs
+from complex_parameters_widget import ParametersCategoryTabs
 
 class ComplexParameters(QMainWindow):
     def __init__(self):
@@ -24,7 +24,7 @@ class ComplexParameters(QMainWindow):
 
     def window_gui(self):
         self.setMinimumSize(800, 600)
-        self.setWindowIcon(QIcon(css.parameters_complex_icon))
+        #self.setWindowIcon(QIcon(css.parameters_complex_icon))
         self.setWindowTitle(self.language['complex_parameters_window_title'])
         self.fileMenu()
         self.central_widget = ParametersCategoryTabs()
@@ -43,15 +43,15 @@ class ComplexParameters(QMainWindow):
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
-        refreshAct = QAction(QIcon(css.exit_icon), self.language['complex_parameters_window_file_menu_refresh'], self)
-        #refreshAct = QAction(self.language['complex_parameters_window_file_menu_refresh'], self)
+        #refreshAct = QAction(QIcon(css.exit_icon), self.language['complex_parameters_window_file_menu_refresh'], self)
+        refreshAct = QAction(self.language['complex_parameters_window_file_menu_refresh'], self)
         refreshAct.triggered.connect(self.refresh_widget)
         fileMenu.addAction(refreshAct)
         
         fileMenu.addSeparator()
         
-        exitAct = QAction(QIcon(css.exit_icon),self.language['complex_parameters_window_file_menu_exit'], self)
-        #exitAct = QAction(self.language['complex_parameters_window_file_menu_exit'], self)
+        #exitAct = QAction(QIcon(css.exit_icon),self.language['complex_parameters_window_file_menu_exit'], self)
+        exitAct = QAction(self.language['complex_parameters_window_file_menu_exit'], self)
         exitAct.triggered.connect(self.exit_window)
         fileMenu.addAction(exitAct)
         
