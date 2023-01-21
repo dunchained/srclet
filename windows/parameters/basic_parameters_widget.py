@@ -13,7 +13,7 @@ language_folder = '/srclet/languages/'
 language_file = 'language.json'
 categories_file = 'parameter_types.json'
 projects_folder = '/projects/'
-parameters_folder = '/parameters/basic/'
+basic_parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
 random_images_folder = '/srclet/images/random_image/'
 eto_methods_folder = '/methods/eto/'
@@ -48,6 +48,9 @@ class ParametersCategoryTabs(QWidget):
                         "basic_parameters_wisget_delete_msg_yes": "Yes",
                         "basic_parameters_wisget_delete_msg_cancel": "Cancel"
                          }
+        
+        self.tab_widget()
+        self.show()
  
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
@@ -76,10 +79,10 @@ class ParametersWidget(QWidget):
         self.category = category
         self.language = language
         
-        self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
         self.category_list = []
         for file in self.get_files:
-            self.file_to_load = open(os.path.join(cwd + parameters_folder + file))
+            self.file_to_load = open(os.path.join(cwd + basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_load)
             if self.category == self.file_data['category']:
                 self.category_list.append(self.file_data['name'])
@@ -111,13 +114,13 @@ class ParametersWidget(QWidget):
         return groupBox
 
     def index_changed(self, i):
-        self.get_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if i.text() == self.file_data['name']:
                 self.file_to_load = file
-        self.json_path = cwd + parameters_folder + self.file_to_load
+        self.json_path = cwd + basic_parameters_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
@@ -143,12 +146,12 @@ class ParametersWidget(QWidget):
 
     def delete_parameter(self, value):
         if value.text() == 'da':
-            self.get_list_of_files = next(os.walk(cwd + parameters_folder), (None, None, []))[2]
+            self.get_list_of_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
             for self.file_to_delete in self.get_list_of_files:
-                self.path_to_file_to_delete = open(os.path.join(cwd + parameters_folder + self.file_to_delete))
+                self.path_to_file_to_delete = open(os.path.join(cwd + basic_parameters_folder + self.file_to_delete))
                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-                    os.remove(os.path.join(cwd + parameters_folder + self.file_to_delete))
+                    os.remove(os.path.join(cwd + basic_parameters_folder + self.file_to_delete))
             self.refresh_parameters_list_after_deletion()
             
     def refresh_parameters_list_after_deletion(self):
