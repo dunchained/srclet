@@ -1,4 +1,4 @@
-import sys, json, os
+import sys, os
 cwd = os.path.curdir
 
 from PyQt5 import QtCore
