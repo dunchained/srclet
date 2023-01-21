@@ -28,7 +28,7 @@ class AddComplexParameter(QWidget):
             "language_description": "en",
 
 
-            "//": "Add Parameter Window",
+            "//": "Add Complex Parameter Window",
             "add_complex_parameter_window_title": "Add complex parameter",
             "add_complex_parameter_window_caption": "Parameter information:",
             "add_complex_parameter_window_category": "Parameter category:",

@@ -1,9 +1,8 @@
 {
     "name": "Compleksna Temperatura",
-    "category": "temperature",
-    "unit": "n",
     "symbol": "n",
-    "formula": "n\tn\t",
-    "description": "\tc",
+    "unit": "n",
+    "formula": "a",
+    "description": "a",
     "type": "a"
 }
