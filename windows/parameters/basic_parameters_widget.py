@@ -145,7 +145,7 @@ class ParametersWidget(QWidget):
         returnValue = msgBox.exec()
 
     def delete_parameter(self, value):
-        if value.text() == 'da':
+        if value.text() == self.language['basic_parameters_wisget_delete_msg_yes']:
             self.get_list_of_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
             for self.file_to_delete in self.get_list_of_files:
                 self.path_to_file_to_delete = open(os.path.join(cwd + basic_parameters_folder + self.file_to_delete))

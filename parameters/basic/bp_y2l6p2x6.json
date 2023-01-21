@@ -1,0 +1,8 @@
+{
+    "name": "Temperatura \u1d3cC",
+    "category": "temperature",
+    "unit": "\u1d3cC",
+    "symbol": "temp_celzius",
+    "description": "Temperatura.",
+    "type": "a"
+}
