@@ -14,7 +14,7 @@ wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QTabWidget
+from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
 from parameters_morty import read_characters, get_filename
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
@@ -156,13 +156,11 @@ class AddBasicParameter(QWidget):
     def special_character_groupbox(self):
         self.sc_groupbox = QGroupBox(self.language['add_basic_parameter_window_sc'])
         
-        self.tabs = QTabWidget()
-        self.tab_special_characters = QWidget()
         
-        self.tabs.addTab(self.tab_special_characters, 'Special characters')
+        
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters('/srclet/inputs/characters/')
+        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/')
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -173,14 +171,14 @@ class AddBasicParameter(QWidget):
                 if i == len(self.button_list): break
                 
         self.sc_scroll.setLayout(self.sc_layout)
-        self.sc = QScrollArea()
-        self.sc.setWidget(self.sc_scroll)
-        self.sc.setWidgetResizable(1)
+        sc = QScrollArea()
+        #sc.setFixedWidth(500)
+        sc.setWidget(self.sc_scroll)
+        sc.setWidgetResizable(1)
         self.sc_groupbox.layout = QVBoxLayout()
-        self.sc_groupbox.layout.addWidget(self.sc)
+        self.sc_groupbox.layout.addWidget(sc)
         
-        
-        # self.sc_groupbox.setLayout(self.sc_groupbox.layout)
+        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
         return self.sc_groupbox
     
     # def special_character_groupbox(self):
