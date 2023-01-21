@@ -15,7 +15,8 @@ other_methods_folder = '/methods/others/'
 
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
-from parameters_morty import read_characters, get_filename, read_basic_parameters
+#from parameters_morty import read_characters, get_filename, read_basic_parameters
+from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
@@ -49,7 +50,7 @@ class AddComplexParameter(QWidget):
             "add_complex_parameter_window_save_message_caption": "Missing data...",
             "add_complex_parameter_window_saved_message": "Parameter saved...",
             "add_complex_parameter_window_saved_message_caption": "Successuful...",
-            "add_complex_parameter_window_ename_message": "Parameter with this name already exists.",
+            "add_complex_parameter_window_name_message": "Parameter with this name already exists.",
             "add_complex_parameter_window_name_message_caption": "Filename...",
             "add_complex_parameter_window_sc": "Input special character:",
             "add_complex_parameter_window_bp": "Input basic parameter:"
@@ -236,7 +237,6 @@ class AddComplexParameter(QWidget):
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_list.append(file)
-                        
         if self.file_list:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)

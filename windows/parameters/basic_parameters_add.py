@@ -48,7 +48,7 @@ class AddBasicParameter(QWidget):
             "add_basic_parameter_window_save_message_caption": "Missing data...",
             "add_basic_parameter_window_saved_message": "Parameter saved...",
             "add_basic_parameter_window_saved_message_caption": "Successuful...",
-            "add_basic_parameter_window_ename_message": "Parameter with this name already exists.",
+            "add_basic_parameter_window_name_message": "Parameter with this name already exists.",
             "add_basic_parameter_window_name_message_caption": "Filename...",
             "add_basic_parameter_window_sc": "Input special character:"
         }

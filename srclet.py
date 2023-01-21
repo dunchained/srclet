@@ -8,7 +8,7 @@ from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
 from windows.parameters.basic_parameters import BasicParameters
-#from windows.parameters.complex_paramateres import ComplexParametersWindow
+from windows.parameters.complex_parameters import ComplexParameters
 from windows.methods.methods_eto import ETOMethodsWindow
 from windows.methods.methods_wb import WBMethodsWindow
 from windows.methods.methods_other import OtherMethodsWindow
@@ -204,7 +204,7 @@ class MainWindow(QMainWindow):
         self.window_basic_parameters = BasicParameters()
                 
     def complex_parameters_window(self):
-        self.window = ComplexParametersWindow(self.language)
+        self.window = ComplexParameters()
                 
     def eto_methods_window(self):
         self.window = ETOMethodsWindow(self.language)

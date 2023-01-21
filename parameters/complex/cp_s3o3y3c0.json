@@ -1,0 +1,9 @@
+{
+    "name": "Temperatura F",
+    "symbol": "temp",
+    "category": "temperature",
+    "unit": "mi",
+    "description": "formula za izracunjavanje",
+    "formula": "formula",
+    "type": "a"
+}
