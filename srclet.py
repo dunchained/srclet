@@ -1,4 +1,4 @@
-import sys, json, os
+import sys, os
 cwd = os.path.curdir
 
 from variables import css, var
@@ -221,7 +221,7 @@ class MainWindow(QMainWindow):
 
     def manual_window(self):
         #self.window = ManualWindow(self.language)
-        QDesktopServices.openUrl(QUrl('https://www.youtube.com/watch?v=9ee673JBm3A'))
+        QDesktopServices.openUrl(QUrl('https://www.youtube.com/watch?v=ECTLzJow1Wo&list=PLBO2iP5zSYD7CbGOXEnMsUoWSkyxRsXTd'))
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
