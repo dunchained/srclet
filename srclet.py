@@ -26,7 +26,6 @@ from PyQt5.QtCore import QUrl
 class MyProxyStyle(QProxyStyle):
     pass
     def pixelMetric(self, QStyle_PixelMetric, option=None, widget=None):
-
         if QStyle_PixelMetric == QStyle.PM_SmallIconSize:
             return icon_size()
         else:
