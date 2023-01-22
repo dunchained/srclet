@@ -1,60 +1,52 @@
-import sys, json, os, random
+import sys, os, json
 from pathlib import Path
 cwd = os.path.curdir
-#
+#from variables import css, var
+from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QHBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
+from PyQt5.QtCore import Qt
+from PyQt5 import QtCore
+
+from methods_morty import read_characters, read_basic_parameters, read_complex_parameters, get_filename
+
 language_folder = '/srclet/languages/'
 language_file = 'language.json'
 categories_file = 'parameter_types.json'
 projects_folder = '/projects/'
-basic_parameters_folder = '/parameters/basic/'
+parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
 random_images_folder = '/srclet/images/random_image/'
 eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
-from parameters_morty import read_characters, get_filename, read_basic_parameters
-#from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-
-class AddComplexParameter(QWidget):
+class AddETOMethod(QWidget):
     def __init__(self):
-        super().__init__()
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        super(AddETOMethod, self).__init__()
+        QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.language = {
-
-            "language_description": "en",
-
-
-            "//": "Add Complex Parameter Window",
-            "add_complex_parameter_window_title": "Add complex parameter",
-            "add_complex_parameter_window_caption": "Parameter information:",
-            "add_complex_parameter_window_category": "Parameter category:",
-            "add_complex_parameter_window_category_exp": "Paremeter category.",
-            "add_complex_parameter_window_name": "Parameter name:",
-            "add_complex_parameter_window_name_exp": "Text to be used as parameter short description.",
-            "add_complex_parameter_window_unit": "Parameter unit:",
-            "add_complex_parameter_window_unit_exp": "Unit to be used...",
-            "add_complex_parameter_window_symbol": "Parameter symbol:",
-            "add_complex_parameter_window_symbol_exp": "Text to be used as parameter symbol in formulas.",
-            "add_complex_parameter_window_desc": "Parameter description:",
-            "add_complex_parameter_window_desc_exp": "Text to be used for short explinations.",
-            "add_complex_parameter_window_formula": "Complex parameter formula:",
-            "add_complex_parameter_window_formula_exp": "Formula used to calculate parameter.",
-            "add_complex_parameter_window_btn_add": "Save",
-            "add_complex_parameter_window_btn_cancel": "Cancel",
-            "add_complex_parameter_window_save_message": "Parameter name or unit empty...",
-            "add_complex_parameter_window_save_message_caption": "Missing data...",
-            "add_complex_parameter_window_saved_message": "Parameter saved...",
-            "add_complex_parameter_window_saved_message_caption": "Successuful...",
-            "add_complex_parameter_window_name_message": "Parameter with this name already exists.",
-            "add_complex_parameter_window_name_message_caption": "Filename...",
-            "add_complex_parameter_window_sc": "Input special character:",
-            "add_complex_parameter_window_bp": "Input basic parameter:"
-        }
+                            "//": "ETO Methods Widget",
+                            "eto_methods_widget_caption": "List of available ETO Methods:",
+                            "eto_methods_widget_btn_add_new": "Add new ETO method",
+                            "eto_methods_widget_btn_delete": "Delete method",
+                            "eto_methods_widget_parameter_caption": "Method information:",
+                            "eto_methods_widget_parameter_filename": "Filename:",
+                            "eto_methods_widget_parameter_name": "Method name:",
+                            "eto_methods_widget_parameter_symbol": "Parameter symbol:",
+                            "eto_methods_widget_parameter_unit": "Parameter unit:",
+                            "eto_methods_widget_parameter_formula": "Calculation foruma:",
+                            "eto_methods_widget_parameter_desc": "Parameter description:",
+                            "eto_methods_widget_parameter_btn_save": "Save changes",
+                            "eto_methods_widget_parameter_btn_cancel": "Cancel changes",
+                            "eto_methods_widget_btn_close": "Close",
+                            "eto_methods_widget_save_changes_message": "Parameter name, symbol or unit empty...",
+                            "eto_methods_widget_save_changes_message_caption": "Missing data...",
+                            "eto_methods_widget_save_message": "Complex Parameter saved...",
+                            "eto_methods_widget_save_message_caption": "Successuful..."
+                         }
+        #self.AddParameter = AddComplexParameter(self.language)
+        #self.AddParameter.hide()
+        #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.window_gui()
 
     def window_gui(self):
@@ -63,28 +55,14 @@ class AddComplexParameter(QWidget):
         self.setFont(font)
         self.setWindowState(Qt.WindowMaximized)
         self.setMinimumSize(1200, 600)
-        self.setWindowTitle(self.language['add_complex_parameter_window_title'])
-        #self.setWindowIcon(QIcon(css.parameters_complex_icon))
+        self.setWindowTitle('Add new ETo method')
         self.grid = QGridLayout()
-        self.grid.addWidget(self.pb_name_groupbox(), 0, 0, 1, 1)
-        self.grid.addWidget(self.pb_category_groupbox(), 0, 1, 1, 1)
-        self.grid.addWidget(self.pb_symbol_groupbox(), 1, 0, 1, 1)
-        self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
-        self.grid.addWidget(self.pb_formula_groupbox(), 2, 0, 1, 2)
-        self.grid.addWidget(self.pb_description_groupbox(), 3, 0, 1, 2)
-        self.grid.addWidget(self.basic_parameters_groupbox(), 0, 2, 4, 1)
-        self.grid.addWidget(self.special_character_groupbox(), 0, 3, 4, 1)
-        self.grid.addWidget(self.button_groupbox(), 4, 0, 1, 4)
-        self.setLayout(self.grid)
-        QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.center_gui()
-        self.show()
+        self.grid.addWidget(self.left_groupbox(), 0, 0, 1, 1)
+        self.grid.addWidget(self.right_groupbox(), 0, 1, 1, 1)
+        self.grid.addWidget(self.down_groupbox(), 1, 0, 1, 2)
         
-    def center_gui(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+        self.setLayout(self.grid)
+        self.show()
         
     def on_focus_changed(self, widget):
         self.on_focused_change = widget
@@ -99,81 +77,17 @@ class AddComplexParameter(QWidget):
         else:
             pass
         
-    def pb_name_groupbox(self):
-        self.pbn_groupbox = QGroupBox(self.language['add_complex_parameter_window_name'])
-        self.text_parameter_name = QLabel(self.language['add_complex_parameter_window_name_exp'])
-        self.parameter_name = QLineEdit()
-        self.pbn_groupbox.layout = QVBoxLayout()
-        self.pbn_groupbox.layout.addWidget(self.text_parameter_name)
-        self.pbn_groupbox.layout.addWidget(self.parameter_name)
-        self.pbn_groupbox.layout.addStretch(1)
-        self.pbn_groupbox.setLayout(self.pbn_groupbox.layout)
-        return self.pbn_groupbox
-    
-    def pb_category_groupbox(self):
-        categoriess_file = 'parameter_types.json' # uvezati iz var
-        self.pbc_groupbox = QGroupBox(self.language['add_complex_parameter_window_category'])
-        self.text_parameter_category = QLabel(self.language['add_complex_parameter_window_category_exp'])
-        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
-        self.categories_file_data = json.load(categories_file)
-        self.categories_list = []
-        for category in self.categories_file_data:
-            self.categories_list.append(self.categories_file_data[category])
-        self.comboBox = QComboBox()
-        self.comboBox.addItems(self.categories_list)
-        self.pbc_groupbox.layout = QVBoxLayout()
-        self.pbc_groupbox.layout.addWidget(self.text_parameter_category)
-        self.pbc_groupbox.layout.addWidget(self.comboBox)
-        self.pbc_groupbox.layout.addStretch(1)
-        self.pbc_groupbox.setLayout(self.pbc_groupbox.layout)
-        return self.pbc_groupbox
-    
-    def pb_symbol_groupbox(self):
-        self.pbs_groupbox = QGroupBox(self.language['add_complex_parameter_window_symbol'])
-        self.text_parameter_symbol = QLabel(self.language['add_complex_parameter_window_symbol_exp'])
-        self.parameter_symbol = QLineEdit()
-        self.pbs_groupbox.layout = QVBoxLayout()
-        self.pbs_groupbox.layout.addWidget(self.text_parameter_symbol)
-        self.pbs_groupbox.layout.addWidget(self.parameter_symbol)
-        self.pbs_groupbox.layout.addStretch(1)
-        self.pbs_groupbox.setLayout(self.pbs_groupbox.layout)
-        return self.pbs_groupbox
-    
-    def pb_unit_groupbox(self):
-        self.pbu_groupbox = QGroupBox(self.language['add_complex_parameter_window_unit'])
-        self.text_parameter_unit = QLabel(self.language['add_complex_parameter_window_unit_exp'])
-        self.parameter_unit = QLineEdit()
-        self.pbu_groupbox.layout = QVBoxLayout()
-        self.pbu_groupbox.layout.addWidget(self.text_parameter_unit)
-        self.pbu_groupbox.layout.addWidget(self.parameter_unit)
-        self.pbu_groupbox.layout.addStretch(1)
-        self.pbu_groupbox.setLayout(self.pbu_groupbox.layout)
-        return self.pbu_groupbox
-
-    def pb_description_groupbox(self):
-        self.pbd_groupbox = QGroupBox(self.language['add_complex_parameter_window_desc'])
-        self.text_parameter_descriprion = QLabel(self.language['add_complex_parameter_window_desc_exp'])
-        self.parameter_descriprion = QTextEdit()
-        self.pbd_groupbox.layout = QVBoxLayout()
-        self.pbd_groupbox.layout.addWidget(self.text_parameter_descriprion)
-        self.pbd_groupbox.layout.addWidget(self.parameter_descriprion)
-        self.pbd_groupbox.layout.addStretch(1)
-        self.pbd_groupbox.setLayout(self.pbd_groupbox.layout)
-        return self.pbd_groupbox
-    
-    def pb_formula_groupbox(self):
-        self.pbf_groupbox = QGroupBox(self.language['add_complex_parameter_window_formula'])
-        self.text_parameter_formula = QLabel(self.language['add_complex_parameter_window_formula_exp'])
-        self.parameter_formula = QTextEdit()
-        self.pbf_groupbox.layout = QVBoxLayout()
-        self.pbf_groupbox.layout.addWidget(self.text_parameter_formula)
-        self.pbf_groupbox.layout.addWidget(self.parameter_formula)
-        self.pbf_groupbox.layout.addStretch(1)
-        self.pbf_groupbox.setLayout(self.pbf_groupbox.layout)
-        return self.pbf_groupbox
-    
+    def right_groupbox(self):
+        self.methods_groupbox = QGroupBox('Inserti:')
+        self.methods_groupbox.layout = QGridLayout()
+        self.methods_groupbox.layout.addWidget(self.special_character_groupbox(), 0, 0, 1, 2)
+        self.methods_groupbox.layout.addWidget(self.basic_parameters_groupbox_insert(), 1, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(self.complex_parameters_groupbox_insert(), 1, 1, 1, 1)
+        self.methods_groupbox.setLayout(self.methods_groupbox.layout)
+        return self.methods_groupbox
+            
     def special_character_groupbox(self):
-        self.sc_groupbox = QGroupBox(self.language['add_complex_parameter_window_sc'])
+        self.sc_groupbox = QGroupBox('Input special character:')
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
         self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
@@ -195,18 +109,18 @@ class AddComplexParameter(QWidget):
         return self.sc_groupbox
     
     def basic_parameters_groupbox(self):
-        self.bp_groupbox = QGroupBox(self.language['add_complex_parameter_window_bp'])
+        self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.bp_check_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
-                button = QPushButton(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.special_character_clicked)
-                self.bp_layout.addWidget(button, row+1, column)
+                self.bp_check = QCheckBox(f'{self.bp_check_list[i]}', self)
+                self.bp_check.clicked.connect(self.basic_parameter_checked)
+                self.bp_layout.addWidget(self.bp_check, row+1, column)
                 i += 1
-                if i == len(self.button_list): break
+                if i == len(self.bp_check_list): break
         self.bp_scroll.setLayout(self.bp_layout)
         bp = QScrollArea()
         bp.setWidget(self.bp_scroll)
@@ -215,77 +129,214 @@ class AddComplexParameter(QWidget):
         self.bp_groupbox.layout.addWidget(bp)
         self.bp_groupbox.setLayout(self.bp_groupbox.layout)
         return self.bp_groupbox
+    
+    def basic_parameter_checked(self):
+        if not self.selected_bp_list.text():
+            self.bpl = []
+        else:
+            self.bpl = self.selected_bp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.bpl.append(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
+        else:
+            self.bpl.remove(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
             
-    def button_groupbox(self):
+    def basic_parameters_groupbox_insert(self):
+        self.bpi_groupbox = QGroupBox('Insert basic parameter:')
+        self.bpi_layout = QGridLayout()
+        self.bpi_scroll = QWidget()
+        self.bpi_check_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.bpi_check = QPushButton(f'{self.bpi_check_list[i]}', self)
+                self.bpi_check.clicked.connect(self.special_character_clicked)
+                self.bpi_layout.addWidget(self.bpi_check, row+1, column)
+                i += 1
+                if i == len(self.bpi_check_list): break
+        self.bpi_scroll.setLayout(self.bpi_layout)
+        bpi = QScrollArea()
+        bpi.setWidget(self.bpi_scroll)
+        bpi.setWidgetResizable(1)
+        self.bpi_groupbox.layout = QVBoxLayout()
+        self.bpi_groupbox.layout.addWidget(bpi)
+        self.bpi_groupbox.setLayout(self.bpi_groupbox.layout)
+        return self.bpi_groupbox
+    
+    def complex_parameters_groupbox_insert(self):
+        self.bpc_groupbox = QGroupBox('Insert complex parameter:')
+        self.bpc_layout = QGridLayout()
+        self.bpc_scroll = QWidget()
+        self.bpc_check_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.bpc_check = QPushButton(f'{self.bpc_check_list[i]}', self)
+                self.bpc_check.clicked.connect(self.special_character_clicked)
+                self.bpc_layout.addWidget(self.bpc_check, row+1, column)
+                i += 1
+                if i == len(self.bpc_check_list): break
+        self.bpc_scroll.setLayout(self.bpc_layout)
+        bpc = QScrollArea()
+        bpc.setWidget(self.bpc_scroll)
+        bpc.setWidgetResizable(1)
+        self.bpc_groupbox.layout = QVBoxLayout()
+        self.bpc_groupbox.layout.addWidget(bpc)
+        self.bpc_groupbox.setLayout(self.bpc_groupbox.layout)
+        return self.bpc_groupbox
+            
+    def complex_parameters_groupbox(self):
+        self.cp_groupbox = QGroupBox()
+        self.cp_layout = QGridLayout()
+        self.cp_scroll = QWidget()
+        self.cp_check_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
+                self.cp_check.clicked.connect(self.complex_parameter_checked)
+                self.cp_layout.addWidget(self.cp_check, row+1, column)
+                i += 1
+                if i == len(self.cp_check_list): break
+        self.cp_scroll.setLayout(self.cp_layout)
+        cp = QScrollArea()
+        cp.setWidget(self.cp_scroll)
+        cp.setWidgetResizable(1)
+        self.cp_groupbox.layout = QVBoxLayout()
+        self.cp_groupbox.layout.addWidget(cp)
+        self.cp_groupbox.setLayout(self.cp_groupbox.layout)
+        return self.cp_groupbox
+    
+    def complex_parameter_checked(self):
+        if not self.selected_cp_list.text():
+            self.cpl = []
+        else:
+            self.cpl = self.selected_cp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.cpl.append(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+        else:
+            self.cpl.remove(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+    
+    
+    def left_groupbox(self):
+        self.method_info_groupbox = QGroupBox('Method information:')
+        
+        self.text_method_name = QLabel('Method name:')
+        self.method_name = QLineEdit()
+        self.text_method_short_name = QLabel('Method short name:')
+        self.method_short_name = QLineEdit()
+        self.text_method_symbol = QLabel('Method symbol:')
+        self.method_symbol = QLineEdit()
+        self.text_method_description = QLabel('Method description:')
+        self.method_description = QTextEdit()
+        self.text_method_conditions = QLabel('Method conditions:')
+        self.method_conditions = QTextEdit()
+        self.text_method_formula = QLabel('Method calculation formula:')
+        self.method_formula = QTextEdit()
+        self.text_basic_parameters = QLabel('Basic parameters:')
+        self.text_complex_parameters = QLabel('Complex parameters:')
+        self.text_bp_selected = QLabel('Selected basic parameters:')
+        self.selected_bp_list = QLabel()
+        self.text_cp_selected = QLabel('Selected complex parameters:')
+        self.selected_cp_list = QLabel()
+        
+        self.method_info_groupbox.layout = QGridLayout()
+        self.method_info_groupbox.layout.addWidget(self.text_method_name, 0, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_name, 1, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_method_short_name, 0, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_short_name, 1, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_method_symbol, 2, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.method_symbol, 3, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.text_method_description, 4, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_description, 5, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_method_conditions, 4, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_conditions, 5, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_method_formula, 6, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.method_formula, 7, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.text_basic_parameters, 8, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.basic_parameters_groupbox(), 9, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_complex_parameters, 8, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.complex_parameters_groupbox(), 9, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_bp_selected, 10, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.selected_bp_list, 11, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_cp_selected, 10, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.selected_cp_list, 11, 1, 1, 1)
+        
+        self.method_info_groupbox.setLayout(self.method_info_groupbox.layout)
+        return self.method_info_groupbox  
+    
+    def down_groupbox(self):
         self.btn_groupbox = QGroupBox()
-        self.buttonSaveParameter = QPushButton(self.language['add_complex_parameter_window_btn_add'])
-        self.buttonSaveParameter.clicked.connect(self.add_parameter)
-        self.buttonCancel = QPushButton(self.language['add_complex_parameter_window_btn_cancel'])
-        self.buttonCancel.clicked.connect(self.close)
+        self.btn_save = QPushButton('Save')
+        self.btn_save.clicked.connect(self.add_method)
+        self.btn_cancel = QPushButton('Cancel')
+        self.btn_cancel.clicked.connect(self.close)
         self.btn_groupbox.layout = QHBoxLayout()
-        self.btn_groupbox.layout.addWidget(self.buttonSaveParameter)
-        self.btn_groupbox.layout.addWidget(self.buttonCancel)
+        self.btn_groupbox.layout.addWidget(self.btn_save)
+        self.btn_groupbox.layout.addWidget(self.btn_cancel)
         self.btn_groupbox.setLayout(self.btn_groupbox.layout)
         return self.btn_groupbox
     
-    def add_parameter(self):
-        self.file_name_to_save = get_filename('cp')
-        get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+    def add_method(self):
+        self.file_name_to_save = get_filename('eto')
+        get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
-            self.file_to_read = open(os.path.join(cwd + complex_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + eto_methods_folder + file))
             self.file_data = json.load(self.file_to_read)
-            if self.parameter_name.text() == self.file_data['name']:
+            if self.method_name.text() == self.file_data['name']:
                 self.file_list.append(file)
+                        
         if self.file_list:
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_complex_parameter_window_name_message'])
-            self.msg.setWindowTitle(self.language['add_complex_parameter_window_name_message_caption'])
+            self.msg.setText('Method with this name already exists.')
+            self.msg.setWindowTitle('Method name...')
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            if not self.parameter_symbol.text() or not self.parameter_unit.text() or not self.parameter_name.text():
+            if not self.method_name.text() or not self.method_short_name.text() or not self.method_symbol.text() or not self.method_formula.toPlainText() or not self.selected_bp_list.text():
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_complex_parameter_window_save_message'])
-                self.msg.setWindowTitle(self.language['add_complex_parameter_window_save_message_caption'])
+                self.msg.setText('Method parameters must have: nabrojati ih!')
+                self.msg.setWindowTitle('Missing data...')
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
             else:
                 parameter_dict = {
-                    "name": self.parameter_name.text(),
-                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.comboBox.currentText())],
-                    "unit": self.parameter_unit.text(),
-                    "symbol": self.parameter_symbol.text(),
-                    "formula": self.parameter_formula.toPlainText(),
-                    "description": self.parameter_descriprion.toPlainText(),
+                    "name": self.method_name.text(),
+                    "short_name": self.method_short_name.text(),
+                    "symbol": self.method_symbol.text(),
+                    "description": self.method_description.toPlainText(),
+                    "method_conditions": self.method_conditions.toPlainText(),
+                    "method_formula": self.method_formula.toPlainText(),
+                    "basic_parameters": self.selected_bp_list.text(),
+                    "complex_parameters": self.selected_cp_list.text(),
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + complex_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
+                with open(cwd + eto_methods_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_complex_parameter_window_saved_message'])
-                self.msg.setWindowTitle(self.language['add_complex_parameter_window_saved_message_caption'])
+                self.msg.setText('Method saved...')
+                self.msg.setWindowTitle('Success...')
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()
             
     def message_box_success(self):
-        self.parameter_name.clear()
-        self.parameter_symbol.clear()
-        self.parameter_unit.clear()
-        self.parameter_descriprion.clear()
         self.close()
-
+            
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = AddComplexParameter()
+    mainWindow = AddETOMethod()
     sys.exit(mainApplication.exec_())

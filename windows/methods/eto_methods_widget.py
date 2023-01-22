@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWid
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
 
+from eto_methods_add import AddETOMethod
 from methods_morty import read_characters, read_basic_parameters, read_complex_parameters
 
 language_folder = '/srclet/languages/'
@@ -107,29 +108,87 @@ class ETOMethodsWidget(QWidget):
                         self.update_labels(
                             state=False, 
                             name=data['name'],
-                            short_name=data['short_name']
-                            )
+                            short_name=data['short_name'],
+                            symbol=data['symbol'],
+                            description=data['description'],
+                            conditions=data['method_conditions'],
+                            formula=data['method_formula'],
+                            bparam=data['basic_parameters'],
+                            cparam=data['complex_parameters'])
                     else:
                         self.update_labels(
                             state=True, 
                             name=data['name'],
-                            short_name=data['short_name'])
+                            short_name=data['short_name'],
+                            symbol=data['symbol'],
+                            description=data['description'],
+                            conditions=data['method_conditions'],
+                            formula=data['method_formula'],
+                            bparam=data['basic_parameters'],
+                            cparam=data['complex_parameters'])
 
-    def update_labels(self, state, name, short_name):
+    def update_labels(self, state, name, short_name, symbol, description, conditions, formula, bparam, cparam):
         self.method_name.setText(name)
         self.method_name.setEnabled(state)
         self.method_short_name.setText(short_name)
         self.method_short_name.setEnabled(state)
-    
+        self.method_symbol.setText(symbol)
+        self.method_symbol.setEnabled(state)
+        self.method_description.setText(description)
+        self.method_description.setEnabled(state)
+        self.method_conditions.setText(conditions)
+        self.method_conditions.setEnabled(state)
+        self.method_formula.setText(formula)
+        self.method_formula.setEnabled(state)
+        self.bp_groupbox.setEnabled(state)
+        self.selected_bp_list.setText(bparam)
+        self.bp_list_to_update = bparam.split(', ')
+        for self.bp_check in range(self.bp_layout.count()):
+            self.bp_check_widget = self.bp_layout.itemAt(self.bp_check).widget()
+            self.bp_check_widget.setChecked(False)
+            if self.bp_check_widget.text() in self.bp_list_to_update: self.bp_check_widget.setChecked(True)
+        self.cp_groupbox.setEnabled(state)
+        self.selected_cp_list.setText(cparam)
+        self.cp_list_to_update = cparam.split(', ')
+        for self.cp_check in range(self.cp_layout.count()):
+            self.cp_check_widget = self.cp_layout.itemAt(self.cp_check).widget()
+            self.cp_check_widget.setChecked(False)
+            if self.cp_check_widget.text() in self.cp_list_to_update: self.cp_check_widget.setChecked(True)
+        self.btn_save_method_changes.setEnabled(state)
+        self.btn_cancel_method_changes.setEnabled(state)
+        self.btn_delete_method.setEnabled(state)
+            
     def new_method(self):
-        print('new method')
+        self.window = AddETOMethod()
         
     def delete_procedure(self):
-        print('delete procedure')
-        self.delete_method()
-        
-    def delete_method(self):
-        print('delete method')
+        self.msgBox = QMessageBox()
+        self.msgBox.setIcon(QMessageBox.Information)
+        self.msgBox.setText('Are you sure you want to delete method?')
+        self.msgBox.setWindowTitle('Delete?')
+        self.msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        self.buttonOK = self.msgBox.button(QMessageBox.Ok)
+        self.buttonOK.setText('yes')
+        self.buttonCancel = self.msgBox.button(QMessageBox.Cancel)
+        self.buttonCancel.setText('cancel')
+        self.msgBox.buttonClicked.connect(self.delete_method)
+        returnValue = self.msgBox.exec()
+
+    def delete_method(self, value):
+        if value.text() == 'yes':
+            self.get_list_of_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+            for self.file_to_delete in self.get_list_of_files:
+                self.path_to_file_to_delete = open(os.path.join(cwd + eto_methods_folder + self.file_to_delete))
+                self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
+                if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
+                    os.remove(os.path.join(cwd + eto_methods_folder + self.file_to_delete))
+            self.refresh_methods_list_after_deletion()
+            
+    def refresh_methods_list_after_deletion(self):
+        self.item_to_remove = self.list_widget.selectedItems()
+        if not self.item_to_remove: return
+        for item in self.item_to_remove:
+            self.list_widget.takeItem(self.list_widget.row(item))
     
     def special_character_groupbox(self):
         self.sc_groupbox = QGroupBox('Input special character:')
@@ -157,15 +216,15 @@ class ETOMethodsWidget(QWidget):
         self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.bp_check_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
-                button = QCheckBox(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.basic_parameter_checked)
-                self.bp_layout.addWidget(button, row+1, column)
+                self.bp_check = QCheckBox(f'{self.bp_check_list[i]}', self)
+                self.bp_check.clicked.connect(self.basic_parameter_checked)
+                self.bp_layout.addWidget(self.bp_check, row+1, column)
                 i += 1
-                if i == len(self.button_list): break
+                if i == len(self.bp_check_list): break
         self.bp_scroll.setLayout(self.bp_layout)
         bp = QScrollArea()
         bp.setWidget(self.bp_scroll)
@@ -191,15 +250,15 @@ class ETOMethodsWidget(QWidget):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
         self.cp_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
+        self.cp_check_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
-                button = QCheckBox(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.complex_parameter_checked)
-                self.cp_layout.addWidget(button, row+1, column)
+                self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
+                self.cp_check.clicked.connect(self.complex_parameter_checked)
+                self.cp_layout.addWidget(self.cp_check, row+1, column)
                 i += 1
-                if i == len(self.button_list): break
+                if i == len(self.cp_check_list): break
         self.cp_scroll.setLayout(self.cp_layout)
         cp = QScrollArea()
         cp.setWidget(self.cp_scroll)
@@ -220,22 +279,6 @@ class ETOMethodsWidget(QWidget):
         else:
             self.cpl.remove(self.sender().text())
             self.selected_cp_list.setText(', '.join(self.cpl))
-    
-    
-    # def refresh_parameters_list(self):
-    #     get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
-    #     self.file_list_update = []
-    #     for file in get_files:
-    #         if Path(file).stem not in self.file_list:
-    #             self.file_list_update.append(Path(file).stem)
-    #     self.list_widget.addItems(self.file_list_update)
-
-    # def delete_parameter(self):
-    #     list_items = self.list_widget.selectedItems()
-    #     if not list_items: return
-    #     for item in list_items:
-    #         self.list_widget.takeItem(self.list_widget.row(item))
-    #     os.remove(cwd + complex_parameters_folder + item.text() + '.json')
     
     def create_method_info(self):
         self.method_info_groupbox = QGroupBox('Method information:')
@@ -291,57 +334,68 @@ class ETOMethodsWidget(QWidget):
         return self.method_info_groupbox
     
     def save_changes_method(self):
-        print('save changes method')
+        self.get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        for file in self.get_files:
+            self.file_to_read = open(os.path.join(cwd + eto_methods_folder + file))
+            self.file_data = json.load(self.file_to_read)
+            if self.method_name.text() == self.file_data['name']:
+                self.file_to_load = file
+        if not self.method_name.text() or not self.method_short_name.text() or not self.method_symbol.text() or not self.method_formula.toPlainText() or not self.selected_bp_list.text():
+            self.msg = QMessageBox()
+            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText('Missing data, nabrojati šta mora imati...')
+            self.msg.setWindowTitle('Missing data...')
+            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.buttonClicked.connect(self.msg.close)
+            self.msg.show()
+        else:
+            parameter_dict = {
+                    "name": self.method_name.text(),
+                    "short_name": self.method_short_name.text(),
+                    "symbol": self.method_symbol.text(),
+                    "description": self.method_description.toPlainText(),
+                    "method_conditions": self.method_conditions.toPlainText(),
+                    "method_formula": self.method_formula.toPlainText(),
+                    "basic_parameters": self.selected_bp_list.text(),
+                    "complex_parameters": self.selected_cp_list.text(),
+                    "type": "a"
+                    }
+            json_object = json.dumps(parameter_dict, indent = 4)
+            with open(cwd + eto_methods_folder + self.file_to_load, "w") as outfile:
+                outfile.write(json_object)
+                
+            self.msg = QMessageBox()
+            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Information)
+            self.msg.setText('Method data saved...')
+            self.msg.setWindowTitle('Success...')
+            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.show()
         
     def cancel_changes_method(self):
-        print('cancel changes method')
-    
-    
-    
-    # def cancel(self):
-    #     self.json_path = cwd + complex_parameters_folder + self.list_widget.currentItem().text() + '.json'
-    #     with open(self.json_path) as json_file:
-    #         data = json.load(json_file)
-            
-    #     self.parameter_name.setText(data['name'])
-    #     self.parameter_symbol.setText(data['symbol'])
-    #     self.parameter_unit.setText(data['unit'])
-    #     self.parameter_formula.setText(data['formula'])
-    #     self.parameter_descriprion.setText(data['description'])
-    
-    # def newParameterWindow(self):
-    #     self.AddParameter.show()
-
-    # def save_changes_parameter(self):
-    #     if not self.parameter_filename or not self.parameter_name.text() or not self.parameter_unit.text() or not self.parameter_symbol.text():
-    #         self.msg = QMessageBox()
-    #         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-    #         self.msg.setIcon(QMessageBox.Information)
-    #         self.msg.setText(self.language['eto_methods_widget_save_changes_message'])
-    #         self.msg.setWindowTitle(self.language['eto_methods_widget_save_changes_message_caption'])
-    #         self.msg.setStandardButtons(QMessageBox.Ok)
-    #         self.msg.buttonClicked.connect(self.msg.close)
-    #         self.msg.show()
-    #     else:
-    #         parameter_dict = {
-    #             "name": self.parameter_name.text(),
-    #             "symbol": self.parameter_symbol.text(),
-    #             "unit": self.parameter_unit.text(),
-    #             "formula": self.parameter_formula.toPlainText(),
-    #             "description": self.parameter_descriprion.toPlainText(),
-    #             "type": "a"
-    #             }
-    #         json_object = json.dumps(parameter_dict, indent = 4)
-    #         with open(cwd + complex_parameters_folder + self.parameter_filename.text() + ".json", "w") as outfile:
-    #             outfile.write(json_object)
-                
-    #         self.msg = QMessageBox()
-    #         self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-    #         self.msg.setIcon(QMessageBox.Information)
-    #         self.msg.setText(self.language['eto_methods_widget_save_message'])
-    #         self.msg.setWindowTitle(self.language['eto_methods_widget_save_message_caption'])
-    #         self.msg.setStandardButtons(QMessageBox.Ok)
-    #         self.msg.show()
+        self.json_path = cwd + eto_methods_folder + self.file_to_load
+        with open(self.json_path) as json_file:
+            data = json.load(json_file)
+        
+        self.method_name.setText(data['name'])
+        self.method_short_name.setText(data['short_name'])
+        self.method_symbol.setText(data['symbol'])
+        self.method_description.setText(data['description'])
+        self.method_conditions.setText(data['method_conditions'])
+        self.method_formula.setText(data['method_formula'])
+        self.selected_bp_list.setText(data['basic_parameters'])
+        self.bp_list_to_update = data['basic_parameters'].split(', ')
+        for self.bp_check in range(self.bp_layout.count()):
+            self.bp_check_widget = self.bp_layout.itemAt(self.bp_check).widget()
+            self.bp_check_widget.setChecked(False)
+            if self.bp_check_widget.text() in self.bp_list_to_update: self.bp_check_widget.setChecked(True)
+        self.selected_cp_list.setText(data['complex_parameters'])
+        self.cp_list_to_update = data['complex_parameters'].split(', ')
+        for self.cp_check in range(self.cp_layout.count()):
+            self.cp_check_widget = self.cp_layout.itemAt(self.cp_check).widget()
+            self.cp_check_widget.setChecked(False)
+            if self.cp_check_widget.text() in self.cp_list_to_update: self.cp_check_widget.setChecked(True)
             
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)

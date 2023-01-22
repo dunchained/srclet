@@ -1,0 +1,11 @@
+{
+    "name": "ETO Method 1",
+    "short_name": "M1 shorty",
+    "symbol": "Symbol",
+    "description": "Nema neke potrebe opisivati ga.",
+    "method_conditions": "Uslovi.",
+    "method_formula": "Samoniklica. hum",
+    "basic_parameters": "hum, temp, rad",
+    "complex_parameters": "rad_c, temp_c, hum_c",
+    "type": "a"
+}

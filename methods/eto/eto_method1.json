@@ -5,7 +5,7 @@
     "description": "Method description2",
     "method_conditions": "conditions in list2",
     "method_formula": "Method formula2",
-    "baic_parameters": "",
-    "complex_parameters": "",
+    "basic_parameters": "rain, hum",
+    "complex_parameters": "rain_c, hum_c",
     "type": "b"
 }
