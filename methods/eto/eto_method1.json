@@ -1,0 +1,11 @@
+{
+    "name": "Method name2",
+    "short_name": "Method short name2",
+    "symbol": "Method symbol2",
+    "description": "Method description2",
+    "method_conditions": "conditions in list2",
+    "method_formula": "Method formula2",
+    "baic_parameters": "",
+    "complex_parameters": "",
+    "type": "b"
+}

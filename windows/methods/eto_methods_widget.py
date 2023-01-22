@@ -3,7 +3,7 @@ from pathlib import Path
 cwd = os.path.curdir
 #from variables import css, var
 from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
 
@@ -93,9 +93,34 @@ class ETOMethodsWidget(QWidget):
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
     
-    def index_changed(self):
-        print('index changed')
-        
+    def index_changed(self, i):
+        self.get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        for file in self.get_files:
+            self.file_to_read = open(os.path.join(cwd + eto_methods_folder + file))
+            self.file_data = json.load(self.file_to_read)
+            if i.text() == self.file_data['name']:
+                self.file_to_load = file
+                self.json_path = cwd + eto_methods_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    data = json.load(json_file)
+                    if data['type'] == 'b':
+                        self.update_labels(
+                            state=False, 
+                            name=data['name'],
+                            short_name=data['short_name']
+                            )
+                    else:
+                        self.update_labels(
+                            state=True, 
+                            name=data['name'],
+                            short_name=data['short_name'])
+
+    def update_labels(self, state, name, short_name):
+        self.method_name.setText(name)
+        self.method_name.setEnabled(state)
+        self.method_short_name.setText(short_name)
+        self.method_short_name.setEnabled(state)
+    
     def new_method(self):
         print('new method')
         
@@ -136,8 +161,8 @@ class ETOMethodsWidget(QWidget):
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
-                button = QPushButton(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.basic_parameter_clicked)
+                button = QCheckBox(f'{self.button_list[i]}', self)
+                button.clicked.connect(self.basic_parameter_checked)
                 self.bp_layout.addWidget(button, row+1, column)
                 i += 1
                 if i == len(self.button_list): break
@@ -150,9 +175,18 @@ class ETOMethodsWidget(QWidget):
         self.bp_groupbox.setLayout(self.bp_groupbox.layout)
         return self.bp_groupbox
     
-    def basic_parameter_clicked(self):
-        print('basic parameter clicked')
-        
+    def basic_parameter_checked(self):
+        if not self.selected_bp_list.text():
+            self.bpl = []
+        else:
+            self.bpl = self.selected_bp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.bpl.append(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
+        else:
+            self.bpl.remove(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
+            
     def complex_parameters_groupbox(self):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
@@ -161,8 +195,8 @@ class ETOMethodsWidget(QWidget):
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
-                button = QPushButton(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.complex_parameter_clicked)
+                button = QCheckBox(f'{self.button_list[i]}', self)
+                button.clicked.connect(self.complex_parameter_checked)
                 self.cp_layout.addWidget(button, row+1, column)
                 i += 1
                 if i == len(self.button_list): break
@@ -175,25 +209,19 @@ class ETOMethodsWidget(QWidget):
         self.cp_groupbox.setLayout(self.cp_groupbox.layout)
         return self.cp_groupbox
     
-    def complex_parameter_clicked(self):
-        print('complex parameter clicked')
+    def complex_parameter_checked(self):
+        if not self.selected_cp_list.text():
+            self.cpl = []
+        else:
+            self.cpl = self.selected_cp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.cpl.append(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+        else:
+            self.cpl.remove(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
     
-    # def index_changed(self, i):
-    #     self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
-    #     for file in self.get_files:
-    #         self.file_to_read = open(os.path.join(cwd + basic_parameters_folder + file))
-    #         self.file_data = json.load(self.file_to_read)
-    #         if i.text() == self.file_data['name']:
-    #             self.file_to_load = file
-    #             self.kategorija = self.file_data['category']
-    #     self.json_path = cwd + basic_parameters_folder + self.file_to_load
-    #     with open(self.json_path) as json_file:
-    #         data = json.load(json_file)
-    #         if data['type'] == 'b':
-    #             self.update_labels(state=False, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
-    #         else:
-    #             self.update_labels(state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
-            
+    
     # def refresh_parameters_list(self):
     #     get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
     #     self.file_list_update = []
