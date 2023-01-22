@@ -1,60 +1,20 @@
-import sys, json, os, random
-from pathlib import Path
+import sys, json, os
 cwd = os.path.curdir
-#
-language_folder = '/srclet/languages/'
-language_file = 'language.json'
-categories_file = 'parameter_types.json'
-projects_folder = '/projects/'
-basic_parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/srclet/images/random_image/'
-eto_methods_folder = '/methods/eto/'
-wb_methods_folder = '/methods/wb/'
-other_methods_folder = '/methods/others/'
-
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QLineEdit
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout
-from parameters_morty import read_characters, get_filename, read_basic_parameters
-#from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
+#from variables import css, var
+import var, css
+#from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
+from parameters_morty import read_characters, get_filename, read_basic_parameters
+from language import language
 
 class AddComplexParameter(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = {
-
-            "language_description": "en",
-
-
-            "//": "Add Complex Parameter Window",
-            "add_complex_parameter_window_title": "Add complex parameter",
-            "add_complex_parameter_window_caption": "Parameter information:",
-            "add_complex_parameter_window_category": "Parameter category:",
-            "add_complex_parameter_window_category_exp": "Paremeter category.",
-            "add_complex_parameter_window_name": "Parameter name:",
-            "add_complex_parameter_window_name_exp": "Text to be used as parameter short description.",
-            "add_complex_parameter_window_unit": "Parameter unit:",
-            "add_complex_parameter_window_unit_exp": "Unit to be used...",
-            "add_complex_parameter_window_symbol": "Parameter symbol:",
-            "add_complex_parameter_window_symbol_exp": "Text to be used as parameter symbol in formulas.",
-            "add_complex_parameter_window_desc": "Parameter description:",
-            "add_complex_parameter_window_desc_exp": "Text to be used for short explinations.",
-            "add_complex_parameter_window_formula": "Complex parameter formula:",
-            "add_complex_parameter_window_formula_exp": "Formula used to calculate parameter.",
-            "add_complex_parameter_window_btn_add": "Save",
-            "add_complex_parameter_window_btn_cancel": "Cancel",
-            "add_complex_parameter_window_save_message": "Parameter name or unit empty...",
-            "add_complex_parameter_window_save_message_caption": "Missing data...",
-            "add_complex_parameter_window_saved_message": "Parameter saved...",
-            "add_complex_parameter_window_saved_message_caption": "Successuful...",
-            "add_complex_parameter_window_name_message": "Parameter with this name already exists.",
-            "add_complex_parameter_window_name_message_caption": "Filename...",
-            "add_complex_parameter_window_sc": "Input special character:",
-            "add_complex_parameter_window_bp": "Input basic parameter:"
-        }
+        self.language = language
         self.window_gui()
 
     def window_gui(self):
@@ -64,7 +24,7 @@ class AddComplexParameter(QWidget):
         self.setWindowState(Qt.WindowMaximized)
         self.setMinimumSize(1200, 600)
         self.setWindowTitle(self.language['add_complex_parameter_window_title'])
-        #self.setWindowIcon(QIcon(css.parameters_complex_icon))
+        self.setWindowIcon(QIcon(css.parameters_complex_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.pb_name_groupbox(), 0, 0, 1, 1)
         self.grid.addWidget(self.pb_category_groupbox(), 0, 1, 1, 1)
@@ -111,10 +71,9 @@ class AddComplexParameter(QWidget):
         return self.pbn_groupbox
     
     def pb_category_groupbox(self):
-        categoriess_file = 'parameter_types.json' # uvezati iz var
         self.pbc_groupbox = QGroupBox(self.language['add_complex_parameter_window_category'])
         self.text_parameter_category = QLabel(self.language['add_complex_parameter_window_category_exp'])
-        categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + categoriess_file))
+        categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
         self.categories_file_data = json.load(categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -176,7 +135,7 @@ class AddComplexParameter(QWidget):
         self.sc_groupbox = QGroupBox(self.language['add_complex_parameter_window_sc'])
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
+        self.button_list, self.rows, self.columns = read_characters(var.charactes_loc)
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -198,7 +157,7 @@ class AddComplexParameter(QWidget):
         self.bp_groupbox = QGroupBox(self.language['add_complex_parameter_window_bp'])
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.button_list, self.rows, self.columns = read_basic_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -230,10 +189,10 @@ class AddComplexParameter(QWidget):
     
     def add_parameter(self):
         self.file_name_to_save = get_filename('cp')
-        get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
-            self.file_to_read = open(os.path.join(cwd + complex_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_list.append(file)
@@ -267,7 +226,7 @@ class AddComplexParameter(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + complex_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
+                with open(cwd + var.complex_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -279,10 +238,6 @@ class AddComplexParameter(QWidget):
                 self.msg.show()
             
     def message_box_success(self):
-        self.parameter_name.clear()
-        self.parameter_symbol.clear()
-        self.parameter_unit.clear()
-        self.parameter_descriprion.clear()
         self.close()
 
 if __name__ == '__main__':

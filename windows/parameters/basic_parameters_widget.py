@@ -1,62 +1,26 @@
-import sys, os, json, shutil
+import sys, os, json
 cwd = os.path.curdir
-#from variables import css, var
-from windows.parameters.basic_parameters_add import AddBasicParameter
-#from basic_parameters_add import AddBasicParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtCore import Qt
+#from variables import var
+import var
+#from windows.parameters.basic_parameters_add import AddBasicParameter
+from basic_parameters_add import AddBasicParameter
+from language import language
 
-language_folder = '/srclet/languages/'
-language_file = 'language.json'
-categories_file = 'parameter_types.json'
-projects_folder = '/projects/'
-basic_parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/srclet/images/random_image/'
-eto_methods_folder = '/methods/eto/'
-wb_methods_folder = '/methods/wb/'
-other_methods_folder = '/methods/others/'
 
 class ParametersCategoryTabs(QWidget):
     def __init__(self):
         super().__init__()
         self.setUpdatesEnabled(True)
-        self.language = {
-                        "language_description": "en",
-                         "//": "Basic Parameters Widget",
-                        "basic_parameters_widget_title": "Parameters",
-                        "basic_parameters_widget_caption": "List of available parameters in this category:",
-                        "basic_parameters_widget_btn_add_new": "Add new parameter",
-                        "basic_parameters_widget_btn_delete": "Delete selected parameter",
-                        "basic_parameters_widget_parameter_caption": "Parameters information:",
-                        "basic_parameters_widget_parameter_filename": "Filename:",
-                        "basic_parameters_widget_parameter_name": "Parameter name:",
-                        "basic_parameters_widget_parameter_symbol": "Parameter symbol:",
-                        "basic_parameters_widget_parameter_unit": "Parameter unit:",
-                        "basic_parameters_widget_parameter_desc": "Parameter description:",
-                        "basic_parameters_widget_parameter_btn_save": "Save changes",
-                        "basic_parameters_widget_parameter_btn_cancel": "Cancel changes",
-                        "basic_parameters_widget_save_changes_message": "Parameter name or unit empty...",
-                        "basic_parameters_widget_save_changes_message_caption": "Missing data...",
-                        "basic_parameters_widget_save_message": "Parameter saved...",
-                        "basic_parameters_widget_save_message_caption": "Successuful...",
-                        "basic_parameters_widget_delete_msg_title": "Delete parameter?",
-                        "basic_parameters_widget_delete_msg_message": "Are you sure you want to delete parameter?",
-                        "basic_parameters_widget_delete_msg_yes": "Yes",
-                        "basic_parameters_widget_delete_msg_cancel": "Cancel",
-                        "basic_parameters_widget_save_changes_message": "Parameter must have name...",
-                        "basic_parameters_widget_save_changes_message_caption": "Changes",
-                        "basic_parameters_widget_save_message": "Changes saved...",
-                        "basic_parameters_widget_save_message_caption": "Changes"
-                         }
+        self.language = language
         self.tab_widget()
         self.show()
  
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
-        self.cat_file = 'parameter_types.json' ### import iz var
-        self.categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + self.cat_file))
+        self.categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
         self.categories_file_data = json.load(self.categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -73,16 +37,15 @@ class ParametersCategoryTabs(QWidget):
         self.mainLayout.addWidget(self.categories_tabs)
         self.setLayout(self.mainLayout)
 
-
 class ParametersWidget(QWidget):
     def __init__(self, category, language):
         super().__init__()
         self.category = category
         self.language = language
-        self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
         self.category_list = []
         for file in self.get_files:
-            self.file_to_load = open(os.path.join(cwd + basic_parameters_folder + file))
+            self.file_to_load = open(os.path.join(cwd + var.basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_load)
             if self.category == self.file_data['category']:
                 self.category_list.append(self.file_data['name'])
@@ -114,14 +77,14 @@ class ParametersWidget(QWidget):
         return self.groupBox
 
     def index_changed(self, i):
-        self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + basic_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if i.text() == self.file_data['name']:
                 self.file_to_load = file
                 self.kategorija = self.file_data['category']
-        self.json_path = cwd + basic_parameters_folder + self.file_to_load
+        self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
@@ -147,12 +110,12 @@ class ParametersWidget(QWidget):
 
     def delete_parameter(self, value):
         if value.text() == self.language['basic_parameters_widget_delete_msg_yes']:
-            self.get_list_of_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
+            self.get_list_of_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
             for self.file_to_delete in self.get_list_of_files:
-                self.path_to_file_to_delete = open(os.path.join(cwd + basic_parameters_folder + self.file_to_delete))
+                self.path_to_file_to_delete = open(os.path.join(cwd + var.basic_parameters_folder + self.file_to_delete))
                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-                    os.remove(os.path.join(cwd + basic_parameters_folder + self.file_to_delete))
+                    os.remove(os.path.join(cwd + var.basic_parameters_folder + self.file_to_delete))
             self.refresh_parameters_list_after_deletion()
             
     def refresh_parameters_list_after_deletion(self):
@@ -163,17 +126,17 @@ class ParametersWidget(QWidget):
         
     def create_parameter_widget(self):
         self.groupBox = QGroupBox(self.language['basic_parameters_widget_parameter_caption'])
-        self.text_parameter_name = QLabel(self.language['basic_parameters_widget_parameter_name'])
+        self.text_parameter_name = QLabel(self.language['add_basic_parameter_window_name'])
         self.parameter_name = QLineEdit()
-        self.text_parameter_symbol = QLabel(self.language['basic_parameters_widget_parameter_symbol'])
+        self.text_parameter_symbol = QLabel(self.language['add_basic_parameter_window_symbol'])
         self.parameter_symbol = QLineEdit()
-        self.text_parameter_unit = QLabel(self.language['basic_parameters_widget_parameter_unit'])
+        self.text_parameter_unit = QLabel(self.language['add_basic_parameter_window_unit'])
         self.parameter_unit = QLineEdit()
-        self.text_parameter_descriprion = QLabel(self.language['basic_parameters_widget_parameter_desc'])
+        self.text_parameter_descriprion = QLabel(self.language['add_basic_parameter_window_desc'])
         self.parameter_descriprion = QTextEdit()
-        self.buttonSave = QPushButton(self.language['basic_parameters_widget_parameter_btn_save'])
+        self.buttonSave = QPushButton(self.language['basic_parameters_widget_parameter_btn_save_changes'])
         self.buttonSave.clicked.connect(self.save_changes_parameter)
-        self.buttonCancel = QPushButton(self.language['basic_parameters_widget_parameter_btn_cancel'])
+        self.buttonCancel = QPushButton(self.language['basic_parameters_widget_parameter_btn_cancel_changes'])
         self.buttonCancel.clicked.connect(self.cancel)
         self.buttonCancel.setEnabled(False)
         self.layout = QVBoxLayout()
@@ -204,9 +167,9 @@ class ParametersWidget(QWidget):
         self.buttonCancel.setEnabled(state)
 
     def save_changes_parameter(self):
-        self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + basic_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_to_load = file
@@ -215,8 +178,8 @@ class ParametersWidget(QWidget):
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['basic_parameters_widget_save_changes_message'])
-            self.msg.setWindowTitle(self.language['basic_parameters_widget_save_changes_message_caption'])
+            self.msg.setText(self.language['add_basic_parameter_window_save_message'])
+            self.msg.setWindowTitle(self.language['add_basic_parameter_window_save_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -230,24 +193,24 @@ class ParametersWidget(QWidget):
                 "type": "a"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(cwd + basic_parameters_folder + self.file_to_load, "w") as outfile:
+            with open(cwd + var.basic_parameters_folder + self.file_to_load, "w") as outfile:
                 outfile.write(json_object)
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['basic_parameters_widget_save_message'])
-            self.msg.setWindowTitle(self.language['basic_parameters_widget_save_message_caption'])
+            self.msg.setText(self.language['add_basic_parameter_window_saved_message'])
+            self.msg.setWindowTitle(self.language['add_basic_parameter_window_saved_message_caption'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.show()
 
     def cancel(self):
-        self.get_files = next(os.walk(cwd + basic_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + basic_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_to_load = file
-        self.json_path = cwd + basic_parameters_folder + self.file_to_load
+        self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
         self.parameter_name.setText(data['name'])

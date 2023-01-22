@@ -29,7 +29,7 @@ language = {
     "//": "ET0 Methods Widget",
     "eto_methods_widget_list": "Available ETO methods:",
     "eto_methods_widget_btn_add_method": "Add new method",
-    "eto_methods_widget_btn_delete_method": "Delete method",
+    "eto_methods_widget_btn_delete_method": "Delete selcted method",
     "eto_methods_widget_msg_delete": "Are you sure you want to delete selected method?",
     "eto_methods_widget_msg_delete_title": "Delete method...",
     "eto_methods_widget_msg_delete_yes": "Yes",
@@ -43,5 +43,5 @@ language = {
     "eto_methods_window_file_menu": "File",
     "eto_methods_window_file_menu_refresh": "Refresh methods list",
     "eto_methods_window_file_menu_exit": "Close",
-    "//": "ET0 Methods Widget END"    
+    "//": "ET0 Methods Window END"    
 }

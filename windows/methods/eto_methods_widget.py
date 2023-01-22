@@ -1,53 +1,21 @@
 import sys, os, json
-from pathlib import Path
 cwd = os.path.curdir
-#from variables import css, var
-from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QGridLayout, QGroupBox, QLabel, QPushButton
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
 from PyQt5.QtCore import Qt
-from PyQt5 import QtCore
-
+#from variables import var
+import var
+#from windows.methods.eto_methods_add import AddETOMethod
 from eto_methods_add import AddETOMethod
+#from mortys.methods_morty import read_characters, read_basic_parameters, read_complex_parameters
 from methods_morty import read_characters, read_basic_parameters, read_complex_parameters
-
-language_folder = '/srclet/languages/'
-language_file = 'language.json'
-categories_file = 'parameter_types.json'
-projects_folder = '/projects/'
-parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/srclet/images/random_image/'
-eto_methods_folder = '/methods/eto/'
-wb_methods_folder = '/methods/wb/'
-other_methods_folder = '/methods/others/'
+from language import language
 
 class ETOMethodsWidget(QWidget):
     def __init__(self):
         super(ETOMethodsWidget, self).__init__()
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.language = {
-                            "//": "ETO Methods Widget",
-                            "eto_methods_widget_caption": "List of available ETO Methods:",
-                            "eto_methods_widget_btn_add_new": "Add new ETO method",
-                            "eto_methods_widget_btn_delete": "Delete method",
-                            "eto_methods_widget_parameter_caption": "Method information:",
-                            "eto_methods_widget_parameter_filename": "Filename:",
-                            "eto_methods_widget_parameter_name": "Method name:",
-                            "eto_methods_widget_parameter_symbol": "Parameter symbol:",
-                            "eto_methods_widget_parameter_unit": "Parameter unit:",
-                            "eto_methods_widget_parameter_formula": "Calculation foruma:",
-                            "eto_methods_widget_parameter_desc": "Parameter description:",
-                            "eto_methods_widget_parameter_btn_save": "Save changes",
-                            "eto_methods_widget_parameter_btn_cancel": "Cancel changes",
-                            "eto_methods_widget_btn_close": "Close",
-                            "eto_methods_widget_save_changes_message": "Parameter name, symbol or unit empty...",
-                            "eto_methods_widget_save_changes_message_caption": "Missing data...",
-                            "eto_methods_widget_save_message": "Complex Parameter saved...",
-                            "eto_methods_widget_save_message_caption": "Successuful..."
-                         }
-        #self.AddParameter = AddComplexParameter(self.language)
-        #self.AddParameter.hide()
-        #self.AddParameter.clicked.connect(self.refresh_parameters_list)
+        self.language = language
         self.window_gui()
 
     def window_gui(self):
@@ -71,21 +39,22 @@ class ETOMethodsWidget(QWidget):
             pass
         
     def create_list_of_methods(self):
-        self.methods_groupbox = QGroupBox(self.language['eto_methods_widget_caption'])
+        self.methods_groupbox = QGroupBox(self.language['eto_methods_widget_list'])
         self.list_widget = QListWidget()
-        self.get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
         self.methods_list = []
         for file in self.get_files:
-            self.file_to_load = open(os.path.join(cwd + eto_methods_folder + file))
+            self.file_to_load = open(os.path.join(cwd + var.eto_methods_folder + file))
             self.file_data = json.load(self.file_to_load)
             self.methods_list.append(self.file_data['name'])
             
         self.list_widget.addItems(self.methods_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        self.btn_add_method = QPushButton('Add new ETO method')
+        self.btn_add_method = QPushButton(self.language['eto_methods_widget_btn_add_method'])
         self.btn_add_method.clicked.connect(self.new_method)
-        self.btn_delete_method = QPushButton('Delete method')
+        self.btn_delete_method = QPushButton(self.language['eto_methods_widget_btn_delete_method'])
         self.btn_delete_method.clicked.connect(self.delete_procedure)
+        self.btn_delete_method.setEnabled(False)
         self.methods_groupbox.layout = QGridLayout()
         self.methods_groupbox.layout.addWidget(self.list_widget, 0, 0, 1, 1)
         self.methods_groupbox.layout.addWidget(self.btn_add_method, 2, 0, 1, 1)
@@ -95,13 +64,13 @@ class ETOMethodsWidget(QWidget):
         return self.methods_groupbox
     
     def index_changed(self, i):
-        self.get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + eto_methods_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
             self.file_data = json.load(self.file_to_read)
             if i.text() == self.file_data['name']:
                 self.file_to_load = file
-                self.json_path = cwd + eto_methods_folder + self.file_to_load
+                self.json_path = cwd + var.eto_methods_folder + self.file_to_load
                 with open(self.json_path) as json_file:
                     data = json.load(json_file)
                     if data['type'] == 'b':
@@ -164,24 +133,24 @@ class ETOMethodsWidget(QWidget):
     def delete_procedure(self):
         self.msgBox = QMessageBox()
         self.msgBox.setIcon(QMessageBox.Information)
-        self.msgBox.setText('Are you sure you want to delete method?')
-        self.msgBox.setWindowTitle('Delete?')
+        self.msgBox.setText(self.language['eto_methods_widget_msg_delete'])
+        self.msgBox.setWindowTitle(self.language['eto_methods_widget_msg_delete_title'])
         self.msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         self.buttonOK = self.msgBox.button(QMessageBox.Ok)
-        self.buttonOK.setText('yes')
+        self.buttonOK.setText(self.language['eto_methods_widget_msg_delete_yes'])
         self.buttonCancel = self.msgBox.button(QMessageBox.Cancel)
-        self.buttonCancel.setText('cancel')
+        self.buttonCancel.setText(self.language['eto_methods_widget_msg_delete_cancel'])
         self.msgBox.buttonClicked.connect(self.delete_method)
         returnValue = self.msgBox.exec()
 
     def delete_method(self, value):
-        if value.text() == 'yes':
-            self.get_list_of_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        if value.text() == self.language['eto_methods_widget_msg_delete_yes']:
+            self.get_list_of_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
             for self.file_to_delete in self.get_list_of_files:
-                self.path_to_file_to_delete = open(os.path.join(cwd + eto_methods_folder + self.file_to_delete))
+                self.path_to_file_to_delete = open(os.path.join(cwd + var.eto_methods_folder + self.file_to_delete))
                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-                    os.remove(os.path.join(cwd + eto_methods_folder + self.file_to_delete))
+                    os.remove(os.path.join(cwd + var.eto_methods_folder + self.file_to_delete))
             self.refresh_methods_list_after_deletion()
             
     def refresh_methods_list_after_deletion(self):
@@ -191,10 +160,10 @@ class ETOMethodsWidget(QWidget):
             self.list_widget.takeItem(self.list_widget.row(item))
     
     def special_character_groupbox(self):
-        self.sc_groupbox = QGroupBox('Input special character:')
+        self.sc_groupbox = QGroupBox(self.language['add_eto_method_inserts_sc'])
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
+        self.button_list, self.rows, self.columns = read_characters(var.charactes_loc)
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -216,7 +185,7 @@ class ETOMethodsWidget(QWidget):
         self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.bp_check_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -250,7 +219,7 @@ class ETOMethodsWidget(QWidget):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
         self.cp_scroll = QWidget()
-        self.cp_check_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
+        self.cp_check_list, self.rows, self.columns = read_complex_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -281,31 +250,29 @@ class ETOMethodsWidget(QWidget):
             self.selected_cp_list.setText(', '.join(self.cpl))
     
     def create_method_info(self):
-        self.method_info_groupbox = QGroupBox('Method information:')
-        
-        self.text_method_name = QLabel('Method name:')
+        self.method_info_groupbox = QGroupBox(self.language['add_eto_method_info_caption'])
+        self.text_method_name = QLabel(self.language['add_eto_method_info_name'])
         self.method_name = QLineEdit()
-        self.text_method_short_name = QLabel('Method short name:')
+        self.text_method_short_name = QLabel(self.language['add_eto_method_info_short_name'])
         self.method_short_name = QLineEdit()
-        self.text_method_symbol = QLabel('Method symbol:')
+        self.text_method_symbol = QLabel(self.language['add_eto_method_info_symbol'])
         self.method_symbol = QLineEdit()
-        self.text_method_description = QLabel('Method description:')
+        self.text_method_description = QLabel(self.language['add_eto_method_info_description'])
         self.method_description = QTextEdit()
-        self.text_method_conditions = QLabel('Method conditions:')
+        self.text_method_conditions = QLabel(self.language['add_eto_method_info_conditions'])
         self.method_conditions = QTextEdit()
-        self.text_method_formula = QLabel('Method calculation formula:')
+        self.text_method_formula = QLabel(self.language['add_eto_method_info_formula'])
         self.method_formula = QTextEdit()
-        self.text_basic_parameters = QLabel('Basic parameters:')
-        self.text_complex_parameters = QLabel('Complex parameters:')
-        self.text_bp_selected = QLabel('Selected basic parameters:')
+        self.text_basic_parameters = QLabel(self.language['add_eto_method_info_bp'])
+        self.text_complex_parameters = QLabel(self.language['add_eto_method_info_cp'])
+        self.text_bp_selected = QLabel(self.language['add_eto_method_info_bp_s'])
         self.selected_bp_list = QLabel()
-        self.text_cp_selected = QLabel('Selected complex parameters:')
+        self.text_cp_selected = QLabel(self.language['add_eto_method_info_cp_s'])
         self.selected_cp_list = QLabel()
-        self.btn_save_method_changes = QPushButton('Save changes')
+        self.btn_save_method_changes = QPushButton(self.language['eto_methods_widget_btn_save_changes'])
         self.btn_save_method_changes.clicked.connect(self.save_changes_method)
-        self.btn_cancel_method_changes = QPushButton('Cancel changes')
+        self.btn_cancel_method_changes = QPushButton(self.language['eto_methods_widget_btn_cancel_changes'])
         self.btn_cancel_method_changes.clicked.connect(self.cancel_changes_method)
-        
         self.method_info_groupbox.layout = QGridLayout()
         self.method_info_groupbox.layout.addWidget(self.text_method_name, 0, 0, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.method_name, 1, 0, 1, 1)
@@ -329,14 +296,13 @@ class ETOMethodsWidget(QWidget):
         self.method_info_groupbox.layout.addWidget(self.selected_cp_list, 11, 1, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.btn_save_method_changes, 12, 0, 1, 2)
         self.method_info_groupbox.layout.addWidget(self.btn_cancel_method_changes, 13, 0, 1, 2)
-        
         self.method_info_groupbox.setLayout(self.method_info_groupbox.layout)
         return self.method_info_groupbox
     
     def save_changes_method(self):
-        self.get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + eto_methods_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.method_name.text() == self.file_data['name']:
                 self.file_to_load = file
@@ -344,8 +310,8 @@ class ETOMethodsWidget(QWidget):
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Missing data, nabrojati šta mora imati...')
-            self.msg.setWindowTitle('Missing data...')
+            self.msg.setText(self.language['add_eto_method_msg_missing'])
+            self.msg.setWindowTitle(self.language['add_eto_method_msg_missing_title'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -362,22 +328,21 @@ class ETOMethodsWidget(QWidget):
                     "type": "a"
                     }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(cwd + eto_methods_folder + self.file_to_load, "w") as outfile:
+            with open(cwd + var.eto_methods_folder + self.file_to_load, "w") as outfile:
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Method data saved...')
-            self.msg.setWindowTitle('Success...')
+            self.msg.setText(self.language['add_eto_method_msg_saved'])
+            self.msg.setWindowTitle(self.language['add_eto_method_msg_saved_title'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.show()
         
     def cancel_changes_method(self):
-        self.json_path = cwd + eto_methods_folder + self.file_to_load
+        self.json_path = cwd + var.eto_methods_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
-        
         self.method_name.setText(data['name'])
         self.method_short_name.setText(data['short_name'])
         self.method_symbol.setText(data['symbol'])

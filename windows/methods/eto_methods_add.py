@@ -1,52 +1,20 @@
 import sys, os, json
-from pathlib import Path
 cwd = os.path.curdir
-#from variables import css, var
 from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QHBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
+from PyQt5.QtWidgets import QLineEdit, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
 from PyQt5.QtCore import Qt
-from PyQt5 import QtCore
-
+from PyQt5.QtGui import QIcon
+#from variables import css, var
+import css, var
+#from mortys.methods_morty import read_characters, read_basic_parameters, read_complex_parameters, get_filename
 from methods_morty import read_characters, read_basic_parameters, read_complex_parameters, get_filename
-
-language_folder = '/srclet/languages/'
-language_file = 'language.json'
-categories_file = 'parameter_types.json'
-projects_folder = '/projects/'
-parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/srclet/images/random_image/'
-eto_methods_folder = '/methods/eto/'
-wb_methods_folder = '/methods/wb/'
-other_methods_folder = '/methods/others/'
+from language import language
 
 class AddETOMethod(QWidget):
     def __init__(self):
         super(AddETOMethod, self).__init__()
+        self.language = language
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.language = {
-                            "//": "ETO Methods Widget",
-                            "eto_methods_widget_caption": "List of available ETO Methods:",
-                            "eto_methods_widget_btn_add_new": "Add new ETO method",
-                            "eto_methods_widget_btn_delete": "Delete method",
-                            "eto_methods_widget_parameter_caption": "Method information:",
-                            "eto_methods_widget_parameter_filename": "Filename:",
-                            "eto_methods_widget_parameter_name": "Method name:",
-                            "eto_methods_widget_parameter_symbol": "Parameter symbol:",
-                            "eto_methods_widget_parameter_unit": "Parameter unit:",
-                            "eto_methods_widget_parameter_formula": "Calculation foruma:",
-                            "eto_methods_widget_parameter_desc": "Parameter description:",
-                            "eto_methods_widget_parameter_btn_save": "Save changes",
-                            "eto_methods_widget_parameter_btn_cancel": "Cancel changes",
-                            "eto_methods_widget_btn_close": "Close",
-                            "eto_methods_widget_save_changes_message": "Parameter name, symbol or unit empty...",
-                            "eto_methods_widget_save_changes_message_caption": "Missing data...",
-                            "eto_methods_widget_save_message": "Complex Parameter saved...",
-                            "eto_methods_widget_save_message_caption": "Successuful..."
-                         }
-        #self.AddParameter = AddComplexParameter(self.language)
-        #self.AddParameter.hide()
-        #self.AddParameter.clicked.connect(self.refresh_parameters_list)
         self.window_gui()
 
     def window_gui(self):
@@ -55,12 +23,12 @@ class AddETOMethod(QWidget):
         self.setFont(font)
         self.setWindowState(Qt.WindowMaximized)
         self.setMinimumSize(1200, 600)
-        self.setWindowTitle('Add new ETo method')
+        self.setWindowTitle(self.language['add_eto_method_window_title'])
+        self.setWindowIcon(QIcon(css.parameters_basic_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.left_groupbox(), 0, 0, 1, 1)
         self.grid.addWidget(self.right_groupbox(), 0, 1, 1, 1)
         self.grid.addWidget(self.down_groupbox(), 1, 0, 1, 2)
-        
         self.setLayout(self.grid)
         self.show()
         
@@ -78,7 +46,7 @@ class AddETOMethod(QWidget):
             pass
         
     def right_groupbox(self):
-        self.methods_groupbox = QGroupBox('Inserti:')
+        self.methods_groupbox = QGroupBox(self.language['add_eto_method_inserts'])
         self.methods_groupbox.layout = QGridLayout()
         self.methods_groupbox.layout.addWidget(self.special_character_groupbox(), 0, 0, 1, 2)
         self.methods_groupbox.layout.addWidget(self.basic_parameters_groupbox_insert(), 1, 0, 1, 1)
@@ -87,10 +55,10 @@ class AddETOMethod(QWidget):
         return self.methods_groupbox
             
     def special_character_groupbox(self):
-        self.sc_groupbox = QGroupBox('Input special character:')
+        self.sc_groupbox = QGroupBox(self.language['add_eto_method_inserts_sc'])
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
+        self.button_list, self.rows, self.columns = read_characters(var.charactes_loc)
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -112,7 +80,7 @@ class AddETOMethod(QWidget):
         self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.bp_check_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -143,10 +111,10 @@ class AddETOMethod(QWidget):
             self.selected_bp_list.setText(', '.join(self.bpl))
             
     def basic_parameters_groupbox_insert(self):
-        self.bpi_groupbox = QGroupBox('Insert basic parameter:')
+        self.bpi_groupbox = QGroupBox(self.language['add_eto_method_inserts_bp'])
         self.bpi_layout = QGridLayout()
         self.bpi_scroll = QWidget()
-        self.bpi_check_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.bpi_check_list, self.rows, self.columns = read_basic_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -165,10 +133,10 @@ class AddETOMethod(QWidget):
         return self.bpi_groupbox
     
     def complex_parameters_groupbox_insert(self):
-        self.bpc_groupbox = QGroupBox('Insert complex parameter:')
+        self.bpc_groupbox = QGroupBox(self.language['add_eto_method_inserts_cp'])
         self.bpc_layout = QGridLayout()
         self.bpc_scroll = QWidget()
-        self.bpc_check_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
+        self.bpc_check_list, self.rows, self.columns = read_complex_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -190,7 +158,7 @@ class AddETOMethod(QWidget):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
         self.cp_scroll = QWidget()
-        self.cp_check_list, self.rows, self.columns = read_complex_parameters() # uvezati iz var
+        self.cp_check_list, self.rows, self.columns = read_complex_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -222,27 +190,25 @@ class AddETOMethod(QWidget):
     
     
     def left_groupbox(self):
-        self.method_info_groupbox = QGroupBox('Method information:')
-        
-        self.text_method_name = QLabel('Method name:')
+        self.method_info_groupbox = QGroupBox(self.language['add_eto_method_info_caption'])
+        self.text_method_name = QLabel(self.language['add_eto_method_info_name'])
         self.method_name = QLineEdit()
-        self.text_method_short_name = QLabel('Method short name:')
+        self.text_method_short_name = QLabel(self.language['add_eto_method_info_short_name'])
         self.method_short_name = QLineEdit()
-        self.text_method_symbol = QLabel('Method symbol:')
+        self.text_method_symbol = QLabel(self.language['add_eto_method_info_symbol'])
         self.method_symbol = QLineEdit()
-        self.text_method_description = QLabel('Method description:')
+        self.text_method_description = QLabel(self.language['add_eto_method_info_description'])
         self.method_description = QTextEdit()
-        self.text_method_conditions = QLabel('Method conditions:')
+        self.text_method_conditions = QLabel(self.language['add_eto_method_info_conditions'])
         self.method_conditions = QTextEdit()
-        self.text_method_formula = QLabel('Method calculation formula:')
+        self.text_method_formula = QLabel(self.language['add_eto_method_info_formula'])
         self.method_formula = QTextEdit()
-        self.text_basic_parameters = QLabel('Basic parameters:')
-        self.text_complex_parameters = QLabel('Complex parameters:')
-        self.text_bp_selected = QLabel('Selected basic parameters:')
+        self.text_basic_parameters = QLabel(self.language['add_eto_method_info_bp'])
+        self.text_complex_parameters = QLabel(self.language['add_eto_method_info_cp'])
+        self.text_bp_selected = QLabel(self.language['add_eto_method_info_bp_s'])
         self.selected_bp_list = QLabel()
-        self.text_cp_selected = QLabel('Selected complex parameters:')
+        self.text_cp_selected = QLabel(self.language['add_eto_method_info_cp_s'])
         self.selected_cp_list = QLabel()
-        
         self.method_info_groupbox.layout = QGridLayout()
         self.method_info_groupbox.layout.addWidget(self.text_method_name, 0, 0, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.method_name, 1, 0, 1, 1)
@@ -264,15 +230,14 @@ class AddETOMethod(QWidget):
         self.method_info_groupbox.layout.addWidget(self.selected_bp_list, 11, 0, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.text_cp_selected, 10, 1, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.selected_cp_list, 11, 1, 1, 1)
-        
         self.method_info_groupbox.setLayout(self.method_info_groupbox.layout)
         return self.method_info_groupbox  
     
     def down_groupbox(self):
         self.btn_groupbox = QGroupBox()
-        self.btn_save = QPushButton('Save')
+        self.btn_save = QPushButton(self.language['add_eto_method_btn_save'])
         self.btn_save.clicked.connect(self.add_method)
-        self.btn_cancel = QPushButton('Cancel')
+        self.btn_cancel = QPushButton(self.language['add_eto_method_btn_close'])
         self.btn_cancel.clicked.connect(self.close)
         self.btn_groupbox.layout = QHBoxLayout()
         self.btn_groupbox.layout.addWidget(self.btn_save)
@@ -282,10 +247,10 @@ class AddETOMethod(QWidget):
     
     def add_method(self):
         self.file_name_to_save = get_filename('eto')
-        get_files = next(os.walk(cwd + eto_methods_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
-            self.file_to_read = open(os.path.join(cwd + eto_methods_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.method_name.text() == self.file_data['name']:
                 self.file_list.append(file)
@@ -294,8 +259,8 @@ class AddETOMethod(QWidget):
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText('Method with this name already exists.')
-            self.msg.setWindowTitle('Method name...')
+            self.msg.setText(self.language['add_eto_method_msg_exists'])
+            self.msg.setWindowTitle(self.language['add_eto_method_msg_exists_title'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -304,8 +269,8 @@ class AddETOMethod(QWidget):
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText('Method parameters must have: nabrojati ih!')
-                self.msg.setWindowTitle('Missing data...')
+                self.msg.setText(self.language['add_eto_method_msg_missing'])
+                self.msg.setWindowTitle(self.language['add_eto_method_msg_missing_title'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
@@ -322,13 +287,13 @@ class AddETOMethod(QWidget):
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + eto_methods_folder + self.file_name_to_save + ".json", "w") as outfile:
+                with open(cwd + var.eto_methods_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText('Method saved...')
-                self.msg.setWindowTitle('Success...')
+                self.msg.setText(self.language['add_eto_method_msg_saved'])
+                self.msg.setWindowTitle(self.language['add_eto_method_msg_saved_title'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()

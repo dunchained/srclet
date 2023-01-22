@@ -1,24 +1,18 @@
-import sys, os
-cwd = os.path.curdir
-
+import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
-from variables import css
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
+#from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
+from basic_parameters_widget import ParametersCategoryTabs
+#from variables import css
+import css
 #from mortys.font_morty import read_menu_font_size
-#from basic_parameters_widget import ParametersCategoryTabs
+from language import language
 
 class BasicParameters(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.language = {
-            "//": "Basic Parameters Window",
-            "basic_parameters_window_title": "Basic Parameters",
-            "basic_parameters_window_file_menu": "File",
-            "basic_parameters_window_file_menu_refresh": "Refresh parameters list",
-            "basic_parameters_window_file_menu_exit": "Close"
-        }
+        self.language = language
         self.setWindowState(QtCore.Qt.WindowMaximized)
         self.window_gui()
 
@@ -43,15 +37,13 @@ class BasicParameters(QMainWindow):
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
-        refreshAct = QAction(QIcon(css.exit_icon), self.language['basic_parameters_window_file_menu_refresh'], self)
-        #refreshAct = QAction(self.language['basic_parameters_window_file_menu_refresh'], self)
+        refreshAct = QAction(QIcon(css.refresh_icon), self.language['basic_parameters_window_file_menu_refresh'], self)
         refreshAct.triggered.connect(self.refresh_widget)
         fileMenu.addAction(refreshAct)
         
         fileMenu.addSeparator()
         
         exitAct = QAction(QIcon(css.exit_icon),self.language['basic_parameters_window_file_menu_exit'], self)
-        #exitAct = QAction(self.language['basic_parameters_window_file_menu_exit'], self)
         exitAct.triggered.connect(self.exit_window)
         fileMenu.addAction(exitAct)
         
@@ -63,7 +55,6 @@ class BasicParameters(QMainWindow):
     def exit_window(self):
         self.hide()
 
-   
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = BasicParameters()

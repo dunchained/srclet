@@ -1,69 +1,27 @@
-import sys, os, json, shutil
+import sys, os, json
 cwd = os.path.curdir
-#from variables import css, var
-#from windows.parameters.complex_parameters_add import AddComplexParameter
-from complex_parameters_add import AddComplexParameter
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QScrollArea
 from PyQt5.QtCore import Qt
-from parameters_morty import read_characters, get_filename, read_basic_parameters
-#from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
-
-language_folder = '/srclet/languages/'
-language_file = 'language.json'
-categories_file = 'parameter_types.json'
-projects_folder = '/projects/'
-basic_parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/srclet/images/random_image/'
-eto_methods_folder = '/methods/eto/'
-wb_methods_folder = '/methods/wb/'
-other_methods_folder = '/methods/others/'
+#from variables import var
+import var
+#from mortys.parameters_morty import read_characters, read_basic_parameters
+from parameters_morty import read_characters, read_basic_parameters
+#from windows.parameters.complex_parameters_add import AddComplexParameter
+from complex_parameters_add import AddComplexParameter
+from language import language
 
 class ParametersCategoryTabs(QWidget):
     def __init__(self):
         super().__init__()
         self.setUpdatesEnabled(True)
-        self.language = {
-                        "language_description": "en",
-                         "//": "Complex Parameters Widget",
-                        "complex_parameters_widget_title": "Parameters",
-                        "complex_parameters_widget_caption": "List of available parameters in this category:",
-                        "complex_parameters_widget_btn_add_new": "Add new parameter",
-                        "complex_parameters_widget_btn_delete": "Delete selected parameter",
-                        "complex_parameters_widget_parameter_caption": "Parameters information:",
-                        "complex_parameters_widget_parameter_filename": "Filename:",
-                        "complex_parameters_widget_parameter_name": "Parameter name:",
-                        "complex_parameters_widget_parameter_symbol": "Parameter symbol:",
-                        "complex_parameters_widget_parameter_unit": "Parameter unit:",
-                        "complex_parameters_widget_parameter_desc": "Parameter description:",
-                        "complex_parameters_widget_parameter_formula": "Parameter formula:",
-                        "complex_parameters_widget_parameter_btn_save": "Save changes",
-                        "complex_parameters_widget_parameter_btn_cancel": "Cancel changes",
-                        "complex_parameters_widget_save_changes_message": "Parameter name or unit empty...",
-                        "complex_parameters_widget_save_changes_message_caption": "Missing data...",
-                        "complex_parameters_widget_save_message": "Parameter saved...",
-                        "complex_parameters_widget_save_message_caption": "Successuful...",
-                        "complex_parameters_widget_delete_msg_title": "Delete parameter?",
-                        "complex_parameters_widget_delete_msg_message": "Are you sure you want to delete parameter?",
-                        "complex_parameters_widget_delete_msg_yes": "Yes",
-                        "complex_parameters_widget_delete_msg_cancel": "Cancel",
-                        "complex_parameters_widget_save_changes_message": "Parameter must have name...",
-                        "complex_parameters_widget_save_changes_message_caption": "Changes",
-                        "complex_parameters_widget_save_message": "Changes saved...",
-                        "complex_parameters_widget_save_message_caption": "Changes",
-                        "complex_parameters_widget_sc": "Input special character:",
-                        "complex_parameters_widget_bp": "Input basic parameter:"
-                         }
+        self.language = language
         self.tab_widget()
         self.show()
-        
-    
  
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
-        self.cat_file = 'parameter_types.json' ### import iz var
-        self.categories_file = open(os.path.join(cwd + language_folder + self.language['language_description'] + '/' + self.cat_file))
+        self.categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
         self.categories_file_data = json.load(self.categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -80,17 +38,16 @@ class ParametersCategoryTabs(QWidget):
         self.mainLayout.addWidget(self.categories_tabs)
         self.setLayout(self.mainLayout)
 
-
 class ParametersWidget(QWidget):
     def __init__(self, category, language):
         super().__init__()
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.category = category
         self.language = language
-        self.get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         self.category_list = []
         for file in self.get_files:
-            self.file_to_load = open(os.path.join(cwd + complex_parameters_folder + file))
+            self.file_to_load = open(os.path.join(cwd + var.complex_parameters_folder + file))
             self.file_data = json.load(self.file_to_load)
             if self.category == self.file_data['category']:
                 self.category_list.append(self.file_data['name'])
@@ -99,8 +56,6 @@ class ParametersWidget(QWidget):
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
         self.grid.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
         self.grid.addWidget(self.basic_parameters_groupbox(), 1, 1, 1, 1)
-        
-        
         self.setLayout(self.grid)
         
     def on_focus_changed(self, widget):
@@ -120,7 +75,7 @@ class ParametersWidget(QWidget):
         self.sc_groupbox = QGroupBox(self.language['complex_parameters_widget_sc'])
         self.sc_layout = QGridLayout()
         self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters('/srclet/characters/') # uvezati iz var
+        self.button_list, self.rows, self.columns = read_characters(var.charactes_loc)
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -142,7 +97,7 @@ class ParametersWidget(QWidget):
         self.bp_groupbox = QGroupBox(self.language['complex_parameters_widget_bp'])
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_basic_parameters() # uvezati iz var
+        self.button_list, self.rows, self.columns = read_basic_parameters()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -166,14 +121,11 @@ class ParametersWidget(QWidget):
         self.list_widget = QListWidget()
         self.list_widget.addItems(self.category_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
-
         self.buttonAddcomplexParameter = QPushButton(self.language['complex_parameters_widget_btn_add_new'])
         self.buttonAddcomplexParameter.clicked.connect(self.new_parameter_window)
-
         self.buttonDelete = QPushButton(self.language['complex_parameters_widget_btn_delete'])
         self.buttonDelete.clicked.connect(self.delete_procedure)
         self.buttonDelete.setEnabled(False)
-        
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.list_widget)
         self.layout.addWidget(self.buttonAddcomplexParameter)
@@ -182,20 +134,32 @@ class ParametersWidget(QWidget):
         return self.groupBox
 
     def index_changed(self, i):
-        self.get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + complex_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if i.text() == self.file_data['name']:
                 self.file_to_load = file
                 self.kategorija = self.file_data['category']
-        self.json_path = cwd + complex_parameters_folder + self.file_to_load
+        self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
             if data['type'] == 'b':
-                self.update_labels(state=False, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'], formula=data['formula'])
+                self.update_labels(
+                    state=False, 
+                    name=data['name'], 
+                    symbol=data['symbol'], 
+                    unit=data['unit'], 
+                    description=data['description'], 
+                    formula=data['formula'])
             else:
-                self.update_labels(state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'], formula=data['formula'])
+                self.update_labels(
+                    state=True, 
+                    name=data['name'], 
+                    symbol=data['symbol'], 
+                    unit=data['unit'], 
+                    description=data['description'], 
+                    formula=data['formula'])
 
     def new_parameter_window(self):
         self.window = AddComplexParameter()
@@ -215,12 +179,12 @@ class ParametersWidget(QWidget):
 
     def delete_parameter(self, value):
         if value.text() == self.language['complex_parameters_widget_delete_msg_yes']:
-            self.get_list_of_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+            self.get_list_of_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
             for self.file_to_delete in self.get_list_of_files:
-                self.path_to_file_to_delete = open(os.path.join(cwd + complex_parameters_folder + self.file_to_delete))
+                self.path_to_file_to_delete = open(os.path.join(cwd + var.complex_parameters_folder + self.file_to_delete))
                 self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-                    os.remove(os.path.join(cwd + complex_parameters_folder + self.file_to_delete))
+                    os.remove(os.path.join(cwd + var.complex_parameters_folder + self.file_to_delete))
             self.refresh_parameters_list_after_deletion()
             
     def refresh_parameters_list_after_deletion(self):
@@ -278,13 +242,12 @@ class ParametersWidget(QWidget):
         self.buttonCancel.setEnabled(state)
 
     def save_changes_parameter(self):
-        self.get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + complex_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_to_load = file
-                #self.kategorija = self.file_data['category']
         if not self.file_to_load or not self.parameter_name.text() or not self.parameter_unit.text() or not self.parameter_symbol.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -305,7 +268,7 @@ class ParametersWidget(QWidget):
                 "type": "a"
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
-            with open(cwd + complex_parameters_folder + self.file_to_load, "w") as outfile:
+            with open(cwd + var.complex_parameters_folder + self.file_to_load, "w") as outfile:
                 outfile.write(json_object)
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
@@ -316,13 +279,13 @@ class ParametersWidget(QWidget):
             self.msg.show()
 
     def cancel(self):
-        self.get_files = next(os.walk(cwd + complex_parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + complex_parameters_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_to_load = file
-        self.json_path = cwd + complex_parameters_folder + self.file_to_load
+        self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
         with open(self.json_path) as json_file:
             data = json.load(json_file)
         self.parameter_name.setText(data['name'])

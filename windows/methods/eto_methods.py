@@ -1,30 +1,24 @@
-import sys, os
-cwd = os.path.curdir
-
+import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
-#from variables import css
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
+#from variables import css
+import css
+#from windows.methods.eto_methods_widget import ETOMethodsWidget
 from eto_methods_widget import ETOMethodsWidget
-
 #from mortys.font_morty import read_menu_font_size
+from language import language
 
 class ETOMethods(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.language = {
-            "//": "ETO Methods Window",
-            "eto_methods_window_title": "ETO Methods",
-            "eto_methods_window_file_menu": "File",
-            "eto_methods_window_file_menu_refresh": "Refresh methods list",
-            "eto_methods_window_file_menu_exit": "Close"
-        }
+        self.language = language
         self.setWindowState(QtCore.Qt.WindowMaximized)
         self.window_gui()
 
     def window_gui(self):
         self.setMinimumSize(800, 600)
-        #self.setWindowIcon(QIcon(css.parameters_basic_icon))
+        self.setWindowIcon(QIcon(css.methods_eto_icon))
         self.setWindowTitle(self.language['eto_methods_window_title'])
         self.fileMenu()
         self.central_widget = ETOMethodsWidget()
@@ -43,15 +37,13 @@ class ETOMethods(QMainWindow):
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
-        #refreshAct = QAction(QIcon(css.exit_icon), self.language['basic_parameters_window_file_menu_refresh'], self)
-        refreshAct = QAction(self.language['eto_methods_window_file_menu_refresh'], self)
+        refreshAct = QAction(QIcon(css.refresh_icon), self.language['eto_methods_window_file_menu_refresh'], self)
         refreshAct.triggered.connect(self.refresh_widget)
         fileMenu.addAction(refreshAct)
         
         fileMenu.addSeparator()
         
-        #exitAct = QAction(QIcon(css.exit_icon),self.language['basic_parameters_window_file_menu_exit'], self)
-        exitAct = QAction(self.language['eto_methods_window_file_menu_exit'], self)
+        exitAct = QAction(QIcon(css.exit_icon),self.language['eto_methods_window_file_menu_exit'], self)
         exitAct.triggered.connect(self.exit_window)
         fileMenu.addAction(exitAct)
         
@@ -62,7 +54,6 @@ class ETOMethods(QMainWindow):
         
     def exit_window(self):
         self.hide()
-
    
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
