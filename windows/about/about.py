@@ -27,7 +27,6 @@ class AboutWindow(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
         
-        
 class MyTabWidget(QWidget):
     def __init__(self, parent, language):
         super(QWidget, self).__init__(parent)
