@@ -39,9 +39,10 @@ font_size_small = 12
 
 projects_folder = '/projects/'
 categories_file = 'parameter_types.json'
-parameters_folder = 'parameters/basic/'
+basic_parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
-
+p_cat_file = 'parameter_types.json'
+charactes_loc = '/srclet/characters/'
 
 
 complex_parameters_folder = '/parameters/complex/'

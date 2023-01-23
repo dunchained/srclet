@@ -19,6 +19,7 @@ srclet_icon = cwd + 'srclet.ico'
 srclet_caption = cwd + 'srclet_caption.png'
 about_window_image_srclet = cwd +'srclet_caption.png'
 about_window_image_development = cwd + 'eu_logo.jpg'
+refresh_icon = cwd + 'refresh_icon.png'
 
 
 

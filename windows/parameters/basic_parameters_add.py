@@ -4,12 +4,12 @@ from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayou
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-#from mortys.parameters_morty import read_characters, get_filename
-from parameters_morty import read_characters, get_filename
-#from variables import var, css
-import var, css
-from language import language
-
+from mortys.parameters_morty import read_characters, get_filename
+#from parameters_morty import read_characters, get_filename
+from variables import var, css
+#import var, css
+#from language import language
+from windows.parameters.language import language
 
 class AddBasicParameter(QWidget):
     def __init__(self):
