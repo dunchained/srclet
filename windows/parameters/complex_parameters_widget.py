@@ -102,7 +102,23 @@ class ParametersWidget(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 button = QPushButton(f'{self.button_list[i]}', self)
-                button.setToolTip(f'{self.button_list[i]}' + "Hire the top \n1% freelance developers")
+
+                self.setStyleSheet('''QToolTip {min-height: 150px; min-width: 400px;}''')
+                self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.button_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b> Parameter symbol: </b>' + self.button_list[i] + '<br>' + \
+                            '<b> Parameter category: </b>' + tooltip_data['category'] + '<br>' + \
+                            '<b> Parameter unit: </b>' + tooltip_data['category'] + '<br>' + \
+                            '<b> Parameter description: </b>' + tooltip_data['description']
+                button.setToolTip(self.text)
                 button.clicked.connect(self.special_character_clicked)
                 self.bp_layout.addWidget(button, row+1, column)
                 i += 1

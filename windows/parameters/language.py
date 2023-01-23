@@ -4,7 +4,7 @@ language = {
     "add_basic_parameter_window_title": "Add basic parameter",
     "add_basic_parameter_window_category": "Parameter category:",
     "add_basic_parameter_window_category_exp": "Paremeter category.",
-    "add_basic_parameter_window_name": "Parameter name:",
+    "add_basic_parameter_window_name": "Parameter name: ",
     "add_basic_parameter_window_name_exp": "Text to be used as parameter short description.",
     "add_basic_parameter_window_unit": "Parameter unit:",
     "add_basic_parameter_window_unit_exp": "Unit to be used...",
