@@ -1,7 +1,7 @@
 import sys, os, json
 cwd = os.path.curdir
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QScrollArea
+from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QScrollArea, QToolTip
 from PyQt5.QtCore import Qt
 #from variables import var
 import var
@@ -102,6 +102,7 @@ class ParametersWidget(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 button = QPushButton(f'{self.button_list[i]}', self)
+                button.setToolTip(f'{self.button_list[i]}' + "Hire the top \n1% freelance developers")
                 button.clicked.connect(self.special_character_clicked)
                 self.bp_layout.addWidget(button, row+1, column)
                 i += 1
