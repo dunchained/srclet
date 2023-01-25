@@ -85,6 +85,25 @@ class AddETOMethod(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 self.bp_check = QCheckBox(f'{self.bp_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.bp_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.bp_check.setToolTip(self.text)
+                
                 self.bp_check.clicked.connect(self.basic_parameter_checked)
                 self.bp_layout.addWidget(self.bp_check, row+1, column)
                 i += 1
@@ -119,6 +138,25 @@ class AddETOMethod(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 self.bpi_check = QPushButton(f'{self.bpi_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.bpi_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bpi_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.bpi_check.setToolTip(self.text)
+                
                 self.bpi_check.clicked.connect(self.special_character_clicked)
                 self.bpi_layout.addWidget(self.bpi_check, row+1, column)
                 i += 1
@@ -141,6 +179,25 @@ class AddETOMethod(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 self.bpc_check = QPushButton(f'{self.bpc_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.bpc_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bpc_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.bpc_check.setToolTip(self.text)
+                
                 self.bpc_check.clicked.connect(self.special_character_clicked)
                 self.bpc_layout.addWidget(self.bpc_check, row+1, column)
                 i += 1
@@ -163,6 +220,25 @@ class AddETOMethod(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.cp_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.cp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.cp_check.setToolTip(self.text)
+                
                 self.cp_check.clicked.connect(self.complex_parameter_checked)
                 self.cp_layout.addWidget(self.cp_check, row+1, column)
                 i += 1

@@ -3,12 +3,12 @@ cwd = os.path.curdir
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtCore import Qt
-from variables import var
-#import var
-from windows.parameters.basic_parameters_add import AddBasicParameter
-#from basic_parameters_add import AddBasicParameter
-#from language import language
-from windows.parameters.language import language
+#from variables import var
+import var
+#from windows.parameters.basic_parameters_add import AddBasicParameter
+from basic_parameters_add import AddBasicParameter
+from language import language
+#from windows.parameters.language import language
 
 class ParametersCategoryTabs(QWidget):
     def __init__(self):

@@ -119,6 +119,7 @@ class ParametersWidget(QWidget):
                             '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
                             '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
                 button.setToolTip(self.text)
+                
                 button.clicked.connect(self.special_character_clicked)
                 self.bp_layout.addWidget(button, row+1, column)
                 i += 1
