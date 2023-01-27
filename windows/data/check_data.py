@@ -9,16 +9,6 @@ from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit,
 from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea, QVBoxLayout, QFormLayout, QHBoxLayout
 import numpy, pandas
 
-#
-
-projects_folder = '/projects/'
-parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
-random_images_folder = '/srclet/images/random_image/'
-eto_methods_folder = '/methods/eto/'
-wb_methods_folder = '/methods/wb/'
-other_methods_folder = '/methods/others/'
-
 class TableWidget(QTableWidget):
     def __init__(self, *args, **kwargs):
         super(TableWidget, self).__init__(*args, **kwargs)
@@ -40,7 +30,7 @@ class CheckDataTypeWidget(TableWidget):
         self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.buttons = []
-        self.data = numpy.loadtxt(file_path, skiprows=1)
+        self.data = numpy.loadtxt(file_path)
         
         self.create_table()
         self.create_options()
@@ -70,10 +60,10 @@ class CheckDataTypeWidget(TableWidget):
         for category in self.categories_file_data:
             self.categories_list.append(self.categories_file_data[category])
 
-        self.get_files = next(os.walk(os.path.curdir + '/' + var.parameters_folder), (None, None, []))[2]
+        self.get_files = next(os.walk(os.path.curdir + '/' + var.basic_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in self.get_files:
-            with open(var.parameters_folder + Path(file).stem + '.json') as jsonFile:
+            with open(cwd + var.basic_parameters_folder + Path(file).stem + '.json') as jsonFile:
                 data = json.load(jsonFile)
                 jsonData = data['name']
                 self.file_list.append(jsonData)
@@ -90,7 +80,7 @@ class CheckDataTypeWidget(TableWidget):
                 self.category_list = []
                 self.kategorija_code = list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(kategorija)]
                 for file in self.get_files:
-                    self.file_to_load = open(os.path.join(cwd + '/' + var.parameters_folder + file))
+                    self.file_to_load = open(os.path.join(cwd + '/' + var.basic_parameters_folder + file))
                     self.file_data = json.load(self.file_to_load)
                     if self.kategorija_code == self.file_data['category']:
                         self.category_list.append(self.file_data['name'])
@@ -316,7 +306,12 @@ class CheckDataTypeWidget(TableWidget):
             
     def save_data(self):
         rt = self.read_table()
-        rt.to_excel(self.project_path + "/data.xlsx")
+        rt.columns = rt.columns.values.tolist()
+        for (colname,colval) in rt.iteritems():
+            if colval[0] == self.language['check_data_select']:
+                rt = rt.drop(rt.columns[colname], axis=1)
+        print(rt)
+        #rt.to_excel(self.project_path + '/data.xlsx', sheet_name='data_input', index=False)
 
         if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
             self.msg = QMessageBox()
