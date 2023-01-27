@@ -127,7 +127,6 @@ class AddComplexParameter(QWidget):
         self.changable_check = QCheckBox(self.language['add_complex_parameter_window_change'])
         self.chd_gruopbox.layout = QVBoxLayout()
         self.chd_gruopbox.layout.addWidget(self.changable_check)
-        self.chd_gruopbox.layout.addStretch(1)
         self.chd_gruopbox.setLayout(self.chd_gruopbox.layout)
         return self.chd_gruopbox
     

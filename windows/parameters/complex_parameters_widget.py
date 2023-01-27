@@ -237,7 +237,9 @@ class ParametersWidget(QWidget):
                     unit=data['unit'],
                     bp = data['basic_parameters'], 
                     description=data['description'], 
-                    formula=data['formula'])
+                    formula=data['formula'],
+                    change='b')
+                
             else:
                 self.update_labels(
                     state=True, 
@@ -246,7 +248,8 @@ class ParametersWidget(QWidget):
                     unit=data['unit'],
                     bp = data['basic_parameters'], 
                     description=data['description'], 
-                    formula=data['formula'])
+                    formula=data['formula'],
+                    change=data['changable'])
 
     def new_parameter_window(self):
         self.window = AddComplexParameter()
@@ -309,12 +312,21 @@ class ParametersWidget(QWidget):
         self.layout.addWidget(self.text_parameter_descriprion)
         self.layout.addWidget(self.parameter_descriprion)
         self.layout.addWidget(self.frame_groupbox())
+        self.layout.addWidget(self.pb_changable_groupbox())
         self.layout.addWidget(self.buttonSave)
         self.layout.addWidget(self.buttonCancel)
         self.groupBox.setLayout(self.layout)
         return self.groupBox
+    
+    def pb_changable_groupbox(self):
+        self.chd_gruopbox = QGroupBox(self.language['add_complex_parameter_window_change_caption'])
+        self.changable_check = QCheckBox(self.language['add_complex_parameter_window_change'])
+        self.chd_gruopbox.layout = QVBoxLayout()
+        self.chd_gruopbox.layout.addWidget(self.changable_check)
+        self.chd_gruopbox.setLayout(self.chd_gruopbox.layout)
+        return self.chd_gruopbox
 
-    def update_labels(self, name, bp, state, symbol, unit, description, formula):
+    def update_labels(self, name, bp, state, symbol, unit, description, formula, change):
         self.parameter_name.setText(name)
         self.parameter_name.setEnabled(state)
         self.parameter_symbol.setText(symbol)
@@ -335,6 +347,16 @@ class ParametersWidget(QWidget):
             self.bpc_check_widget = self.bpc_layout.itemAt(self.bpc_check).widget()
             self.bpc_check_widget.setChecked(False)
             if self.bpc_check_widget.text() in self.bpc_list_to_update: self.bpc_check_widget.setChecked(True)
+            
+        if change == 'b':
+            self.changable_check.setEnabled(False)
+        else:
+            self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+            for file in self.get_files:
+                self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                self.file_data = json.load(self.file_to_read)
+                print(self.file_data)
+        
 
     def save_changes_parameter(self):
         self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
