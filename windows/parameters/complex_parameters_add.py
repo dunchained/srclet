@@ -32,10 +32,11 @@ class AddComplexParameter(QWidget):
         self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
         self.grid.addWidget(self.pb_formula_groupbox(), 2, 0, 1, 2)
         self.grid.addWidget(self.pb_description_groupbox(), 3, 0, 1, 2)
+        self.grid.addWidget(self.pb_changable_groupbox(), 4, 0, 1, 2)
         self.grid.addWidget(self.basic_parameters_groupbox(), 0, 2, 2, 1)
-        self.grid.addWidget(self.frame_groupbox(), 2, 2, 2, 1)
-        self.grid.addWidget(self.special_character_groupbox(), 0, 3, 4, 1)
-        self.grid.addWidget(self.button_groupbox(), 4, 0, 1, 4)
+        self.grid.addWidget(self.frame_groupbox(), 2, 2, 3, 1)
+        self.grid.addWidget(self.special_character_groupbox(), 0, 3, 5, 1)
+        self.grid.addWidget(self.button_groupbox(), 5, 0, 1, 4)
         self.setLayout(self.grid)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.center_gui()
@@ -120,6 +121,15 @@ class AddComplexParameter(QWidget):
         self.pbd_groupbox.layout.addStretch(1)
         self.pbd_groupbox.setLayout(self.pbd_groupbox.layout)
         return self.pbd_groupbox
+    
+    def pb_changable_groupbox(self):
+        self.chd_gruopbox = QGroupBox(self.language['add_complex_parameter_window_change_caption'])
+        self.changable_check = QCheckBox(self.language['add_complex_parameter_window_change'])
+        self.chd_gruopbox.layout = QVBoxLayout()
+        self.chd_gruopbox.layout.addWidget(self.changable_check)
+        self.chd_gruopbox.layout.addStretch(1)
+        self.chd_gruopbox.setLayout(self.chd_gruopbox.layout)
+        return self.chd_gruopbox
     
     def pb_formula_groupbox(self):
         self.pbf_groupbox = QGroupBox(self.language['add_complex_parameter_window_formula'])
@@ -274,6 +284,10 @@ class AddComplexParameter(QWidget):
     
     def add_parameter(self):
         self.file_name_to_save = get_filename('cp')
+        if self.changable_check.checkState() == 2:
+            self.change_to_save = 'yes'
+        else:
+            self.change_to_save = 'no'
         get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
@@ -308,6 +322,7 @@ class AddComplexParameter(QWidget):
                     "symbol": self.parameter_symbol.text(),
                     "formula": self.parameter_formula.toPlainText(),
                     "description": self.parameter_descriprion.toPlainText(),
+                    "changable": self.change_to_save,
                     "basic_parameters": self.selected_bp_list.text(),
                     "type": "a"
                     }

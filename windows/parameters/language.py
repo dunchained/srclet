@@ -71,6 +71,8 @@ language = {
     "add_complex_parameter_window_name_message_caption": "Filename...",
     "add_complex_parameter_window_sc": "Input special character:",
     "add_complex_parameter_window_bp": "Input basic parameter:",
+    "add_complex_parameter_window_change_caption": "Parameter is changable:",
+    "add_complex_parameter_window_change": "Yes",
     "//": "Complex Parameters Add END",
     
     "//": "Complex Parameters Widget",
