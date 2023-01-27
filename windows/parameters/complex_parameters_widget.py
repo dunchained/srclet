@@ -350,16 +350,25 @@ class ParametersWidget(QWidget):
             
         if change == 'b':
             self.changable_check.setEnabled(False)
-        else:
+        elif change == 'yes':
             self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+            self.files =[]
             for file in self.get_files:
-                self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
-                self.file_data = json.load(self.file_to_read)
-                print(self.file_data)
-        
+                if self.file_data['changable'] == 'yes' and name==self.file_data['name']:
+                    self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                self.changable_check.setEnabled(True)
+                self.changable_check.setChecked(True)
+        else:
+            self.changable_check.setEnabled(True)
+            self.changable_check.setChecked(False)
 
     def save_changes_parameter(self):
         self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+        if self.changable_check.checkState() == 2:
+            self.change_write = 'yes'
+        else:
+            self.change_write = 'no'
+            
         for file in self.get_files:
             self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
@@ -381,6 +390,7 @@ class ParametersWidget(QWidget):
                 "category": self.kategorija,
                 "basic_parameters": self.selected_bp_list.text(),
                 "unit": self.parameter_unit.text(),
+                "changable": self.change_write,
                 "description": self.parameter_descriprion.toPlainText(),
                 "formula": self.parameter_formula.toPlainText(),
                 "type": "a"

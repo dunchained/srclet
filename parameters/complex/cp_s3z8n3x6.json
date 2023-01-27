@@ -1,11 +1,11 @@
 {
     "name": "Novi param",
-    "category": "temperature",
-    "unit": "sa",
     "symbol": "sa",
-    "formula": "sa",
-    "description": "sa",
-    "changable": "yes",
+    "category": "temperature",
     "basic_parameters": "",
+    "unit": "sa",
+    "changable": "no",
+    "description": "sa",
+    "formula": "sa",
     "type": "a"
 }
