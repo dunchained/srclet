@@ -1,20 +1,30 @@
-import os, json
+import os, json, sys
+cwd = os.path.curdir
+
+from plambas.project_plambases import read_methods_data, read_project_data
+#from project_plambases import read_project_data, read_methods_data
 from variables import css, var
+#import var
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
-from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QFormLayout
+from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QFormLayout, QApplication
 from PyQt5.QtCore import Qt
 
 #from plambas.the_constructor import SrcletEngine
 #
 class CalculateWidget(QWidget):
-    def __init__(self, project_path, language):
-        self.project_path = project_path
-        self.language = language
+    #def __init__(self, project_path, language):
+    def __init__(self):
+        self.project_path = cwd + var.project_path
+        #self.language = language
         self.project_title = self.project_path.split('/')[-1]
         super().__init__()
         #SrcletEngine.calculator(self, calculation_data=self.project_path)
+        self.project_data = read_project_data(project_path=self.project_title)
+        self.methods_data = read_methods_data()
+        
+        
         self.window_gui()
         
     def window_gui(self):
@@ -35,7 +45,7 @@ class CalculateWidget(QWidget):
         self.move(qr.topLeft())    
 
     def project_data_info(self):
-        self.project_data_info_groupbox = QGroupBox(self.language['project_opened_widget_project_info'] + self.project_title)
+        self.project_data_info_groupbox = QGroupBox('projekat i data info')
         self.project_data_info_groupbox.layout = QVBoxLayout()
         self.flay = QFormLayout()
         self.label_weather_station = QLabel('weather_station:')
@@ -51,8 +61,10 @@ class CalculateWidget(QWidget):
         return self.project_data_info_groupbox
 
     def methods_info(self):
-        groupBox = QGroupBox(self.language['project_opened_widget_methods_info'])
-        groupBox.setFixedWidth(400)
+        #self.methods_list_all, self.methods_list_eto = read_methods_data()
+        pass
+        
+        groupBox = QGroupBox('metode:')
         label = QLabel(self.project_path  + 'methods')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -62,7 +74,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def export_save_calculate(self):
-        groupBox = QGroupBox(self.language['project_opened_widget_export_save_calc'])
+        groupBox = QGroupBox('save')
         label = QLabel(self.project_path  + 'export')
         vbox = QVBoxLayout()
         vbox.addWidget(label)
@@ -71,7 +83,7 @@ class CalculateWidget(QWidget):
         return groupBox
 
     def status_info(self):
-        groupBox = QGroupBox(self.language['project_opened_widget_status_info'])
+        groupBox = QGroupBox('status')
         groupBox.setFixedHeight(80)
         self.status_label = QLabel('status  | kalkulacija: 0 | mezertacmuminacija: 0')
         self.progress_bar = QProgressBar()
@@ -85,3 +97,8 @@ class CalculateWidget(QWidget):
         hbox.addStretch(1)
         groupBox.setLayout(hbox)
         return groupBox
+    
+if __name__ == '__main__':
+    mainApplication = QApplication(sys.argv)
+    mainWindow = CalculateWidget()
+    sys.exit(mainApplication.exec_())

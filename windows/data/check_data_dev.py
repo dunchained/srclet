@@ -324,13 +324,14 @@ class CheckDataTypeWidget(TableWidget):
                 self.lista2.append(item_text)
             self.lista.append(self.lista2)
         #pandas.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
-        data_frame = pandas.DataFrame(self.lista)
-        return data_frame.transpose()
+        self.data_frame = pandas.DataFrame(self.lista)
+        return self.data_frame.transpose()
         
             
     def save_data(self):
         rt = self.read_table()
-        rt.to_excel(self.project_path + "/data.xlsx")
+        
+        rt.to_excel(self.project_path + "/data.xlsx", sheet_name='data_input', index=False)
 
         if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
             self.msg = QMessageBox()

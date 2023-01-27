@@ -1,0 +1,11 @@
+{
+    "name": "Radiation adjustment coefficient",
+    "category": "radiation",
+    "unit": "popravi",
+    "symbol": "kRs",
+    "formula": "0.17",
+    "description": "Empirical coefficient for solar radiation correction. It is recommnede to use kRs = 0.19 for \"interior\" and kRs = 0.19 for \"costal\" regions. \nThe standard value is 0.17",
+    "changable": "yes",
+    "basic_parameters": "",
+    "type": "a"
+}

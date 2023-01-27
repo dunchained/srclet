@@ -1,0 +1,8 @@
+{
+    "name": "Wind speed",
+    "category": "wind",
+    "unit": "m/s",
+    "symbol": "u2",
+    "description": "Mean daily wind speed at 2 m in meters per second",
+    "type": "a"
+}

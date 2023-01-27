@@ -1,0 +1,11 @@
+{
+    "name": "Turc empirical coefficient",
+    "category": "humidity",
+    "unit": "POPRAVI",
+    "symbol": "aT",
+    "formula": "1",
+    "description": "Turc empirical coefficient that depends of RHmean",
+    "changable": "no",
+    "basic_parameters": "",
+    "type": "a"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Elevation",
+    "category": "other",
+    "unit": "m",
+    "symbol": "z",
+    "description": "Elevation above sea level in meters",
+    "type": "a"
+}

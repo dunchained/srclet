@@ -1,0 +1,11 @@
+{
+    "name": "Tabari & Talaee (2011) 2",
+    "short_name": "mm/day",
+    "symbol": "ET\u2080 TT2",
+    "description": "Reference evapotranspiration in mm per day by Tabari & Talaee (2011) equation 2",
+    "method_conditions": "",
+    "method_formula": "-0.478+(0.156*Rs)-(0.0112*Tmax)+(0.0733*Tmin)",
+    "basic_parameters": "Tmin, Tmax, Rs",
+    "complex_parameters": "",
+    "type": "a"
+}

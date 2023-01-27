@@ -1,0 +1,8 @@
+{
+    "name": "Dew point temperature",
+    "category": "temperature",
+    "unit": "\u00b0C",
+    "symbol": "Tdew",
+    "description": "Dew point temperature in degrees Celsious",
+    "type": "a"
+}

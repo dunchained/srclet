@@ -1,0 +1,8 @@
+{
+    "name": "Precipitation",
+    "category": "rain",
+    "unit": "mm",
+    "symbol": "PRCP",
+    "description": "Sum of monthly precipitation",
+    "type": "a"
+}
