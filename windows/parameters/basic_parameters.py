@@ -2,13 +2,13 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
-#from basic_parameters_widget import ParametersCategoryTabs
-from variables import css
-#import css
+#from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
+from basic_parameters_widget import ParametersCategoryTabs
+#from variables import css
+import css
 #from mortys.font_morty import read_menu_font_size
-#from language import language
-from windows.parameters.language import language
+from language import language
+#from windows.parameters.language import language
 
 class BasicParameters(QMainWindow):
     def __init__(self):
