@@ -1,10 +1,10 @@
 import os, json, sys
 cwd = os.path.curdir
 
-from plambas.project_plambases import read_methods_data, read_project_data
-#from project_plambases import read_project_data, read_methods_data
-from variables import css, var
-#import var
+#from plambas.project_plambases import read_methods_data, read_project_data
+from project_plambases import read_project_data, read_methods_data
+#from variables import css, var
+import var
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
@@ -21,8 +21,9 @@ class CalculateWidget(QWidget):
         self.project_title = self.project_path.split('/')[-1]
         super().__init__()
         #SrcletEngine.calculator(self, calculation_data=self.project_path)
-        self.project_data = read_project_data(project_path=self.project_title)
-        self.methods_data = read_methods_data()
+        self.project_data, self.available_parameters_list = read_project_data(project_path=self.project_title)
+        print(self.project_data, self.available_parameters_list)
+        self.methods_data = read_methods_data(project_path=self.project_title)
         
         
         self.window_gui()

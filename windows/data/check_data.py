@@ -30,7 +30,7 @@ class CheckDataTypeWidget(TableWidget):
         self.project_path = project_path
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.buttons = []
-        self.data = numpy.loadtxt(file_path)
+        self.data = numpy.loadtxt(file_path, skiprows=1)
         
         self.create_table()
         self.create_options()
@@ -306,12 +306,12 @@ class CheckDataTypeWidget(TableWidget):
             
     def save_data(self):
         rt = self.read_table()
-        rt.columns = rt.columns.values.tolist()
-        for (colname,colval) in rt.iteritems():
-            if colval[0] == self.language['check_data_select']:
-                rt = rt.drop(rt.columns[colname], axis=1)
-        print(rt)
-        #rt.to_excel(self.project_path + '/data.xlsx', sheet_name='data_input', index=False)
+        #rt.columns = rt.columns.values.tolist()
+        # for (colname,colval) in rt.iteritems():
+        #     if colval[0] == self.language['check_data_select']:
+        #         rt = rt.drop(rt.columns[colname], axis=1)
+        # print(rt)
+        rt.to_excel(self.project_path + '/data.xlsx', sheet_name='data_input', index=False)
 
         if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
             self.msg = QMessageBox()

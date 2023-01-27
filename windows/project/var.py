@@ -52,4 +52,4 @@ wb_methods_folder = '/methods/wb/'
 other_methods_folder = '/methods/others/'
 font_size = 12
 
-project_path = 'projects/Projekat 1'
+project_path = 'projects/TEST Projekat'
