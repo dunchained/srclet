@@ -4,5 +4,5 @@
     "unit": "%",
     "symbol": "RHmax",
     "description": "Maximum monthly relative air humidity in procentage",
-    "type": "a"
+    "type": "b"
 }

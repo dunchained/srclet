@@ -4,5 +4,5 @@
     "unit": "MJ/\u33a1/day",
     "symbol": "Rs",
     "description": "Daily global solar radiation (shortwave)",
-    "type": "a"
+    "type": "b"
 }

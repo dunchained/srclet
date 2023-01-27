@@ -4,5 +4,5 @@
     "unit": "h/day",
     "symbol": "n",
     "description": "Actual sunshine duration in hours per day",
-    "type": "a"
+    "type": "b"
 }

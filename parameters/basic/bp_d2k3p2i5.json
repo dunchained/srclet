@@ -4,5 +4,5 @@
     "unit": "%",
     "symbol": "RHmean",
     "description": "Average monthly reletive air humidity in procentages",
-    "type": "a"
+    "type": "b"
 }

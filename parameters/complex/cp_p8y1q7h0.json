@@ -6,5 +6,5 @@
     "formula": "Tmax-Tmin",
     "basic_parameters": "Tmax, Tmin",
     "description": "Temperature difference between maximum and minimum monthly air temperature in degrees Celsious",
-    "type": "a"
+    "type": "b"
 }

@@ -4,5 +4,5 @@
     "unit": "\u00b0C",
     "symbol": "Tmean",
     "description": "Mean monthly air temperature in degree Celsious",
-    "type": "a"
+    "type": "b"
 }
