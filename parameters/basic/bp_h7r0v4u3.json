@@ -1,0 +1,8 @@
+{
+    "name": "Minimum relative air humidity",
+    "category": "humidity",
+    "unit": "%",
+    "symbol": "RHmin",
+    "description": "Minimum monthly relative air humidity in procentages",
+    "type": "a"
+}

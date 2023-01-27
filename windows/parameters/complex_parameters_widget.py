@@ -2,6 +2,7 @@ import sys, os, json
 cwd = os.path.curdir
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QScrollArea, QToolTip
+from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtCore import Qt
 #from variables import var
 import var
@@ -132,7 +133,73 @@ class ParametersWidget(QWidget):
         self.bp_groupbox.layout.addWidget(bp)
         self.bp_groupbox.setLayout(self.bp_groupbox.layout)
         return self.bp_groupbox
-        
+    
+    def frame_groupbox(self):
+        self.frame_groupbox = QGroupBox('Basic parameters:')
+        self.text_bp_selected = QLabel('selected')
+        self.text_basic_parameters = QLabel('add_eto_method_info_bp')
+        self.selected_bp_list = QLabel()
+        self.frame_groupbox.layout = QGridLayout()
+        self.frame_groupbox.layout.addWidget(self.text_basic_parameters, 0, 0)
+        self.frame_groupbox.layout.addWidget(self.basic_parameters_groupbox_check(), 1, 0)
+        self.frame_groupbox.layout.addWidget(self.text_bp_selected, 2, 0)
+        self.frame_groupbox.layout.addWidget(self.selected_bp_list, 3, 0)
+        self.frame_groupbox.setLayout(self.frame_groupbox.layout)
+        return self.frame_groupbox
+    
+    def basic_parameters_groupbox_check(self):
+        self.bpc_groupbox = QGroupBox()
+        self.bpc_layout = QGridLayout()
+        self.bpc_scroll = QWidget()
+        self.bpc_check_list, self.rows, self.columns = read_basic_parameters()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.bpc_check = QCheckBox(f'{self.bpc_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.bpc_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bpc_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.bpc_check.setToolTip(self.text)
+                
+                self.bpc_check.clicked.connect(self.basic_parameter_checked)
+                self.bpc_layout.addWidget(self.bpc_check, row+1, column)
+                i += 1
+                if i == len(self.bpc_check_list): break
+        self.bpc_scroll.setLayout(self.bpc_layout)
+        bpc = QScrollArea()
+        bpc.setWidget(self.bpc_scroll)
+        bpc.setWidgetResizable(1)
+        self.bpc_groupbox.layout = QVBoxLayout()
+        self.bpc_groupbox.layout.addWidget(bpc)
+        self.bpc_groupbox.setLayout(self.bpc_groupbox.layout)
+        return self.bpc_groupbox
+    
+    def basic_parameter_checked(self):
+        if not self.selected_bp_list.text():
+            self.bpl = []
+        else:
+            self.bpl = self.selected_bp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.bpl.append(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
+        else:
+            self.bpl.remove(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
+            
     def create_list_widget(self, category_list):
         self.category_list = category_list
         self.groupBox = QGroupBox(self.language['complex_parameters_widget_caption'])
@@ -167,7 +234,8 @@ class ParametersWidget(QWidget):
                     state=False, 
                     name=data['name'], 
                     symbol=data['symbol'], 
-                    unit=data['unit'], 
+                    unit=data['unit'],
+                    bp = data['basic_parameters'], 
                     description=data['description'], 
                     formula=data['formula'])
             else:
@@ -175,7 +243,8 @@ class ParametersWidget(QWidget):
                     state=True, 
                     name=data['name'], 
                     symbol=data['symbol'], 
-                    unit=data['unit'], 
+                    unit=data['unit'],
+                    bp = data['basic_parameters'], 
                     description=data['description'], 
                     formula=data['formula'])
 
@@ -239,12 +308,13 @@ class ParametersWidget(QWidget):
         self.layout.addWidget(self.parameter_formula)
         self.layout.addWidget(self.text_parameter_descriprion)
         self.layout.addWidget(self.parameter_descriprion)
+        self.layout.addWidget(self.frame_groupbox())
         self.layout.addWidget(self.buttonSave)
         self.layout.addWidget(self.buttonCancel)
         self.groupBox.setLayout(self.layout)
         return self.groupBox
 
-    def update_labels(self, name, state, symbol, unit, description, formula):
+    def update_labels(self, name, bp, state, symbol, unit, description, formula):
         self.parameter_name.setText(name)
         self.parameter_name.setEnabled(state)
         self.parameter_symbol.setText(symbol)
@@ -258,6 +328,13 @@ class ParametersWidget(QWidget):
         self.buttonSave.setEnabled(state)
         self.buttonDelete.setEnabled(state)
         self.buttonCancel.setEnabled(state)
+        self.bp_groupbox.setEnabled(state)
+        self.selected_bp_list.setText(bp)
+        self.bpc_list_to_update = bp.split(', ')
+        for self.bpc_check in range(self.bpc_layout.count()):
+            self.bpc_check_widget = self.bpc_layout.itemAt(self.bpc_check).widget()
+            self.bpc_check_widget.setChecked(False)
+            if self.bpc_check_widget.text() in self.bpc_list_to_update: self.bpc_check_widget.setChecked(True)
 
     def save_changes_parameter(self):
         self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
@@ -280,6 +357,7 @@ class ParametersWidget(QWidget):
                 "name": self.parameter_name.text(),
                 "symbol": self.parameter_symbol.text(),
                 "category": self.kategorija,
+                "basic_parameters": self.selected_bp_list.text(),
                 "unit": self.parameter_unit.text(),
                 "description": self.parameter_descriprion.toPlainText(),
                 "formula": self.parameter_formula.toPlainText(),
@@ -311,6 +389,12 @@ class ParametersWidget(QWidget):
         self.parameter_unit.setText(data['unit'])
         self.parameter_descriprion.setText(data['description'])
         self.parameter_formula.setText(data['formula'])
+        self.selected_bp_list.setText(data['basic_parameters'])
+        self.bp_list_to_update = data['basic_parameters'].split(', ')
+        for self.bpc_check in range(self.bpc_layout.count()):
+            self.bpc_check_widget = self.bpc_layout.itemAt(self.bpc_check).widget()
+            self.bpc_check_widget.setChecked(False)
+            if self.bpc_check_widget.text() in self.bp_list_to_update: self.bpc_check_widget.setChecked(True)
         
 if __name__ == '__main__':
    mainApplication = QApplication(sys.argv)

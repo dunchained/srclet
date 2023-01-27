@@ -1,0 +1,10 @@
+{
+    "name": "Temperature difference",
+    "category": "temperature",
+    "unit": "\u00b0C",
+    "symbol": "TD",
+    "formula": "Tmax-Tmin",
+    "basic_parameters": "Tmax, Tmin",
+    "description": "Temperature difference between maximum and minimum monthly air temperature in degrees Celsious",
+    "type": "a"
+}

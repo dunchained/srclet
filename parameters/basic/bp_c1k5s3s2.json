@@ -1,0 +1,8 @@
+{
+    "name": "Maximum temperature",
+    "category": "temperature",
+    "unit": "\u00b0C",
+    "symbol": "Tmax",
+    "description": "Average monthly maximum air temperature in degree Celsious",
+    "type": "a"
+}

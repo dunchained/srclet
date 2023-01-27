@@ -160,7 +160,7 @@ class AddBasicParameter(QWidget):
         for file in get_files:
             self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
-            if self.parameter_name.text() == self.file_data['name']:
+            if self.parameter_name.text() == self.file_data['name'] or self.parameter_symbol.text() == self.file_data['symbol']:
                 self.file_list.append(file)
                         
         if self.file_list:
