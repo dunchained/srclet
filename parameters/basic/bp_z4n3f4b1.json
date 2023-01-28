@@ -1,7 +1,7 @@
 {
     "name": "Month",
     "category": "other",
-    "unit": "POPRAVI",
+    "unit": "",
     "symbol": "M",
     "description": "Ordinal number of the month for which the calculation is performed",
     "type": "a"

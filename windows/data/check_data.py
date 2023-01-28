@@ -83,7 +83,7 @@ class CheckDataTypeWidget(TableWidget):
                     self.file_to_load = open(os.path.join(cwd + '/' + var.basic_parameters_folder + file))
                     self.file_data = json.load(self.file_to_load)
                     if self.kategorija_code == self.file_data['category']:
-                        self.category_list.append(self.file_data['name'])
+                        self.category_list.append(self.file_data['name'] + '  |  ' + self.file_data['unit'])
                 for parameter in self.category_list:
                     self.menu_action = self.menu_param.addAction(parameter)
                     self.menu_action.triggered.connect(self.set_column_value)
