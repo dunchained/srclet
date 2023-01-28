@@ -1,0 +1,8 @@
+{
+    "name": "Wind speed",
+    "category": "wind",
+    "unit": "m/s",
+    "symbol": "uz",
+    "description": " Mean daily wind speed at \"zu\" height in meters per second",
+    "type": "a"
+}

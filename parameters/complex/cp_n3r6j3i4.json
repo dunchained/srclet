@@ -1,0 +1,12 @@
+{
+    "name": "Hight of wind measurement",
+    "category": "wind",
+    "unit": "m",
+    "symbol": "zu",
+    "formula": "2",
+    "description": "",
+    "changable": "yes",
+    "basic_parameters": "",
+    "complex_parameters": "",
+    "type": "a"
+}

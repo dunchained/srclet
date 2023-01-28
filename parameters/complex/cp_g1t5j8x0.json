@@ -1,0 +1,12 @@
+{
+    "name": "Regression constant a",
+    "category": "radiation",
+    "unit": "",
+    "symbol": "as",
+    "formula": "0.25",
+    "description": "Fraction of extraterrestrial radiation reaching the earth on an overcast day",
+    "changable": "yes",
+    "basic_parameters": "",
+    "complex_parameters": "",
+    "type": "a"
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Solar constant",
+    "category": "radiation",
+    "unit": "MJ/m2/min",
+    "symbol": "Gsc",
+    "formula": "0.082",
+    "description": "",
+    "changable": "yes",
+    "basic_parameters": "",
+    "complex_parameters": "",
+    "type": "a"
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Calculated mean temperature",
+    "category": "temperature",
+    "unit": "\u00b0C",
+    "symbol": "T",
+    "formula": "(Tmax+Tmin)/2",
+    "description": "Mean air temperature based on data for minimum and maximum air temperature",
+    "changable": "no",
+    "basic_parameters": "Tmax, Tmin",
+    "complex_parameters": "",
+    "type": "a"
+}
