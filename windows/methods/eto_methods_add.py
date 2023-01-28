@@ -8,6 +8,7 @@ from PyQt5.QtGui import QIcon
 import css, var
 #from mortys.methods_morty import read_characters, read_basic_parameters, read_complex_parameters, get_filename
 from methods_morty import read_characters, read_basic_parameters, read_complex_parameters, get_filename
+from methods_morty import read_basic_parameters_insert, read_complex_parameters_non_changable
 from language import language
 
 class AddETOMethod(QWidget):
@@ -81,6 +82,7 @@ class AddETOMethod(QWidget):
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
         self.bp_check_list, self.rows, self.columns = read_basic_parameters()
+        
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -133,7 +135,7 @@ class AddETOMethod(QWidget):
         self.bpi_groupbox = QGroupBox(self.language['add_eto_method_inserts_bp'])
         self.bpi_layout = QGridLayout()
         self.bpi_scroll = QWidget()
-        self.bpi_check_list, self.rows, self.columns = read_basic_parameters()
+        self.bpi_check_list, self.rows, self.columns = read_basic_parameters_insert()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -174,7 +176,7 @@ class AddETOMethod(QWidget):
         self.bpc_groupbox = QGroupBox(self.language['add_eto_method_inserts_cp'])
         self.bpc_layout = QGridLayout()
         self.bpc_scroll = QWidget()
-        self.bpc_check_list, self.rows, self.columns = read_complex_parameters()
+        self.bpc_check_list, self.rows, self.columns = read_complex_parameters_non_changable()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -198,7 +200,7 @@ class AddETOMethod(QWidget):
                             '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
                 self.bpc_check.setToolTip(self.text)
                 
-                self.bpc_check.clicked.connect(self.special_character_clicked)
+                self.bpc_check.clicked.connect(self.complex_parameter_clicked)
                 self.bpc_layout.addWidget(self.bpc_check, row+1, column)
                 i += 1
                 if i == len(self.bpc_check_list): break
@@ -210,6 +212,26 @@ class AddETOMethod(QWidget):
         self.bpc_groupbox.layout.addWidget(bpc)
         self.bpc_groupbox.setLayout(self.bpc_groupbox.layout)
         return self.bpc_groupbox
+    
+    def complex_parameter_clicked(self):
+        sender = self.sender()
+        sender_text = sender.text()
+        
+        self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+        for file in self.get_files:
+            self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+            self.file_data = json.load(self.file_to_read)
+            if sender_text == self.file_data['symbol']:
+                self.file_to_load = file
+        self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+        with open(self.json_path) as json_file:
+            data = json.load(json_file)
+        if self.on_focused_change.__class__.__name__ == 'QTextEdit':
+            self.on_focused_change.setPlainText(self.on_focused_change.toPlainText() + data['formula'])
+        elif self.on_focused_change.__class__.__name__ == 'QLineEdit':
+            self.on_focused_change.setText(self.on_focused_change.text() + data['formula'])
+        else:
+            pass
             
     def complex_parameters_groupbox(self):
         self.cp_groupbox = QGroupBox()

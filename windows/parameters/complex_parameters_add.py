@@ -7,7 +7,8 @@ from PyQt5.QtGui import QIcon
 #from variables import css, var
 import var, css
 #from mortys.parameters_morty import read_characters, get_filename, read_basic_parameters
-from parameters_morty import read_characters, get_filename, read_basic_parameters
+from parameters_morty import read_characters, get_filename, read_basic_parameters, read_complex_parameters
+from parameters_morty import read_complex_parameters_non_changable, read_complex_parameters_insert, read_basic_parameters_insert
 from language import language
 
 class AddComplexParameter(QWidget):
@@ -35,7 +36,9 @@ class AddComplexParameter(QWidget):
         self.grid.addWidget(self.pb_changable_groupbox(), 4, 0, 1, 2)
         self.grid.addWidget(self.basic_parameters_groupbox(), 0, 2, 2, 1)
         self.grid.addWidget(self.frame_groupbox(), 2, 2, 3, 1)
-        self.grid.addWidget(self.special_character_groupbox(), 0, 3, 5, 1)
+        self.grid.addWidget(self.special_character_groupbox(), 0, 3, 2, 1)
+        self.grid.addWidget(self.complex_parameters_groupbox_insert(), 2, 3, 1, 1)
+        self.grid.addWidget(self.frame_complex_groupbox(), 3, 3, 2, 1 )
         self.grid.addWidget(self.button_groupbox(), 5, 0, 1, 4)
         self.setLayout(self.grid)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
@@ -167,7 +170,7 @@ class AddComplexParameter(QWidget):
         self.bp_groupbox = QGroupBox(self.language['add_complex_parameter_window_bp'])
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_basic_parameters()
+        self.button_list, self.rows, self.columns = read_basic_parameters_insert()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -202,6 +205,133 @@ class AddComplexParameter(QWidget):
         self.bp_groupbox.layout.addWidget(bp)
         self.bp_groupbox.setLayout(self.bp_groupbox.layout)
         return self.bp_groupbox
+    
+    def complex_parameters_groupbox_insert(self):
+        self.bpc_groupbox = QGroupBox('Complex parameters:')
+        self.bpc_layout = QGridLayout()
+        self.bpc_scroll = QWidget()
+        self.bpc_check_list, self.rows, self.columns = read_complex_parameters_non_changable()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.bpc_check = QPushButton(f'{self.bpc_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.bpc_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bpc_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.bpc_check.setToolTip(self.text)
+                
+                self.bpc_check.clicked.connect(self.complex_parameter_clicked)
+                self.bpc_layout.addWidget(self.bpc_check, row+1, column)
+                i += 1
+                if i == len(self.bpc_check_list): break
+        self.bpc_scroll.setLayout(self.bpc_layout)
+        bpc = QScrollArea()
+        bpc.setWidget(self.bpc_scroll)
+        bpc.setWidgetResizable(1)
+        self.bpc_groupbox.layout = QVBoxLayout()
+        self.bpc_groupbox.layout.addWidget(bpc)
+        self.bpc_groupbox.setLayout(self.bpc_groupbox.layout)
+        return self.bpc_groupbox
+    
+    def complex_parameter_clicked(self):
+        sender = self.sender()
+        sender_text = sender.text()
+        
+        self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+        for file in self.get_files:
+            self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+            self.file_data = json.load(self.file_to_read)
+            if sender_text == self.file_data['symbol']:
+                self.file_to_load = file
+        self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+        with open(self.json_path) as json_file:
+            data = json.load(json_file)
+        if self.on_focused_change.__class__.__name__ == 'QTextEdit':
+            self.on_focused_change.setPlainText(self.on_focused_change.toPlainText() + data['formula'])
+        elif self.on_focused_change.__class__.__name__ == 'QLineEdit':
+            self.on_focused_change.setText(self.on_focused_change.text() + data['formula'])
+        else:
+            pass
+        
+    def complex_parameters_groupbox_check(self):
+        self.cp_groupbox = QGroupBox('complex parameters:')
+        self.cp_layout = QGridLayout()
+        self.cp_scroll = QWidget()
+        self.cp_check_list, self.rows, self.columns = read_complex_parameters()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.cp_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.cp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.cp_check.setToolTip(self.text)
+                
+                self.cp_check.clicked.connect(self.complex_parameter_checked)
+                self.cp_layout.addWidget(self.cp_check, row+1, column)
+                i += 1
+                if i == len(self.cp_check_list): break
+        self.cp_scroll.setLayout(self.cp_layout)
+        cp = QScrollArea()
+        cp.setWidget(self.cp_scroll)
+        cp.setWidgetResizable(1)
+        self.cp_groupbox.layout = QVBoxLayout()
+        self.cp_groupbox.layout.addWidget(cp)
+        self.cp_groupbox.setLayout(self.cp_groupbox.layout)
+        return self.cp_groupbox
+    
+    def complex_parameter_checked(self):
+        if not self.selected_cp_list.text():
+            self.cpl = []
+        else:
+            self.cpl = self.selected_cp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.cpl.append(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+        else:
+            self.cpl.remove(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+            
+    def frame_complex_groupbox(self):
+        self.frame_groupbox = QGroupBox('Basic parameters:')
+        self.text_cp_selected = QLabel('selected')
+        self.text_complex_parameters = QLabel('add_eto_method_info_bp')
+        self.selected_cp_list = QLabel()
+        self.frame_groupbox.layout = QGridLayout()
+        self.frame_groupbox.layout.addWidget(self.text_basic_parameters, 0, 0)
+        self.frame_groupbox.layout.addWidget(self.complex_parameters_groupbox_check(), 1, 0)
+        self.frame_groupbox.layout.addWidget(self.text_cp_selected, 2, 0)
+        self.frame_groupbox.layout.addWidget(self.selected_cp_list, 3, 0)
+        self.frame_groupbox.setLayout(self.frame_groupbox.layout)
+        return self.frame_groupbox
     
     def frame_groupbox(self):
         self.frame_groupbox = QGroupBox('Basic parameters:')
@@ -304,7 +434,7 @@ class AddComplexParameter(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            if not self.parameter_symbol.text() or not self.parameter_unit.text() or not self.parameter_name.text():
+            if not self.parameter_symbol.text() or not self.parameter_name.text():
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
@@ -323,6 +453,7 @@ class AddComplexParameter(QWidget):
                     "description": self.parameter_descriprion.toPlainText(),
                     "changable": self.change_to_save,
                     "basic_parameters": self.selected_bp_list.text(),
+                    "complex_parameters": self.selected_cp_list.text(),
                     "type": "a"
                     }
                 json_object = json.dumps(parameter_dict, indent = 4)

@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt
 #from variables import var
 import var
 #from mortys.parameters_morty import read_characters, read_basic_parameters
-from parameters_morty import read_characters, read_basic_parameters
+from parameters_morty import read_characters, read_basic_parameters, read_complex_parameters
 #from windows.parameters.complex_parameters_add import AddComplexParameter
 from complex_parameters_add import AddComplexParameter
 from language import language
@@ -147,6 +147,72 @@ class ParametersWidget(QWidget):
         self.frame_groupbox.setLayout(self.frame_groupbox.layout)
         return self.frame_groupbox
     
+    def complex_parameters_groupbox_check(self):
+        self.cpc_groupbox = QGroupBox('complex parameters:')
+        self.cpc_layout = QGridLayout()
+        self.cpc_scroll = QWidget()
+        self.cpc_check_list, self.rows, self.columns = read_complex_parameters()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.cpc_check = QCheckBox(f'{self.cpc_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.cpc_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.complex_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.cpc_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.cpc_check.setToolTip(self.text)
+                
+                self.cpc_check.clicked.connect(self.complex_parameter_checked)
+                self.cpc_layout.addWidget(self.cpc_check, row+1, column)
+                i += 1
+                if i == len(self.cpc_check_list): break
+        self.cpc_scroll.setLayout(self.cpc_layout)
+        cpc = QScrollArea()
+        cpc.setWidget(self.cpc_scroll)
+        cpc.setWidgetResizable(1)
+        self.cpc_groupbox.layout = QVBoxLayout()
+        self.cpc_groupbox.layout.addWidget(cpc)
+        self.cpc_groupbox.setLayout(self.cpc_groupbox.layout)
+        return self.cpc_groupbox
+    
+    def complex_parameter_checked(self):
+        if not self.selected_cp_list.text():
+            self.bpl = []
+        else:
+            self.bpl = self.selected_cp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.bpl.append(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.bpl))
+        else:
+            self.bpl.remove(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.bpl))
+    
+    def frame_complex_groupbox(self):
+        self.frame_groupbox = QGroupBox('complex parameters:')
+        self.text_cp_selected = QLabel('selected')
+        self.text_complex_parameters = QLabel('add_eto_method_info_bp')
+        self.selected_cp_list = QLabel()
+        self.frame_groupbox.layout = QGridLayout()
+        self.frame_groupbox.layout.addWidget(self.text_complex_parameters, 0, 0)
+        self.frame_groupbox.layout.addWidget(self.complex_parameters_groupbox_check(), 1, 0)
+        self.frame_groupbox.layout.addWidget(self.text_cp_selected, 2, 0)
+        self.frame_groupbox.layout.addWidget(self.selected_cp_list, 3, 0)
+        self.frame_groupbox.setLayout(self.frame_groupbox.layout)
+        return self.frame_groupbox
+    
     def basic_parameters_groupbox_check(self):
         self.bpc_groupbox = QGroupBox()
         self.bpc_layout = QGridLayout()
@@ -235,7 +301,8 @@ class ParametersWidget(QWidget):
                     name=data['name'], 
                     symbol=data['symbol'], 
                     unit=data['unit'],
-                    bp = data['basic_parameters'], 
+                    bp = data['basic_parameters'],
+                    cp = data['complex_parameters'], 
                     description=data['description'], 
                     formula=data['formula'],
                     change='b')
@@ -246,7 +313,8 @@ class ParametersWidget(QWidget):
                     name=data['name'], 
                     symbol=data['symbol'], 
                     unit=data['unit'],
-                    bp = data['basic_parameters'], 
+                    bp = data['basic_parameters'],
+                    cp = data['complex_parameters'],
                     description=data['description'], 
                     formula=data['formula'],
                     change=data['changable'])
@@ -300,21 +368,22 @@ class ParametersWidget(QWidget):
         self.buttonCancel = QPushButton(self.language['complex_parameters_widget_parameter_btn_cancel'])
         self.buttonCancel.clicked.connect(self.cancel)
         self.buttonCancel.setEnabled(False)
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.text_parameter_name)
-        self.layout.addWidget(self.parameter_name)
-        self.layout.addWidget(self.text_parameter_symbol)
-        self.layout.addWidget(self.parameter_symbol)
-        self.layout.addWidget(self.text_parameter_unit)
-        self.layout.addWidget(self.parameter_unit)
-        self.layout.addWidget(self.text_parameter_formula)
-        self.layout.addWidget(self.parameter_formula)
-        self.layout.addWidget(self.text_parameter_descriprion)
-        self.layout.addWidget(self.parameter_descriprion)
-        self.layout.addWidget(self.frame_groupbox())
-        self.layout.addWidget(self.pb_changable_groupbox())
-        self.layout.addWidget(self.buttonSave)
-        self.layout.addWidget(self.buttonCancel)
+        self.layout = QGridLayout()
+        self.layout.addWidget(self.text_parameter_name, 0, 0, 1, 1)
+        self.layout.addWidget(self.parameter_name, 1, 0, 1, 1)
+        self.layout.addWidget(self.text_parameter_symbol, 0, 1, 1, 1)
+        self.layout.addWidget(self.parameter_symbol, 1, 1, 1, 1)
+        self.layout.addWidget(self.text_parameter_unit, 2, 0, 1, 1)
+        self.layout.addWidget(self.parameter_unit, 3, 0, 1, 1)
+        self.layout.addWidget(self.pb_changable_groupbox(), 2, 1, 2, 1)
+        self.layout.addWidget(self.text_parameter_descriprion, 4, 0, 1, 1)
+        self.layout.addWidget(self.parameter_descriprion, 5, 0, 1, 1)
+        self.layout.addWidget(self.text_parameter_formula, 4, 1, 1, 1)
+        self.layout.addWidget(self.parameter_formula, 5, 1, 1, 1)
+        self.layout.addWidget(self.frame_groupbox(), 6, 0, 1, 1)
+        self.layout.addWidget(self.frame_complex_groupbox(), 6, 1, 1, 1)
+        self.layout.addWidget(self.buttonSave, 7, 0, 1, 2)
+        self.layout.addWidget(self.buttonCancel, 8, 0, 1, 2)
         self.groupBox.setLayout(self.layout)
         return self.groupBox
     
@@ -326,7 +395,7 @@ class ParametersWidget(QWidget):
         self.chd_gruopbox.setLayout(self.chd_gruopbox.layout)
         return self.chd_gruopbox
 
-    def update_labels(self, name, bp, state, symbol, unit, description, formula, change):
+    def update_labels(self, name, bp, cp, state, symbol, unit, description, formula, change):
         self.parameter_name.setText(name)
         self.parameter_name.setEnabled(state)
         self.parameter_symbol.setText(symbol)
@@ -347,6 +416,13 @@ class ParametersWidget(QWidget):
             self.bpc_check_widget = self.bpc_layout.itemAt(self.bpc_check).widget()
             self.bpc_check_widget.setChecked(False)
             if self.bpc_check_widget.text() in self.bpc_list_to_update: self.bpc_check_widget.setChecked(True)
+            
+        self.selected_cp_list.setText(cp)
+        self.cpc_list_to_update = cp.split(', ')
+        for self.cpc_check in range(self.cpc_layout.count()):
+            self.cpc_check_widget = self.cpc_layout.itemAt(self.cpc_check).widget()
+            self.cpc_check_widget.setChecked(False)
+            if self.cpc_check_widget.text() in self.cpc_list_to_update: self.cpc_check_widget.setChecked(True)
             
         if change == 'b':
             self.changable_check.setEnabled(False)
@@ -374,7 +450,7 @@ class ParametersWidget(QWidget):
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_to_load = file
-        if not self.file_to_load or not self.parameter_name.text() or not self.parameter_unit.text() or not self.parameter_symbol.text():
+        if not self.file_to_load or not self.parameter_name.text() or not self.parameter_symbol.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
@@ -389,6 +465,7 @@ class ParametersWidget(QWidget):
                 "symbol": self.parameter_symbol.text(),
                 "category": self.kategorija,
                 "basic_parameters": self.selected_bp_list.text(),
+                "complex_parameters": self.selected_cp_list.text(),
                 "unit": self.parameter_unit.text(),
                 "changable": self.change_write,
                 "description": self.parameter_descriprion.toPlainText(),
@@ -427,6 +504,13 @@ class ParametersWidget(QWidget):
             self.bpc_check_widget = self.bpc_layout.itemAt(self.bpc_check).widget()
             self.bpc_check_widget.setChecked(False)
             if self.bpc_check_widget.text() in self.bp_list_to_update: self.bpc_check_widget.setChecked(True)
+        
+        self.selected_cp_list.setText(data['complex_parameters'])
+        self.cp_list_to_update = data['complex_parameters'].split(', ')
+        for self.cpc_check in range(self.cpc_layout.count()):
+            self.cpc_check_widget = self.cpc_layout.itemAt(self.cpc_check).widget()
+            self.cpc_check_widget.setChecked(False)
+            if self.cpc_check_widget.text() in self.cp_list_to_update: self.cpc_check_widget.setChecked(True)
         
 if __name__ == '__main__':
    mainApplication = QApplication(sys.argv)

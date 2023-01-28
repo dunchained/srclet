@@ -7,5 +7,6 @@
     "description": "Latent heat of vaporisation",
     "changable": "yes",
     "basic_parameters": "",
+    "complex_parameters": "",
     "type": "a"
 }

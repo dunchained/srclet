@@ -173,7 +173,7 @@ class AddBasicParameter(QWidget):
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
-            if not self.parameter_symbol.text() or not self.parameter_unit.text() or not self.parameter_name.text():
+            if not self.parameter_symbol.text() or not self.parameter_name.text():
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)

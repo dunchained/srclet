@@ -174,7 +174,7 @@ class ParametersWidget(QWidget):
             if self.parameter_name.text() == self.file_data['name']:
                 self.file_to_load = file
                 #self.kategorija = self.file_data['category']
-        if not self.file_to_load or not self.parameter_name.text() or not self.parameter_unit.text() or not self.parameter_symbol.text():
+        if not self.file_to_load or not self.parameter_name.text() or not self.parameter_symbol.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)

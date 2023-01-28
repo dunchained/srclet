@@ -7,5 +7,6 @@
     "description": "Average minimum monthly temperature in kelvin",
     "changable": "no",
     "basic_parameters": "Tmin",
+    "complex_parameters": "",
     "type": "a"
 }

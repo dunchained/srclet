@@ -7,5 +7,6 @@
     "description": "Latitude in radian",
     "changable": "no",
     "basic_parameters": "\u03a6",
+    "complex_parameters": "",
     "type": "a"
 }
