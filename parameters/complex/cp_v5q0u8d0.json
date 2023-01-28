@@ -1,0 +1,11 @@
+{
+    "name": "Specific heat at constant pressure",
+    "category": "other",
+    "unit": "MJ/kg/\u00b0C",
+    "symbol": "cp",
+    "formula": "0.001013",
+    "description": "Specific heat at constant pressure",
+    "changable": "yes",
+    "basic_parameters": "",
+    "type": "a"
+}

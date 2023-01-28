@@ -1,0 +1,11 @@
+{
+    "name": "Number of mid month day",
+    "category": "other",
+    "unit": "POPRAVI",
+    "symbol": "J",
+    "formula": "(round(30.5*M)-14.6)",
+    "description": "The number of 15th (usually) day in a given month in relation to all days of the year i.e. between the first (January 1) and the last (December 31) day.",
+    "changable": "no",
+    "basic_parameters": "M",
+    "type": "a"
+}

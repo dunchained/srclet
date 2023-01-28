@@ -1,0 +1,8 @@
+{
+    "name": "Latitude",
+    "category": "radiation",
+    "unit": "decimal degrees",
+    "symbol": "\u03a6",
+    "description": "Latitude in decimal degrees. Positive for northern latitude, and negative for southern.",
+    "type": "a"
+}

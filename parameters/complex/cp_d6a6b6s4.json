@@ -2,9 +2,9 @@
     "name": "Atmospheric pressure",
     "category": "other",
     "unit": "kPa",
-    "symbol": "Pa_",
+    "symbol": "Pa",
     "formula": "101.3*((293-0.0065*z)/293)**5.26",
-    "description": "Calculated atmospheric pressure in kilopascal",
+    "description": "Atmospheric pressure in kilopascal",
     "changable": "no",
     "basic_parameters": "z",
     "type": "a"

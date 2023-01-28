@@ -1,5 +1,5 @@
 {
-    "name": "Average reletive air humidity",
+    "name": "Mean reletive air humidity",
     "category": "humidity",
     "unit": "%",
     "symbol": "RHmean",

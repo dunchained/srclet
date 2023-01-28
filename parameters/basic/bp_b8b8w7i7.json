@@ -1,8 +1,0 @@
-{
-    "name": "Atmospheric pressure (m)",
-    "category": "other",
-    "unit": "kPa",
-    "symbol": "Pa",
-    "description": "Measured atmospheric pressure in kilopascal\nThe pressure exerted by the weight of the earths atmosphere.",
-    "type": "a"
-}
