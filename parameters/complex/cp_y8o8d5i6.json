@@ -1,0 +1,12 @@
+{
+    "name": "TD (K)",
+    "category": "temperature",
+    "unit": "K",
+    "symbol": "TD (K)",
+    "formula": "(Tmax+273.16)-(Tmin+273.16)",
+    "description": "",
+    "changable": "no",
+    "basic_parameters": "Tmax, Tmin",
+    "complex_parameters": "",
+    "type": "a"
+}

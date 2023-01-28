@@ -1,0 +1,11 @@
+{
+    "name": "cxycxy",
+    "short_name": "cxy",
+    "symbol": "cxy",
+    "description": "cxy",
+    "method_conditions": "cxy",
+    "method_formula": "cxyc",
+    "basic_parameters": "Tmax, Rs, RHmin, Tmean, M",
+    "complex_parameters": "aT, \u03bb, cp, kRs",
+    "type": "a"
+}

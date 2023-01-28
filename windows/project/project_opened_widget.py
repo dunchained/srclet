@@ -22,7 +22,7 @@ class CalculateWidget(QWidget):
         super().__init__()
         #SrcletEngine.calculator(self, calculation_data=self.project_path)
         self.project_data, self.available_parameters_list = read_project_data(project_path=self.project_title)
-        self.methods_data = read_methods_data(project_path=self.project_title)
+        self.methods_data = read_methods_data(project_path=self.project_title, available_parameters=self.available_parameters_list)
         
         
         self.window_gui()
