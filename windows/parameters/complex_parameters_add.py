@@ -10,6 +10,8 @@ import var, css
 from parameters_morty import read_characters, get_filename, read_basic_parameters, read_complex_parameters
 from parameters_morty import read_complex_parameters_non_changable, read_complex_parameters_insert, read_basic_parameters_insert
 from language import language
+from character_widget import InputCharacterWidget
+from basic_parameters_insert_widget import InputBasicParameterNameWidget
 
 class AddComplexParameter(QWidget):
     def __init__(self):
@@ -34,9 +36,11 @@ class AddComplexParameter(QWidget):
         self.grid.addWidget(self.pb_formula_groupbox(), 2, 0, 1, 2)
         self.grid.addWidget(self.pb_description_groupbox(), 3, 0, 1, 2)
         self.grid.addWidget(self.pb_changable_groupbox(), 4, 0, 1, 2)
-        self.grid.addWidget(self.basic_parameters_groupbox(), 0, 2, 2, 1)
+        #self.grid.addWidget(self.basic_parameters_groupbox(), 0, 2, 2, 1)
+        self.grid.addWidget(InputBasicParameterNameWidget(columns=3), 0, 2, 2, 1)
         self.grid.addWidget(self.frame_groupbox(), 2, 2, 3, 1)
-        self.grid.addWidget(self.special_character_groupbox(), 0, 3, 2, 1)
+        #self.grid.addWidget(self.special_character_groupbox(), 0, 3, 2, 1)
+        self.grid.addWidget(InputCharacterWidget(columns=3), 0, 3, 2, 1)
         self.grid.addWidget(self.complex_parameters_groupbox_insert(), 2, 3, 1, 1)
         self.grid.addWidget(self.frame_complex_groupbox(), 3, 3, 2, 1 )
         self.grid.addWidget(self.button_groupbox(), 5, 0, 1, 4)
@@ -143,28 +147,6 @@ class AddComplexParameter(QWidget):
         self.pbf_groupbox.layout.addStretch(1)
         self.pbf_groupbox.setLayout(self.pbf_groupbox.layout)
         return self.pbf_groupbox
-    
-    def special_character_groupbox(self):
-        self.sc_groupbox = QGroupBox(self.language['add_complex_parameter_window_sc'])
-        self.sc_layout = QGridLayout()
-        self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters(var.charactes_loc)
-        i = 0
-        for row in range(self.rows):
-            for column in range(self.columns):
-                button = QPushButton(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.special_character_clicked)
-                self.sc_layout.addWidget(button, row+1, column)
-                i += 1
-                if i == len(self.button_list): break
-        self.sc_scroll.setLayout(self.sc_layout)
-        sc = QScrollArea()
-        sc.setWidget(self.sc_scroll)
-        sc.setWidgetResizable(1)
-        self.sc_groupbox.layout = QVBoxLayout()
-        self.sc_groupbox.layout.addWidget(sc)
-        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
-        return self.sc_groupbox
     
     def basic_parameters_groupbox(self):
         self.bp_groupbox = QGroupBox(self.language['add_complex_parameter_window_bp'])

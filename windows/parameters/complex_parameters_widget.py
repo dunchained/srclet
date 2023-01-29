@@ -11,6 +11,8 @@ from parameters_morty import read_characters, read_basic_parameters, read_comple
 #from windows.parameters.complex_parameters_add import AddComplexParameter
 from complex_parameters_add import AddComplexParameter
 from language import language
+from character_widget import InputCharacterWidget
+from basic_parameters_insert_widget import InputBasicParameterNameWidget
 
 class ParametersCategoryTabs(QWidget):
     def __init__(self):
@@ -55,8 +57,10 @@ class ParametersWidget(QWidget):
         self.grid = QGridLayout()
         self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
-        self.grid.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
-        self.grid.addWidget(self.basic_parameters_groupbox(), 1, 1, 1, 1)
+        #self.grid.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
+        self.grid.addWidget(InputCharacterWidget(columns=5), 1, 0, 1, 1)
+        #self.grid.addWidget(self.basic_parameters_groupbox(), 1, 1, 1, 1)
+        self.grid.addWidget(InputBasicParameterNameWidget(columns=5), 1, 1, 1, 1)
         self.setLayout(self.grid)
         
     def on_focus_changed(self, widget):
