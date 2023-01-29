@@ -4,10 +4,6 @@
     "weather_station_elevation": "500",
     "weather_station_latitude": "43",
     "weather_station_longitude": "18",
-    "anamometer_height": "2",
-    "wind_speed": "2",
-    "krs_factor": "0.162",
     "skip_rows": "1",
-    "missing_data": "-999",
     "project_description": "project_description"
 }

@@ -191,35 +191,35 @@ class CheckDataTypeWidget(TableWidget):
         self.hlay_longitude.addWidget(self.label_weather_station_longitude1)
         self.flay.addRow(self.hlay_longitude)
         
-        self.label_anamometer_height = QLabel('The anamometer height (zu): ')
-        self.label_anamometer_height1 = QLabel('meters.')
-        self.line_anamometer_height = QLineEdit('10')
-        self.hlay_anamometer = QHBoxLayout()
-        self.hlay_anamometer.addWidget(self.label_anamometer_height)
-        self.hlay_anamometer.addWidget(self.line_anamometer_height)
-        self.hlay_anamometer.addWidget(self.label_anamometer_height1)
-        self.flay.addRow(self.hlay_anamometer)
+        # self.label_anamometer_height = QLabel('The anamometer height (zu): ')
+        # self.label_anamometer_height1 = QLabel('meters.')
+        # self.line_anamometer_height = QLineEdit('10')
+        # self.hlay_anamometer = QHBoxLayout()
+        # self.hlay_anamometer.addWidget(self.label_anamometer_height)
+        # self.hlay_anamometer.addWidget(self.line_anamometer_height)
+        # self.hlay_anamometer.addWidget(self.label_anamometer_height1)
+        # self.flay.addRow(self.hlay_anamometer)
         
-        self.label_wind_speed = QLabel('Value of wind speed if missing (u2): ')
-        self.label_wind_speed1 = QLabel('m/s.')
-        self.line_wind_speed = QLineEdit('2')
-        self.hlay_wind_speed = QHBoxLayout()
-        self.hlay_wind_speed.addWidget(self.label_wind_speed)
-        self.hlay_wind_speed.addWidget(self.line_wind_speed)
-        self.hlay_wind_speed.addWidget(self.label_wind_speed1)
-        self.flay.addRow(self.hlay_wind_speed)
+        # self.label_wind_speed = QLabel('Value of wind speed if missing (u2): ')
+        # self.label_wind_speed1 = QLabel('m/s.')
+        # self.line_wind_speed = QLineEdit('2')
+        # self.hlay_wind_speed = QHBoxLayout()
+        # self.hlay_wind_speed.addWidget(self.label_wind_speed)
+        # self.hlay_wind_speed.addWidget(self.line_wind_speed)
+        # self.hlay_wind_speed.addWidget(self.label_wind_speed1)
+        # self.flay.addRow(self.hlay_wind_speed)
         
-        self.label_krs_factor = QLabel('Value of krs factor:')
-        self.line_krs_factor = QLineEdit('0.162')
-        self.flay.addRow(self.label_krs_factor, self.line_krs_factor)
+        # self.label_krs_factor = QLabel('Value of krs factor:')
+        # self.line_krs_factor = QLineEdit('0.162')
+        # self.flay.addRow(self.label_krs_factor, self.line_krs_factor)
         
         self.label_skip_rows = QLabel('Skip number of rows:')
         self.line_skip_rows = QLineEdit('1')
         self.flay.addRow(self.label_skip_rows, self.line_skip_rows)
         
-        self.label_missing_data = QLabel('Code for missing data:')
-        self.line_missing_data = QLineEdit('-999')
-        self.flay.addRow(self.label_missing_data, self.line_missing_data)
+        # self.label_missing_data = QLabel('Code for missing data:')
+        # self.line_missing_data = QLineEdit('-999')
+        # self.flay.addRow(self.label_missing_data, self.line_missing_data)
         
         self.groupBoxOptions.setLayout(self.flay)
  
@@ -349,11 +349,7 @@ class CheckDataTypeWidget(TableWidget):
                 "weather_station_elevation": self.line_weather_station_elevation.text(),
                 "weather_station_latitude": self.line_weather_station_latitude.text(),
                 "weather_station_longitude": self.line_weather_station_longitude.text(),
-                "anamometer_height": self.line_anamometer_height.text(),
-                "wind_speed": self.line_wind_speed.text(),
-                "krs_factor": self.line_krs_factor.text(),
-                "skip_rows": self.line_skip_rows.text(),
-                "missing_data": self.line_missing_data.text()
+                "skip_rows": self.line_skip_rows.text()
                 }
             json_object = json.dumps(parameter_dict, indent = 4)
             self.ambalage = self.project_path + "/data.json"

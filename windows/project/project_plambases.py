@@ -6,35 +6,35 @@ cwd = os.path.curdir
 def read_project_data(project_path):
     file_to_read = open(os.path.join(cwd + var.projects_folder + project_path + '/data.json'))
     file_data = json.load(file_to_read)
-    
     data_to_read = pandas.read_excel(os.path.join(cwd + var.projects_folder + project_path + '/data.xlsx'), sheet_name='data_input', skiprows=1)
     #data_to_read = data_to_read.drop(data_to_read.columns[0], axis=1)
     column_names_list = data_to_read.columns.values.tolist()
     return file_data, column_names_list
 
-def read_methods_data(project_path, available_parameters):
-    print(available_parameters)
-    # remove month and year za ovu usporedbu...
+def read_methods_data():
     # ETO
     get_files_eto = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
     methods_eto_list = []
     for file in get_files_eto:
         file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
         file_data = json.load(file_to_read)
+        methods_eto_list.append(file_data['name'])
+        
+    return methods_eto_list
 
-        bp1 = file_data['basic_parameters']
-        bp = list(bp1.split(', '))
-        bpc = [x for x in bp if x != '']
+        # bp1 = file_data['basic_parameters']
+        # bp = list(bp1.split(', '))
+        # bpc = [x for x in bp if x != '']
         
-        bpc_names = read_bp(bpc)
-        #print('BP Lista bez Kompleksnih: ', bpc_names)
+        # bpc_names = read_bp(bpc)
+        # #print('BP Lista bez Kompleksnih: ', bpc_names)
         
-        cp1 = file_data['complex_parameters']
-        cp = list(cp1.split(', '))
-        cpc = [x for x in cp if x != '']
+        # cp1 = file_data['complex_parameters']
+        # cp = list(cp1.split(', '))
+        # cpc = [x for x in cp if x != '']
         
-        cpc_names = read_cp(cpc)
-        #print('BP Lista u Kompleksnih: ', cpc_names)
+        # cpc_names = read_cp(cpc)
+        # #print('BP Lista u Kompleksnih: ', cpc_names)
         
 def read_bp(bpc):
     get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
@@ -115,3 +115,20 @@ def read_cp(cpc):
         #     print(required_parameters)
         #     print(available_parameters_list)
         #     print("No, List1 doesn't have all elements of the List2.", file_data['name'])
+
+def available_cp_changable():
+    get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
+    cp_list = []
+    for file in get_files:
+        file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
+        file_data = json.load(file_to_read)
+        if file_data['type'] == 'a':
+            file_changable = file_data['changable']
+            if file_changable == 'yes':
+                acp_dict = {
+                    "name": file_data['name'],
+                    "symbol": file_data['symbol'],
+                    "value": file_data['formula']
+                }
+                cp_list.append(acp_dict)
+    return cp_list

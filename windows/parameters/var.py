@@ -1,3 +1,4 @@
+c_cat_file = 'character_types.json'
 p_cat_file = 'parameter_types.json'
 language_folder = '/srclet/languages/'
 charactes_loc = '/srclet/characters/'
