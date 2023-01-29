@@ -13,14 +13,14 @@ from language import language
 #from windows.parameters.language import language
 
 class InputCharacterWidget(QTabWidget):
-    def __init__(self, columns):
+    def __init__(self, columns=3):
         super().__init__()
         self.columns = columns
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
-        self.window_gui()
+        self.widget_gui()
 
-    def window_gui(self):
+    def widget_gui(self):
         self.setWindowState(Qt.WindowMaximized)
         main_layout = QGridLayout()
         self.setLayout(main_layout)
@@ -54,7 +54,7 @@ class InputCharacterWidget(QTabWidget):
             self.tabs.addTab(self.tab, category['name'])
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        #self.show()
+        self.show()
         
     def read_character_categories(self):
         self.cat = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.c_cat_file))

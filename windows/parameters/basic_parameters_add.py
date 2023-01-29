@@ -67,7 +67,6 @@ class AddBasicParameter(QWidget):
         self.pbn_groupbox.layout = QVBoxLayout()
         self.pbn_groupbox.layout.addWidget(self.text_parameter_name)
         self.pbn_groupbox.layout.addWidget(self.parameter_name)
-        self.pbn_groupbox.layout.addStretch(1)
         self.pbn_groupbox.setLayout(self.pbn_groupbox.layout)
         return self.pbn_groupbox
     
@@ -84,7 +83,6 @@ class AddBasicParameter(QWidget):
         self.pbc_groupbox.layout = QVBoxLayout()
         self.pbc_groupbox.layout.addWidget(self.text_parameter_category)
         self.pbc_groupbox.layout.addWidget(self.comboBox)
-        self.pbc_groupbox.layout.addStretch(1)
         self.pbc_groupbox.setLayout(self.pbc_groupbox.layout)
         return self.pbc_groupbox
     
@@ -95,7 +93,6 @@ class AddBasicParameter(QWidget):
         self.pbs_groupbox.layout = QVBoxLayout()
         self.pbs_groupbox.layout.addWidget(self.text_parameter_symbol)
         self.pbs_groupbox.layout.addWidget(self.parameter_symbol)
-        self.pbs_groupbox.layout.addStretch(1)
         self.pbs_groupbox.setLayout(self.pbs_groupbox.layout)
         return self.pbs_groupbox
     
@@ -106,7 +103,6 @@ class AddBasicParameter(QWidget):
         self.pbu_groupbox.layout = QVBoxLayout()
         self.pbu_groupbox.layout.addWidget(self.text_parameter_unit)
         self.pbu_groupbox.layout.addWidget(self.parameter_unit)
-        self.pbu_groupbox.layout.addStretch(1)
         self.pbu_groupbox.setLayout(self.pbu_groupbox.layout)
         return self.pbu_groupbox
 
@@ -117,7 +113,6 @@ class AddBasicParameter(QWidget):
         self.pbd_groupbox.layout = QVBoxLayout()
         self.pbd_groupbox.layout.addWidget(self.text_parameter_descriprion)
         self.pbd_groupbox.layout.addWidget(self.parameter_descriprion)
-        self.pbd_groupbox.layout.addStretch(1)
         self.pbd_groupbox.setLayout(self.pbd_groupbox.layout)
         return self.pbd_groupbox
     
