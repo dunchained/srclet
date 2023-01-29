@@ -19,10 +19,6 @@ class ParametersCategoryTabs(QWidget):
         super().__init__()
         self.setUpdatesEnabled(True)
         self.language = language
-        self.tab_widget()
-        self.show()
- 
-    def tab_widget(self):
         self.categories_tabs = QTabWidget()
         self.categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
         self.categories_file_data = json.load(self.categories_file)
@@ -40,7 +36,8 @@ class ParametersCategoryTabs(QWidget):
         self.mainLayout = QVBoxLayout()
         self.mainLayout.addWidget(self.categories_tabs)
         self.setLayout(self.mainLayout)
-
+        self.show()
+ 
 class ParametersWidget(QWidget):
     def __init__(self, category, language):
         super().__init__()
@@ -55,12 +52,16 @@ class ParametersWidget(QWidget):
             if self.category == self.file_data['category']:
                 self.category_list.append(self.file_data['name'])
         self.grid = QGridLayout()
-        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 1, 1)
-        self.grid.addWidget(self.create_parameter_widget(), 0, 1, 1, 1)
+        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 2, 1)
+        self.grid.addWidget(self.create_parameter_widget(), 0, 1, 2, 1)
+        self.grid.addWidget(InputBasicParameterNameWidget(columns=3), 0, 2, 1, 1)
+        self.grid.addWidget(InputBasicParameterNameWidget(columns=3), 1, 2, 1, 1)
+
+        
         #self.grid.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
-        self.grid.addWidget(InputCharacterWidget(columns=5), 1, 0, 1, 1)
+        #self.grid.addWidget(InputCharacterWidget(columns=5), 1, 0, 1, 1)
         #self.grid.addWidget(self.basic_parameters_groupbox(), 1, 1, 1, 1)
-        self.grid.addWidget(InputBasicParameterNameWidget(columns=5), 1, 1, 1, 1)
+        #self.grid.addWidget(InputBasicParameterNameWidget(columns=5), 1, 1, 1, 1)
         self.setLayout(self.grid)
         
     def on_focus_changed(self, widget):
@@ -283,6 +284,7 @@ class ParametersWidget(QWidget):
         self.buttonDelete.setEnabled(False)
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.list_widget)
+        self.layout.addWidget(InputCharacterWidget(columns=5))
         self.layout.addWidget(self.buttonAddcomplexParameter)
         self.layout.addWidget(self.buttonDelete)
         self.groupBox.setLayout(self.layout)
@@ -413,7 +415,7 @@ class ParametersWidget(QWidget):
         self.buttonSave.setEnabled(state)
         self.buttonDelete.setEnabled(state)
         self.buttonCancel.setEnabled(state)
-        self.bp_groupbox.setEnabled(state)
+        #self.bp_groupbox.setEnabled(state)
         self.selected_bp_list.setText(bp)
         self.bpc_list_to_update = bp.split(', ')
         for self.bpc_check in range(self.bpc_layout.count()):

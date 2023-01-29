@@ -1,3 +1,4 @@
+c_cat_file = 'character_types.json'
 charactes_loc = '/srclet/characters/'
 eto_methods_folder = '/methods/eto/'
 

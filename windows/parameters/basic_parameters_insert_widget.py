@@ -89,7 +89,7 @@ class InputBasicParameterNameWidget(QTabWidget):
             self.tabs.addTab(self.tab, category['name'])
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.show()
+        #self.show()
         
     def read_parameter_categories(self):
         self.cat = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
@@ -106,12 +106,10 @@ class InputBasicParameterNameWidget(QTabWidget):
     def read_categories_files(self, category, columns):
         self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
         self.category_list = []
-        print(category)
         for file_name in self.get_files:
             json_path = os.path.join(cwd +var.basic_parameters_folder + file_name)
             with open(json_path) as json_file:
                 parameters = json.load(json_file)
-                print()
                 if parameters['category'] == category:
                     self.category_list.append(parameters['symbol'])
         

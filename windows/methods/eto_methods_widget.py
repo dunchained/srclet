@@ -10,6 +10,8 @@ from eto_methods_add import AddETOMethod
 #from mortys.methods_morty import read_characters, read_basic_parameters, read_complex_parameters
 from methods_morty import read_characters, read_basic_parameters, read_complex_parameters
 from language import language
+from character_widget import InputCharacterWidget
+from basic_parameters_insert_widget import InputBasicParameterNameWidget
 
 class ETOMethodsWidget(QWidget):
     def __init__(self):
@@ -20,8 +22,10 @@ class ETOMethodsWidget(QWidget):
 
     def window_gui(self):
         self.grid = QGridLayout()
-        self.grid.addWidget(self.create_list_of_methods(), 0, 0, 1, 1)
-        self.grid.addWidget(self.create_method_info(), 0, 1, 1, 1)
+        self.grid.addWidget(self.create_list_of_methods(), 0, 0, 2, 1)
+        self.grid.addWidget(self.create_method_info(), 0, 1, 2, 1)
+        self.grid.addWidget(InputBasicParameterNameWidget(columns=3), 0, 2, 1, 1)
+        self.grid.addWidget(InputBasicParameterNameWidget(columns=3), 1, 2, 1, 1)
         self.setLayout(self.grid)
         self.show()
         
@@ -58,7 +62,8 @@ class ETOMethodsWidget(QWidget):
         self.methods_groupbox.layout = QGridLayout()
         self.methods_groupbox.layout.addWidget(self.list_widget, 0, 0, 1, 1)
         self.methods_groupbox.layout.addWidget(self.btn_add_method, 2, 0, 1, 1)
-        self.methods_groupbox.layout.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
+        #self.methods_groupbox.layout.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(InputCharacterWidget(columns=5), 1, 0, 1, 1)
         self.methods_groupbox.layout.addWidget(self.btn_delete_method, 3, 0, 1, 1)
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
