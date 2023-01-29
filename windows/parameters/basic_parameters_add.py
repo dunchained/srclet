@@ -10,6 +10,7 @@ from parameters_morty import read_characters, get_filename
 import var, css
 from language import language
 #from windows.parameters.language import language
+from character_widget import InputCharacterWidget
 
 class AddBasicParameter(QWidget):
     def __init__(self):
@@ -32,7 +33,8 @@ class AddBasicParameter(QWidget):
         self.grid.addWidget(self.pb_symbol_groupbox(), 1, 0, 1, 1)
         self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
         self.grid.addWidget(self.pb_description_groupbox(), 2, 0, 1, 2)
-        self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
+        #self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
+        self.grid.addWidget(InputCharacterWidget(columns=5), 0, 2, 3, 1)
         self.grid.addWidget(self.button_groupbox(), 3, 0, 1, 3)
         self.setLayout(self.grid)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)

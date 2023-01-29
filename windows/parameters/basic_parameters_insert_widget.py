@@ -13,7 +13,7 @@ from language import language
 #from windows.parameters.language import language
 
 class InputBasicParameterNameWidget(QTabWidget):
-    def __init__(self, columns):
+    def __init__(self, columns=3):
         super().__init__()
         self.columns = columns
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -73,10 +73,6 @@ class InputBasicParameterNameWidget(QTabWidget):
                                                 '<b>' + 'Parameter complex parameters: ' + '</b>' + tooltip_data['complex_parameters'] + '<br>' + \
                                                 '<b>' + 'Parameter description: ' + '</b>' + tooltip_data['description']
                                     self.button.setToolTip(self.text)
-                                    
-                            
-                    
-                    
                     self.button.clicked.connect(self.special_character_clicked)
                     self.sc_layout.addWidget(self.button, row+1, column)
                     i += 1
@@ -121,7 +117,6 @@ class InputBasicParameterNameWidget(QTabWidget):
         
         self.lista_kompleksnih = self.read_complex_parameters_changable(category=category)
         self.category_list = self.category_list + self.lista_kompleksnih
-                
         if len(self.category_list) % columns == 0:
             rows = len(self.category_list) // columns
         else:
@@ -140,7 +135,6 @@ class InputBasicParameterNameWidget(QTabWidget):
                         if c_parameters['category'] == category:
                             lista_kompleksnih.append(c_parameters['symbol'])
         return lista_kompleksnih
-       
 
     def on_focus_changed(self, widget):
         self.on_focused_change = widget
