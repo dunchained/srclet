@@ -13,9 +13,10 @@ from language import language
 #from windows.parameters.language import language
 
 class InputBasicParameterNameWidget(QTabWidget):
-    def __init__(self, columns=3):
+    def __init__(self, columns=3, title='Insert basic parameter:'):
         super().__init__()
         self.columns = columns
+        self.input_title = title
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
         self.window_gui()
@@ -87,6 +88,8 @@ class InputBasicParameterNameWidget(QTabWidget):
             self.tab.layout.addWidget(self.sc_groupbox)
             self.tab.setLayout(self.tab.layout)
             self.tabs.addTab(self.tab, category['name'])
+        self.label_caption = QLabel(self.input_title)
+        main_layout.addWidget(self.label_caption)
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.show()

@@ -13,9 +13,10 @@ from language import language
 #from windows.parameters.language import language
 
 class InputCharacterWidget(QTabWidget):
-    def __init__(self, columns=3):
+    def __init__(self, columns=3, title='Insert special character:'):
         super().__init__()
         self.columns = columns
+        self.input_title = title
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
         self.language = language
         self.widget_gui()
@@ -52,11 +53,11 @@ class InputCharacterWidget(QTabWidget):
             self.tab.layout.addWidget(self.sc_groupbox)
             self.tab.setLayout(self.tab.layout)
             self.tabs.addTab(self.tab, category['name'])
-        self.labe_caption = QLabel('Insput special character:')
-        main_layout.addWidget(self.labe_caption)
+        self.label_caption = QLabel(self.input_title)
+        main_layout.addWidget(self.label_caption)
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        #self.show()
+        self.show()
         
     def read_character_categories(self):
         self.cat = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.c_cat_file))

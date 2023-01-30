@@ -12,6 +12,7 @@ from parameters_morty import read_complex_parameters_non_changable, read_complex
 from language import language
 from character_widget import InputCharacterWidget
 from basic_parameters_insert_widget import InputBasicParameterNameWidget
+from complex_parameters_insert_widget import InputComplexParameterFormulaWidget
 
 class AddComplexParameter(QWidget):
     def __init__(self):
@@ -41,7 +42,8 @@ class AddComplexParameter(QWidget):
         self.grid.addWidget(self.frame_groupbox(), 2, 2, 3, 1)
         #self.grid.addWidget(self.special_character_groupbox(), 0, 3, 2, 1)
         self.grid.addWidget(InputCharacterWidget(columns=3), 0, 3, 2, 1)
-        self.grid.addWidget(self.complex_parameters_groupbox_insert(), 2, 3, 1, 1)
+        # self.grid.addWidget(self.complex_parameters_groupbox_insert(), 2, 3, 1, 1)
+        self.grid.addWidget(InputComplexParameterFormulaWidget(columns=3), 2, 3, 1, 1)
         self.grid.addWidget(self.frame_complex_groupbox(), 3, 3, 2, 1 )
         self.grid.addWidget(self.button_groupbox(), 5, 0, 1, 4)
         self.setLayout(self.grid)
@@ -232,7 +234,6 @@ class AddComplexParameter(QWidget):
     def complex_parameter_clicked(self):
         sender = self.sender()
         sender_text = sender.text()
-        
         self.get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
         for file in self.get_files:
             self.file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
