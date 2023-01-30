@@ -52,9 +52,11 @@ class InputCharacterWidget(QTabWidget):
             self.tab.layout.addWidget(self.sc_groupbox)
             self.tab.setLayout(self.tab.layout)
             self.tabs.addTab(self.tab, category['name'])
+        self.labe_caption = QLabel('Insput special character:')
+        main_layout.addWidget(self.labe_caption)
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.show()
+        #self.show()
         
     def read_character_categories(self):
         self.cat = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.c_cat_file))

@@ -87,6 +87,7 @@ class InputBasicParameterNameWidget(QTabWidget):
             self.tab.layout.addWidget(self.sc_groupbox)
             self.tab.setLayout(self.tab.layout)
             self.tabs.addTab(self.tab, category['name'])
+        
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.label_za_listu = QLabel('selected')
