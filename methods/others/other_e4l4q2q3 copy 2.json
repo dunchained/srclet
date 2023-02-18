@@ -1,0 +1,11 @@
+{
+    "name": "222Other m4etod 2 3",
+    "short_name": "mm/day",
+    "symbol": "sym2222bo4dddli_",
+    "description": "Moramol to.",
+    "method_conditions": "",
+    "method_formula": "-0.611 + 0.149 * Rs + 0.079 * Tmean",
+    "basic_parameters": "Tmean, Rs",
+    "complex_parameters": "",
+    "type": "a"
+}

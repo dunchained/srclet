@@ -4,7 +4,7 @@ cwd = os.path.curdir
 #from plambas.project_plambases import read_methods_data, read_project_data
 #from bregasta.reading import read_data_file
 from project_plambases import read_methods_data, available_changable_parameters, read_project_data
-from project_plambases import other_read_methods_data
+from project_plambases import other_read_methods_data, other_read_methods_data_on_update
 #from variables import css, var
 import var
 
@@ -231,18 +231,22 @@ class CalculateWidget(QWidget):
             self.cpl.append(sender)
             self.label_remove.setText(', '.join(self.cpl))
             if sender in self.label_remove.text():
-                print(sender)
-                self.method_groupbox3 = QGroupBox(self.method)
-                self.method_groupbox3.setCheckable(True)
-                self.method_groupbox3.setChecked(False)
-                self.method_groupbox3.clicked.connect(self.parameter_checked)
-                #self.method_groupbox1.clicked.connect(self.parameter_checked_updates)
-                self.method_groupbox3.layout = QGridLayout()
-                self.method_name3 = self.name_symbol3 = QLabel(sender)
-                self.method_groupbox3.layout.addWidget(self.method_name3)
-                self.method_groupbox3.setLayout(self.method_groupbox3.layout)
-                
-                self.other_methods_layout.addWidget(self.method_groupbox3)
+                _, self.method_parameters_dicte = other_read_methods_data_on_update()
+                print(self.method_parameters_dicte)
+                for self.method, self.parameters in self.method_parameters_dicte.items():
+                    self.parameters = self.label_remove.text().split(', ')
+                    result = all(elem in self.cpl for elem in self.parameters)
+                    if result:
+                        self.method_groupbox3 = QGroupBox(self.method)
+                        self.method_groupbox3.setCheckable(True)
+                        self.method_groupbox3.setChecked(False)
+                        self.method_groupbox3.clicked.connect(self.parameter_checked)
+                        self.method_groupbox3.layout = QGridLayout()
+                        self.method_name3 = self.name_symbol3 = QLabel(sender)
+                        self.method_groupbox3.layout.addWidget(self.method_name3)
+                        self.method_groupbox3.setLayout(self.method_groupbox3.layout)
+                        
+                        self.other_methods_layout.addWidget(self.method_groupbox3)
                 #if groupbox.title()
                 #print(self.sender().setParent(None))
                 #print(groupbox.text())
@@ -250,23 +254,6 @@ class CalculateWidget(QWidget):
             sender = self.sender().title()
             self.cpl.remove(sender)
             self.label_remove.setText(', '.join(self.cpl))
-    
-    @QtCore.pyqtSlot()
-    def parameter_checked_updates(self):
-        if self.sender().isChecked() == True:
-            sender = self.sender().title()
-            print(sender)
-            #print('haba')
-            #print(self.other_methods_scroll.children())
-            #print(len(self.other_methods_scroll.children()))
-            
-            #for groupbox in self.other_methods_scroll.children():
-                #print(self.sender().setParent(None))
-                
-        else:
-            print('huba')
-            # removas sendera
-            
     
 
     def wb_methods_info(self):
