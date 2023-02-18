@@ -189,7 +189,6 @@ class CalculateWidget(QWidget):
         self.all_available_others_methods_data, _ = other_read_methods_data()
         for self.method, self.parameters in _.items():
             self.parameters = self.parameters.split(', ')
-            if 
             
             print(self.parameters)
             self.method_groupbox1 = QGroupBox(self.method)
