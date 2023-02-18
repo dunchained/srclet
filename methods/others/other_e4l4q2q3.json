@@ -1,0 +1,11 @@
+{
+    "name": "Other metod 2",
+    "short_name": "mm/day",
+    "symbol": "ET\u2080 Irmak",
+    "description": "Moramol to.",
+    "method_conditions": "",
+    "method_formula": "-0.611 + 0.149 * Rs + 0.079 * Tmean",
+    "basic_parameters": "Tmean, Rs",
+    "complex_parameters": "",
+    "type": "a"
+}

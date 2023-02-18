@@ -2,6 +2,19 @@ import os, json, pandas
 #
 import var
 cwd = os.path.curdir
+cwd_other = os.path.curdir + var.other_methods_folder
+
+def other_read_methods_data():
+    get_files_eto = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
+    methods_list = []
+    methods_parameters = []
+    for file in get_files_eto:
+        file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
+        file_data = json.load(file_to_read)
+        methods_list.append(file_data['symbol'])
+        methods_parameters.append(file_data['basic_parameters'])
+    res = dict(zip(methods_list, methods_parameters))
+    return methods_list, res
 
 def read_project_data(project_path):
     file_to_read = open(os.path.join(cwd + var.projects_folder + project_path + '/data.json'))
@@ -10,6 +23,47 @@ def read_project_data(project_path):
     #data_to_read = data_to_read.drop(data_to_read.columns[0], axis=1)
     column_names_list = data_to_read.columns.values.tolist()
     return file_data, column_names_list
+
+def available_changable_parameters(project_path):
+    get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
+    cp_list = []
+    for file in get_files:
+        file_to_read = open(os.path.join(cwd + var.changable_parameters_folder + file))
+        file_data = json.load(file_to_read)
+        if file_data['type'] == 'a':
+            file_changable = file_data['changable']
+            if file_changable == 'yes':
+                acp_dict = {"name": file_data['name'], "symbol": file_data['symbol'], "value": file_data['formula']}
+                cp_list.append(acp_dict)
+    all_data_from_project_dict, _ = read_project_data(project_path=project_path)
+    for key, value in all_data_from_project_dict.items():
+        if key == 'weather_station_latitude':
+            acp_dict = {"name": 'Wather station latitude', "symbol": key, "value": value}
+            cp_list.append(acp_dict)
+        elif key == 'weather_station_elevation':
+            acp_dict = {"name": 'Wather station elevation', "symbol": key, "value": value}
+            cp_list.append(acp_dict)
+        elif key == 'weather_station_longitude':
+            acp_dict = {"name": 'Wather station longitude', "symbol": key, "value": value}
+            cp_list.append(acp_dict)        
+        else:
+            pass
+    for_available_parameters = []
+    for item in cp_list:
+        for_available_parameters.append(item['symbol'])
+    return cp_list, for_available_parameters
+
+#######################################################################
+
+
+
+# def read_project_data(project_path):
+#     file_to_read = open(os.path.join(cwd + var.projects_folder + project_path + '/data.json'))
+#     file_data = json.load(file_to_read)
+#     data_to_read = pandas.read_excel(os.path.join(cwd + var.projects_folder + project_path + '/data.xlsx'), sheet_name='data_input', skiprows=1)
+#     #data_to_read = data_to_read.drop(data_to_read.columns[0], axis=1)
+#     column_names_list = data_to_read.columns.values.tolist()
+#     return file_data, column_names_list
 
 def read_methods_data():
     # ETO
@@ -116,19 +170,3 @@ def read_cp(cpc):
         #     print(available_parameters_list)
         #     print("No, List1 doesn't have all elements of the List2.", file_data['name'])
 
-def available_cp_changable():
-    get_files = next(os.walk(cwd + var.complex_parameters_folder), (None, None, []))[2]
-    cp_list = []
-    for file in get_files:
-        file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
-        file_data = json.load(file_to_read)
-        if file_data['type'] == 'a':
-            file_changable = file_data['changable']
-            if file_changable == 'yes':
-                acp_dict = {
-                    "name": file_data['name'],
-                    "symbol": file_data['symbol'],
-                    "value": file_data['formula']
-                }
-                cp_list.append(acp_dict)
-    return cp_list

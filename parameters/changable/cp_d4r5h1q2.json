@@ -1,0 +1,12 @@
+{
+    "name": "Turc empirical coefficient V",
+    "category": "humidity",
+    "unit": "",
+    "symbol": "aT",
+    "formula": "1",
+    "description": "Turc empirical coefficient that depends of RHmean",
+    "changable": "yes",
+    "basic_parameters": "",
+    "complex_parameters": "",
+    "type": "a"
+}

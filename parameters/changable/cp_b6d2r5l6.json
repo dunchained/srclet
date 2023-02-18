@@ -1,0 +1,12 @@
+{
+    "name": "Ratio molecular weight of water vapour/dry air C",
+    "category": "other",
+    "unit": "MJ/kg/\u00b0C",
+    "symbol": "\u03b5",
+    "formula": "0.622",
+    "description": "Ratio molecular weight of water vapour/dry air",
+    "changable": "yes",
+    "basic_parameters": "",
+    "complex_parameters": "",
+    "type": "a"
+}

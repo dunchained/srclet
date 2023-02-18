@@ -46,6 +46,7 @@ charactes_loc = '/srclet/characters/'
 
 
 complex_parameters_folder = '/parameters/complex/'
+changable_parameters_folder = '/parameters/changable/'
 random_images_folder = '/srclet/images/random_image/'
 eto_methods_folder = '/methods/eto/'
 wb_methods_folder = '/methods/wb/'
