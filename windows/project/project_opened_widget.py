@@ -23,8 +23,7 @@ class CalculateWidget(QWidget):
         self.project_title = self.project_path.split('/')[-1]
         super().__init__()
         #SrcletEngine.calculator(self, calculation_data=self.project_path)
-        self.project_data, self.available_parameters_list = read_project_data(project_path=self.project_title)
-        
+        self.project_data, self.available_parameters_list, self.list_param_symbol = read_project_data(project_path=self.project_title)
         self.window_gui()
         
     def window_gui(self):
@@ -165,9 +164,7 @@ class CalculateWidget(QWidget):
         self.other_methods_groupbox = QGroupBox('Other Methods: ')
         self.other_methods_layout = QVBoxLayout()
         self.other_methods_scroll = QWidget()
-        
-       
-        self.all_data_from_project_dict, self.all_pa_data_file_list = read_project_data(project_path=self.project_title)
+        self.all_data_from_project_dict, self.all_pa_data_file_list, self.lista_dostupnih_param = read_project_data(project_path=self.project_title)
         
         _, self.base_data_list = available_changable_parameters(project_path=self.project_title)
         # for item in self.base_data_list:
@@ -186,20 +183,25 @@ class CalculateWidget(QWidget):
             self.other_methods_layout.addWidget(self.method_groupbox)
         
         
-        self.all_available_others_methods_data, _ = other_read_methods_data()
-        for self.method, self.parameters in _.items():
+        self.all_available_others_methods_data, self.method_parameters_dict = other_read_methods_data()
+        #self.lista_dostupnih_param
+        for self.method, self.parameters in self.method_parameters_dict.items():
             self.parameters = self.parameters.split(', ')
             
-            print(self.parameters)
-            self.method_groupbox1 = QGroupBox(self.method)
-            self.method_groupbox1.setCheckable(True)
-            self.method_groupbox1.setChecked(False)
-            self.method_groupbox1.layout = QGridLayout()
-            self.method_name1 = self.name_symbol1 = QLabel(self.method)
-            self.method_groupbox1.layout.addWidget(self.method_name1)
-            self.method_groupbox1.setLayout(self.method_groupbox1.layout)
-            
-            self.other_methods_layout.addWidget(self.method_groupbox1)
+            result = all(elem in self.lista_dostupnih_param for elem in self.parameters)
+            if result:
+                print("Yes, self.parameters contains all elements in self.all_pa_data_file_list")
+                self.method_groupbox1 = QGroupBox(self.method)
+                self.method_groupbox1.setCheckable(True)
+                self.method_groupbox1.setChecked(False)
+                self.method_groupbox1.layout = QGridLayout()
+                self.method_name1 = self.name_symbol1 = QLabel(self.method)
+                self.method_groupbox1.layout.addWidget(self.method_name1)
+                self.method_groupbox1.setLayout(self.method_groupbox1.layout)
+                
+                self.other_methods_layout.addWidget(self.method_groupbox1)    
+            else :
+                pass
     
         self.other_methods_scroll.setLayout(self.other_methods_layout)
         methods = QScrollArea()

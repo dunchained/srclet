@@ -22,7 +22,15 @@ def read_project_data(project_path):
     data_to_read = pandas.read_excel(os.path.join(cwd + var.projects_folder + project_path + '/data.xlsx'), sheet_name='data_input', skiprows=1)
     #data_to_read = data_to_read.drop(data_to_read.columns[0], axis=1)
     column_names_list = data_to_read.columns.values.tolist()
-    return file_data, column_names_list
+    column_symbols = []
+    for symbol in column_names_list:
+        get_files_parameters = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+        for file1 in get_files_parameters:
+            file_to_read1 = open(os.path.join(cwd + var.basic_parameters_folder + file1))
+            file_data1 = json.load(file_to_read1)
+            if symbol == file_data1['name']:
+                column_symbols.append(file_data1['symbol'])
+    return file_data, column_names_list, column_symbols
 
 def available_changable_parameters(project_path):
     get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
@@ -35,7 +43,7 @@ def available_changable_parameters(project_path):
             if file_changable == 'yes':
                 acp_dict = {"name": file_data['name'], "symbol": file_data['symbol'], "value": file_data['formula']}
                 cp_list.append(acp_dict)
-    all_data_from_project_dict, _ = read_project_data(project_path=project_path)
+    all_data_from_project_dict, _, _ = read_project_data(project_path=project_path)
     for key, value in all_data_from_project_dict.items():
         if key == 'weather_station_latitude':
             acp_dict = {"name": 'Wather station latitude', "symbol": key, "value": value}
@@ -109,8 +117,8 @@ def read_cp(cpc):
             file_to_read = open(os.path.join(cwd + var.complex_parameters_folder + file))
             file_data = json.load(file_to_read)
             if file_data['symbol'] == cp:
-                print(file_data['basic_parameters'])
-                print(file_data['complex_parameters'])
+                #print(file_data['basic_parameters'])
+                #print(file_data['complex_parameters'])
                 cp_names_list.append(file_data['basic_parameters'])
     return cp_names_list
     
