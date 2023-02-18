@@ -2,7 +2,9 @@ import os, json, sys
 cwd = os.path.curdir
 
 #from plambas.project_plambases import read_methods_data, read_project_data
-from project_plambases import read_project_data, read_methods_data, available_cp_changable
+#from bregasta.reading import read_data_file
+from project_plambases import read_methods_data, available_changable_parameters, read_project_data
+from project_plambases import other_read_methods_data
 #from variables import css, var
 import var
 
@@ -30,9 +32,9 @@ class CalculateWidget(QWidget):
         
         self.grid.addWidget(self.project_data_info(), 0, 0, 1, 1)
         self.grid.addWidget(self.available_changable_parameters(), 1, 0, 1, 1)
-        self.grid.addWidget(self.methods_info(), 0, 1, 2, 1)
-        self.grid.addWidget(self.methods_info(), 0, 2, 2, 1)
-        self.grid.addWidget(self.methods_info(), 0, 3, 2, 1)
+        self.grid.addWidget(self.other_methods_info(), 0, 1, 2, 1)
+        #self.grid.addWidget(self.eto_methods_info(), 0, 2, 2, 1)
+        #self.grid.addWidget(self.wb_methods_info(), 0, 3, 2, 1)
         self.grid.addWidget(self.calculate_options(), 2, 0, 1, 4)
         self.grid.addWidget(self.status_info(), 3, 0, 1, 2)
         self.grid.addWidget(self.buttons_calculate(), 3, 2, 1, 2)
@@ -63,7 +65,6 @@ class CalculateWidget(QWidget):
         groupBox.setLayout(vbox)
         return groupBox
         
-        
     def available_changable_parameters(self):
         self.acp_groupbox = QGroupBox('Available changable parameters:')
         self.acp_groupbox.setCheckable(True)
@@ -71,8 +72,8 @@ class CalculateWidget(QWidget):
         self.acp_layout = QVBoxLayout()
         self.acp_scroll = QWidget()
         
-        self.list_of_acp = available_cp_changable()
-        
+        self.list_of_acp, _ = available_changable_parameters(project_path=self.project_title)
+
         for self.acp in self.list_of_acp:
             self.acp1_groupbox = QGroupBox(self.acp['name'] + ':')
             self.flay = QFormLayout()
@@ -126,9 +127,98 @@ class CalculateWidget(QWidget):
         
         self.project_data_info_groupbox.setLayout(self.flay)
         return self.project_data_info_groupbox
+    
+    def eto_methods_info(self):
+        self.other_methods_groupbox = QGroupBox('Other Methods: ')
+        self.other_methods_layout = QVBoxLayout()
+        self.other_methods_scroll = QWidget()
+        
+        # učitati parametre iz fajla plambas_read_available_parameters_fromdata_file()
+        # učitaš ih kao listu list_of_available_parameters
+        # na tu listu dodaš sve other metode koji se mogu rač
+        
+        self.methods_data = other_read_methods_data()
+        
+        for self.method in self.methods_data:
+            self.method_groupbox = QGroupBox(self.method)
+            self.method_groupbox.setCheckable(True)
+            self.method_groupbox.setChecked(False)
+            self.method_groupbox.layout = QGridLayout()
+            self.method_name = self.name_symbol = QLabel(self.method)
+            self.method_groupbox.layout.addWidget(self.method_name)
+            self.method_groupbox.setLayout(self.method_groupbox.layout)
 
-    def methods_info(self):
-        self.methods_groupbox = QGroupBox('Methods: ')
+            self.other_methods_layout.addWidget(self.method_groupbox)
+            
+        self.other_methods_scroll.setLayout(self.other_methods_layout)
+        methods = QScrollArea()
+        methods.setWidget(self.other_methods_scroll)
+        methods.setWidgetResizable(1)
+
+        self.other_methods_groupbox.layout = QVBoxLayout()
+        self.other_methods_groupbox.layout.addWidget(methods)
+        self.other_methods_groupbox.setLayout(self.other_methods_groupbox.layout)
+        return self.other_methods_groupbox
+    
+       
+    def other_methods_info(self):
+        self.other_methods_groupbox = QGroupBox('Other Methods: ')
+        self.other_methods_layout = QVBoxLayout()
+        self.other_methods_scroll = QWidget()
+        
+       
+        self.all_data_from_project_dict, self.all_pa_data_file_list = read_project_data(project_path=self.project_title)
+        
+        _, self.base_data_list = available_changable_parameters(project_path=self.project_title)
+        # for item in self.base_data_list:
+        #     if item not in self.all_pa_data_file_list:
+        #         self.base_data_list.append(item)    
+            
+        for self.method in self.all_pa_data_file_list:
+            self.method_groupbox = QGroupBox(self.method)
+            self.method_groupbox.setCheckable(False)
+            self.method_groupbox.setChecked(True)
+            self.method_groupbox.layout = QGridLayout()
+            self.method_name = self.name_symbol = QLabel(self.method)
+            self.method_groupbox.layout.addWidget(self.method_name)
+            self.method_groupbox.setLayout(self.method_groupbox.layout)
+
+            self.other_methods_layout.addWidget(self.method_groupbox)
+        
+        
+        self.all_available_others_methods_data, _ = other_read_methods_data()
+        for self.method, self.parameters in _.items():
+            self.parameters = self.parameters.split(', ')
+            if 
+            
+            print(self.parameters)
+            self.method_groupbox1 = QGroupBox(self.method)
+            self.method_groupbox1.setCheckable(True)
+            self.method_groupbox1.setChecked(False)
+            self.method_groupbox1.layout = QGridLayout()
+            self.method_name1 = self.name_symbol1 = QLabel(self.method)
+            self.method_groupbox1.layout.addWidget(self.method_name1)
+            self.method_groupbox1.setLayout(self.method_groupbox1.layout)
+            
+            self.other_methods_layout.addWidget(self.method_groupbox1)
+    
+        self.other_methods_scroll.setLayout(self.other_methods_layout)
+        methods = QScrollArea()
+        methods.setWidget(self.other_methods_scroll)
+        methods.setWidgetResizable(1)
+        
+        self.text = ', '.join(self.base_data_list)
+        self.label_remove = QLabel(self.text)
+        self.label_remove.setWordWrap(True)
+        
+        self.other_methods_groupbox.layout = QVBoxLayout()
+        self.other_methods_groupbox.layout.addWidget(methods)
+        self.other_methods_groupbox.layout.addWidget(self.label_remove)
+        self.other_methods_groupbox.setLayout(self.other_methods_groupbox.layout)
+        return self.other_methods_groupbox
+
+    def wb_methods_info(self):
+        self.methods_groupbox = QGroupBox('WB Methods: ')
         self.methods_layout = QVBoxLayout()
         self.methods_scroll = QWidget()
         
