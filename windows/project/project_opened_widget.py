@@ -4,7 +4,7 @@ cwd = os.path.curdir
 #from plambas.project_plambases import read_methods_data, read_project_data
 #from bregasta.reading import read_data_file
 from project_plambases import read_methods_data, available_changable_parameters, read_project_data
-from project_plambases import other_read_methods_data, other_read_methods_data_on_update, eto_read_methods_data
+from project_plambases import other_read_methods_data, other_read_methods_data_on_update, eto_read_methods_data, wb_read_methods_data
 #from variables import css, var
 import var
 
@@ -34,7 +34,7 @@ class CalculateWidget(QWidget):
         self.grid.addWidget(self.available_changable_parameters(), 1, 0, 1, 1)
         self.grid.addWidget(self.other_methods_info(), 0, 1, 2, 1)
         self.grid.addWidget(self.eto_methods_info(), 0, 2, 2, 1)
-        #self.grid.addWidget(self.wb_methods_info(), 0, 3, 2, 1)
+        self.grid.addWidget(self.wb_methods_info(), 0, 3, 2, 1)
         self.grid.addWidget(self.calculate_options(), 2, 0, 1, 4)
         self.grid.addWidget(self.status_info(), 3, 0, 1, 2)
         self.grid.addWidget(self.buttons_calculate(), 3, 2, 1, 2)
@@ -133,9 +133,7 @@ class CalculateWidget(QWidget):
         self.other_methods_layout = QVBoxLayout()
         self.other_methods_scroll = QWidget()
         self.all_data_from_project_dict, self.all_pa_data_file_list, self.lista_dostupnih_param = read_project_data(project_path=self.project_title)
-        
         _, self.base_data_list = available_changable_parameters(project_path=self.project_title) 
-            
         for self.method in self.all_pa_data_file_list:
             self.method_groupbox = QGroupBox(self.method)
             self.method_groupbox.setCheckable(False)
@@ -144,10 +142,7 @@ class CalculateWidget(QWidget):
             self.method_name = self.name_symbol = QLabel(self.method)
             self.method_groupbox.layout.addWidget(self.method_name)
             self.method_groupbox.setLayout(self.method_groupbox.layout)
-
             self.other_methods_layout.addWidget(self.method_groupbox)
-        
-        
         self.all_available_others_methods_data, self.method_parameters_dict = other_read_methods_data()
         for self.method, self.parameters in self.method_parameters_dict.items():
             self.parameters = self.parameters.split(', ')
@@ -161,20 +156,16 @@ class CalculateWidget(QWidget):
                 self.method_name1 = self.name_symbol1 = QLabel(self.method)
                 self.method_groupbox1.layout.addWidget(self.method_name1)
                 self.method_groupbox1.setLayout(self.method_groupbox1.layout)
-                
                 self.other_methods_layout.addWidget(self.method_groupbox1)
             else :
                 pass
-    
         self.other_methods_scroll.setLayout(self.other_methods_layout)
         methods = QScrollArea()
         methods.setWidget(self.other_methods_scroll)
         methods.setWidgetResizable(1)
-        
         self.texte = ', '.join(self.base_data_list)
         self.label_remove = QLabel(self.texte)
         self.label_remove.setWordWrap(True)
-        
         self.other_methods_groupbox.layout = QVBoxLayout()
         self.other_methods_groupbox.layout.addWidget(methods)
         self.other_methods_groupbox.layout.addWidget(self.label_remove)
@@ -187,15 +178,14 @@ class CalculateWidget(QWidget):
             self.cpl = []
         else:
             self.cpl = self.label_remove.text().split(', ')
-            self.bpl = self.label_remove.text().split(', ')
+            self.apl = self.label_remove_.text().split(', ')
         
         if self.sender().isChecked() == True:
             sender = self.sender().title()
             self.cpl.append(sender)
-            self.bpl.append(sender)
+            self.apl.append(sender)
             self.label_remove.setText(', '.join(self.cpl))
-            self.label_remove_.setText(', '.join(self.bpl))
-            
+            self.label_remove_.setText(', '.join(self.apl))
             if sender in self.label_remove.text():
                 _, self.method_parameters_dicte = other_read_methods_data_on_update()
                 self.methods_list__ = []
@@ -204,7 +194,6 @@ class CalculateWidget(QWidget):
                     self.parameters_all = self.cpl + self.lista_dostupnih_param
                     result = all(elem in self.parameters_all for elem in self.parameters_)
                     self.methods_list_ = []
-                    
                     for self.object in self.other_methods_scroll.children():
                         if self.object.__class__.__name__ == 'QGroupBox':
                             self.methods_list_.append(self.object.title())
@@ -220,14 +209,35 @@ class CalculateWidget(QWidget):
                     self.method_name3 = self.name_symbol3 = QLabel(self._method)
                     self.method_groupbox3.layout.addWidget(self.method_name3)
                     self.method_groupbox3.setLayout(self.method_groupbox3.layout)
-                    
                     self.other_methods_layout.addWidget(self.method_groupbox3)
+                    
+                # ovdje
+                _, self.method_parameters_dictef = eto_read_methods_data()
+                self.methods_list___ = []
+                for self.method_f, self.parameters_f in self.method_parameters_dictef.items():
+                    self.parameters_f = self.parameters_f.split(', ')
+                    self.parameters_to_check_f = self.label_remove_.text().split(', ') + self.lista_dostupnih_param
+                    resulta = all(elem in self.parameters_to_check_f for elem in self.parameters_f)
+                    if resulta:
+                        if sender in self.parameters_f:
+                            self.methods_list___.append(self.method_f)
+               
+                for self.f_method in self.methods_list___:
+                    self.method_groupbox5 = QGroupBox(self.f_method)
+                    self.method_groupbox5.setCheckable(True)
+                    self.method_groupbox5.setChecked(False)
+                    self.method_groupbox5.clicked.connect(self.eto_method_checked)
+                    self.method_groupbox5.layout = QGridLayout()
+                    self.method_name5 = self.name_symbol5 = QLabel(self.f_method)
+                    self.method_groupbox5.layout.addWidget(self.method_name5)
+                    self.method_groupbox5.setLayout(self.method_groupbox5.layout)
+                    self.eto_methods_layout.addWidget(self.method_groupbox5)
         else:
             sender = self.sender().title()
             self.cpl.remove(sender)
-            self.bpl.remove(sender)
+            self.apl.remove(sender)
             self.label_remove.setText(', '.join(self.cpl))
-            self.label_remove_.setText(', '.join(self.bpl))
+            self.label_remove_.setText(', '.join(self.apl))
             
             if sender not in self.label_remove.text():
                 _, self.method_parameters_dictee = other_read_methods_data_on_update()
@@ -239,9 +249,29 @@ class CalculateWidget(QWidget):
                 for self.objectee in self.other_methods_scroll.children():
                     if self.objectee.__class__.__name__ == 'QGroupBox':
                         if self.objectee.title() in self.methods_list__e:
-                            print(self.objectee.title())
                             self.other_methods_scroll.children().remove(self.objectee)
+                            if self.objectee.title() in self.apl:
+                                self.apl.remove(self.objectee.title())
+                                self.label_remove_.setText(', '.join(self.apl))
+                            if self.objectee.title() in self.cpl:
+                                self.cpl.remove(self.objectee.title())
+                                self.label_remove.setText(', '.join(self.cpl))
                             self.objectee.deleteLater()
+                
+                _, self.method_parameters_dicteeg = eto_read_methods_data()
+                self.methods_list__g = []
+                for self.method_g, self.parameters_g in self.method_parameters_dicteeg.items():
+                    self.parameters_g = self.parameters_g.split(', ')
+                    if sender in self.parameters_g:
+                        self.methods_list__g.append(self.method_g)
+                for self.objecteeg in self.eto_methods_scroll.children():
+                    if self.objecteeg.__class__.__name__ == 'QGroupBox':
+                        if self.objecteeg.title() in self.methods_list__g:
+                            self.eto_methods_scroll.children().remove(self.objecteeg)
+                            if self.objecteeg.title() in self.apl:
+                                self.apl.remove(self.objecteeg.title())
+                                self.label_remove_.setText(', '.join(self.apl))
+                            self.objecteeg.deleteLater()
                             
     def eto_methods_info(self):
         self.eto_methods_groupbox = QGroupBox('ETO Methods: ')
@@ -252,56 +282,28 @@ class CalculateWidget(QWidget):
         self.label_remove_.setWordWrap(True)
         
         self.all_available_eto_methods_data, self.eto_method_parameters_dict = eto_read_methods_data()
-        for self.mehod, self.parameters in self.eto_method_parameters_dict.items():
+        for self.method_w, self.parameters in self.eto_method_parameters_dict.items():
             self.parameters = self.parameters.split(', ')
-            print(self.parameters)
             self.parameters_to_check = self.label_remove_.text().split(', ') + self.lista_dostupnih_param
-            result = all(elem in self.parameters_to_check for elem in self.parameters)
-            #if result:
-                #print(self.method)
-    #     for self.method, self.parameters in self.method_parameters_dict.items():
-    #         self.parameters = self.parameters.split(', ')
-    #         result = all(elem in self.lista_dostupnih_param for elem in self.parameters)
-    #         if result:
-    #             self.method_groupbox1 = QGroupBox(self.method)
-    #             self.method_groupbox1.setCheckable(True)
-    #             self.method_groupbox1.setChecked(False)
-    #             self.method_groupbox1.clicked.connect(self.eto_method_checked)
-    #             self.method_groupbox1.layout = QGridLayout()
-    #             self.method_name1 = self.name_symbol1 = QLabel(self.method)
-    #             self.method_groupbox1.layout.addWidget(self.method_name1)
-    #             self.method_groupbox1.setLayout(self.method_groupbox1.layout)
-                
-    #             self.eto_methods_layout.addWidget(self.method_groupbox1)
-    #         else :
-    #             pass
-        
-        
-        
-        
-        
-        # for self.method, self.parameters in self.all_pa_data_file_list:
-        #     print(self.method, self.parameters)
-        #     self.method_groupbox = QGroupBox(self.method)
-        #     self.method_groupbox.setCheckable(True)
-        #     self.method_groupbox.setChecked(False)
-        #     self.method_groupbox.clicked.connect(self.eto_method_checked)
-        #     self.method_groupbox.layout = QGridLayout()
-        #     self.method_name = self.name_symbol = QLabel(self.method)
-        #     self.method_groupbox.layout.addWidget(self.method_name)
-        #     self.method_groupbox.setLayout(self.method_groupbox.layout)
-
-        #     self.eto_methods_layout.addWidget(self.method_groupbox)
-
-    #
-    
+            resulta = all(elem in self.parameters_to_check for elem in self.parameters)
+            if resulta:
+                self.method_groupbox = QGroupBox(self.method_w)
+                self.method_groupbox.setCheckable(True)
+                self.method_groupbox.setChecked(False)
+                self.method_groupbox.clicked.connect(self.eto_method_checked)
+                self.method_groupbox.layout = QGridLayout()
+                self.method_name = self.name_symbol = QLabel(self.method_w)
+                self.method_groupbox.layout.addWidget(self.method_name)
+                self.method_groupbox.setLayout(self.method_groupbox.layout)
+                self.eto_methods_layout.addWidget(self.method_groupbox)
+            else :
+                pass
+     
         self.eto_methods_scroll.setLayout(self.eto_methods_layout)
         methods = QScrollArea()
         methods.setWidget(self.eto_methods_scroll)
         methods.setWidgetResizable(1)
-        
-        
-        
+
         self.eto_methods_groupbox.layout = QVBoxLayout()
         self.eto_methods_groupbox.layout.addWidget(methods)
         self.eto_methods_groupbox.layout.addWidget(self.label_remove_)
@@ -310,88 +312,85 @@ class CalculateWidget(QWidget):
     
     @QtCore.pyqtSlot()
     def eto_method_checked(self):
-        # if not self.label_remove_.text():
-        #     self.bpl = [] 
-        # else:
-        #     self.bpl = self.label_remove_.text().split(', ')
-        
+        if not self.label_remove_.text():
+            self.apl = []
+        else:
+            self.apl = self.label_remove_.text().split(', ')
+            
         if self.sender().isChecked() == True:
             sender = self.sender().title()
-            # self.bpl.append(sender)
-            # self.label_remove_.setText(', '.join(self.bpl))
+            self.apl.append(sender)
+            self.label_remove_.setText(', '.join(self.apl))
             
-    #         if sender in self.label_remove.text():
-    #             _, self.method_parameters_dicte = eto_read_methods_data_on_update()
-    #             self.methods_list__ = []
-    #             for self.method_, self.parameters_ in self.method_parameters_dicte.items():
-    #                 self.parameters_ = self.parameters_.split(', ')
-    #                 self.parameters_all = self.cpl + self.lista_dostupnih_param
-    #                 result = all(elem in self.parameters_all for elem in self.parameters_)
-    #                 self.methods_list_ = []
-                    
-    #                 for self.object in self.eto_methods_scroll.children():
-    #                     if self.object.__class__.__name__ == 'QGroupBox':
-    #                         self.methods_list_.append(self.object.title())
-    #                 if result:
-    #                     if self.method_ not in self.methods_list_:
-    #                         self.methods_list__.append(self.method_)
-    #             for self._method in self.methods_list__:
-    #                 self.method_groupbox3 = QGroupBox(self._method)
-    #                 self.method_groupbox3.setCheckable(True)
-    #                 self.method_groupbox3.setChecked(False)
-    #                 self.method_groupbox3.clicked.connect(self.eto_method_checked)
-    #                 self.method_groupbox3.layout = QGridLayout()
-    #                 self.method_name3 = self.name_symbol3 = QLabel(self._method)
-    #                 self.method_groupbox3.layout.addWidget(self.method_name3)
-    #                 self.method_groupbox3.setLayout(self.method_groupbox3.layout)
-                    
-    #                 self.eto_methods_layout.addWidget(self.method_groupbox3)
+            # provjera za sljedeću listu
+            # dodavanje ako ima
         else:
             sender = self.sender().title()
-            # self.bpl.remove(sender)
-            # self.label_remove_.setText(', '.join(self.bpl))
+            self.apl.remove(sender)
+            self.label_remove_.setText(', '.join(self.apl))
             
-    #         if sender not in self.label_remove.text():
-    #             _, self.method_parameters_dictee = eto_read_methods_data_on_update()
-    #             self.methods_list__e = []
-    #             for self.method_e, self.parameters_e in self.method_parameters_dictee.items():
-    #                 self.parameters_e = self.parameters_e.split(', ')
-    #                 if sender in self.parameters_e:
-    #                     self.methods_list__e.append(self.method_e)
-    #             for self.objectee in self.eto_methods_scroll.children():
-    #                 if self.objectee.__class__.__name__ == 'QGroupBox':
-    #                     if self.objectee.title() in self.methods_list__e:
-    #                         print(self.objectee.title())
-    #                         self.eto_methods_scroll.children().remove(self.objectee)
-                            # self.objectee.deleteLater()                        
-                            
+            # provjera za oduzimanje ako ima
+            # oduzimanje
+            
     def wb_methods_info(self):
-        self.methods_groupbox = QGroupBox('WB Methods: ')
-        self.methods_layout = QVBoxLayout()
-        self.methods_scroll = QWidget()
+        self.wb_methods_groupbox = QGroupBox('WB Methods: ')
+        self.wb_methods_layout = QVBoxLayout()
+        self.wb_methods_scroll = QWidget()
+        self.texte_ = ', '.join(self.base_data_list)
+        self.label_remove_ = QLabel(self.texte_)
+        self.label_remove_.setWordWrap(True)
         
-        self.methods_data = read_methods_data()
-        
-        for self.method in self.methods_data:
-            self.method_groupbox = QGroupBox(self.method)
-            self.method_groupbox.setCheckable(True)
-            self.method_groupbox.setChecked(False)
-            self.method_groupbox.layout = QGridLayout()
-            self.method_name = self.name_symbol = QLabel(self.method)
-            self.method_groupbox.layout.addWidget(self.method_name)
-            self.method_groupbox.setLayout(self.method_groupbox.layout)
-
-            self.methods_layout.addWidget(self.method_groupbox)
-            
-        self.methods_scroll.setLayout(self.methods_layout)
+        self.all_available_wb_methods_data, self.wb_method_parameters_dict = wb_read_methods_data()
+        for self.method_w, self.parameters in self.wb_method_parameters_dict.items():
+            self.parameters = self.parameters.split(', ')
+            self.parameters_to_check = self.label_remove_.text().split(', ') + self.lista_dostupnih_param
+            resulta = all(elem in self.parameters_to_check for elem in self.parameters)
+            if resulta:
+                self.method_groupbox = QGroupBox(self.method_w)
+                self.method_groupbox.setCheckable(True)
+                self.method_groupbox.setChecked(False)
+                self.method_groupbox.clicked.connect(self.wb_method_checked)
+                self.method_groupbox.layout = QGridLayout()
+                self.method_name = self.name_symbol = QLabel(self.method_w)
+                self.method_groupbox.layout.addWidget(self.method_name)
+                self.method_groupbox.setLayout(self.method_groupbox.layout)
+                self.wb_methods_layout.addWidget(self.method_groupbox)
+            else :
+                pass
+     
+        self.wb_methods_scroll.setLayout(self.wb_methods_layout)
         methods = QScrollArea()
-        methods.setWidget(self.methods_scroll)
+        methods.setWidget(self.wb_methods_scroll)
         methods.setWidgetResizable(1)
 
-        self.methods_groupbox.layout = QVBoxLayout()
-        self.methods_groupbox.layout.addWidget(methods)
-        self.methods_groupbox.setLayout(self.methods_groupbox.layout)
-        return self.methods_groupbox
+        self.wb_methods_groupbox.layout = QVBoxLayout()
+        self.wb_methods_groupbox.layout.addWidget(methods)
+        self.wb_methods_groupbox.layout.addWidget(self.label_remove_)
+        self.wb_methods_groupbox.setLayout(self.wb_methods_groupbox.layout)
+        return self.wb_methods_groupbox
+    
+    @QtCore.pyqtSlot()
+    def wb_method_checked(self):
+        if not self.label_remove_.text():
+            self.apl = []
+        else:
+            self.apl = self.label_remove_.text().split(', ')
+            
+        if self.sender().isChecked() == True:
+            sender = self.sender().title()
+            self.apl.append(sender)
+            self.label_remove_.setText(', '.join(self.apl))
+            
+            # provjera za sljedeću listu
+            # dodavanje ako ima
+        else:
+            sender = self.sender().title()
+            self.apl.remove(sender)
+            self.label_remove_.setText(', '.join(self.apl))
+            
+            # provjera za oduzimanje ako ima
+            # oduzimanje
+            
 
     def calculate_options(self):
         self.calculate_options_groupbox = QGroupBox('options')
