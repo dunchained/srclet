@@ -179,13 +179,16 @@ class CalculateWidget(QWidget):
         else:
             self.cpl = self.label_remove.text().split(', ')
             self.apl = self.label_remove_.text().split(', ')
+            self.kpl = self.label_remove_k.text().split(', ')
         
         if self.sender().isChecked() == True:
             sender = self.sender().title()
             self.cpl.append(sender)
             self.apl.append(sender)
+            self.kpl.append(sender)
             self.label_remove.setText(', '.join(self.cpl))
             self.label_remove_.setText(', '.join(self.apl))
+            self.label_remove_k.setText(', '.join(self.kpl))
             if sender in self.label_remove.text():
                 _, self.method_parameters_dicte = other_read_methods_data_on_update()
                 self.methods_list__ = []
@@ -236,8 +239,10 @@ class CalculateWidget(QWidget):
             sender = self.sender().title()
             self.cpl.remove(sender)
             self.apl.remove(sender)
+            self.kpl.remove(sender)
             self.label_remove.setText(', '.join(self.cpl))
             self.label_remove_.setText(', '.join(self.apl))
+            self.label_remove_k.setText(', '.join(self.kpl))
             
             if sender not in self.label_remove.text():
                 _, self.method_parameters_dictee = other_read_methods_data_on_update()
@@ -316,18 +321,23 @@ class CalculateWidget(QWidget):
             self.apl = []
         else:
             self.apl = self.label_remove_.text().split(', ')
+            self.kpl = self.label_remove_k.text().split(', ')
             
         if self.sender().isChecked() == True:
             sender = self.sender().title()
             self.apl.append(sender)
+            self.kpl.append(sender)
             self.label_remove_.setText(', '.join(self.apl))
+            self.label_remove_k.setText(', '.join(self.kpl))
             
             # provjera za sljedeću listu
             # dodavanje ako ima
         else:
             sender = self.sender().title()
             self.apl.remove(sender)
+            self.kpl.remove(sender)
             self.label_remove_.setText(', '.join(self.apl))
+            self.label_remove_k.setText(', '.join(self.kpl))
             
             # provjera za oduzimanje ako ima
             # oduzimanje
@@ -336,22 +346,23 @@ class CalculateWidget(QWidget):
         self.wb_methods_groupbox = QGroupBox('WB Methods: ')
         self.wb_methods_layout = QVBoxLayout()
         self.wb_methods_scroll = QWidget()
-        self.texte_ = ', '.join(self.base_data_list)
-        self.label_remove_ = QLabel(self.texte_)
-        self.label_remove_.setWordWrap(True)
+        self.texte_k = ', '.join(self.base_data_list)
+        self.label_remove_k = QLabel(self.texte_k)
+        self.label_remove_k.setWordWrap(True)
         
         self.all_available_wb_methods_data, self.wb_method_parameters_dict = wb_read_methods_data()
-        for self.method_w, self.parameters in self.wb_method_parameters_dict.items():
-            self.parameters = self.parameters.split(', ')
-            self.parameters_to_check = self.label_remove_.text().split(', ') + self.lista_dostupnih_param
-            resulta = all(elem in self.parameters_to_check for elem in self.parameters)
-            if resulta:
-                self.method_groupbox = QGroupBox(self.method_w)
+        for self.method_k, self.parameters_k in self.wb_method_parameters_dict.items():
+            self.parameters_k = self.parameters_k.split(', ')
+            self.parameters_to_check_k = self.label_remove_k.text().split(', ') + self.lista_dostupnih_param
+            print(self.parameters_k)
+            resultak = all(elem in self.parameters_to_check_k for elem in self.parameters_k)
+            if resultak:
+                self.method_groupbox = QGroupBox(self.method_k)
                 self.method_groupbox.setCheckable(True)
                 self.method_groupbox.setChecked(False)
                 self.method_groupbox.clicked.connect(self.wb_method_checked)
                 self.method_groupbox.layout = QGridLayout()
-                self.method_name = self.name_symbol = QLabel(self.method_w)
+                self.method_name = self.name_symbol = QLabel(self.method_k)
                 self.method_groupbox.layout.addWidget(self.method_name)
                 self.method_groupbox.setLayout(self.method_groupbox.layout)
                 self.wb_methods_layout.addWidget(self.method_groupbox)
@@ -365,32 +376,26 @@ class CalculateWidget(QWidget):
 
         self.wb_methods_groupbox.layout = QVBoxLayout()
         self.wb_methods_groupbox.layout.addWidget(methods)
-        self.wb_methods_groupbox.layout.addWidget(self.label_remove_)
+        self.wb_methods_groupbox.layout.addWidget(self.label_remove_k)
         self.wb_methods_groupbox.setLayout(self.wb_methods_groupbox.layout)
         return self.wb_methods_groupbox
     
     @QtCore.pyqtSlot()
     def wb_method_checked(self):
-        if not self.label_remove_.text():
-            self.apl = []
+        if not self.label_remove_k.text():
+            self.kpl = []
         else:
-            self.apl = self.label_remove_.text().split(', ')
+            self.kpl = self.label_remove_k.text().split(', ')
             
         if self.sender().isChecked() == True:
             sender = self.sender().title()
-            self.apl.append(sender)
-            self.label_remove_.setText(', '.join(self.apl))
-            
-            # provjera za sljedeću listu
-            # dodavanje ako ima
+            self.kpl.append(sender)
+            self.label_remove_k.setText(', '.join(self.kpl))
         else:
             sender = self.sender().title()
-            self.apl.remove(sender)
-            self.label_remove_.setText(', '.join(self.apl))
-            
-            # provjera za oduzimanje ako ima
-            # oduzimanje
-            
+            self.kpl.remove(sender)
+            self.label_remove_k.setText(', '.join(self.kpl))
+          
 
     def calculate_options(self):
         self.calculate_options_groupbox = QGroupBox('options')

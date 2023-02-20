@@ -34,11 +34,11 @@ def eto_read_methods_data():
     return methods_list, res
 
 def wb_read_methods_data():
-    get_files_eto = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
+    get_files_eto = next(os.walk(cwd + var.wb_methods_folder), (None, None, []))[2]
     methods_list = []
     methods_parameters = []
     for file in get_files_eto:
-        file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
+        file_to_read = open(os.path.join(cwd + var.wb_methods_folder + file))
         file_data = json.load(file_to_read)
         methods_list.append(file_data['symbol'])
         if file_data['other_methods']:

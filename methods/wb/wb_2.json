@@ -1,0 +1,12 @@
+{
+    "name": "wb2",
+    "short_name": "mm/day",
+    "symbol": "wb_sym2",
+    "description": "Turc (1961) method with average temperature, solar radiation and average relative humidity",
+    "method_conditions": "if RHmea >= 50: aT = 1;\nelse: aT = 1 + ((50-RHmean)/70)",
+    "method_formula": "aT*0.013*(Tmean/(Tmean+15))*((23.8856*Rs+50)/\u03bb)",
+    "basic_parameters": "Tmean, Rs",
+    "other_methods": "",
+    "eto_methods": "",
+    "type": "a"
+}
