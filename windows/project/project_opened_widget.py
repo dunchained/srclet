@@ -225,38 +225,31 @@ class CalculateWidget(QWidget):
             self.label_remove.setText(', '.join(self.cpl))
             if sender in self.label_remove.text():
                 _, self.method_parameters_dicte = other_read_methods_data_on_update()
+                self.methods_list__ = []
                 for self.method_, self.parameters_ in self.method_parameters_dicte.items():
                     self.parameters_ = self.parameters_.split(', ')
                     self.parameters_all = self.cpl + self.lista_dostupnih_param
-                    print()
                     result = all(elem in self.parameters_all for elem in self.parameters_)
+                    self.methods_list_ = []
+                    
+                    for self.object in self.other_methods_scroll.children():
+                        if self.object.__class__.__name__ == 'QGroupBox':
+                            self.methods_list_.append(self.object.title())
                     if result:
-                        self.methods_list_ = []
-                        for self.object in self.other_methods_scroll.children():
-                            if self.object.__class__.__name__ == 'QGroupBox':
-                                self.methods_list_.append(self.object.title())
-                        self.methods_list__ = []
-                        for self.methods__ in self.methods_list_:
-                            if self.method_ not in self.methods_list_:
-                                    if self.method_ not in self.methods_list__:
-                                        self.methods_list__.append(self.method_)
+                        if self.method_ not in self.methods_list_:
+                            self.methods_list__.append(self.method_)
                 print(self.methods_list__)
-             
-                #     result = all(elem in self.cpl for elem in self.parameters)
-                #     if result:
-                #         self.method_groupbox3 = QGroupBox(self.method)
-                #         self.method_groupbox3.setCheckable(True)
-                #         self.method_groupbox3.setChecked(False)
-                #         self.method_groupbox3.clicked.connect(self.parameter_checked)
-                #         self.method_groupbox3.layout = QGridLayout()
-                #         self.method_name3 = self.name_symbol3 = QLabel(sender)
-                #         self.method_groupbox3.layout.addWidget(self.method_name3)
-                #         self.method_groupbox3.setLayout(self.method_groupbox3.layout)
-                        
-                #         self.other_methods_layout.addWidget(self.method_groupbox3)
-                #if groupbox.title()
-                #print(self.sender().setParent(None))
-                #print(groupbox.text())
+                for self._method in self.methods_list__:
+                    self.method_groupbox3 = QGroupBox(self._method)
+                    self.method_groupbox3.setCheckable(True)
+                    self.method_groupbox3.setChecked(False)
+                    #self.method_groupbox3.clicked.connect(self.parameter_checked)
+                    self.method_groupbox3.layout = QGridLayout()
+                    self.method_name3 = self.name_symbol3 = QLabel(self._method)
+                    self.method_groupbox3.layout.addWidget(self.method_name3)
+                    self.method_groupbox3.setLayout(self.method_groupbox3.layout)
+                    
+                    self.other_methods_layout.addWidget(self.method_groupbox3)
         else:
             sender = self.sender().title()
             self.cpl.remove(sender)
