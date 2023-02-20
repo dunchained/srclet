@@ -160,7 +160,6 @@ class CalculateWidget(QWidget):
         self.other_methods_groupbox.setLayout(self.other_methods_groupbox.layout)
         return self.other_methods_groupbox
     
-       
     def other_methods_info(self):
         self.other_methods_groupbox = QGroupBox('Other Methods: ')
         self.other_methods_layout = QVBoxLayout()
