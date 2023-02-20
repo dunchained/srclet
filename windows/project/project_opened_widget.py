@@ -261,6 +261,9 @@ class CalculateWidget(QWidget):
                             if self.objectee.title() in self.cpl:
                                 self.cpl.remove(self.objectee.title())
                                 self.label_remove.setText(', '.join(self.cpl))
+                            if self.objectee.title() in self.kpl:
+                                self.kpl.remove(self.objectee.title())
+                                self.label_remove_k.setText(', '.join(self.kpl))
                             self.objectee.deleteLater()
                 
                 _, self.method_parameters_dicteeg = eto_read_methods_data()
@@ -276,6 +279,9 @@ class CalculateWidget(QWidget):
                             if self.objecteeg.title() in self.apl:
                                 self.apl.remove(self.objecteeg.title())
                                 self.label_remove_.setText(', '.join(self.apl))
+                            if self.objecteeg.title() in self.kpl:
+                                self.kpl.remove(self.objecteeg.title())
+                                self.label_remove_k.setText(', '.join(self.kpl))
                             self.objecteeg.deleteLater()
                             
     def eto_methods_info(self):
