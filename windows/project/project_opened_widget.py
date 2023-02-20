@@ -166,10 +166,7 @@ class CalculateWidget(QWidget):
         self.other_methods_scroll = QWidget()
         self.all_data_from_project_dict, self.all_pa_data_file_list, self.lista_dostupnih_param = read_project_data(project_path=self.project_title)
         
-        _, self.base_data_list = available_changable_parameters(project_path=self.project_title)
-        # for item in self.base_data_list:
-        #     if item not in self.all_pa_data_file_list:
-        #         self.base_data_list.append(item)    
+        _, self.base_data_list = available_changable_parameters(project_path=self.project_title) 
             
         for self.method in self.all_pa_data_file_list:
             self.method_groupbox = QGroupBox(self.method)
@@ -184,17 +181,14 @@ class CalculateWidget(QWidget):
         
         
         self.all_available_others_methods_data, self.method_parameters_dict = other_read_methods_data()
-        #self.lista_dostupnih_param
         for self.method, self.parameters in self.method_parameters_dict.items():
             self.parameters = self.parameters.split(', ')
             result = all(elem in self.lista_dostupnih_param for elem in self.parameters)
             if result:
-                #print("Yes, self.parameters contains all elements in self.all_pa_data_file_list")
                 self.method_groupbox1 = QGroupBox(self.method)
                 self.method_groupbox1.setCheckable(True)
                 self.method_groupbox1.setChecked(False)
                 self.method_groupbox1.clicked.connect(self.parameter_checked)
-                #self.method_groupbox1.clicked.connect(self.parameter_checked_updates)
                 self.method_groupbox1.layout = QGridLayout()
                 self.method_name1 = self.name_symbol1 = QLabel(self.method)
                 self.method_groupbox1.layout.addWidget(self.method_name1)
@@ -231,20 +225,23 @@ class CalculateWidget(QWidget):
             self.label_remove.setText(', '.join(self.cpl))
             if sender in self.label_remove.text():
                 _, self.method_parameters_dicte = other_read_methods_data_on_update()
-                #print(self.method_parameters_dicte)
                 for self.method_, self.parameters_ in self.method_parameters_dicte.items():
-                    print('_')
-                    #print(self.method, self.parameters_)
-                    #self.parameters_ = self.parameters_.split(', ')
-                    #if not self.parameters_ and sender == self.method_:
-                    # if sender in self.parameters:
-                        
-                    #     print('sender:', sender)
-                    #     print('method_:', self.method_)
-                    #     print('parameters_:', self.parameters_)
-                # for self.method, self.parameters in self.method_parameters_dicte.items():
-                #     self.parameters = self.label_remove.text().split(', ')
-                #     print('sender:', sender, 'method', self.method, 'parameters:', self.parameters)
+                    self.parameters_ = self.parameters_.split(', ')
+                    self.parameters_all = self.cpl + self.lista_dostupnih_param
+                    print()
+                    result = all(elem in self.parameters_all for elem in self.parameters_)
+                    if result:
+                        self.methods_list_ = []
+                        for self.object in self.other_methods_scroll.children():
+                            if self.object.__class__.__name__ == 'QGroupBox':
+                                self.methods_list_.append(self.object.title())
+                        self.methods_list__ = []
+                        for self.methods__ in self.methods_list_:
+                            if self.method_ not in self.methods_list_:
+                                    if self.method_ not in self.methods_list__:
+                                        self.methods_list__.append(self.method_)
+                print(self.methods_list__)
+             
                 #     result = all(elem in self.cpl for elem in self.parameters)
                 #     if result:
                 #         self.method_groupbox3 = QGroupBox(self.method)

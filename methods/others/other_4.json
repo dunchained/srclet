@@ -1,11 +1,11 @@
 {
-    "name": "Othddder method 1",
+    "name": "Method 4",
     "short_name": "mm/day",
-    "symbol": "sym",
+    "symbol": "symbol4",
     "description": "Reference evapotranspiration in mm per day by Tabari & Talaee (2011) equation 2",
     "method_conditions": "",
     "method_formula": "-0.478+(0.156*Rs)-(0.0112*Tmax)+(0.0733*Tmin)",
-    "basic_parameters": "Tmin, Tmax, Rs",
+    "basic_parameters": "Tmin, Tmax, Rs, Tkew",
     "complex_parameters": "",
     "type": "a"
 }

@@ -11,8 +11,9 @@ def other_read_methods_data():
     for file in get_files_eto:
         file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
         file_data = json.load(file_to_read)
-        methods_list.append(file_data['symbol'])
-        methods_parameters.append(file_data['basic_parameters'])
+        if not file_data['complex_parameters']:
+            methods_list.append(file_data['symbol'])
+            methods_parameters.append(file_data['basic_parameters'])
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res
 
@@ -20,8 +21,6 @@ def other_read_methods_data_on_update():
     get_files_eto = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
     methods_list = []
     methods_parameters = []
-    methods_parameters_b = []
-    methods_all = []
     for file in get_files_eto:
         file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
         file_data = json.load(file_to_read)
@@ -31,7 +30,6 @@ def other_read_methods_data_on_update():
             methods_parameters_data = methods_parameters_data + ', ' + file_data['complex_parameters']
         methods_parameters.append(methods_parameters_data)
     res = dict(zip(methods_list, methods_parameters))
-    print('resultate', res)
     return methods_list, res
 
 def read_project_data(project_path):
