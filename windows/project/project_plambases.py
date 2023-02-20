@@ -17,6 +17,29 @@ def other_read_methods_data():
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res
 
+def eto_read_methods_data():
+    get_files_eto = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
+    methods_list = []
+    methods_parameters = []
+    other_methods = []
+    for file in get_files_eto:
+        file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
+        file_data = json.load(file_to_read)
+        methods_list.append(file_data['symbol'])
+        methods_parameters.append(file_data['basic_parameters'])
+        if file_data['other_methods'] != '':
+            methods_parameters.append(file_data['other_methods'])  
+        
+    
+    #print(methods_parameters)
+              
+                
+    #print(other_methods)
+    #print(other_methods)
+    #methods_parameters = methods_parameters.split(', ') + ', ' + other_methods
+    res = dict(zip(methods_list, methods_parameters))
+    return methods_list, res
+
 def other_read_methods_data_on_update():
     get_files_eto = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
     methods_list = []

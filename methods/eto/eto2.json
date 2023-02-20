@@ -1,11 +1,11 @@
 {
-    "name": "Irmak (2003)",
+    "name": "eto2",
     "short_name": "mm/day",
-    "symbol": "ET\u2080 Irmak",
+    "symbol": "eto_sym2",
     "description": "Moramol to.",
     "method_conditions": "",
     "method_formula": "-0.611 + 0.149 * Rs + 0.079 * Tmean",
     "basic_parameters": "Tmean, Rs",
-    "complex_parameters": "",
+    "other_methods": "",
     "type": "a"
 }

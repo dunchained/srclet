@@ -1,11 +1,11 @@
 {
-    "name": "Turc (1961)",
+    "name": "eto3",
     "short_name": "mm/day",
-    "symbol": "ET\u2080 Turc",
+    "symbol": "eto_sym3",
     "description": "Turc (1961) method with average temperature, solar radiation and average relative humidity",
     "method_conditions": "if RHmea >= 50: aT = 1;\nelse: aT = 1 + ((50-RHmean)/70)",
     "method_formula": "aT*0.013*(Tmean/(Tmean+15))*((23.8856*Rs+50)/\u03bb)",
     "basic_parameters": "Tmean, Rs",
-    "complex_parameters": "\u03bb, aT",
+    "other_methods": "symbol1",
     "type": "a"
 }

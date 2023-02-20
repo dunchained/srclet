@@ -1,11 +1,11 @@
 {
-    "name": "Valiantzas (2012) 4",
+    "name": "eto4",
     "short_name": "mm/day",
-    "symbol": "ET\u2080 Val4",
+    "symbol": "eto_sym4",
     "description": "Reference evapotranspiration, 4th version of Valiantzas equation",
     "method_conditions": "",
     "method_formula": "0.0393*Rs*((Tmean+9.5)**0.5)-(0.19*Rs**0.6)*(((math.pi/180)*\u03a6)**0.15)+(0.078*(Tmean+20))*(1-(RHmean/100))",
     "basic_parameters": "Rs, Tmean, \u03a6, RHmean",
-    "complex_parameters": "",
+    "other_methods": "",
     "type": "a"
 }
