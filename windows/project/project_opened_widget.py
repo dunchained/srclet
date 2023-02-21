@@ -27,7 +27,6 @@ class CalculateWidget(QWidget):
         
     def window_gui(self):
         self.grid = QGridLayout()
-        
         self.grid.addWidget(self.project_data_info(), 0, 0, 1, 1)
         self.grid.addWidget(self.available_changable_parameters(), 1, 0, 1, 1)
         self.grid.addWidget(self.other_methods_info(), 0, 1, 2, 1)
