@@ -41,15 +41,12 @@ def wb_read_methods_data():
         file_to_read = open(os.path.join(cwd + var.wb_methods_folder + file))
         file_data = json.load(file_to_read)
         methods_list.append(file_data['symbol'])
-        if file_data['eto_methods']:
-            to_append = file_data['basic_parameters'] + ', ' + file_data['eto_methods']
-        else:
-            to_append = file_data['basic_parameters']
-            
+        to_append = file_data['basic_parameters']
         if file_data['other_methods']:
             to_append = to_append + ', ' + file_data['other_methods']
-        else:
-            to_append = file_data['basic_parameters']
+            if file_data['eto_methods']:
+                to_append = to_append + ', ' + file_data['eto_methods']
+            
         methods_parameters.append(to_append)
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res

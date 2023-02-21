@@ -441,7 +441,7 @@ class CalculateWidget(QWidget):
         for self.method_k, self.parameters_k in self.wb_method_parameters_dict.items():
             self.parameters_k = self.parameters_k.split(', ')
             self.parameters_to_check_k = self.label_remove_k.text().split(', ') + self.lista_dostupnih_param
-            print(self.parameters_k)
+            print(self.parameters_to_check_k, self.parameters_k )
             resultak = all(elem in self.parameters_to_check_k for elem in self.parameters_k)
             if resultak:
                 self.method_groupbox = QGroupBox(self.method_k)
