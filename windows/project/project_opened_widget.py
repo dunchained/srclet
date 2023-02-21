@@ -235,6 +235,29 @@ class CalculateWidget(QWidget):
                     self.method_groupbox5.layout.addWidget(self.method_name5)
                     self.method_groupbox5.setLayout(self.method_groupbox5.layout)
                     self.eto_methods_layout.addWidget(self.method_groupbox5)
+                    
+                # ovdje
+                _, self.method_parameters_dictefa = wb_read_methods_data()
+                self.methods_list___a = []
+                for self.method_fa, self.parameters_fa in self.method_parameters_dictefa.items():
+                    self.parameters_fa = self.parameters_fa.split(', ')
+                    self.parameters_to_check_fa = self.label_remove_k.text().split(', ') + self.lista_dostupnih_param
+                    resultaa = all(elem in self.parameters_to_check_fa for elem in self.parameters_fa)
+                    if resultaa:
+                        if sender in self.parameters_fa:
+                            self.methods_list___a.append(self.method_fa)
+                print(self.methods_list___a)
+               
+                for self.fa_method in self.methods_list___a:
+                    self.method_groupbox6 = QGroupBox(self.fa_method)
+                    self.method_groupbox6.setCheckable(True)
+                    self.method_groupbox6.setChecked(False)
+                    self.method_groupbox6.clicked.connect(self.wb_method_checked)
+                    self.method_groupbox6.layout = QGridLayout()
+                    self.method_name6 = self.name_symbol6 = QLabel(self.fa_method)
+                    self.method_groupbox6.layout.addWidget(self.method_name6)
+                    self.method_groupbox6.setLayout(self.method_groupbox6.layout)
+                    self.wb_methods_layout.addWidget(self.method_groupbox6)
         else:
             sender = self.sender().title()
             self.cpl.remove(sender)
@@ -283,6 +306,24 @@ class CalculateWidget(QWidget):
                                 self.kpl.remove(self.objecteeg.title())
                                 self.label_remove_k.setText(', '.join(self.kpl))
                             self.objecteeg.deleteLater()
+                            
+                _, self.method_parameters_dicteega = wb_read_methods_data()
+                self.methods_list__ga = []
+                for self.method_ga, self.parameters_ga in self.method_parameters_dicteega.items():
+                    self.parameters_ga = self.parameters_ga.split(', ')
+                    if sender in self.parameters_ga:
+                        self.methods_list__ga.append(self.method_ga)
+                for self.objecteega in self.wb_methods_scroll.children():
+                    if self.objecteega.__class__.__name__ == 'QGroupBox':
+                        if self.objecteega.title() in self.methods_list__ga:
+                            self.wb_methods_scroll.children().remove(self.objecteega)
+                            # if self.objecteeg.title() in self.apl:
+                            #     self.apl.remove(self.objecteeg.title())
+                            #     self.label_remove_.setText(', '.join(self.apl))
+                            # if self.objecteeg.title() in self.kpl:
+                            #     self.kpl.remove(self.objecteeg.title())
+                            #     self.label_remove_k.setText(', '.join(self.kpl))
+                            self.objecteega.deleteLater()
                             
     def eto_methods_info(self):
         self.eto_methods_groupbox = QGroupBox('ETO Methods: ')
@@ -336,6 +377,28 @@ class CalculateWidget(QWidget):
             self.label_remove_.setText(', '.join(self.apl))
             self.label_remove_k.setText(', '.join(self.kpl))
             
+            _, self.method_parameters_dictefau = wb_read_methods_data()
+            self.methods_list___au = []
+            for self.method_fau, self.parameters_fau in self.method_parameters_dictefau.items():
+                self.parameters_fau = self.parameters_fau.split(', ')
+                self.parameters_to_check_fau = self.label_remove_k.text().split(', ') + self.lista_dostupnih_param
+                resultaau = all(elem in self.parameters_to_check_fau for elem in self.parameters_fau)
+                if resultaau:
+                    if sender in self.parameters_fau:
+                        self.methods_list___au.append(self.method_fau)
+            print(self.methods_list___au)
+            
+            for self.fau_method in self.methods_list___au:
+                self.method_groupbox7 = QGroupBox(self.fau_method)
+                self.method_groupbox7.setCheckable(True)
+                self.method_groupbox7.setChecked(False)
+                self.method_groupbox7.clicked.connect(self.wb_method_checked)
+                self.method_groupbox7.layout = QGridLayout()
+                self.method_name7 = self.name_symbol7 = QLabel(self.fau_method)
+                self.method_groupbox7.layout.addWidget(self.method_name7)
+                self.method_groupbox7.setLayout(self.method_groupbox7.layout)
+                self.wb_methods_layout.addWidget(self.method_groupbox7)
+            
             # provjera za sljedeću listu
             # dodavanje ako ima
         else:
@@ -344,6 +407,24 @@ class CalculateWidget(QWidget):
             self.kpl.remove(sender)
             self.label_remove_.setText(', '.join(self.apl))
             self.label_remove_k.setText(', '.join(self.kpl))
+            
+            _, self.method_parameters_dicteegab = wb_read_methods_data()
+            self.methods_list__gab = []
+            for self.method_gab, self.parameters_gab in self.method_parameters_dicteegab.items():
+                self.parameters_gab = self.parameters_gab.split(', ')
+                if sender in self.parameters_gab:
+                    self.methods_list__gab.append(self.method_gab)
+            for self.objecteegab in self.wb_methods_scroll.children():
+                if self.objecteegab.__class__.__name__ == 'QGroupBox':
+                    if self.objecteegab.title() in self.methods_list__gab:
+                        self.wb_methods_scroll.children().remove(self.objecteegab)
+                        # if self.objecteeg.title() in self.apl:
+                        #     self.apl.remove(self.objecteeg.title())
+                        #     self.label_remove_.setText(', '.join(self.apl))
+                        # if self.objecteeg.title() in self.kpl:
+                        #     self.kpl.remove(self.objecteeg.title())
+                        #     self.label_remove_k.setText(', '.join(self.kpl))
+                        self.objecteegab.deleteLater()
             
             # provjera za oduzimanje ako ima
             # oduzimanje
