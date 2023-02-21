@@ -44,8 +44,8 @@ def wb_read_methods_data():
         to_append = file_data['basic_parameters']
         if file_data['other_methods']:
             to_append = to_append + ', ' + file_data['other_methods']
-            if file_data['eto_methods']:
-                to_append = to_append + ', ' + file_data['eto_methods']
+        if file_data['eto_methods']:
+            to_append = to_append + ', ' + file_data['eto_methods']
             
         methods_parameters.append(to_append)
     res = dict(zip(methods_list, methods_parameters))
