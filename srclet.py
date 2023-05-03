@@ -3,7 +3,7 @@ cwd = os.path.curdir
 
 from variables import css, var
 from windows.project.new_project import NewProjectWindow
-from windows.project.open_project import OpenProjectWindow
+#from windows.project.open_project import OpenProjectWindow
 from windows.about.about import AboutWindow
 from windows.manual.manual import ManualWindow
 from windows.settings.settings import SettingsWindow
@@ -185,28 +185,34 @@ class MainWindow(QMainWindow):
 
     # File:
     def settings_window(self):
-        self.window = SettingsWindow(self.language)   
+        self.window_settings = SettingsWindow(self.language)   
 
     def exit_srclet(self):
-        self.close()
-        self.window_basic_parameters.close()
+        mainApplication.quit()
+        #self.close()
+        
+        #self.window_basic_parameters.close()
         
     # Project:
     def new_project_window(self):
         self.window = NewProjectWindow(self.language)
 
     def open_project_window(self):
-        self.window = OpenProjectWindow(self.language)
+        pass
+        #self.window = OpenProjectWindow(self.language)
         
     # Customize:
     def basic_parameters_window(self):
-        self.window_basic_parameters = BasicParameters()
+        pass
+        #self.window_basic_parameters = BasicParameters()
                 
     def complex_parameters_window(self):
-        self.window = ComplexParameters()
+        pass
+        #self.window = ComplexParameters()
                 
     def eto_methods_window(self):
-        self.window = ETOMethodsWindow(self.language)
+        pass
+        #self.window = ETOMethodsWindow(self.language)
 
     def wb_methods_window(self):
         self.window = WBMethodsWindow(self.language)
