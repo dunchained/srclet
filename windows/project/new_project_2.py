@@ -3,7 +3,7 @@ cwd = os.path.curdir
 
 from variables import css, var
 from windows.data.check_data import CheckDataTypeWidget
-from windows.project.project_opened import ProjectWindow
+#from windows.project.project_opened import ProjectWindow
 from mortys.font_morty import read_text_font_size, read_input_font_size
 from mortys.project_description_morty import update_project_description
 
