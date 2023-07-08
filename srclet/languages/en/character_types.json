@@ -1,7 +1,7 @@
 {
     "latin": "Latin",
     "greek": "Greek",
-    "other": "Other",
     "math": "Math",
-    "python": "Python"
+    "python": "Python",
+    "other": "Other"
 }

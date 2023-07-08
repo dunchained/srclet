@@ -1,9 +1,8 @@
-{   
+{
     "language_name": "English",
     "language_description": "en",
-    
     "//": "srclet.py:",
-    "main_window_title": "srcleta",
+    "main_window_title": "srcleta - working beta",
     "menu_file": "&File",
     "menu_file_settings": "Settings",
     "menu_file_settings_tooltip": "Tooltip Settings",
@@ -32,19 +31,17 @@
     "menu_help_about_tooltip": "Tooltip About",
     "menu_help_manual": "Manual",
     "menu_help_manual_tooltip": "Tooltip Manual",
-
     "//": "settings.py",
     "settings_window_title": "Settings",
     "settings_window_menu_font": "Menu font size:",
     "settings_window_text_font": "Text font size:",
-    "settings_window_input_font": "Input font size:",    
+    "settings_window_input_font": "Input font size:",
     "settings_window_language": "Select language:",
     "settings_window_btn_save": "Save",
     "settings_window_btn_close": "Close",
     "settings_window_groupbox": "Available settings:",
     "settings_window_message": "Settings have been succssufully changed. Changes will take effect next time you start srclet.",
     "settings_window_message_caption": "Settings...",
-
     "//": "new_project.py",
     "new_project_title": "Create new project...",
     "new_project_caption": "Enter new project name:",
@@ -54,7 +51,6 @@
     "new_project_message_name": "There is a project with that name already...",
     "new_project_message_empty_title": "Project name...",
     "new_project_message_empty": "Project name can not be empty...",
-
     "//": "new_project_2.py",
     "new_project_2_title": "Create new project: ",
     "new_project_2_data_caption": "Project data file:",
@@ -66,35 +62,30 @@
     "new_project_2_file_dialog": "Open data file...",
     "new_project_2_load_message": "Please select data file...",
     "new_project_2_load_message_caption": "Data file...",
-
+    "new_project_2_browse_message": "Data file not tabbex txt.",
+    "new_project_2_browse_message_caption": "Data file...",
     "new_project_2_description_caption": "Short project description:",
     "new_project_2_description_initial": "Provide some short description of the project.",
-    
     "new_project_2_btn_save_and_exit": "Save project and exit",
     "new_project_2_btn_save_and_exit_tooltip": "Save project and exit",
     "new_project_2_btn_save_and_open": "Save and open project",
     "new_project_2_btn_save_and_open_tooltip": "Save and open project",
     "new_project_2_btn_cancel": "Cancel",
     "new_project_2_btn_cancel_tooltip": "Cancel",
-
     "new_project_2_save_and_exit_message_caption": "Success!",
     "new_project_2_save_and_exit_message": "Project saved...",
     "new_project_2_save_and_open_message_caption": "Success!",
     "new_project_2_save_and_open_message": "Project saved...",
-
     "//": "check_data.py",
     "check_data_title": "Check for data file: ",
     "check_data_select": "Click to enter data type",
     "check_data_select_donotuse": "Do not use...",
     "check_data_select_year": "Year",
     "check_data_select_month": "Month",
-    
     "check_data_message": "Fill the missing data...",
     "check_data_caption": "Missing data...",
     "check_data_message1": "Data saved...",
     "check_data_caption1": "Successful...",
-    
-
     "//": "Open project Window",
     "open_project_title": "Open existing project...",
     "open_project_caption": "Select project from the list:",
@@ -107,13 +98,10 @@
     "open_project_delete_message_title": "Delete project?",
     "open_project_delete_ok": "Yes",
     "open_project_delete_cancel": "No",
-
-
     "//": "Opened project Window",
     "project_opened_title": "Working with project: ",
     "project_opened_menu_file": "File",
     "project_opened_menu_exit": "Exit",
-
     "//": "Opened project Widget",
     "project_opened_widget_project_info": "Project info: ",
     "project_opened_widget_data_info": "data_info",
@@ -121,7 +109,6 @@
     "project_opened_widget_vizualization_options": "viz_options",
     "project_opened_widget_export_save_calc": "save_export_calc",
     "project_opened_widget_status_info": "status_info",
-
     "//": "Parameters Window",
     "parameters_window_title": "Parameters",
     "parameters_window_caption": "List of available parameters in this category:",
@@ -140,7 +127,6 @@
     "parameters_window_save_changes_message_caption": "Missing data...",
     "parameters_window_save_message": "Parameter saved...",
     "parameters_window_save_message_caption": "Successuful...",
-
     "//": "Add Parameter Window",
     "add_parameter_window_title": "Add new parameter",
     "add_parameter_window_caption": "Parameter information:",
@@ -162,7 +148,6 @@
     "add_parameter_window_saved_message_caption": "Successuful...",
     "add_parameter_window_filename_message": "Parameter with this filename already exists.",
     "add_parameter_window_filename_message_caption": "Filename...",
-
     "//": "Complex Parameters Window",
     "complex_parameters_window_title": "Complex Parameters",
     "complex_parameters_window_caption": "List of available complex parameters:",
@@ -182,7 +167,6 @@
     "complex_parameters_window_save_changes_message_caption": "Missing data...",
     "complex_parameters_window_save_message": "Complex Parameter saved...",
     "complex_parameters_window_save_message_caption": "Successuful...",
-
     "//": "Add Parameter Window",
     "add_complex_parameter_window_title": "Add new complex parameter",
     "add_complex_parameter_window_caption": "Parameter information:",
@@ -206,18 +190,13 @@
     "add_complex_parameter_window_saved_message_caption": "Successuful...",
     "add_complex_parameter_window_filename_message": "Complex arameter with this filename already exists.",
     "add_complex_parameter_window_filename_message_caption": "Filename...",
-
     "//": "ETO Methods Window",
     "add_complex_parameter_window_title": "Add new complex parameter",
     "add_complex_parameter_window_caption": "Parameter information:",
-
     "//": "Add ETO methods Window",
     "add_complex_parameter_window_title": "Add new complex parameter",
     "add_complex_parameter_window_caption": "Parameter information:",
-
-
-
-    "//":"about.py",
+    "//": "about.py",
     "about_window_title": "Abouta SRCLET",
     "version": "Version",
     "development": "Development",
@@ -245,5 +224,4 @@
     "disclamair_text1": "Authors decline all responsibility for errors or deficiencies in the database or in the files and documents that come with the SRCLET softwere.",
     "disclamair_text2": "Authors also declines any responsibility for updating the data and assumes no responsibility for errors and omissions in the data provided. Users are, however, kindly asked to report any errors or deficiencies at: meet.jeanmonnet@gmail.com.",
     "disclamair_text3": "The European Commission support for the production of this prodact does not constitute an endorsement of the contents which reflects the views only of the authors, and the Commission cannot be held responsible for any use which may be made of the information contained therein."
-
 }
