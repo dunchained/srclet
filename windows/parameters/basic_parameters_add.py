@@ -226,11 +226,11 @@ class AddBasicParameter(QWidget):
             else:
                 parameter_dict = {
                     "name": self.parameter_name.text(),
-                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.comboBox.currentText())],
                     "unit": self.parameter_unit.text(),
                     "symbol": self.parameter_symbol.text(),
                     "description": self.parameter_descriprion.toPlainText(),
-                    "type": "a"
+                    "type": "a",
+                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.comboBox.currentText())]
                 }
                 json_object = json.dumps(parameter_dict, indent=4)
                 with open(cwd + var.basic_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:

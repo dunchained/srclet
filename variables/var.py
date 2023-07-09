@@ -42,6 +42,7 @@ categories_file = 'parameter_types.json'
 basic_parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
 p_cat_file = 'parameter_types.json'
+cp_cat_file = 'changable_parameter_types.json'
 c_cat_file = 'character_types.json'
 charactes_loc = '/srclet/characters/'
 

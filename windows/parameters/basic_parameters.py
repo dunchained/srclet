@@ -4,7 +4,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
 from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
 from variables import css
-# from mortys.font_morty import read_menu_font_size
+from mortys.font_morty import read_menu_font_size
 
 
 class BasicParameters(QMainWindow):
@@ -26,7 +26,7 @@ class BasicParameters(QMainWindow):
     def fileMenu(self):
         menubar = self.menuBar()
         font = menubar.font()
-        font.setPointSize(14)
+        font.setPointSize(read_menu_font_size())
         menubar.setFont(font)
 
         fileMenu = menubar.addMenu(
