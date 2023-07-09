@@ -1,16 +1,32 @@
+self.language = {
+    "//": "check_data.py",
+    "check_data_title": "Check for data file: ",
+    "check_data_select": "Click to enter data type",
+    "check_data_select_donotuse": "Do not use...",
+    "check_data_select_eto_method": "ET0 Methods",
+    "check_data_select_wb_method": "WB Methods",
+    "check_data_select_other_method": "Other Methods",
+    "month": "Month",
+    "year": "Year",
+    "check_data_data_options": "Data options: ",
+    "check_data_station_name": "Wather station name: ",
+    "check_data_country": "Country: ",
+    "check_data_elevation": "Weather station elevation (z): ",
+    "check_data_elevation1": "meters.",
+    "check_data_latitude": "Weather station latitude (fi): ",
+    "check_data_latitude1": "decimal degrees.",
+    "check_data_longitude": "Weather station longitude (fi): ",
+    "check_data_longitude1": "decimal degrees.",
+    "check_data_number_of_rows": "Skip number of rows: ",
 
-# Python3 code to demonstrate
-# to get key and value
-# using in operator
- 
-# initializing dictionary
-test_dict = {"Geeks": 1, "for": 2, "geeks": 3}
- 
-# Printing dictionary
-print("Original dictionary is : " + str(test_dict))
- 
-# using in operator to
-# get key and value
-print("Dict key-value are : ")
-for i in test_dict:
-    print(i, test_dict[i])
+    "check_data_begining_date": "Data begining date: ",
+    "check_data_end_date": "Data end date: ",
+    "check_data_num_rows": "Number of rows: ",
+    "check_data_num_cols": "Number of selected columns: ",
+    "check_data_btn_check_data": "Check data",
+
+    "check_data_message": "Fill the missing data...",
+    "check_data_caption": "Missing data...",
+    "check_data_message1": "Data saved...",
+    "check_data_caption1": "Successful..."
+}
