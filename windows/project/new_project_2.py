@@ -1,3 +1,4 @@
+from windows.project.project_opened import ProjectWindow
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QPushButton, QGroupBox, QTextEdit
@@ -10,10 +11,6 @@ import os
 import shutil
 cwd = os.path.curdir
 
-# from windows.project.project_opened import ProjectWindow
-
-
-#
 
 class NewProjectWindow2(QWidget):
     def __init__(self, name_of_project, language):

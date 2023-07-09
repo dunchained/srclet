@@ -1,3 +1,4 @@
+from windows.project.open_project import OpenProjectWindow
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QProxyStyle, QStyle, QToolTip
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget, QMenu
@@ -18,7 +19,6 @@ import sys
 import os
 cwd = os.path.curdir
 
-# from windows.project.open_project import OpenProjectWindow
 # from windows.parameters.basic_parameters import BasicParameters
 # from windows.parameters.complex_parameters import ComplexParameters
 # from remove_after.methods_eto import ETOMethodsWindow
@@ -219,8 +219,7 @@ class MainWindow(QMainWindow):
         self.window = NewProjectWindow(self.language)
 
     def open_project_window(self):
-        pass
-        # self.window = OpenProjectWindow(self.language)
+        self.window = OpenProjectWindow(self.language)
 
     # Customize:
     def basic_parameters_window(self):
