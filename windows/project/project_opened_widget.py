@@ -9,7 +9,6 @@ from plambas.project_plambases import read_methods_data, available_changable_par
 import os
 import sys
 cwd = os.path.curdir
-# from bregasta.reading import read_data_file
 
 
 class CalculateWidget(QWidget):
