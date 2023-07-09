@@ -8,16 +8,14 @@ from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit,
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
 from PyQt5.QtCore import Qt, QDateTime, QDate, pyqtSignal
 from pathlib import Path
-from variables import css, var
+from variables import var
 cwd = os.path.curdir
 
 
 class TableWidget(QTableWidget):
     def __init__(self, *args, **kwargs):
         super(TableWidget, self).__init__(*args, **kwargs)
-        # self.verticalHeader().hide()
         self.horizontalHeader().hide()
-        # self.rowAt(2)
 
     def scroll_contents_by(self, dx, dy):
         super(TableWidget, self).scroll_contents_by(dx, dy)
@@ -44,7 +42,6 @@ class CheckDataTypeWidget(TableWidget):
         layout.addWidget(self.table, 0, 0)
         layout.addWidget(self.groupBoxDataOptions, 1, 0)
         self.setLayout(layout)
-        # self.setWindowIcon(QIcon(css.srclet_main_window_icon))
         self.setWindowTitle(self.language['check_data_title'] + file_path)
         self.showMaximized()
 
@@ -234,36 +231,10 @@ class CheckDataTypeWidget(TableWidget):
         self.hlay_longitude.addWidget(self.label_weather_station_longitude1)
         self.flay.addRow(self.hlay_longitude)
 
-        # self.label_anamometer_height = QLabel('The anamometer height (zu): ')
-        # self.label_anamometer_height1 = QLabel('meters.')
-        # self.line_anamometer_height = QLineEdit('10')
-        # self.hlay_anamometer = QHBoxLayout()
-        # self.hlay_anamometer.addWidget(self.label_anamometer_height)
-        # self.hlay_anamometer.addWidget(self.line_anamometer_height)
-        # self.hlay_anamometer.addWidget(self.label_anamometer_height1)
-        # self.flay.addRow(self.hlay_anamometer)
-
-        # self.label_wind_speed = QLabel('Value of wind speed if missing (u2): ')
-        # self.label_wind_speed1 = QLabel('m/s.')
-        # self.line_wind_speed = QLineEdit('2')
-        # self.hlay_wind_speed = QHBoxLayout()
-        # self.hlay_wind_speed.addWidget(self.label_wind_speed)
-        # self.hlay_wind_speed.addWidget(self.line_wind_speed)
-        # self.hlay_wind_speed.addWidget(self.label_wind_speed1)
-        # self.flay.addRow(self.hlay_wind_speed)
-
-        # self.label_krs_factor = QLabel('Value of krs factor:')
-        # self.line_krs_factor = QLineEdit('0.162')
-        # self.flay.addRow(self.label_krs_factor, self.line_krs_factor)
-
         self.label_skip_rows = QLabel(
             self.language['check_data_number_of_rows'])
         self.line_skip_rows = QLineEdit('1')
         self.flay.addRow(self.label_skip_rows, self.line_skip_rows)
-
-        # self.label_missing_data = QLabel('Code for missing data:')
-        # self.line_missing_data = QLineEdit('-999')
-        # self.flay.addRow(self.label_missing_data, self.line_missing_data)
 
         self.groupBoxOptions.setLayout(self.flay)
 
@@ -311,10 +282,11 @@ class CheckDataTypeWidget(TableWidget):
         self.groupBoxCheck.setLayout(self.flay_check)
 
         # Postavka svega na DataOptionsGroupBox:
-        self.buttonSave = QPushButton('Save data')
+        self.buttonSave = QPushButton(
+            self.language['check_data_btn_save_data'])
         self.buttonSave.setEnabled(False)
         self.buttonSave.clicked.connect(self.save_data)
-        self.buttonClose = QPushButton('Cancel')
+        self.buttonClose = QPushButton(self.language['check_data_btn_cancel'])
         self.buttonClose.clicked.connect(self.close_self)
 
         self.groupBoxDataOptionsLayout.addWidget(
@@ -354,18 +326,16 @@ class CheckDataTypeWidget(TableWidget):
             str(len(self.list_of_selected_columns)))
         broj_redova = int(self.label_number_of_rows_num.text())
         if broj_redova % 12 == 0:
-            self.label_check_done.setText(
-                'Number of rows and months ratio: OK')
-            self.label_check_done1.setText('Data shape: ' + self.label_number_of_rows_num.text(
+            self.label_check_done.setText(self.language['check_data_msg_1'])
+            self.label_check_done1.setText(self.language['check_data_msg_2'] + self.label_number_of_rows_num.text(
             ) + 'x' + self.label_number_of_selected_columns_num.text())
-            self.label_check_done2.setText('Good to go...')
+            self.label_check_done2.setText(self.language['check_data_msg_3'])
             self.buttonSave.setEnabled(True)
         else:
-            self.label_check_done.setText(
-                'Number of rows and months ratio: NOT OK')
-            self.label_check_done1.setText('Data shape: ' + self.label_number_of_rows_num.text(
+            self.label_check_done.setText(self.language['check_data_msg_4'])
+            self.label_check_done1.setText(self.language['check_data_msg_2'] + self.label_number_of_rows_num.text(
             ) + 'x' + self.label_number_of_selected_columns_num.text())
-            self.label_check_done2.setText('Skiping the rows can help...')
+            self.label_check_done2.setText(self.language['check_data_msg_5'])
             self.buttonSave.setEnabled(False)
 
     def read_table(self):
@@ -375,23 +345,22 @@ class CheckDataTypeWidget(TableWidget):
 
         for column in range(self.number_of_columns):
             self.dugmad = self.buttons[column].text()
-            self.lista2 = []
-            self.lista2.append(self.dugmad)
-            for row in range(self.number_of_rows):
-                item = self.table.item(row, column)
-                item_text = item.text()
-                self.lista2.append(item_text)
-            self.lista.append(self.lista2)
+            if self.dugmad != self.language['check_data_select'] and self.dugmad != self.language['check_data_select_donotuse']:
+                self.lista2 = []
+                self.lista2.append(self.dugmad)
+                for row in range(self.number_of_rows):
+                    item = self.table.item(row, column)
+                    item_text = item.text()
+                    self.lista2.append(item_text)
+                self.lista.append(self.lista2)
         # pandas.DataFrame(data=None, index=[0], columns=None, dtype=None, copy=False)
         self.data_frame = pandas.DataFrame(self.lista)
         return self.data_frame.transpose()
 
     def save_data(self):
         rt = self.read_table()
-
         rt.to_excel(self.project_path + "/data.xlsx",
                     sheet_name='data_input', index=False)
-
         if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
             self.msg = QMessageBox()
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
