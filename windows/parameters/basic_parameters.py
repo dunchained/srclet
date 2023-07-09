@@ -2,16 +2,13 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-#from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
-from basic_parameters_widget import ParametersCategoryTabs
-#from variables import css
-import css
-#from mortys.font_morty import read_menu_font_size
-from language import language
-#from windows.parameters.language import language
+from windows.parameters.basic_parameters_widget import ParametersCategoryTabs
+from variables import css
+# from mortys.font_morty import read_menu_font_size
+
 
 class BasicParameters(QMainWindow):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.language = language
         self.setWindowState(QtCore.Qt.WindowMaximized)
@@ -22,7 +19,7 @@ class BasicParameters(QMainWindow):
         self.setWindowIcon(QIcon(css.parameters_basic_icon))
         self.setWindowTitle(self.language['basic_parameters_window_title'])
         self.fileMenu()
-        self.central_widget = ParametersCategoryTabs()
+        self.central_widget = ParametersCategoryTabs(language=self.language)
         self.setCentralWidget(self.central_widget)
         self.show()
 
@@ -31,30 +28,34 @@ class BasicParameters(QMainWindow):
         font = menubar.font()
         font.setPointSize(14)
         menubar.setFont(font)
-        
-        fileMenu = menubar.addMenu(self.language['basic_parameters_window_file_menu'])
+
+        fileMenu = menubar.addMenu(
+            self.language['basic_parameters_window_file_menu'])
         font = fileMenu.font()
         font.setPointSize(14)
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
-        refreshAct = QAction(QIcon(css.refresh_icon), self.language['basic_parameters_window_file_menu_refresh'], self)
+        refreshAct = QAction(QIcon(
+            css.refresh_icon), self.language['basic_parameters_window_file_menu_refresh'], self)
         refreshAct.triggered.connect(self.refresh_widget)
         fileMenu.addAction(refreshAct)
-        
+
         fileMenu.addSeparator()
-        
-        exitAct = QAction(QIcon(css.exit_icon),self.language['basic_parameters_window_file_menu_exit'], self)
+
+        exitAct = QAction(QIcon(
+            css.exit_icon), self.language['basic_parameters_window_file_menu_exit'], self)
         exitAct.triggered.connect(self.exit_window)
         fileMenu.addAction(exitAct)
-        
+
     def refresh_widget(self):
         self.takeCentralWidget()
-        self.new_widget = ParametersCategoryTabs()
+        self.new_widget = ParametersCategoryTabs(self.language)
         self.setCentralWidget(self.new_widget)
-        
+
     def exit_window(self):
         self.hide()
+
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)

@@ -1,0 +1,8 @@
+{
+    "name": "Temperatura__Test",
+    "category": "temperature",
+    "unit": "\u03c0",
+    "symbol": "test_temperatura",
+    "description": "opis.",
+    "type": "a"
+}

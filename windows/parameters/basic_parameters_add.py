@@ -1,8 +1,6 @@
-import css
-import var
-from character_widget import InputCharacterWidget
-from language import language
-from parameters_morty import read_characters, get_filename
+from variables import var, css
+from widgets.character_widget import InputCharacterWidget
+from mortys.basic_parameters_morty import read_characters, get_filename
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
@@ -11,19 +9,13 @@ import sys
 import json
 import os
 cwd = os.path.curdir
-# rom mortys.parameters_morty import read_characters, get_filename
-# from variables import var, css
-# from windows.parameters.language import language
 
 
 class AddBasicParameter(QWidget):
-    def __init__(self, data_to_input):
+    def __init__(self, language, data_to_input):
         super().__init__()
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        if data_to_input == None:
-            print('None')
-        else:
-            print('one')
+        self.data_to_input = data_to_input
         self.language = language
         self.window_gui()
 
@@ -42,7 +34,8 @@ class AddBasicParameter(QWidget):
         self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
         self.grid.addWidget(self.pb_description_groupbox(), 2, 0, 1, 2)
         # self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
-        self.grid.addWidget(InputCharacterWidget(columns=5), 0, 2, 3, 1)
+        self.grid.addWidget(InputCharacterWidget(language=self.language, columns=5,
+                            title=self.language['add_basic_parameter_window_sc']), 0, 2, 3, 1)
         self.grid.addWidget(self.button_groupbox(), 3, 0, 1, 3)
         self.setLayout(self.grid)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
@@ -75,7 +68,10 @@ class AddBasicParameter(QWidget):
             self.language['add_basic_parameter_window_name'])
         self.text_parameter_name = QLabel(
             self.language['add_basic_parameter_window_name_exp'])
-        self.parameter_name = QLineEdit()
+        if self.data_to_input == None:
+            self.parameter_name = QLineEdit()
+        else:
+            self.parameter_name = QLineEdit(self.data_to_input['name'])
         self.pbn_groupbox.layout = QVBoxLayout()
         self.pbn_groupbox.layout.addWidget(self.text_parameter_name)
         self.pbn_groupbox.layout.addWidget(self.parameter_name)
@@ -95,6 +91,12 @@ class AddBasicParameter(QWidget):
             self.categories_list.append(self.categories_file_data[category])
         self.comboBox = QComboBox()
         self.comboBox.addItems(self.categories_list)
+        if self.data_to_input == None:
+            pass
+        else:
+            for category, category_val in self.categories_file_data.items():
+                if self.data_to_input['category'] == category:
+                    self.comboBox.setCurrentText(category_val)
         self.pbc_groupbox.layout = QVBoxLayout()
         self.pbc_groupbox.layout.addWidget(self.text_parameter_category)
         self.pbc_groupbox.layout.addWidget(self.comboBox)
@@ -106,7 +108,10 @@ class AddBasicParameter(QWidget):
             self.language['add_basic_parameter_window_symbol'])
         self.text_parameter_symbol = QLabel(
             self.language['add_basic_parameter_window_symbol_exp'])
-        self.parameter_symbol = QLineEdit()
+        if self.data_to_input == None:
+            self.parameter_symbol = QLineEdit()
+        else:
+            self.parameter_symbol = QLineEdit(self.data_to_input['symbol'])
         self.pbs_groupbox.layout = QVBoxLayout()
         self.pbs_groupbox.layout.addWidget(self.text_parameter_symbol)
         self.pbs_groupbox.layout.addWidget(self.parameter_symbol)
@@ -118,7 +123,10 @@ class AddBasicParameter(QWidget):
             self.language['add_basic_parameter_window_unit'])
         self.text_parameter_unit = QLabel(
             self.language['add_basic_parameter_window_unit_exp'])
-        self.parameter_unit = QLineEdit()
+        if self.data_to_input == None:
+            self.parameter_unit = QLineEdit()
+        else:
+            self.parameter_unit = QLineEdit(self.data_to_input['unit'])
         self.pbu_groupbox.layout = QVBoxLayout()
         self.pbu_groupbox.layout.addWidget(self.text_parameter_unit)
         self.pbu_groupbox.layout.addWidget(self.parameter_unit)
@@ -130,7 +138,11 @@ class AddBasicParameter(QWidget):
             self.language['add_basic_parameter_window_desc'])
         self.text_parameter_descriprion = QLabel(
             self.language['add_basic_parameter_window_desc_exp'])
-        self.parameter_descriprion = QTextEdit()
+        if self.data_to_input == None:
+            self.parameter_descriprion = QTextEdit()
+        else:
+            self.parameter_descriprion = QTextEdit(
+                self.data_to_input['description'])
         self.pbd_groupbox.layout = QVBoxLayout()
         self.pbd_groupbox.layout.addWidget(self.text_parameter_descriprion)
         self.pbd_groupbox.layout.addWidget(self.parameter_descriprion)

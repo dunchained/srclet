@@ -1,51 +1,6 @@
 language = {
     "language_description": "en",
-    "//": "Basic Parameters Add",
-    "add_basic_parameter_window_title": "Add basic parameter",
-    "add_basic_parameter_window_category": "Parameter category:",
-    "add_basic_parameter_window_category_exp": "Paremeter category.",
-    "add_basic_parameter_window_name": "Parameter name: ",
-    "add_basic_parameter_window_name_exp": "Text to be used as parameter short description.",
-    "add_basic_parameter_window_unit": "Parameter unit:",
-    "add_basic_parameter_window_unit_exp": "Unit to be used...",
-    "add_basic_parameter_window_symbol": "Parameter symbol:",
-    "add_basic_parameter_window_symbol_exp": "Text to be used as parameter symbol in formulas.",
-    "add_basic_parameter_window_desc": "Parameter description:",
-    "add_basic_parameter_window_desc_exp": "Text to be used for short explinations.",
-    "add_basic_parameter_window_btn_add": "Save",
-    "add_basic_parameter_window_btn_cancel": "Cancel",
-    "add_basic_parameter_window_save_message": "Parameter name or unit empty...",
-    "add_basic_parameter_window_save_message_caption": "Missing data...",
-    "add_basic_parameter_window_saved_message": "Parameter saved...",
-    "add_basic_parameter_window_saved_message_caption": "Success...",
-    "add_basic_parameter_window_name_message": "Parameter with this name or symbol already exists. Parameter name and symbol are unique values.",
-    "add_basic_parameter_window_name_message_caption": "Parameter name...",
-    "add_basic_parameter_window_sc": "Insert special character:",
-    "//": "Basic Parameters Add END",
-    
-    "//": "Basic Parameters Widget",
-    "basic_parameters_widget_title": "Parameters",
-    "basic_parameters_widget_caption": "List of available parameters:",
-    "basic_parameters_widget_btn_add_new": "Add new parameter",
-    "basic_parameters_widget_btn_delete": "Delete selected parameter",
-    "basic_parameters_widget_parameter_caption": "Parameter information:",
-    "basic_parameters_widget_parameter_btn_save_changes": "Save changes",
-    "basic_parameters_widget_parameter_btn_cancel_changes": "Cancel changes",
-    "basic_parameters_widget_delete_msg_title": "Delete parameter...",
-    "basic_parameters_widget_delete_msg_message": "Are you sure you want to delete selected parameter?",
-    "basic_parameters_widget_delete_msg_yes": "Yes",
-    "basic_parameters_widget_delete_msg_cancel": "Cancel",
-    "basic_parameters_widget_save_changes_message": "Parameter must have name...",
-    "basic_parameters_widget_save_changes_message_caption": "Changes...",
-    "//": "Basic Parameters Widget END",
-    
-    "//": "Basic Parameters Window",
-    "basic_parameters_window_title": "Basic Parameters",
-    "basic_parameters_window_file_menu": "File",
-    "basic_parameters_window_file_menu_refresh": "Refresh parameters list",
-    "basic_parameters_window_file_menu_exit": "Close",
-    "//": "Basic Parameters Window END",
-    
+
     "//": "Complex Parameters Add",
     "add_complex_parameter_window_title": "Add complex parameter",
     "add_complex_parameter_window_caption": "Parameter information:",
@@ -74,7 +29,7 @@ language = {
     "add_complex_parameter_window_change_caption": "Parameter is changable:",
     "add_complex_parameter_window_change": "Yes",
     "//": "Complex Parameters Add END",
-    
+
     "//": "Complex Parameters Widget",
     "complex_parameters_widget_title": "Parameters",
     "complex_parameters_widget_caption": "List of available parameters in this category:",
@@ -104,12 +59,12 @@ language = {
     "complex_parameters_widget_sc": "Input special character:",
     "complex_parameters_widget_bp": "Input basic parameter:",
     "//": "Complex Parameters Widget END",
-    
+
     "//": "Complex Parameters Window",
     "complex_parameters_window_title": "Complex Parameters",
     "complex_parameters_window_file_menu": "File",
     "complex_parameters_window_file_menu_refresh": "Refresh parameters list",
     "complex_parameters_window_file_menu_exit": "Close",
     "//": "Complex Parameters Window END",
-    
+
 }

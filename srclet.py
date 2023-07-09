@@ -1,3 +1,4 @@
+from windows.parameters.basic_parameters import BasicParameters
 from windows.project.open_project import OpenProjectWindow
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QProxyStyle, QStyle, QToolTip
@@ -19,7 +20,6 @@ import sys
 import os
 cwd = os.path.curdir
 
-# from windows.parameters.basic_parameters import BasicParameters
 # from windows.parameters.complex_parameters import ComplexParameters
 # from remove_after.methods_eto import ETOMethodsWindow
 
@@ -223,8 +223,7 @@ class MainWindow(QMainWindow):
 
     # Customize:
     def basic_parameters_window(self):
-        pass
-        # self.window_basic_parameters = BasicParameters()
+        self.window_basic_parameters = BasicParameters(self.language)
 
     def complex_parameters_window(self):
         pass

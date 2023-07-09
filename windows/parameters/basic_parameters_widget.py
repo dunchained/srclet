@@ -1,6 +1,5 @@
-from language import language
-from basic_parameters_add import AddBasicParameter
-import var
+from windows.parameters.basic_parameters_add import AddBasicParameter
+from variables import var
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
@@ -8,13 +7,10 @@ import sys
 import os
 import json
 cwd = os.path.curdir
-# from variables import var
-# from windows.parameters.basic_parameters_add import AddBasicParameter
-# from windows.parameters.language import language
 
 
 class ParametersCategoryTabs(QWidget):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.setUpdatesEnabled(True)
         self.language = language
@@ -76,6 +72,12 @@ class ParametersWidget(QWidget):
             self.language['basic_parameters_widget_btn_add_new'])
         self.buttonAddBasicParameter.clicked.connect(self.new_parameter_window)
 
+        self.buttonAddBasicParameterInherit = QPushButton(
+            self.language['basic_parameters_widget_btn_add_new_inherit'])
+        self.buttonAddBasicParameterInherit.setEnabled(False)
+        self.buttonAddBasicParameterInherit.clicked.connect(
+            self.new_parameter_window_inherit)
+
         self.buttonDelete = QPushButton(
             self.language['basic_parameters_widget_btn_delete'])
         self.buttonDelete.clicked.connect(self.delete_procedure)
@@ -84,6 +86,7 @@ class ParametersWidget(QWidget):
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.list_widget)
         self.layout.addWidget(self.buttonAddBasicParameter)
+        self.layout.addWidget(self.buttonAddBasicParameterInherit)
         self.layout.addWidget(self.buttonDelete)
         self.groupBox.setLayout(self.layout)
         return self.groupBox
@@ -104,12 +107,37 @@ class ParametersWidget(QWidget):
             if data['type'] == 'b':
                 self.update_labels(
                     state=False, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
+                self.parameter_dict = {
+                    "name": data['name'] + self.language['basic_parameters_new_addition'],
+                    "symbol": data['symbol'] + self.language['basic_parameters_new_addition'],
+                    "category": data['category'],
+                    "unit": data['unit'] + self.language['basic_parameters_new_addition'],
+                    "description": data['description'] + self.language['basic_parameters_new_addition'],
+                    "type": "a"
+                }
+                self.buttonAddBasicParameterInherit.setEnabled(True)
+
             else:
                 self.update_labels(
                     state=True, name=data['name'], symbol=data['symbol'], unit=data['unit'], description=data['description'])
+                self.parameter_dict = {
+                    "name": data['name'] + self.language['basic_parameters_new_addition'],
+                    "symbol": data['symbol'] + self.language['basic_parameters_new_addition'],
+                    "category": data['category'],
+                    "unit": data['unit'] + self.language['basic_parameters_new_addition'],
+                    "description": data['description'] + self.language['basic_parameters_new_addition'],
+                    "type": "a"
+                }
+                self.buttonAddBasicParameterInherit.setEnabled(True)
 
     def new_parameter_window(self):
-        self.window = AddBasicParameter(data_to_input=None)
+        self.window = AddBasicParameter(
+            language=self.language, data_to_input=None)
+
+    def new_parameter_window_inherit(self):
+
+        self.window = AddBasicParameter(
+            language=self.language, data_to_input=self.parameter_dict)
 
     def delete_procedure(self):
         self.msgBox = QMessageBox()
