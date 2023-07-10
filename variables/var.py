@@ -38,10 +38,10 @@ font_size_medium = 14
 font_size_small = 12
 
 projects_folder = '/projects/'
-categories_file = 'parameter_types.json'
+categories_file = 'basic_parameter_types.json'
 basic_parameters_folder = '/parameters/basic/'
 complex_parameters_folder = '/parameters/complex/'
-p_cat_file = 'parameter_types.json'
+p_cat_file = 'basic_parameter_types.json'
 cp_cat_file = 'changable_parameter_types.json'
 c_cat_file = 'character_types.json'
 charactes_loc = '/srclet/characters/'

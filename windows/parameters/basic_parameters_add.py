@@ -9,7 +9,7 @@ import sys
 import json
 import os
 cwd = os.path.curdir
-
+from mortys.font_morty import read_text_font_size
 
 class AddBasicParameter(QWidget):
     def __init__(self, language, data_to_input):
@@ -21,7 +21,7 @@ class AddBasicParameter(QWidget):
 
     def window_gui(self):
         font = self.font()
-        font.setPointSize(14)  # učitati font iz mortija
+        font.setPointSize(read_text_font_size())
         self.setFont(font)
         self.setWindowState(Qt.WindowMaximized)
         self.setMinimumSize(1200, 600)
@@ -33,7 +33,6 @@ class AddBasicParameter(QWidget):
         self.grid.addWidget(self.pb_symbol_groupbox(), 1, 0, 1, 1)
         self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
         self.grid.addWidget(self.pb_description_groupbox(), 2, 0, 1, 2)
-        # self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
         self.grid.addWidget(InputCharacterWidget(language=self.language, columns=5,
                             title=self.language['add_basic_parameter_window_sc']), 0, 2, 3, 1)
         self.grid.addWidget(self.button_groupbox(), 3, 0, 1, 3)
@@ -148,31 +147,6 @@ class AddBasicParameter(QWidget):
         self.pbd_groupbox.layout.addWidget(self.parameter_descriprion)
         self.pbd_groupbox.setLayout(self.pbd_groupbox.layout)
         return self.pbd_groupbox
-
-    def special_character_groupbox(self):
-        self.sc_groupbox = QGroupBox(
-            self.language['add_basic_parameter_window_sc'])
-        self.sc_layout = QGridLayout()
-        self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters(
-            var.charactes_loc)
-        i = 0
-        for row in range(self.rows):
-            for column in range(self.columns):
-                button = QPushButton(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.special_character_clicked)
-                self.sc_layout.addWidget(button, row+1, column)
-                i += 1
-                if i == len(self.button_list):
-                    break
-        self.sc_scroll.setLayout(self.sc_layout)
-        sc = QScrollArea()
-        sc.setWidget(self.sc_scroll)
-        sc.setWidgetResizable(1)
-        self.sc_groupbox.layout = QVBoxLayout()
-        self.sc_groupbox.layout.addWidget(sc)
-        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
-        return self.sc_groupbox
 
     def button_groupbox(self):
         self.btn_groupbox = QGroupBox()

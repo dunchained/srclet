@@ -1,12 +1,9 @@
 {
-    "name": "Solar declination C",
-    "category": "radiation",
-    "unit": "rad",
-    "symbol": "\u03b4",
-    "formula": "0.409 math.sin((((2*math.pi)/365)*(round(30.5*M)-14.6))-1.39)",
-    "description": "",
-    "changable": "yes",
-    "basic_parameters": "M",
-    "complex_parameters": "",
-    "type": "a"
+    "name": "c_parameter_3",
+    "unit": "unit",
+    "symbol": "\u03c9s",
+    "description": "Nakav opis nešta.",
+    "type": "a",
+    "category": "other",
+    "value": "1"
 }

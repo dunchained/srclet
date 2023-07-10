@@ -1,6 +1,7 @@
 from variables import var, css
 from widgets.character_widget import InputCharacterWidget
-from mortys.basic_parameters_morty import read_characters, get_filename
+from mortys.changable_parameters_morty import read_characters, get_filename
+from mortys.font_morty import read_text_font_size
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
@@ -9,7 +10,6 @@ import sys
 import json
 import os
 cwd = os.path.curdir
-
 
 class AddChangableParameter(QWidget):
     def __init__(self, language, data_to_input):
@@ -21,7 +21,7 @@ class AddChangableParameter(QWidget):
 
     def window_gui(self):
         font = self.font()
-        font.setPointSize(14)  # učitati font iz mortija
+        font.setPointSize(read_text_font_size())
         self.setFont(font)
         self.setWindowState(Qt.WindowMaximized)
         self.setMinimumSize(1200, 600)
@@ -33,11 +33,11 @@ class AddChangableParameter(QWidget):
         self.grid.addWidget(self.pb_category_groupbox(), 0, 1, 1, 1)
         self.grid.addWidget(self.pb_symbol_groupbox(), 1, 0, 1, 1)
         self.grid.addWidget(self.pb_unit_groupbox(), 1, 1, 1, 1)
-        self.grid.addWidget(self.pb_description_groupbox(), 2, 0, 1, 2)
-        # self.grid.addWidget(self.special_character_groupbox(), 0, 2, 3, 1)
+        self.grid.addWidget(self.pb_value_groupbox(), 2, 0, 1, 2)
+        self.grid.addWidget(self.pb_description_groupbox(), 3, 0, 1, 2)
         self.grid.addWidget(InputCharacterWidget(language=self.language, columns=5,
-                            title=self.language['add_changable_parameter_window_sc']), 0, 2, 3, 1)
-        self.grid.addWidget(self.button_groupbox(), 3, 0, 1, 3)
+                            title=self.language['add_changable_parameter_window_sc']), 0, 2, 4, 1)
+        self.grid.addWidget(self.button_groupbox(), 4, 0, 1, 3)
         self.setLayout(self.grid)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
         self.center_gui()
@@ -64,6 +64,21 @@ class AddChangableParameter(QWidget):
         else:
             pass
 
+    def pb_value_groupbox(self):
+        self.pbv_groupbox = QGroupBox(
+            self.language['add_changable_parameter_window_value'])
+        self.text_parameter_value = QLabel(
+            self.language['add_changable_parameter_window_value_exp'])
+        if self.data_to_input == None:
+            self.parameter_value = QLineEdit()
+        else:
+            self.parameter_value = QLineEdit(self.data_to_input['value'])
+        self.pbv_groupbox.layout = QVBoxLayout()
+        self.pbv_groupbox.layout.addWidget(self.text_parameter_value)
+        self.pbv_groupbox.layout.addWidget(self.parameter_value)
+        self.pbv_groupbox.setLayout(self.pbv_groupbox.layout)
+        return self.pbv_groupbox
+
     def pb_name_groupbox(self):
         self.pbn_groupbox = QGroupBox(
             self.language['add_changable_parameter_window_name'])
@@ -85,7 +100,7 @@ class AddChangableParameter(QWidget):
         self.text_parameter_category = QLabel(
             self.language['add_changable_parameter_window_category_exp'])
         categories_file = open(os.path.join(
-            cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
+            cwd + var.language_folder + self.language['language_description'] + '/' + var.cp_cat_file))
         self.categories_file_data = json.load(categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -150,31 +165,6 @@ class AddChangableParameter(QWidget):
         self.pbd_groupbox.setLayout(self.pbd_groupbox.layout)
         return self.pbd_groupbox
 
-    def special_character_groupbox(self):
-        self.sc_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_sc'])
-        self.sc_layout = QGridLayout()
-        self.sc_scroll = QWidget()
-        self.button_list, self.rows, self.columns = read_characters(
-            var.charactes_loc)
-        i = 0
-        for row in range(self.rows):
-            for column in range(self.columns):
-                button = QPushButton(f'{self.button_list[i]}', self)
-                button.clicked.connect(self.special_character_clicked)
-                self.sc_layout.addWidget(button, row+1, column)
-                i += 1
-                if i == len(self.button_list):
-                    break
-        self.sc_scroll.setLayout(self.sc_layout)
-        sc = QScrollArea()
-        sc.setWidget(self.sc_scroll)
-        sc.setWidgetResizable(1)
-        self.sc_groupbox.layout = QVBoxLayout()
-        self.sc_groupbox.layout.addWidget(sc)
-        self.sc_groupbox.setLayout(self.sc_groupbox.layout)
-        return self.sc_groupbox
-
     def button_groupbox(self):
         self.btn_groupbox = QGroupBox()
         self.buttonSaveParameter = QPushButton(
@@ -190,13 +180,13 @@ class AddChangableParameter(QWidget):
         return self.btn_groupbox
 
     def add_parameter(self):
-        self.file_name_to_save = get_filename('bp')
+        self.file_name_to_save = get_filename('cp')
         get_files = next(
-            os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+            os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
             self.file_to_read = open(os.path.join(
-                cwd + var.basic_parameters_folder + file))
+                cwd + var.changable_parameters_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.parameter_name.text() == self.file_data['name'] or self.parameter_symbol.text() == self.file_data['symbol']:
                 self.file_list.append(file)
@@ -231,10 +221,11 @@ class AddChangableParameter(QWidget):
                     "symbol": self.parameter_symbol.text(),
                     "description": self.parameter_descriprion.toPlainText(),
                     "type": "a",
-                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.comboBox.currentText())]
+                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.comboBox.currentText())],
+                    "value": self.parameter_value.text()
                 }
                 json_object = json.dumps(parameter_dict, indent=4)
-                with open(cwd + var.basic_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
+                with open(cwd + var.changable_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)

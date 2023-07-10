@@ -1,9 +1,5 @@
 {
-    "temperature": "Temperature",
-    "humidity": "Humidity",
-    "wind": "Wind",
-    "radiation": "Sunshine / Radiation",
-    "ET0": "ET0",
-    "rain": "Rain",
+    "et0": "ET0",
+    "wb": "Water balance",
     "other": "Other"
 }

@@ -1,12 +1,9 @@
 {
-    "name": "Ratio molecular weight of water vapour/dry air C",
-    "category": "other",
-    "unit": "MJ/kg/\u00b0C",
-    "symbol": "\u03b5",
-    "formula": "0.622",
-    "description": "Ratio molecular weight of water vapour/dry air",
-    "changable": "yes",
-    "basic_parameters": "",
-    "complex_parameters": "",
-    "type": "a"
+    "name": "c_parameter_2",
+    "unit": "unit",
+    "symbol": "\u03c9s",
+    "description": "Nakav opis nešta.",
+    "type": "a",
+    "category": "wb",
+    "value": "1"
 }

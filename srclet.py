@@ -1,4 +1,5 @@
 from windows.parameters.basic_parameters import BasicParameters
+from windows.parameters.changable_parameters import ChangableParameters
 from windows.project.open_project import OpenProjectWindow
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QProxyStyle, QStyle, QToolTip
@@ -19,10 +20,6 @@ from variables import css, var
 import sys
 import os
 cwd = os.path.curdir
-
-# from windows.parameters.complex_parameters import ComplexParameters
-# from remove_after.methods_eto import ETOMethodsWindow
-
 
 class MyProxyStyle(QProxyStyle):
     pass
@@ -140,11 +137,11 @@ class MainWindow(QMainWindow):
         parameters_menu.addAction(parametersAct)
 
         complexParametersAct = QAction(QIcon(
-            css.parameters_complex_icon), self.language['menu_customize_complex_parameters'], self)
+            css.parameters_complex_icon), self.language['menu_customize_changable_parameters'], self)
         complexParametersAct.setShortcut('Ctrl+R')
         complexParametersAct.setToolTip(
-            self.language['menu_customize_complex_parameters_tooltip'])
-        complexParametersAct.triggered.connect(self.complex_parameters_window)
+            self.language['menu_customize_changable_parameters_tooltip'])
+        complexParametersAct.triggered.connect(self.changable_parameters_window)
         parameters_menu.addAction(complexParametersAct)
 
         fileMenu.addMenu(parameters_menu)
@@ -225,9 +222,8 @@ class MainWindow(QMainWindow):
     def basic_parameters_window(self):
         self.window_basic_parameters = BasicParameters(self.language)
 
-    def complex_parameters_window(self):
-        pass
-        # self.window = ComplexParameters()
+    def changable_parameters_window(self):
+        self.window = ChangableParameters(self.language)
 
     def eto_methods_window(self):
         pass
