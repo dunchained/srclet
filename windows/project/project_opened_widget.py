@@ -13,12 +13,10 @@ cwd = os.path.curdir
 
 class CalculateWidget(QWidget):
     def __init__(self, project_path, language):
-        # def __init__(self):
         self.project_path = project_path
         self.language = language
         self.project_title = self.project_path.split('/')[-1]
         super().__init__()
-        # SrcletEngine.calculator(self, calculation_data=self.project_path)
         self.project_data, self.available_parameters_list, self.list_param_symbol = read_project_data(
             project_path=self.project_title)
         self.window_gui()
