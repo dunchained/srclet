@@ -16,13 +16,12 @@ class ProjectWindow(QMainWindow):
         self.language = language
         self.project_path = project_path
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.setFixedSize(var.project_opened_window_widith,
-                          var.project_opened_window_height)
-        # self.showMaximized()
-        # self.project_title = self.project_path.split('/')[-1]
-        # self.setWindowTitle(self.language['project_opened_title'] + self.project_title)
-        # self.setWindowTitle(self.language['project_opened_title'] + self.project_path)
-        # self.setWindowIcon(QIcon(css.srclet_icon))
+        #self.setFixedSize(var.project_opened_window_widith, var.project_opened_window_height)
+        self.showMaximized()
+        self.project_title = self.project_path.split('/')[-1]
+        self.setWindowTitle(self.language['project_opened_title'] + self.project_title)
+        self.setWindowTitle(self.language['project_opened_title'] + self.project_path)
+        self.setWindowIcon(QIcon(css.srclet_icon))
         self.center_gui()
         self.file_menu()
         self.central_widget = CalculateWidget(

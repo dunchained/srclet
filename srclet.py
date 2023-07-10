@@ -10,8 +10,6 @@ from mortys.icon_morty import icon_size
 from mortys.font_morty import read_menu_font_size
 from mortys.language_morty import language
 from widgets.image_widget import ImageWidget
-from remove_after.methods_other import OtherMethodsWindow
-from remove_after.methods_wb import WBMethodsWindow
 from windows.settings.settings import SettingsWindow
 from windows.manual.manual import ManualWindow
 from windows.about.about import AboutWindow
