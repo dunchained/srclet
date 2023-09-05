@@ -227,10 +227,12 @@ class MainWindow(QMainWindow):
         # self.window = ETOMethodsWindow(self.language)
 
     def wb_methods_window(self):
-        self.window = WBMethodsWindow(self.language)
+        pass
+        #self.window = WBMethodsWindow(self.language)
 
     def other_methods_window(self):
-        self.window = OtherMethodsWindow(self.language)
+        pass
+        #self.window = OtherMethodsWindow(self.language)
 
     # Help:
     def about_window(self):

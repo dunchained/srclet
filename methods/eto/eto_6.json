@@ -1,6 +1,6 @@
 {
     "name": "eto6",
-    "short_name": "mm/day",
+    "unit": "mm/day",
     "symbol": "eto_sym6",
     "description": "Turc (1961) method with average temperature, solar radiation and average relative humidity",
     "method_conditions": "if RHmea >= 50: aT = 1;\nelse: aT = 1 + ((50-RHmean)/70)",

@@ -3,7 +3,7 @@ import numpy
 import os
 import sys
 import json
-from PyQt5.QtWidgets import QMessageBox, QMenuBar, QAbstractScrollArea, QVBoxLayout, QFormLayout, QHBoxLayout
+from PyQt5.QtWidgets import QMessageBox, QVBoxLayout, QFormLayout, QHBoxLayout
 from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
 from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
 from PyQt5.QtCore import Qt, QDateTime, QDate, pyqtSignal
@@ -62,28 +62,28 @@ class CheckDataTypeWidget(TableWidget):
             self.categories_list.append(self.categories_file_data[category])
 
         self.get_files_parameters = next(
-            os.walk(os.path.curdir + "/parameters/basic/"), (None, None, []))[2]
+            os.walk(os.path.curdir + var.basic_parameters_folder), (None, None, []))[2]
         self.file_list_parameters = []
         for file in self.get_files_parameters:
-            with open('parameters/basic/' + Path(file).stem + '.json') as jsonFile:
+            with open(var.basic_parameters_folder_ + Path(file).stem + '.json') as jsonFile:
                 data = json.load(jsonFile)
                 jsonData = data['name']
                 self.file_list_parameters.append(jsonData)
 
         self.get_files_eto_methods = next(
-            os.walk(os.path.curdir + "/methods/eto/"), (None, None, []))[2]
+            os.walk(os.path.curdir + var.eto_methods_folder), (None, None, []))[2]
         self.file_list_eto_methods = []
         for file in self.get_files_eto_methods:
             self.file_list_eto_methods.append(Path(file).stem + '.json')
 
         self.get_files_wb_methods = next(
-            os.walk(os.path.curdir + "/methods/wb/"), (None, None, []))[2]
+            os.walk(os.path.curdir + var.wb_methods_folder), (None, None, []))[2]
         self.file_list_wb_methods = []
         for file in self.get_files_wb_methods:
             self.file_list_wb_methods.append(Path(file).stem + '.json')
 
         self.get_files_other_methods = next(
-            os.walk(os.path.curdir + "/methods/others/"), (None, None, []))[2]
+            os.walk(os.path.curdir + var.other_methods_folder), (None, None, []))[2]
         self.file_list_other_methods = []
         for file in self.get_files_other_methods:
             self.file_list_other_methods.append(Path(file).stem + '.json')
@@ -122,7 +122,7 @@ class CheckDataTypeWidget(TableWidget):
                     cwd + var.eto_methods_folder + file))
                 self.file_data = json.load(self.file_to_load)
                 self.menu_action = self.eto_method_menu.addAction(
-                    'ET0 | ' + self.file_data['name'] + '  |  ' + self.file_data['short_name'])
+                    'ET0 | ' + self.file_data['name'] + '  |  ' + self.file_data['unit'])
                 self.menu_action.triggered.connect(self.set_column_value)
 
             self.wb_method_menu = self.menu_kat.addMenu(
@@ -132,7 +132,7 @@ class CheckDataTypeWidget(TableWidget):
                     cwd + var.wb_methods_folder + file))
                 self.file_data = json.load(self.file_to_load)
                 self.menu_action = self.wb_method_menu.addAction(
-                    'WB | ' + self.file_data['name'] + '  |  ' + self.file_data['short_name'])
+                    'WB | ' + self.file_data['name'] + '  |  ' + self.file_data['unit'])
                 self.menu_action.triggered.connect(self.set_column_value)
 
             self.other_method_menu = self.menu_kat.addMenu(
@@ -142,7 +142,7 @@ class CheckDataTypeWidget(TableWidget):
                     cwd + var.other_methods_folder + file))
                 self.file_data = json.load(self.file_to_load)
                 self.menu_action = self.other_method_menu.addAction(
-                    'OTHER | ' + self.file_data['name'] + '  |  ' + self.file_data['short_name'])
+                    'OTHER | ' + self.file_data['name'] + '  |  ' + self.file_data['unit'])
                 self.menu_action.triggered.connect(self.set_column_value)
 
             self.menu_kat.addSeparator()

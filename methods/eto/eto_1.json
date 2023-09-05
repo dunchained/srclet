@@ -1,6 +1,6 @@
 {
     "name": "et01",
-    "short_name": "mm/day",
+    "unit": "mm/day",
     "symbol": "eto_sym1",
     "description": "Reference evapotranspiration in mm per day by Tabari & Talaee (2011) equation 2",
     "method_conditions": "",

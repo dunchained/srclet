@@ -1,0 +1,10 @@
+{
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "radiation": "Sunshine / Radiation",
+    "ET": "ET",
+    "wb": "WB",
+    "rain": "Rain",
+    "other": "Other"
+}

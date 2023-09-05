@@ -1,0 +1,8 @@
+{
+    "name": "Year",
+    "unit": "",
+    "symbol": "Y",
+    "description": "Ordinal number of the year for which the calculation is performed_new",
+    "type": "a",
+    "category": "other"
+}

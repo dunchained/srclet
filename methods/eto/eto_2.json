@@ -1,6 +1,6 @@
 {
     "name": "eto2",
-    "short_name": "mm/day",
+    "unit": "mm/day",
     "symbol": "eto_sym2",
     "description": "Moramol to.",
     "method_conditions": "",

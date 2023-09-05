@@ -1,6 +1,6 @@
 {
     "name": "eto4",
-    "short_name": "mm/day",
+    "unit": "mm/day",
     "symbol": "eto_sym4",
     "description": "Reference evapotranspiration, 4th version of Valiantzas equation",
     "method_conditions": "",

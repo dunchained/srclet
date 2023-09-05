@@ -1,8 +1,8 @@
-from variables import var, css
-from mortys.basic_parameters_morty import read_characters, get_filename
+#from variables import var
+import var
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit, QTabWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit, QTabWidget
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QDateEdit
 import sys
 import json
@@ -11,12 +11,32 @@ cwd = os.path.curdir
 
 
 class InputCharacterWidget(QTabWidget):
-    def __init__(self, language, columns, title):
+    #def __init__(self, language, columns, title):
+    def __init__(self, columns=3, title='hue hue'):
         super().__init__()
         self.columns = columns
         self.input_title = title
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = language
+        self.language = {
+            "//": "Basic Parameters Widget",
+            "basic_parameters_widget_title": "Parameters",
+            "basic_parameters_new_addition": "_new",
+            "language_description": "en",
+            "basic_parameters_widget_caption": "List of available parameters:",
+            "basic_parameters_widget_btn_add_new": "Add new parameter",
+            "basic_parameters_widget_btn_add_new_inherit": "Add new parameter based on selected",
+            "basic_parameters_widget_btn_delete": "Delete selected parameter",
+            "basic_parameters_widget_parameter_caption": "Parameter information:",
+            "basic_parameters_widget_parameter_btn_save_changes": "Save changes",
+            "basic_parameters_widget_parameter_btn_cancel_changes": "Cancel changes",
+            "basic_parameters_widget_delete_msg_title": "Delete parameter...",
+            "basic_parameters_widget_delete_msg_message": "Are you sure you want to delete selected parameter?",
+            "basic_parameters_widget_delete_msg_yes": "Yes",
+            "basic_parameters_widget_delete_msg_cancel": "Cancel",
+            "basic_parameters_widget_save_changes_message": "Parameter must have name...",
+            "basic_parameters_widget_save_changes_message_caption": "Changes...",
+            "//": "Basic Parameters Widget END"
+        }
         self.widget_gui()
 
     def widget_gui(self):
@@ -32,12 +52,14 @@ class InputCharacterWidget(QTabWidget):
             self.sc_layout = QGridLayout()
             self.sc_scroll = QWidget()
             file_name_to_send = category['category']
-            self.characters_list, self.rows, self.columns = self.read_characters_file(
+            self.characters_list, self.opisi_list, self.rows, self.columns = self.read_characters_file(
                 file_name=file_name_to_send, columns=self.columns)
             i = 0
+            print(self.opisi_list)
             for row in range(self.rows):
                 for column in range(self.columns):
                     self.button = QPushButton(self.characters_list[i])
+                    self.button.setToolTip(self.opisi_list[i])
                     self.button.clicked.connect(self.special_character_clicked)
                     self.sc_layout.addWidget(self.button, row+1, column)
                     i += 1
@@ -73,18 +95,20 @@ class InputCharacterWidget(QTabWidget):
         return self.cat_list
 
     def read_characters_file(self, file_name, columns):
-        file = os.path.join(cwd + var.charactes_loc +
-                            'special_characters_' + file_name + '.json')
+        file = os.path.join(cwd + var.charactes_loc + 'special_characters_' + file_name + '.json')
         open_file = open(file)
         data_file = json.load(open_file)
         category_list = []
-        for character in data_file:
-            category_list.append(data_file[character])
+        description_list = []
+        for key, character in data_file.items():
+            print(key, character)
+            category_list.append(character)
+            description_list.append(key)
         if len(category_list) % columns == 0:
             rows = len(category_list) // columns
         else:
             rows = len(category_list) // columns + 1
-        return category_list, rows, columns
+        return category_list, description_list, rows, columns
 
     def on_focus_changed(self, widget):
         self.on_focused_change = widget
