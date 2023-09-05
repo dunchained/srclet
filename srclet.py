@@ -18,7 +18,6 @@ from variables import css, var
 import sys
 import os
 cwd = os.path.curdir
-
 class MyProxyStyle(QProxyStyle):
     pass
 
