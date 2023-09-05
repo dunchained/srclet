@@ -55,11 +55,10 @@ class InputCharacterWidget(QTabWidget):
             self.characters_list, self.opisi_list, self.rows, self.columns = self.read_characters_file(
                 file_name=file_name_to_send, columns=self.columns)
             i = 0
-            print(self.opisi_list)
             for row in range(self.rows):
                 for column in range(self.columns):
-                    self.button = QPushButton(self.characters_list[i])
-                    self.button.setToolTip(self.opisi_list[i])
+                    self.button = QPushButton(self.opisi_list[i])
+                    self.button.setToolTip(self.characters_list[i])
                     self.button.clicked.connect(self.special_character_clicked)
                     self.sc_layout.addWidget(self.button, row+1, column)
                     i += 1
@@ -95,13 +94,12 @@ class InputCharacterWidget(QTabWidget):
         return self.cat_list
 
     def read_characters_file(self, file_name, columns):
-        file = os.path.join(cwd + var.charactes_loc + 'special_characters_' + file_name + '.json')
+        file = os.path.join(cwd + var.charactes_loc + self.language['language_description'] + '/' + 'special_characters_' + file_name + '.json')
         open_file = open(file)
         data_file = json.load(open_file)
         category_list = []
         description_list = []
         for key, character in data_file.items():
-            print(key, character)
             category_list.append(character)
             description_list.append(key)
         if len(category_list) % columns == 0:
