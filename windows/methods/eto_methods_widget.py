@@ -10,7 +10,7 @@ from eto_methods_add import AddETOMethod
 #from mortys.methods_morty import read_characters, read_basic_parameters, read_complex_parameters
 from methods_morty import read_characters, read_basic_parameters, read_complex_parameters
 from language import language
-from character_widget import InputCharacterWidget
+from windows.methods.ch_widget import InputCharacterWidget
 from basic_parameters_insert_widget import InputBasicParameterNameWidget
 
 class ETOMethodsWidget(QWidget):

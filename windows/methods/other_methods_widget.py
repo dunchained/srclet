@@ -1,7 +1,9 @@
 #from windows.parameters.basic_parameters_add import AddBasicParameter
 import var
 from language import language
-from character_widget import InputCharacterWidget
+from ch_widget import InputCharacterWidget
+from bp_widget import BasicParameterWidget
+from cp_widget import ChangableParameterWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
@@ -56,10 +58,11 @@ class OtherMethodsWidget(QWidget):
             if self.category == self.file_data['category']:
                 self.category_list.append(self.file_data['name'])
         self.grid = QGridLayout()
-        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 2, 1)
-        self.grid.addWidget(self.create_parameter_widget(), 0, 1, 2, 1)
-        self.grid.addWidget(InputCharacterWidget(language=language, title='Input BASIC widget CHANGE:', columns=3), 0, 2, 1, 1)
-        self.grid.addWidget(InputCharacterWidget(language=language, title='Input OTHER widget CHANGE:', columns=3), 1, 2, 1, 1)
+        self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 3, 1)
+        self.grid.addWidget(self.create_parameter_widget(), 0, 1, 3, 1)
+        self.grid.addWidget(BasicParameterWidget(language=language, title='Input BASIC widget CHANGE:', columns=3), 0, 2, 1, 1)
+        self.grid.addWidget(ChangableParameterWidget(language=language, title='Input CHANGEBLE widget CHANGE:', columns=3), 1, 2, 1, 1)
+        self.grid.addWidget(InputCharacterWidget(language=language, title='Input OTHER widget CHANGE:', columns=3), 2, 2, 1, 1)
 
         self.setLayout(self.grid)
 

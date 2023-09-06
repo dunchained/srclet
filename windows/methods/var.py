@@ -4,9 +4,11 @@ eto_methods_folder = '/methods/eto/'
 
 
 p_cat_file = 'basic_parameter_types.json'
+ch_cat_file = 'changable_parameter_types.json'
 om_cat_file = 'other_methods_types.json'
 language_folder = '/srclet/languages/'
 basic_parameters_folder = '/parameters/basic/'
+changable_parameters_folder = '/parameters/changable/'
 complex_parameters_folder = '/parameters/complex/'
 language_file = 'language.json'
 projects_folder = '/projects/'

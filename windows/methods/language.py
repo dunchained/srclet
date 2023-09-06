@@ -203,6 +203,18 @@ language = {
     "other_methods_window_name_message_caption": "Parameter name...",
     "other_methods_window_sc": "Insert special character:",
     "other_methods_new_addition": "_new",
-    "//": "OTHER Methods Add END"
+    "//": "OTHER Methods Add END",
+
+    "//": "Input Basic Parameter Widget",
+    "input_bp_parameter_name": "Parameter name: ",
+    "input_bp_parameter_cat": "Parameter category: ",
+    "input_bp_parameter_unit": "Parameter unit: ",
+    "input_bp_parameter_sym": "Parameter symbol: ",
+    "input_bp_parameter_desc": "Parameter description: ",
+    "//": "Input Basic Parameter Widget END",
+
+    "//": "Input Changable Parameter Widget",
+    "input_cp_parameter_val": "Parameter value: ",
+    "//": "Input Changable Parameter Widget END",
 }
 
