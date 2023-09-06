@@ -4,7 +4,7 @@ cwd = os.path.curdir
 categories_file = 'parameter_types.json'
 language_folder = '/srclet/languages/'
 basic_parameters_folder = '/parameters/basic/'
-complex_parameters_folder = '/parameters/complex/'
+complex_parameters_folder = '/parameters/changable/'
 
 def read_characters(character_type):
     lista_fajlova = next(os.walk(cwd + character_type), (None, None, []))[2]
@@ -48,8 +48,7 @@ def read_complex_parameters_insert():
             value = characters['symbol']
             if characters['type'] == 'a':
                 value = characters['symbol']
-                if characters['changable'] == 'yes':
-                    button_list.append(value)
+                button_list.append(value)
     columns = 3
     if len(button_list) % 3 == 0:
         rows = len(button_list) // 3
@@ -86,8 +85,7 @@ def read_complex_parameters():
             value = characters['symbol']
             if characters['type'] == 'a':
                 value = characters['symbol']
-                if characters['changable'] == 'yes':
-                    button_list.append(value)
+                button_list.append(value)
     columns = 3
     if len(button_list) % 3 == 0:
         rows = len(button_list) // 3
