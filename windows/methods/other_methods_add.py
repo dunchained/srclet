@@ -57,9 +57,6 @@ class AddOtherMethod(QWidget):
         self.methods_groupbox.layout.addWidget(ChangableParameterWidget(language=self.language, title='CH Chang', columns=3), 0, 1, 1, 1)
         self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title='CH Char', columns=3), 1, 0, 1, 1)
         self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title='CH Char', columns=3), 1, 1, 1, 1)
-        #self.methods_groupbox.layout.addWidget(self.special_character_groupbox(), 0, 0, 1, 2)
-        #self.methods_groupbox.layout.addWidget(self.basic_parameters_groupbox_insert(), 1, 0, 1, 1)
-        #self.methods_groupbox.layout.addWidget(self.complex_parameters_groupbox_insert(), 1, 1, 1, 1)
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
             
