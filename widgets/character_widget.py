@@ -1,5 +1,4 @@
-#from variables import var
-import var
+from variables import var
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit, QTabWidget
@@ -11,32 +10,12 @@ cwd = os.path.curdir
 
 
 class InputCharacterWidget(QTabWidget):
-    #def __init__(self, language, columns, title):
-    def __init__(self, columns=3, title='hue hue'):
+    def __init__(self, language, columns, title):
         super().__init__()
         self.columns = columns
         self.input_title = title
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.language = {
-            "//": "Basic Parameters Widget",
-            "basic_parameters_widget_title": "Parameters",
-            "basic_parameters_new_addition": "_new",
-            "language_description": "en",
-            "basic_parameters_widget_caption": "List of available parameters:",
-            "basic_parameters_widget_btn_add_new": "Add new parameter",
-            "basic_parameters_widget_btn_add_new_inherit": "Add new parameter based on selected",
-            "basic_parameters_widget_btn_delete": "Delete selected parameter",
-            "basic_parameters_widget_parameter_caption": "Parameter information:",
-            "basic_parameters_widget_parameter_btn_save_changes": "Save changes",
-            "basic_parameters_widget_parameter_btn_cancel_changes": "Cancel changes",
-            "basic_parameters_widget_delete_msg_title": "Delete parameter...",
-            "basic_parameters_widget_delete_msg_message": "Are you sure you want to delete selected parameter?",
-            "basic_parameters_widget_delete_msg_yes": "Yes",
-            "basic_parameters_widget_delete_msg_cancel": "Cancel",
-            "basic_parameters_widget_save_changes_message": "Parameter must have name...",
-            "basic_parameters_widget_save_changes_message_caption": "Changes...",
-            "//": "Basic Parameters Widget END"
-        }
+        self.language = language
         self.widget_gui()
 
     def widget_gui(self):
