@@ -3,7 +3,7 @@
     "humidity": "Humidity",
     "wind": "Wind",
     "radiation": "Sunshine / Radiation",
-    "ET": "ET",
+    "et": "ET",
     "wb": "WB",
     "rain": "Rain",
     "other": "Other"

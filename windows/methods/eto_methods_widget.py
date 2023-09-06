@@ -63,7 +63,7 @@ class ETOMethodsWidget(QWidget):
         self.methods_groupbox.layout.addWidget(self.list_widget, 0, 0, 1, 1)
         self.methods_groupbox.layout.addWidget(self.btn_add_method, 2, 0, 1, 1)
         #self.methods_groupbox.layout.addWidget(self.special_character_groupbox(), 1, 0, 1, 1)
-        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=language, title='IN', columns=3), 1, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=language, title=self.language['add_basic_parameter_window_sc'], columns=3), 1, 0, 1, 1)
         self.methods_groupbox.layout.addWidget(self.btn_delete_method, 3, 0, 1, 1)
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
@@ -82,24 +82,24 @@ class ETOMethodsWidget(QWidget):
                         self.update_labels(
                             state=False, 
                             name=data['name'],
-                            short_name=data['unit'],
+                            short_name=data['short_name'],
                             symbol=data['symbol'],
                             description=data['description'],
                             conditions=data['method_conditions'],
                             formula=data['method_formula'],
                             bparam=data['basic_parameters'],
-                            cparam=data['other_methods'])
+                            cparam=data['complex_parameters'])
                     else:
                         self.update_labels(
                             state=True, 
                             name=data['name'],
-                            short_name=data['unit'],
+                            short_name=data['short_name'],
                             symbol=data['symbol'],
                             description=data['description'],
                             conditions=data['method_conditions'],
                             formula=data['method_formula'],
                             bparam=data['basic_parameters'],
-                            cparam=data['other_methods'])
+                            cparam=data['complex_parameters'])
 
     def update_labels(self, state, name, short_name, symbol, description, conditions, formula, bparam, cparam):
         self.method_name.setText(name)

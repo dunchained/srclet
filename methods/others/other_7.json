@@ -7,5 +7,6 @@
     "method_formula": "-0.478+(0.156*Rs)-(0.0112*Tmax)+(0.0733*Tmin)",
     "basic_parameters": "Tmin, Tmax, Rs",
     "other_methods": "symbol3",
+    "category": "humidity",
     "type": "a"
 }
