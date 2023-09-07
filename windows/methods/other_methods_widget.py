@@ -27,8 +27,7 @@ class OtherMethodsCategoryTabs(QWidget):
 
     def tab_widget(self):
         self.categories_tabs = QTabWidget()
-        self.categories_file = open(os.path.join(
-            cwd + var.language_folder + self.language['language_description'] + '/' + var.om_cat_file))
+        self.categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.om_cat_file))
         self.categories_file_data = json.load(self.categories_file)
         self.categories_list = []
         for category in self.categories_file_data:
@@ -172,18 +171,14 @@ class OtherMethodsWidget(QWidget):
 
     def delete_procedure(self):
         self.msgBox = QMessageBox()
-        self.msgBox.setIcon(QMessageBox.Information)
-        self.msgBox.setText(
-            self.language['other_methods_widget_delete_msg_title'])
-        self.msgBox.setWindowTitle(
-            self.language['other_methods_widget_delete_msg_message'])
+        self.msgBox.setIcon(QMessageBox.Information) 
+        self.msgBox.setText(self.language['other_methods_widget_delete_msg_title'])
+        self.msgBox.setWindowTitle(self.language['other_methods_widget_delete_msg_message'])
         self.msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         self.buttonOK = self.msgBox.button(QMessageBox.Ok)
-        self.buttonOK.setText(
-            self.language['other_methods_widget_delete_msg_yes'])
+        self.buttonOK.setText(self.language['other_methods_widget_delete_msg_yes'])
         self.buttonCancel = self.msgBox.button(QMessageBox.Cancel)
-        self.buttonCancel.setText(
-            self.language['other_methods_widget_delete_msg_cancel'])
+        self.buttonCancel.setText(self.language['other_methods_widget_delete_msg_cancel'])
         self.msgBox.buttonClicked.connect(self.delete_parameter)
         returnValue = self.msgBox.exec()
 
