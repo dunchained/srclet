@@ -16,7 +16,8 @@ from cp_widget import ChangableParameterWidget
 
 class AddOtherMethod(QWidget):
     def __init__(self, language, data_to_input):
-        super(AddOtherMethod, self).__init__()
+        super().__init__()
+        #self.setUpdatesEnabled(True)
         self.language = language
         self.data_to_input = data_to_input
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
@@ -60,168 +61,7 @@ class AddOtherMethod(QWidget):
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
             
-       
-    def basic_parameters_groupbox(self):
-        self.bp_groupbox = QGroupBox()
-        self.bp_layout = QGridLayout()
-        self.bp_scroll = QWidget()
-        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
-        
-        i = 0
-        for row in range(self.rows):
-            for column in range(self.columns):
-                self.bp_check = QCheckBox(f'{self.bp_check_list[i]}', self)
-                
-                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
-                self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
-                for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
-                    self.file_data = json.load(self.file_to_read)
-                    if self.bp_check_list[i] == self.file_data['symbol']:
-                        self.file_to_load = file
-                self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
-                with open(self.json_path) as json_file:
-                    tooltip_data = json.load(json_file)
-                # dodati šta fali za parameter od polja
-                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bp_check_list[i] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
-                self.bp_check.setToolTip(self.text)
-                
-                self.bp_check.clicked.connect(self.basic_parameter_checked)
-                self.bp_layout.addWidget(self.bp_check, row+1, column)
-                i += 1
-                if i == len(self.bp_check_list): break
-        self.bp_scroll.setLayout(self.bp_layout)
-        bp = QScrollArea()
-        bp.setWidget(self.bp_scroll)
-        bp.setWidgetResizable(1)
-        self.bp_groupbox.layout = QVBoxLayout()
-        self.bp_groupbox.layout.addWidget(bp)
-        self.bp_groupbox.setLayout(self.bp_groupbox.layout)
-        return self.bp_groupbox
-    
-    def basic_parameter_checked(self):
-        if not self.selected_bp_list.text():
-            self.bpl = []
-        else:
-            self.bpl = self.selected_bp_list.text().split(', ')
-        if self.sender().checkState() == 2:
-            self.bpl.append(self.sender().text())
-            self.selected_bp_list.setText(', '.join(self.bpl))
-        else:
-            self.bpl.remove(self.sender().text())
-            self.selected_bp_list.setText(', '.join(self.bpl))
-            
-    def changable_parameters_groupbox(self):
-        self.cp_groupbox = QGroupBox()
-        self.cp_layout = QGridLayout()
-        self.cp_scroll = QWidget()
-        self.cp_check_list, self.rows, self.columns = read_changable_parameters()
-        i = 0
-        for row in range(self.rows):
-            for column in range(self.columns):
-                self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
-                
-                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
-                self.get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
-                for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.changable_parameters_folder + file))
-                    self.file_data = json.load(self.file_to_read)
-                    if self.cp_check_list[i] == self.file_data['symbol']:
-                        self.file_to_load = file
-                self.json_path = cwd + var.changable_parameters_folder + self.file_to_load
-                with open(self.json_path) as json_file:
-                    tooltip_data = json.load(json_file)
 
-                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.cp_check_list[i] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description'] + \
-                            '<b>' + self.language['input_cp_parameter_val'] + '</b>' + tooltip_data['value']
-                self.cp_check.setToolTip(self.text)
-                
-                self.cp_check.clicked.connect(self.changable_parameter_checked)
-                self.cp_layout.addWidget(self.cp_check, row+1, column)
-                i += 1
-                if i == len(self.cp_check_list): break
-        self.cp_scroll.setLayout(self.cp_layout)
-        cp = QScrollArea()
-        cp.setWidget(self.cp_scroll)
-        cp.setWidgetResizable(1)
-        self.cp_groupbox.layout = QVBoxLayout()
-        self.cp_groupbox.layout.addWidget(cp)
-        self.cp_groupbox.setLayout(self.cp_groupbox.layout)
-        return self.cp_groupbox
-    
-    def changable_parameter_checked(self):
-        if not self.selected_cp_list.text():
-            self.cpl = []
-        else:
-            self.cpl = self.selected_cp_list.text().split(', ')
-        if self.sender().checkState() == 2:
-            self.cpl.append(self.sender().text())
-            self.selected_cp_list.setText(', '.join(self.cpl))
-        else:
-            self.cpl.remove(self.sender().text())
-            self.selected_cp_list.setText(', '.join(self.cpl))
-
-    def om_groupbox(self):
-        self.om_groupboxx = QGroupBox()
-        self.om_layout = QGridLayout()
-        self.om_scroll = QWidget()
-        self.om_check_list, self.rows, self.columns = read_om()
-        i = 0
-        for row in range(self.rows):
-            for column in range(self.columns):
-                self.om_check = QCheckBox(f'{self.om_check_list[i]}', self)
-                
-                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
-                self.get_files = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
-                for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
-                    self.file_data = json.load(self.file_to_read)
-                    if self.om_check_list[i] == self.file_data['symbol']:
-                        self.file_to_load = file
-                self.json_path = cwd + var.other_methods_folder + self.file_to_load
-                with open(self.json_path) as json_file:
-                    tooltip_data = json.load(json_file)
-
-                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.om_check_list[i] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description'] 
-                self.om_check.setToolTip(self.text)
-                
-                self.om_check.clicked.connect(self.om_checked)
-                self.om_layout.addWidget(self.om_check, row+1, column)
-                i += 1
-                if i == len(self.om_check_list): break
-        self.om_scroll.setLayout(self.om_layout)
-        om = QScrollArea()
-        om.setWidget(self.om_scroll)
-        om.setWidgetResizable(1)
-        self.om_groupboxx.layout = QVBoxLayout()
-        self.om_groupboxx.layout.addWidget(om)
-        self.om_groupboxx.setLayout(self.om_groupboxx.layout)
-        return self.om_groupboxx
-    
-    def om_checked(self):
-        if not self.selected_om_list.text():
-            self.ompl = []
-        else:
-            self.ompl = self.selected_om_list.text().split(', ')
-        if self.sender().checkState() == 2:
-            self.ompl.append(self.sender().text())
-            self.selected_om_list.setText(', '.join(self.ompl))
-        else:
-            self.ompl.remove(self.sender().text())
-            self.selected_om_list.setText(', '.join(self.ompl))
-        
     def left_groupbox(self):
         self.method_info_groupbox = QGroupBox(self.language['add_other_method_info_caption'])
         
@@ -274,20 +114,9 @@ class AddOtherMethod(QWidget):
             self.method_description = QTextEdit(self.data_to_input['description'])
             self.method_conditions = QTextEdit(self.data_to_input['method_conditions'])
             self.method_formula = QTextEdit(self.data_to_input['method_formula'])
-            
             self.selected_bp_list = QLabel(self.data_to_input['basic_parameters'])
-            self.bp_list_to_update = self.selected_bp_list.text().split(', ')
-            print(self.bp_list_to_update)
-            #for bp_check in range(self.bp_groupbox.layout.itemAt(self.bp_layout)):
-            print(vars(AddOtherMethod.basic_parameters_))
-                        # for self.bp_check in range(self.bp_layout.count()):
-            #     self.bp_check_widget = self.bp_layout.itemAt(self.bp_check).widget()
-            #     self.bp_check_widget.setChecked(False)
-            #     if self.bp_check_widget.text() in self.bp_list_to_update: self.bp_check_widget.setChecked(True)
-           
             self.selected_cp_list = QLabel(self.data_to_input['changable_parameters'])
             self.selected_om_list = QLabel(self.data_to_input['other_methods'])
-
      
         self.method_info_groupbox.layout = QGridLayout()
 
@@ -400,7 +229,192 @@ class AddOtherMethod(QWidget):
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()
+
+    def basic_parameters_groupbox(self):
+        self.bp_groupbox = QGroupBox()
+        self.bp_layout = QGridLayout()
+        self.bp_scroll = QWidget()
+        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
+        
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.bp_check = QCheckBox(f'{self.bp_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.bp_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                # dodati šta fali za parameter od polja
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.bp_check.setToolTip(self.text)
+                
+                self.bp_check.clicked.connect(self.basic_parameter_checked)
+                self.bp_layout.addWidget(self.bp_check, row+1, column)
+                i += 1
+                if i == len(self.bp_check_list): break
+        self.bp_scroll.setLayout(self.bp_layout)
+        bp = QScrollArea()
+        bp.setWidget(self.bp_scroll)
+        bp.setWidgetResizable(1)
+        self.bp_groupbox.layout = QVBoxLayout()
+        self.bp_groupbox.layout.addWidget(bp)
+        self.bp_groupbox.setLayout(self.bp_groupbox.layout)
+        if self.data_to_input == None:
+            pass
+        else:
+            self.bp_list_to_update = self.selected_bp_list.text().split(', ')
+            for self.bp_check in range(self.bp_layout.count()):
+                self.bp_check_widget = self.bp_layout.itemAt(self.bp_check).widget()
+                self.bp_check_widget.setChecked(False)
+                if self.bp_check_widget.text() in self.bp_list_to_update: self.bp_check_widget.setChecked(True)
+        return self.bp_groupbox
+    
+    def basic_parameter_checked(self):
+        if not self.selected_bp_list.text():
+            self.bpl = []
+        else:
+            self.bpl = self.selected_bp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.bpl.append(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
+        else:
+            self.bpl.remove(self.sender().text())
+            self.selected_bp_list.setText(', '.join(self.bpl))
             
+    def changable_parameters_groupbox(self):
+        self.cp_groupbox = QGroupBox()
+        self.cp_layout = QGridLayout()
+        self.cp_scroll = QWidget()
+        self.cp_check_list, self.rows, self.columns = read_changable_parameters()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.changable_parameters_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.cp_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.changable_parameters_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.cp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description'] + \
+                            '<b>' + self.language['input_cp_parameter_val'] + '</b>' + tooltip_data['value']
+                self.cp_check.setToolTip(self.text)
+                
+                self.cp_check.clicked.connect(self.changable_parameter_checked)
+                self.cp_layout.addWidget(self.cp_check, row+1, column)
+                i += 1
+                if i == len(self.cp_check_list): break
+        self.cp_scroll.setLayout(self.cp_layout)
+        cp = QScrollArea()
+        cp.setWidget(self.cp_scroll)
+        cp.setWidgetResizable(1)
+        self.cp_groupbox.layout = QVBoxLayout()
+        self.cp_groupbox.layout.addWidget(cp)
+        self.cp_groupbox.setLayout(self.cp_groupbox.layout)
+        if self.data_to_input == None:
+            pass
+        else:
+            self.cp_list_to_update = self.selected_cp_list.text().split(', ')
+            for self.cp_check in range(self.cp_layout.count()):
+                self.cp_check_widget = self.cp_layout.itemAt(self.cp_check).widget()
+                self.cp_check_widget.setChecked(False)
+                if self.cp_check_widget.text() in self.cp_list_to_update: self.cp_check_widget.setChecked(True)
+        return self.cp_groupbox
+    
+    def changable_parameter_checked(self):
+        if not self.selected_cp_list.text():
+            self.cpl = []
+        else:
+            self.cpl = self.selected_cp_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.cpl.append(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+        else:
+            self.cpl.remove(self.sender().text())
+            self.selected_cp_list.setText(', '.join(self.cpl))
+
+    def om_groupbox(self):
+        self.om_groupboxx = QGroupBox()
+        self.om_layout = QGridLayout()
+        self.om_scroll = QWidget()
+        self.om_check_list, self.rows, self.columns = read_om()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.om_check = QCheckBox(f'{self.om_check_list[i]}', self)
+                
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.om_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.other_methods_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+
+                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.om_check_list[i] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description'] 
+                self.om_check.setToolTip(self.text)
+                
+                self.om_check.clicked.connect(self.om_checked)
+                self.om_layout.addWidget(self.om_check, row+1, column)
+                i += 1
+                if i == len(self.om_check_list): break
+        self.om_scroll.setLayout(self.om_layout)
+        om = QScrollArea()
+        om.setWidget(self.om_scroll)
+        om.setWidgetResizable(1)
+        self.om_groupboxx.layout = QVBoxLayout()
+        self.om_groupboxx.layout.addWidget(om)
+        self.om_groupboxx.setLayout(self.om_groupboxx.layout)
+        if self.data_to_input == None:
+            pass
+        else:
+            self.om_list_to_update = self.selected_om_list.text().split(', ')
+            for self.om_check in range(self.om_layout.count()):
+                self.om_check_widget = self.om_layout.itemAt(self.om_check).widget()
+                self.om_check_widget.setChecked(False)
+                if self.om_check_widget.text() in self.om_list_to_update: self.om_check_widget.setChecked(True)
+        return self.om_groupboxx
+    
+    def om_checked(self):
+        if not self.selected_om_list.text():
+            self.ompl = []
+        else:
+            self.ompl = self.selected_om_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.ompl.append(self.sender().text())
+            self.selected_om_list.setText(', '.join(self.ompl))
+        else:
+            self.ompl.remove(self.sender().text())
+            self.selected_om_list.setText(', '.join(self.ompl))
+                
     def message_box_success(self):
         self.close()
             

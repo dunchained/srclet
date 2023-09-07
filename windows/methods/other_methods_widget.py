@@ -165,7 +165,6 @@ class OtherMethodsWidget(QWidget):
             language=self.language, data_to_input=None)
 
     def new_om_window_inherit(self):
-
         self.window = AddOtherMethod(
             language=self.language, data_to_input=self.method_dict)
 
@@ -567,7 +566,6 @@ class OtherMethodsWidget(QWidget):
             self.om_check_widget = self.om_layout.itemAt(self.om_check).widget()
             self.om_check_widget.setChecked(False)
             if self.om_check_widget.text() in self.om_list_to_update: self.om_check_widget.setChecked(True)
-
 
 
 if __name__ == '__main__':
