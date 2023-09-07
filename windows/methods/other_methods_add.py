@@ -101,7 +101,6 @@ class AddOtherMethod(QWidget):
         self.bp_groupbox.layout = QVBoxLayout()
         self.bp_groupbox.layout.addWidget(bp)
         self.bp_groupbox.setLayout(self.bp_groupbox.layout)
-        print(self.bp_groupbox.findChild(QGridLayout))
         return self.bp_groupbox
     
     def basic_parameter_checked(self):
@@ -240,7 +239,6 @@ class AddOtherMethod(QWidget):
         self.text_cp_selected = QLabel(self.language['add_other_method_info_cp_s'])
         self.text_om_selected = QLabel(self.language['add_other_method_info_om_s'])
 
-
         if self.data_to_input == None:
             self.method_name = QLineEdit()
             self.method_unit = QLineEdit()
@@ -278,9 +276,11 @@ class AddOtherMethod(QWidget):
             self.method_formula = QTextEdit(self.data_to_input['method_formula'])
             
             self.selected_bp_list = QLabel(self.data_to_input['basic_parameters'])
-            self.bp_list_to_update = self.data_to_input['basic_parameters'].split(', ')
-            print(self.bp_groupbox.findChild(QGridLayout))
-            # for self.bp_check in range(self.bp_layout.count()):
+            self.bp_list_to_update = self.selected_bp_list.text().split(', ')
+            print(self.bp_list_to_update)
+            #for bp_check in range(self.bp_groupbox.layout.itemAt(self.bp_layout)):
+            print(vars(AddOtherMethod.basic_parameters_))
+                        # for self.bp_check in range(self.bp_layout.count()):
             #     self.bp_check_widget = self.bp_layout.itemAt(self.bp_check).widget()
             #     self.bp_check_widget.setChecked(False)
             #     if self.bp_check_widget.text() in self.bp_list_to_update: self.bp_check_widget.setChecked(True)
