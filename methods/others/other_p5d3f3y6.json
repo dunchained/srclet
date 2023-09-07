@@ -1,0 +1,13 @@
+{
+    "name": "OM1",
+    "unit": "mm/ss",
+    "symbol": "sike",
+    "description": "Neki opis ne\u0161to.\t",
+    "method_conditions": "",
+    "method_formula": "\u0100",
+    "basic_parameters": "Tmax, RHmin, test_temperatura",
+    "changable_parameters": "sasasa, \u03c9s, \u03c9s",
+    "other_methods": "symbol4, symbol5, symbol6",
+    "category": "wind",
+    "type": "b"
+}
