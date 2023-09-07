@@ -70,7 +70,7 @@ class BasicParameterWidget(QTabWidget):
         main_layout.addWidget(self.label_caption)
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.show()
+        #self.show()
         
     def read_parameter_categories(self):
         self.cat = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.p_cat_file))
