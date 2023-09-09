@@ -163,9 +163,9 @@ class AddOtherMethod(QWidget):
     
     def down_groupbox(self):
         self.btn_groupbox = QGroupBox()
-        self.btn_save = QPushButton(self.language['add_eto_method_btn_save'])
+        self.btn_save = QPushButton(self.language['add_other_method_btn_save'])
         self.btn_save.clicked.connect(self.add_method)
-        self.btn_cancel = QPushButton(self.language['add_eto_method_btn_close'])
+        self.btn_cancel = QPushButton(self.language['add_other_method_btn_close'])
         self.btn_cancel.clicked.connect(self.close)
         self.btn_groupbox.layout = QHBoxLayout()
         self.btn_groupbox.layout.addWidget(self.btn_save)
@@ -234,12 +234,10 @@ class AddOtherMethod(QWidget):
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
         self.bp_check_list, self.rows, self.columns = read_basic_parameters()
-        
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
                 self.bp_check = QCheckBox(f'{self.bp_check_list[i]}', self)
-                
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
                 for file in self.get_files:
@@ -250,14 +248,12 @@ class AddOtherMethod(QWidget):
                 self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
                 with open(self.json_path) as json_file:
                     tooltip_data = json.load(json_file)
-                # dodati šta fali za parameter od polja
-                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.bp_check_list[i] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description']
+                self.text = '<b>' + self.language['tooltips_bp_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_symbol'] + '</b>' + self.bp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_desc'] + '</b>' + tooltip_data['description']
                 self.bp_check.setToolTip(self.text)
-                
                 self.bp_check.clicked.connect(self.basic_parameter_checked)
                 self.bp_layout.addWidget(self.bp_check, row+1, column)
                 i += 1
@@ -300,7 +296,6 @@ class AddOtherMethod(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 self.cp_check = QCheckBox(f'{self.cp_check_list[i]}', self)
-                
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
                 for file in self.get_files:
@@ -311,15 +306,13 @@ class AddOtherMethod(QWidget):
                 self.json_path = cwd + var.changable_parameters_folder + self.file_to_load
                 with open(self.json_path) as json_file:
                     tooltip_data = json.load(json_file)
-
-                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.cp_check_list[i] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description'] + \
-                            '<b>' + self.language['input_cp_parameter_val'] + '</b>' + tooltip_data['value']
+                self.text = '<b>' + self.language['tooltips_bp_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['tooltips_cp_value'] + '</b>' + tooltip_data['value'] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_symbol'] + '</b>' + self.cp_check_list[i] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['tooltips_bp_desc'] + '</b>' + tooltip_data['description']
                 self.cp_check.setToolTip(self.text)
-                
                 self.cp_check.clicked.connect(self.changable_parameter_checked)
                 self.cp_layout.addWidget(self.cp_check, row+1, column)
                 i += 1
@@ -332,7 +325,7 @@ class AddOtherMethod(QWidget):
         self.cp_groupbox.layout.addWidget(cp)
         self.cp_groupbox.setLayout(self.cp_groupbox.layout)
         if self.data_to_input == None:
-            pass
+            pass 
         else:
             self.cp_list_to_update = self.selected_cp_list.text().split(', ')
             for self.cp_check in range(self.cp_layout.count()):
@@ -362,7 +355,6 @@ class AddOtherMethod(QWidget):
         for row in range(self.rows):
             for column in range(self.columns):
                 self.om_check = QCheckBox(f'{self.om_check_list[i]}', self)
-                
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
                 for file in self.get_files:
@@ -373,14 +365,17 @@ class AddOtherMethod(QWidget):
                 self.json_path = cwd + var.other_methods_folder + self.file_to_load
                 with open(self.json_path) as json_file:
                     tooltip_data = json.load(json_file)
-
-                self.text = '<b>' + self.language['add_basic_parameter_window_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_symbol'] + '</b>' + self.om_check_list[i] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
-                            '<b>' + self.language['add_basic_parameter_window_desc'] + '</b>' + tooltip_data['description'] 
+                self.text = '<b>' + self.language['tooltips_om_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_symbol'] + '</b>' + self.om_check_list[i] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_mc'] + '</b>' + tooltip_data['method_conditions'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_mf'] + '</b>' + tooltip_data['method_formula'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_bps'] + '</b>' + tooltip_data['basic_parameters'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_cps'] + '</b>' + tooltip_data['changable_parameters'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_oms'] + '</b>' + tooltip_data['other_methods'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_category'] + '</b>' + tooltip_data['category'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_desc'] + '</b>' + tooltip_data['description'] 
                 self.om_check.setToolTip(self.text)
-                
                 self.om_check.clicked.connect(self.om_checked)
                 self.om_layout.addWidget(self.om_check, row+1, column)
                 i += 1
