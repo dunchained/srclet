@@ -1,7 +1,4 @@
-import os
-import json
-import pandas
-#
+import os, json, pandas
 from variables import var
 cwd = os.path.curdir
 cwd_other = os.path.curdir + var.other_methods_folder
@@ -16,12 +13,11 @@ def other_read_methods_data():
         file_to_read = open(os.path.join(
             cwd + var.other_methods_folder + file))
         file_data = json.load(file_to_read)
-        if not file_data['complex_parameters']:
+        if not file_data['changable_parameters']:
             methods_list.append(file_data['symbol'])
             methods_parameters.append(file_data['basic_parameters'])
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res
-
 
 def eto_read_methods_data():
     get_files_eto = next(
@@ -40,7 +36,6 @@ def eto_read_methods_data():
         methods_parameters.append(to_append)
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res
-
 
 def wb_read_methods_data():
     get_files_eto = next(
@@ -61,7 +56,6 @@ def wb_read_methods_data():
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res
 
-
 def other_read_methods_data_on_update():
     get_files_eto = next(
         os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
@@ -73,13 +67,12 @@ def other_read_methods_data_on_update():
         file_data = json.load(file_to_read)
         methods_list.append(file_data['symbol'])
         methods_parameters_data = file_data['basic_parameters']
-        if file_data['complex_parameters']:
+        if file_data['changable_parameters']:
             methods_parameters_data = methods_parameters_data + \
-                ', ' + file_data['complex_parameters']
+                ', ' + file_data['changable_parameters']
         methods_parameters.append(methods_parameters_data)
     res = dict(zip(methods_list, methods_parameters))
     return methods_list, res
-
 
 def read_project_data(project_path):
     file_to_read = open(os.path.join(
@@ -100,7 +93,6 @@ def read_project_data(project_path):
             if symbol == file_data1['name']:
                 column_symbols.append(file_data1['symbol'])
     return file_data, column_names_list, column_symbols
-
 
 def available_changable_parameters(project_path):
     get_files = next(

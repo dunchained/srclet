@@ -1,8 +1,0 @@
-{
-    "name": "Mean temperature_new",
-    "unit": "\u00b0C_new",
-    "symbol": "Tmean_new",
-    "description": "Mean monthly air temperature in degree Celsious_new",
-    "type": "a",
-    "category": "temperature"
-}

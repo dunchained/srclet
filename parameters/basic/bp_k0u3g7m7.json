@@ -1,8 +1,0 @@
-{
-    "name": "Basic parameter 1",
-    "category": "temperature",
-    "unit": "s",
-    "symbol": "basic_parameter1",
-    "description": "s",
-    "type": "a"
-}

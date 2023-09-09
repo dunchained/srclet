@@ -1,8 +1,0 @@
-{
-    "name": "Basic parameter 2",
-    "category": "humidity",
-    "unit": "s",
-    "symbol": "basic_parameter2",
-    "description": "s",
-    "type": "a"
-}

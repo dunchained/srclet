@@ -1,7 +1,7 @@
 {
-    "name": "c_parameter_1",
-    "unit": "unitsasa",
-    "symbol": "\u03c9s",
+    "name": "cp1",
+    "unit": "1/10",
+    "symbol": "\u039e",
     "description": "Nakav opis ne\u0161ta.",
     "type": "a",
     "category": "et",

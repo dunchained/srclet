@@ -1,8 +1,8 @@
 {
-    "name": "c_parameter_2",
+    "name": "cp2",
     "unit": "unit",
     "symbol": "\u03c9s",
-    "description": "Nakav opis nešta.",
+    "description": "Nakav opis ne\u0161ta.",
     "type": "a",
     "category": "wb",
     "value": "1"
