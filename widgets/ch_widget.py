@@ -1,10 +1,8 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QDateEdit
-import sys
-import json
-import os
+import sys, json, os
 cwd = os.path.curdir
+from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
+from PyQt5.QtCore import Qt
 from variables import var
 
 
@@ -72,7 +70,7 @@ class InputCharacterWidget(QTabWidget):
         return self.cat_list
 
     def read_characters_file(self, file_name, columns):
-        file = os.path.join(cwd + var.charactes_loc + self.language['language_description'] + '/' + 'special_characters_' + file_name + '.json')
+        file = os.path.join(cwd + var.characters_loc + self.language['language_description'] + '/' + 'special_characters_' + file_name + '.json')
         open_file = open(file)
         data_file = json.load(open_file)
         category_list = []

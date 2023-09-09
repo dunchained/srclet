@@ -2,6 +2,8 @@ from windows.parameters.basic_parameters import BasicParameters
 from windows.parameters.changable_parameters import ChangableParameters
 from windows.project.open_project import OpenProjectWindow
 from windows.methods.eto_methods import ETOMethods
+from windows.methods.other_methods import OtherMethods
+from windows.methods.wb_methods import WBMethods
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QProxyStyle, QStyle, QToolTip
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget, QMenu
@@ -227,12 +229,10 @@ class MainWindow(QMainWindow):
         self.window = ETOMethods(self.language)
 
     def wb_methods_window(self):
-        pass
-        #self.window = WBMethodsWindow(self.language)
+        self.window = WBMethods(self.language)
 
     def other_methods_window(self):
-        pass
-        #self.window = OtherMethodsWindow(self.language)
+        self.window = OtherMethods(self.language)
 
     # Help:
     def about_window(self):

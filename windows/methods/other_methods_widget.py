@@ -1,19 +1,15 @@
-#from windows.parameters.basic_parameters_add import AddBasicParameter
-import var
-from language import language
-from ch_widget import InputCharacterWidget
-from bp_widget import BasicParameterWidget
-from cp_widget import ChangableParameterWidget
-from om_widget import OtherMethodsWidget
-from other_methods_add import AddOtherMethod
+import os, sys, json
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QCheckBox, QScrollArea
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
-import sys
-import os
-import json
 cwd = os.path.curdir
-from methods_morty import read_bp, read_cp, read_om
+from widgets.ch_widget import InputCharacterWidget
+from widgets.bp_widget import BasicParameterWidget
+from widgets.cp_widget import ChangableParameterWidget
+from widgets.om_widget import OtherMethodsWidget
+from windows.methods.other_methods_add import AddOtherMethod
+from mortys.methods_morty import read_bp, read_cp, read_om
+from variables import var
 
 class OtherMethodCategoryTabs(QWidget):
     def __init__(self, language):

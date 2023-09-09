@@ -391,6 +391,12 @@
 
     "//": "WB Methods Window",
     "wb_methods_window_title": "WB Methods",
+    "input_cp_parameter_val": "Parameter value: ",
+    "input_bp_parameter_name": "Parameter name: ",
+    "input_bp_parameter_cat": "Parameter category: ",
+    "input_bp_parameter_unit": "Parameter unit: ",
+    "input_bp_parameter_sym": "Parameter symbol: ",
+    "input_bp_parameter_desc": "Parameter description: ",
     "//": "WB Methods Window END"
 
 }

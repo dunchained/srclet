@@ -2,15 +2,12 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-from other_methods_widget import OtherMethodCategoryTabs
-from language import language
-import css
-from font_morty import read_menu_font_size
-
+from windows.methods.other_methods_widget import OtherMethodCategoryTabs
+from variables import css
+from mortys.font_morty import read_menu_font_size
 
 class OtherMethods(QMainWindow):
-    #def __init__(self, language):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.language = language
         self.setWindowState(QtCore.Qt.WindowMaximized)

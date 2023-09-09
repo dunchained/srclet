@@ -2,13 +2,11 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-#from variables import css
-import css
-from wb_methods_widget import WBMethodsWidget
-from language import language
+from variables import css
+from windows.methods.wb_methods_widget import WBMethodsWidget
 
-class ETOMethods(QMainWindow):
-    def __init__(self):
+class WBMethods(QMainWindow):
+    def __init__(self, language):
         super().__init__()
         self.language = language
         self.setWindowState(QtCore.Qt.WindowMaximized)
@@ -55,5 +53,5 @@ class ETOMethods(QMainWindow):
    
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = ETOMethods()
+    mainWindow = WBMethods()
     sys.exit(mainApplication.exec_())

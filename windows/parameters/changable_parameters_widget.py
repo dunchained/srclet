@@ -3,10 +3,9 @@ from variables import var
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
-import sys
-import os
-import json
+import sys, os, json
 cwd = os.path.curdir
+from widgets.ch_widget import InputCharacterWidget
 
 
 class ParametersCategoryTabs(QWidget):
@@ -216,6 +215,7 @@ class ParametersWidget(QWidget):
         self.layout.addWidget(self.parameter_value)
         self.layout.addWidget(self.text_parameter_descriprion)
         self.layout.addWidget(self.parameter_descriprion)
+        self.layout.addWidget(InputCharacterWidget(language=self.language, columns=5, title=self.language['add_changable_parameter_window_sc']))
         self.layout.addWidget(self.buttonSave)
         self.layout.addWidget(self.buttonCancel)
         self.groupBox.setLayout(self.layout)

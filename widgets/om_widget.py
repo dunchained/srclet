@@ -3,7 +3,6 @@ cwd = os.path.curdir
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
 from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
 from variables import var
 
 class OtherMethodsWidget(QTabWidget):

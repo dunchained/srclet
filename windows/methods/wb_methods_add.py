@@ -4,15 +4,13 @@ from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QHBoxLayout, QGridLayout, 
 from PyQt5.QtWidgets import QLineEdit, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox, QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-import css, var
-from methods_morty import read_bp, get_filename, read_cp, read_om, read_eto
-from language import language
-
-from bp_widget import BasicParameterWidget
-from ch_widget import InputCharacterWidget
-from cp_widget import ChangableParameterWidget
-from om_widget import OtherMethodsWidget
-from et_widget import ET0MethodsWidget
+from variables import css, var
+from mortys.methods_morty import read_bp, get_filename, read_cp, read_om, read_eto
+from widgets.bp_widget import BasicParameterWidget
+from widgets.ch_widget import InputCharacterWidget
+from widgets.cp_widget import ChangableParameterWidget
+from widgets.om_widget import OtherMethodsWidget
+from widgets.et_widget import ET0MethodsWidget
 
 class AddWBMethod(QWidget):
     def __init__(self, language, data_to_input):

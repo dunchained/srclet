@@ -1,14 +1,12 @@
 from variables import var, css
-from widgets.character_widget import InputCharacterWidget
-from mortys.changable_parameters_morty import read_characters, get_filename
+from widgets.ch_widget import InputCharacterWidget
+from mortys.changable_parameters_morty import get_filename
 from mortys.font_morty import read_text_font_size
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
-import sys
-import json
-import os
+from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
+import sys, json, os
 cwd = os.path.curdir
 
 class AddChangableParameter(QWidget):

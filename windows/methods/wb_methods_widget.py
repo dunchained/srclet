@@ -3,15 +3,14 @@ cwd = os.path.curdir
 from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QGridLayout, QGroupBox, QLabel, QPushButton
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
 from PyQt5.QtCore import Qt
-import var
-from wb_methods_add import AddWBMethod
-from methods_morty import read_om, read_bp, read_cp, read_eto
-from language import language
-from ch_widget import InputCharacterWidget
-from bp_widget import BasicParameterWidget
-from cp_widget import ChangableParameterWidget
-from om_widget import OtherMethodsWidget
-from et_widget import ET0MethodsWidget
+from variables import var
+from windows.methods.wb_methods_add import AddWBMethod
+from mortys.methods_morty import read_om, read_bp, read_cp, read_eto
+from widgets.ch_widget import InputCharacterWidget
+from widgets.bp_widget import BasicParameterWidget
+from widgets.cp_widget import ChangableParameterWidget
+from widgets.om_widget import OtherMethodsWidget
+from widgets.et_widget import ET0MethodsWidget
 
 class WBMethodsWidget(QWidget):
     def __init__(self, language):
@@ -24,11 +23,11 @@ class WBMethodsWidget(QWidget):
         self.grid = QGridLayout()
         self.grid.addWidget(self.create_list_of_methods(), 0, 0, 3, 1)
         self.grid.addWidget(self.create_method_info(), 0, 1, 3, 1)
-        self.grid.addWidget(BasicParameterWidget(language=language, title=self.language['add_other_method_inserts_bp'], columns=2), 0, 2, 1, 1)
-        self.grid.addWidget(ChangableParameterWidget(language=language, title=self.language['add_other_method_inserts_cp'], columns=2), 0, 3, 1, 1)
-        self.grid.addWidget(OtherMethodsWidget(language=language, title=self.language['add_other_method_inserts_om'], columns=2), 1, 2, 1, 1)
-        self.grid.addWidget(ET0MethodsWidget(language=language, title=self.language['add_wb_method_inserts_et'], columns=2), 1, 3, 1, 1)
-        self.grid.addWidget(InputCharacterWidget(language=language, title=self.language['add_wb_method_inserts_sc'], columns=2), 2, 2, 1, 2)
+        self.grid.addWidget(BasicParameterWidget(language=self.language, title=self.language['add_other_method_inserts_bp'], columns=2), 0, 2, 1, 1)
+        self.grid.addWidget(ChangableParameterWidget(language=self.language, title=self.language['add_other_method_inserts_cp'], columns=2), 0, 3, 1, 1)
+        self.grid.addWidget(OtherMethodsWidget(language=self.language, title=self.language['add_other_method_inserts_om'], columns=2), 1, 2, 1, 1)
+        self.grid.addWidget(ET0MethodsWidget(language=self.language, title=self.language['add_wb_method_inserts_et'], columns=2), 1, 3, 1, 1)
+        self.grid.addWidget(InputCharacterWidget(language=self.language, title=self.language['add_wb_method_inserts_sc'], columns=2), 2, 2, 1, 2)
         self.setLayout(self.grid)
         self.show()
         

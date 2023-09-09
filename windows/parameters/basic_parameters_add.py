@@ -1,10 +1,10 @@
 from variables import var, css
-from widgets.character_widget import InputCharacterWidget
-from mortys.basic_parameters_morty import read_characters, get_filename
+from widgets.ch_widget import InputCharacterWidget
+from mortys.basic_parameters_morty import get_filename
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
 import sys
 import json
 import os
