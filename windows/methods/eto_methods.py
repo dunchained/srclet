@@ -2,15 +2,11 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-#from variables import css
-import css
-#from windows.methods.eto_methods_widget import ETOMethodsWidget
-from eto_methods_widget import ETOMethodsWidget
-#from mortys.font_morty import read_menu_font_size
-from language import language
+from variables import css
+from windows.methods.eto_methods_widget import ETOMethodsWidget
 
 class ETOMethods(QMainWindow):
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self.language = language
         self.setWindowState(QtCore.Qt.WindowMaximized)
@@ -21,7 +17,7 @@ class ETOMethods(QMainWindow):
         self.setWindowIcon(QIcon(css.methods_eto_icon))
         self.setWindowTitle(self.language['eto_methods_window_title'])
         self.fileMenu()
-        self.central_widget = ETOMethodsWidget()
+        self.central_widget = ETOMethodsWidget(self.language)
         self.setCentralWidget(self.central_widget)
         self.show()
 
@@ -49,7 +45,7 @@ class ETOMethods(QMainWindow):
         
     def refresh_widget(self):
         self.takeCentralWidget()
-        self.new_widget = ETOMethodsWidget()
+        self.new_widget = ETOMethodsWidget(self.language)
         self.setCentralWidget(self.new_widget)
         
     def exit_window(self):

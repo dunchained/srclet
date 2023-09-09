@@ -4,6 +4,7 @@ from language import language
 from ch_widget import InputCharacterWidget
 from bp_widget import BasicParameterWidget
 from cp_widget import ChangableParameterWidget
+from om_widget import OtherMethodsWidget
 from other_methods_add import AddOtherMethod
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QCheckBox, QScrollArea
@@ -12,13 +13,10 @@ import sys
 import os
 import json
 cwd = os.path.curdir
-from methods_morty import read_basic_parameters, read_changable_parameters, read_om
+from methods_morty import read_bp, read_cp, read_om
 
-
-
-class OtherMethodsCategoryTabs(QWidget):
-    #def __init__(self, language):
-    def __init__(self):
+class OtherMethodCategoryTabs(QWidget):
+    def __init__(self, language):
         super().__init__()
         self.setUpdatesEnabled(True)
         self.language = language
@@ -36,7 +34,7 @@ class OtherMethodsCategoryTabs(QWidget):
             self.category = list(self.categories_file_data.keys())[
                 list(self.categories_file_data.values()).index(tabName)]
             self.tabWidget = QWidget()
-            self.listWidget = OtherMethodsWidget(self.category, self.language)
+            self.listWidget = OtherMethodWidget(self.category, self.language)
             self.tabLayout = QGridLayout()
             self.tabLayout.addWidget(self.listWidget)
             self.tabWidget.setLayout(self.tabLayout)
@@ -45,8 +43,7 @@ class OtherMethodsCategoryTabs(QWidget):
         self.mainLayout.addWidget(self.categories_tabs)
         self.setLayout(self.mainLayout)
 
-
-class OtherMethodsWidget(QWidget):
+class OtherMethodWidget(QWidget):
     def __init__(self, category, language):
         super().__init__()
         self.category = category
@@ -62,9 +59,10 @@ class OtherMethodsWidget(QWidget):
         self.grid = QGridLayout()
         self.grid.addWidget(self.create_list_widget(self.category_list), 0, 0, 3, 1)
         self.grid.addWidget(self.create_parameter_widget(), 0, 1, 3, 1)
-        self.grid.addWidget(BasicParameterWidget(language=language, title='Input BASIC widget CHANGE:', columns=3), 0, 2, 1, 1)
-        self.grid.addWidget(ChangableParameterWidget(language=language, title='Input CHANGEBLE widget CHANGE:', columns=3), 1, 2, 1, 1)
-        self.grid.addWidget(InputCharacterWidget(language=language, title='Input OTHER widget CHANGE:', columns=3), 2, 2, 1, 1)
+        self.grid.addWidget(BasicParameterWidget(language=language, title=self.language['add_other_method_inserts_bp'], columns=2), 0, 2, 1, 1)
+        self.grid.addWidget(ChangableParameterWidget(language=language, title=self.language['add_other_method_inserts_cp'], columns=2), 0, 3, 1, 1)
+        self.grid.addWidget(OtherMethodsWidget(language=language, title=self.language['add_other_method_inserts_om'], columns=2), 2, 2, 1, 1)
+        self.grid.addWidget(InputCharacterWidget(language=language, title=self.language['add_other_method_inserts_sc'], columns=2), 2, 3, 1, 1)
 
         self.setLayout(self.grid)
 
@@ -75,12 +73,10 @@ class OtherMethodsWidget(QWidget):
         self.list_widget.addItems(self.category_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
 
-        self.buttonAddBasicParameter = QPushButton(
-            self.language['other_methods_widget_btn_add_new'])
+        self.buttonAddBasicParameter = QPushButton(self.language['other_methods_widget_btn_add_new'])
         self.buttonAddBasicParameter.clicked.connect(self.new_om_window)
 
-        self.buttonAddBasicParameterInherit = QPushButton(
-            self.language['other_methods_widget_btn_add_new_inherit'])
+        self.buttonAddBasicParameterInherit = QPushButton(self.language['other_methods_widget_btn_add_new_inherit'])
         self.buttonAddBasicParameterInherit.setEnabled(False)
         self.buttonAddBasicParameterInherit.clicked.connect(self.new_om_window_inherit)
 
@@ -90,7 +86,6 @@ class OtherMethodsWidget(QWidget):
 
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.list_widget)
-        self.layout.addWidget(InputCharacterWidget(language=language, title='Input character widget CHANGE:', columns=3))
         self.layout.addWidget(self.buttonAddBasicParameter)
         self.layout.addWidget(self.buttonAddBasicParameterInherit)
         self.layout.addWidget(self.buttonDelete)
@@ -121,9 +116,9 @@ class OtherMethodsWidget(QWidget):
                                    oms=data['other_methods'])
                 self.method_dict = {
                                     "name": data['name'] + self.language['other_methods_new_addition'],
-                                    "symbol": data['symbol'] + self.language['other_methods_new_addition'],
+                                    "symbol": data['symbol'],
                                     "category": data['category'],
-                                    "unit": data['unit'] + self.language['other_methods_new_addition'],
+                                    "unit": data['unit'],
                                     "description": data['description'] + self.language['other_methods_new_addition'],
                                     "method_conditions": data['method_conditions'],
                                     "method_formula": data['method_formula'],
@@ -147,9 +142,9 @@ class OtherMethodsWidget(QWidget):
                                    oms=data['other_methods'])
                 self.method_dict = {
                                     "name": data['name'] + self.language['other_methods_new_addition'],
-                                    "symbol": data['symbol'] + self.language['other_methods_new_addition'],
+                                    "symbol": data['symbol'],
                                     "category": data['category'],
-                                    "unit": data['unit'] + self.language['other_methods_new_addition'],
+                                    "unit": data['unit'],
                                     "description": data['description'] + self.language['other_methods_new_addition'],
                                     "method_conditions": data['method_conditions'],
                                     "method_formula": data['method_formula'],
@@ -202,7 +197,7 @@ class OtherMethodsWidget(QWidget):
         self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
+        self.bp_check_list, self.rows, self.columns = read_bp()
         
         i = 0
         for row in range(self.rows):
@@ -256,7 +251,7 @@ class OtherMethodsWidget(QWidget):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
         self.cp_scroll = QWidget()
-        self.cp_check_list, self.rows, self.columns = read_changable_parameters()
+        self.cp_check_list, self.rows, self.columns = read_cp()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -566,5 +561,5 @@ class OtherMethodsWidget(QWidget):
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = OtherMethodsCategoryTabs()
+    mainWindow = OtherMethodCategoryTabs()
     sys.exit(mainApplication.exec_())

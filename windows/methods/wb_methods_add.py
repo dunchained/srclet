@@ -5,17 +5,17 @@ from PyQt5.QtWidgets import QLineEdit, QTextEdit, QMessageBox, QWidget, QApplica
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 import css, var
-from methods_morty import read_basic_parameters, get_filename, read_changable_parameters, read_om
+from methods_morty import read_bp, get_filename, read_cp, read_om, read_eto
 from language import language
 
 from bp_widget import BasicParameterWidget
 from ch_widget import InputCharacterWidget
 from cp_widget import ChangableParameterWidget
 from om_widget import OtherMethodsWidget
+from et_widget import ET0MethodsWidget
 
 class AddWBMethod(QWidget):
-    #def __init__(self, language, data_to_input):
-    def __init__(self, data_to_input=None):
+    def __init__(self, language, data_to_input):
         super().__init__()
         self.language = language
         self.data_to_input = data_to_input
@@ -40,23 +40,14 @@ class AddWBMethod(QWidget):
     def on_focus_changed(self, widget):
         self.on_focused_change = widget
         
-    def special_character_clicked(self, i):
-        sender = self.sender()
-        sender_text = sender.text()
-        if self.on_focused_change.__class__.__name__ == 'QTextEdit':
-            self.on_focused_change.setPlainText(self.on_focused_change.toPlainText() + sender_text)
-        elif self.on_focused_change.__class__.__name__ == 'QLineEdit':
-            self.on_focused_change.setText(self.on_focused_change.text() + sender_text)
-        else:
-            pass
-        
     def right_groupbox(self):
         self.methods_groupbox = QGroupBox(self.language['add_other_method_inserts'])
         self.methods_groupbox.layout = QGridLayout()
-        self.methods_groupbox.layout.addWidget(BasicParameterWidget(language=self.language, title=self.language['add_wb_method_inserts_bp'], columns=3), 0, 0, 1, 1)
-        self.methods_groupbox.layout.addWidget(ChangableParameterWidget(language=self.language, title=self.language['add_wb_method_inserts_cp'], columns=3), 0, 1, 1, 1)
-        self.methods_groupbox.layout.addWidget(OtherMethodsWidget(language=self.language, title=self.language['add_wb_method_inserts_om'], columns=3), 1, 0, 1, 1)
-        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title=self.language['add_wb_method_inserts_sc'], columns=3), 1, 1, 1, 1)
+        self.methods_groupbox.layout.addWidget(BasicParameterWidget(language=self.language, title=self.language['add_wb_method_inserts_bp'], columns=2), 0, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(ChangableParameterWidget(language=self.language, title=self.language['add_wb_method_inserts_cp'], columns=2), 0, 1, 1, 1)
+        self.methods_groupbox.layout.addWidget(OtherMethodsWidget(language=self.language, title=self.language['add_wb_method_inserts_om'], columns=2), 1, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(ET0MethodsWidget(language=self.language, title=self.language['add_wb_method_inserts_et'], columns=2), 1, 1, 1, 1)
+        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title=self.language['add_wb_method_inserts_sc'], columns=2), 2, 0, 1, 2)
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
             
@@ -74,89 +65,79 @@ class AddWBMethod(QWidget):
         self.text_basic_parameters = QLabel(self.language['add_other_method_info_bp'])
         self.text_changable_parameters = QLabel(self.language['add_other_method_info_cp'])
         self.text_om_parameters = QLabel(self.language['add_other_method_info_om'])
+        self.text_eto_parameters = QLabel(self.language['add_other_method_info_eto'])
         self.text_bp_selected = QLabel(self.language['add_other_method_info_bp_s'])
         self.text_cp_selected = QLabel(self.language['add_other_method_info_cp_s'])
         self.text_om_selected = QLabel(self.language['add_other_method_info_om_s'])
+        self.text_eto_selected = QLabel(self.language['add_other_method_info_eto_s'])
 
         if self.data_to_input == None:
             self.method_name = QLineEdit()
             self.method_unit = QLineEdit()
             self.method_symbol = QLineEdit()
-            categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.om_cat_file))
-            self.categories_file_data = json.load(categories_file)
-            self.categories_list = []
-            for category in self.categories_file_data:
-                self.categories_list.append(self.categories_file_data[category])
-            self.category_combo = QComboBox()
-            self.category_combo.addItems(self.categories_list)
             self.method_description = QTextEdit()
             self.method_conditions = QTextEdit()
             self.method_formula = QTextEdit()
             self.selected_bp_list = QLabel()
             self.selected_cp_list = QLabel()
             self.selected_om_list = QLabel()
+            self.selected_eto_list = QLabel()
 
         else:
             self.method_name = QLineEdit(self.data_to_input['name'])
             self.method_unit = QLineEdit(self.data_to_input['unit'])
             self.method_symbol = QLineEdit(self.data_to_input['symbol'])
-            categories_file = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.om_cat_file))
-            self.categories_file_data = json.load(categories_file)
-            self.categories_list = []
-            for category in self.categories_file_data:
-                self.categories_list.append(self.categories_file_data[category])
-            self.category_combo = QComboBox()
-            self.category_combo.addItems(self.categories_list)
-            for category, category_val in self.categories_file_data.items():
-                if self.data_to_input['category'] == category:
-                    self.category_combo.setCurrentText(category_val)
             self.method_description = QTextEdit(self.data_to_input['description'])
             self.method_conditions = QTextEdit(self.data_to_input['method_conditions'])
             self.method_formula = QTextEdit(self.data_to_input['method_formula'])
             self.selected_bp_list = QLabel(self.data_to_input['basic_parameters'])
             self.selected_cp_list = QLabel(self.data_to_input['changable_parameters'])
             self.selected_om_list = QLabel(self.data_to_input['other_methods'])
+            self.selected_eto_list = QLabel(self.data_to_input['eto_methods'])
      
         self.method_info_groupbox.layout = QGridLayout()
 
         self.method_info_groupbox.layout.addWidget(self.text_method_name, 0, 0, 1, 2)
         self.method_info_groupbox.layout.addWidget(self.method_name, 1, 0, 1, 2)
 
-        self.method_info_groupbox.layout.addWidget(self.text_method_unit, 0, 2, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.method_unit, 1, 2, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_method_unit, 2, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_unit, 3, 0, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_method_symbol, 2, 0, 1, 2)
-        self.method_info_groupbox.layout.addWidget(self.method_symbol, 3, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.text_method_symbol, 2, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_symbol, 3, 1, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_method_category, 2, 2, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.category_combo, 3, 2, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_method_description, 4, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_description, 5, 0, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_method_description, 4, 0, 1, 2)
-        self.method_info_groupbox.layout.addWidget(self.method_description, 5, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.text_method_conditions, 4, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.method_conditions, 5, 1, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_method_conditions, 4, 2, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.method_conditions, 5, 2, 1, 1)
-
-        self.method_info_groupbox.layout.addWidget(self.text_method_formula, 6, 0, 1, 3)
-        self.method_info_groupbox.layout.addWidget(self.method_formula, 7, 0, 1, 3)
+        self.method_info_groupbox.layout.addWidget(self.text_method_formula, 6, 0, 1, 2)
+        self.method_info_groupbox.layout.addWidget(self.method_formula, 7, 0, 1, 2)
 
         self.method_info_groupbox.layout.addWidget(self.text_basic_parameters, 8, 0, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.basic_parameters_groupbox(), 9, 0, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_changable_parameters, 8, 1, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.changable_parameters_groupbox(), 9, 1, 1, 1)
-
-        self.method_info_groupbox.layout.addWidget(self.text_om_parameters, 8, 2, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.om_groupbox(), 9, 2, 1, 1)
-
         self.method_info_groupbox.layout.addWidget(self.text_bp_selected, 10, 0, 1, 1)
         self.method_info_groupbox.layout.addWidget(self.selected_bp_list, 11, 0, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_cp_selected, 10, 1, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.selected_cp_list, 11, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_changable_parameters, 12, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.changable_parameters_groupbox(), 13, 0, 1, 1)
 
-        self.method_info_groupbox.layout.addWidget(self.text_om_selected, 10, 2, 1, 1)
-        self.method_info_groupbox.layout.addWidget(self.selected_om_list, 11, 2, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.text_cp_selected, 14, 0, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.selected_cp_list, 15, 0, 1, 1)
+
+        self.method_info_groupbox.layout.addWidget(self.text_om_parameters, 8, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.om_groupbox(), 9, 1, 1, 1)
+
+        self.method_info_groupbox.layout.addWidget(self.text_om_selected, 10, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.selected_om_list, 11, 1, 1, 1)
+
+        self.method_info_groupbox.layout.addWidget(self.text_eto_parameters, 12, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.eto_groupbox(), 13, 1, 1, 1)
+
+        self.method_info_groupbox.layout.addWidget(self.text_eto_selected, 14, 1, 1, 1)
+        self.method_info_groupbox.layout.addWidget(self.selected_eto_list, 15, 1, 1, 1)
 
         self.method_info_groupbox.setLayout(self.method_info_groupbox.layout)
         return self.method_info_groupbox  
@@ -175,10 +156,10 @@ class AddWBMethod(QWidget):
     
     def add_method(self):
         self.file_name_to_save = get_filename('wb')
-        get_files = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
+        get_files = next(os.walk(cwd + var.wb_methods_folder), (None, None, []))[2]
         self.file_list = []
         for file in get_files:
-            self.file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
+            self.file_to_read = open(os.path.join(cwd + var.wb_methods_folder + file))
             self.file_data = json.load(self.file_to_read)
             if self.method_name.text() == self.file_data['name']:
                 self.file_list.append(file)
@@ -188,7 +169,7 @@ class AddWBMethod(QWidget):
             self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.msg.setIcon(QMessageBox.Information)
             self.msg.setText(self.language['add_wb_method_msg_exists'])
-            self.msg.setWindowTitle(self.language['add_other_method_msg_exists_title'])
+            self.msg.setWindowTitle(self.language['add_wb_method_msg_exists_title'])
             self.msg.setStandardButtons(QMessageBox.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
@@ -213,18 +194,18 @@ class AddWBMethod(QWidget):
                     "basic_parameters": self.selected_bp_list.text(),
                     "changable_parameters": self.selected_cp_list.text(),
                     "other_methods": self.selected_om_list.text(),
-                    "category": list(self.categories_file_data.keys())[list(self.categories_file_data.values()).index(self.category_combo.currentText())],
+                    "eto_methods": self.selected_eto_list.text(),
                     "type": "a"
                     }
                 
                 json_object = json.dumps(parameter_dict, indent = 4)
-                with open(cwd + var.other_methods_folder + self.file_name_to_save + ".json", "w") as outfile:
+                with open(cwd + var.wb_methods_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
                 self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
                 self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(self.language['add_other_method_msg_saved'])
-                self.msg.setWindowTitle(self.language['add_other_method_msg_saved_title'])
+                self.msg.setText(self.language['add_wb_method_msg_saved'])
+                self.msg.setWindowTitle(self.language['add_wb_method_msg_saved_title'])
                 self.msg.setStandardButtons(QMessageBox.Ok)
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()
@@ -233,7 +214,7 @@ class AddWBMethod(QWidget):
         self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
+        self.bp_check_list, self.rows, self.columns = read_bp()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -291,7 +272,7 @@ class AddWBMethod(QWidget):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
         self.cp_scroll = QWidget()
-        self.cp_check_list, self.rows, self.columns = read_changable_parameters()
+        self.cp_check_list, self.rows, self.columns = read_cp()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -408,6 +389,68 @@ class AddWBMethod(QWidget):
         else:
             self.ompl.remove(self.sender().text())
             self.selected_om_list.setText(', '.join(self.ompl))
+
+    def eto_groupbox(self):
+        self.eto_groupboxx = QGroupBox()
+        self.eto_layout = QGridLayout()
+        self.eto_scroll = QWidget()
+        self.eto_check_list, self.rows, self.columns = read_eto()
+        i = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.eto_check = QCheckBox(f'{self.eto_check_list[i]}', self)
+                self.setStyleSheet('''QToolTip {min-width: 300px;}''')
+                self.get_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
+                for file in self.get_files:
+                    self.file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
+                    self.file_data = json.load(self.file_to_read)
+                    if self.eto_check_list[i] == self.file_data['symbol']:
+                        self.file_to_load = file
+                self.json_path = cwd + var.eto_methods_folder + self.file_to_load
+                with open(self.json_path) as json_file:
+                    tooltip_data = json.load(json_file)
+                self.text = '<b>' + self.language['tooltips_om_name'] + '</b>' + tooltip_data['name'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_symbol'] + '</b>' + self.eto_check_list[i] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_unit'] + '</b>' + tooltip_data['unit'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_mc'] + '</b>' + tooltip_data['method_conditions'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_mf'] + '</b>' + tooltip_data['method_formula'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_bps'] + '</b>' + tooltip_data['basic_parameters'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_cps'] + '</b>' + tooltip_data['changable_parameters'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_oms'] + '</b>' + tooltip_data['other_methods'] + '<br>' + \
+                            '<b>' + self.language['tooltips_om_desc'] + '</b>' + tooltip_data['description'] 
+                self.eto_check.setToolTip(self.text)
+                self.eto_check.clicked.connect(self.eto_checked)
+                self.eto_layout.addWidget(self.eto_check, row+1, column)
+                i += 1
+                if i == len(self.eto_check_list): break
+        self.eto_scroll.setLayout(self.eto_layout)
+        eto = QScrollArea()
+        eto.setWidget(self.eto_scroll)
+        eto.setWidgetResizable(1)
+        self.eto_groupboxx.layout = QVBoxLayout()
+        self.eto_groupboxx.layout.addWidget(eto)
+        self.eto_groupboxx.setLayout(self.eto_groupboxx.layout)
+        if self.data_to_input == None:
+            pass
+        else:
+            self.eto_list_to_update = self.selected_eto_list.text().split(', ')
+            for self.eto_check in range(self.eto_layout.count()):
+                self.eto_check_widget = self.eto_layout.itemAt(self.eto_check).widget()
+                self.eto_check_widget.setChecked(False)
+                if self.eto_check_widget.text() in self.eto_list_to_update: self.eto_check_widget.setChecked(True)
+        return self.eto_groupboxx
+    
+    def eto_checked(self):
+        if not self.selected_eto_list.text():
+            self.etopl = []
+        else:
+            self.etopl = self.selected_eto_list.text().split(', ')
+        if self.sender().checkState() == 2:
+            self.etopl.append(self.sender().text())
+            self.selected_eto_list.setText(', '.join(self.etopl))
+        else:
+            self.etopl.remove(self.sender().text())
+            self.selected_eto_list.setText(', '.join(self.etopl))
                 
     def message_box_success(self):
         self.close()

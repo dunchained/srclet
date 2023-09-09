@@ -1,8 +1,8 @@
 {
     "name": "Minimum temperature_new",
+    "symbol": "Tmin_new",
     "category": "temperature",
     "unit": "\u00b0C_new",
-    "symbol": "Tmin_new",
     "description": "Average minimum monthly air temperature in degree Celsious_new",
     "type": "a"
 }

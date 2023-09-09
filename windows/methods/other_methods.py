@@ -2,13 +2,13 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QAction, QMainWindow, QApplication
-#from other_methods_widget import OtherMethodsCategoryTabs
+from other_methods_widget import OtherMethodCategoryTabs
 from language import language
 import css
 from font_morty import read_menu_font_size
 
 
-class BasicParameters(QMainWindow):
+class OtherMethods(QMainWindow):
     #def __init__(self, language):
     def __init__(self):
         super().__init__()
@@ -21,8 +21,8 @@ class BasicParameters(QMainWindow):
         self.setWindowIcon(QIcon(css.parameters_basic_icon))
         self.setWindowTitle(self.language['other_methods_window_title'])
         self.fileMenu()
-        #self.central_widget = OtherMethodsCategoryTabs(language=self.language)
-        #self.setCentralWidget(self.central_widget)
+        self.central_widget = OtherMethodCategoryTabs(language=self.language)
+        self.setCentralWidget(self.central_widget)
         self.show()
 
     def fileMenu(self):
@@ -52,7 +52,7 @@ class BasicParameters(QMainWindow):
 
     def refresh_widget(self):
         self.takeCentralWidget()
-        self.new_widget = ParametersCategoryTabs(self.language)
+        self.new_widget = OtherMethodCategoryTabs(self.language)
         self.setCentralWidget(self.new_widget)
 
     def exit_window(self):
@@ -61,5 +61,5 @@ class BasicParameters(QMainWindow):
 
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
-    mainWindow = BasicParameters()
+    mainWindow = OtherMethods()
     sys.exit(mainApplication.exec_())

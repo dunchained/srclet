@@ -1,13 +1,10 @@
 import sys, json, os
 cwd = os.path.curdir
-
 from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
 from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-#from variables import var
-import var
-from language import language
+from variables import var
 
 class BasicParameterWidget(QTabWidget):
     def __init__(self, language, title, columns=3):

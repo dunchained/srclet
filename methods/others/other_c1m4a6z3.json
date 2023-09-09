@@ -7,7 +7,7 @@
     "method_formula": "sa",
     "basic_parameters": "PRCP, 19_new, uz, Tmin, RHmean, \u03a6, basic_parameter2, Tmean, RHmax, Rs",
     "changable_parameters": "sasasa, \u03c9s, nama",
-    "other_methods": "sike, symbol1",
+    "other_methods": "sike, symbol1, nikita",
     "category": "temperature",
     "type": "a"
 }

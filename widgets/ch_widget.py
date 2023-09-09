@@ -1,12 +1,11 @@
-import var
-from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit, QTabWidget
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QDateEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget
+from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QDateEdit
 import sys
 import json
 import os
 cwd = os.path.curdir
+from variables import var
 
 
 class InputCharacterWidget(QTabWidget):

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QLineEdit, QTextEdit, QMessageBox, QWidget, QApplica
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 import css, var
-from methods_morty import read_basic_parameters, get_filename, read_changable_parameters, read_om
+from methods_morty import read_bp, get_filename, read_cp, read_om
 from language import language
 
 from bp_widget import BasicParameterWidget
@@ -14,8 +14,7 @@ from cp_widget import ChangableParameterWidget
 from om_widget import OtherMethodsWidget
 
 class AddOtherMethod(QWidget):
-    #def __init__(self, language, data_to_input):
-    def __init__(self, data_to_input=None):
+    def __init__(self, language, data_to_input):
         super().__init__()
         self.language = language
         self.data_to_input = data_to_input
@@ -233,7 +232,7 @@ class AddOtherMethod(QWidget):
         self.bp_groupbox = QGroupBox()
         self.bp_layout = QGridLayout()
         self.bp_scroll = QWidget()
-        self.bp_check_list, self.rows, self.columns = read_basic_parameters()
+        self.bp_check_list, self.rows, self.columns = read_bp()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):
@@ -291,7 +290,7 @@ class AddOtherMethod(QWidget):
         self.cp_groupbox = QGroupBox()
         self.cp_layout = QGridLayout()
         self.cp_scroll = QWidget()
-        self.cp_check_list, self.rows, self.columns = read_changable_parameters()
+        self.cp_check_list, self.rows, self.columns = read_cp()
         i = 0
         for row in range(self.rows):
             for column in range(self.columns):

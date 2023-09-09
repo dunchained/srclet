@@ -1,0 +1,13 @@
+{
+    "name": "sa",
+    "unit": "sa",
+    "symbol": "sasa",
+    "description": "sa",
+    "method_conditions": "sa",
+    "method_formula": "sa",
+    "basic_parameters": "basic_parameter1",
+    "changable_parameters": "\u03c9s",
+    "other_methods": "symbol3",
+    "category": "wind",
+    "type": "a"
+}

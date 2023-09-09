@@ -1,0 +1,13 @@
+{
+    "name": "aaa",
+    "unit": "aaa",
+    "symbol": "aaa",
+    "description": "aaa",
+    "method_conditions": "aaa",
+    "method_formula": "aaa",
+    "basic_parameters": "basic_parameter1",
+    "changable_parameters": "\u03c9s",
+    "other_methods": "symbol3",
+    "category": "temperature",
+    "type": "a"
+}
