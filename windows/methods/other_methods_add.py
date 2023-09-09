@@ -4,20 +4,19 @@ from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QHBoxLayout, QGridLayout, 
 from PyQt5.QtWidgets import QLineEdit, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox, QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-#from variables import css, var
 import css, var
-#from mortys.methods_morty import read_characters, read_basic_parameters, read_complex_parameters, get_filename
 from methods_morty import read_basic_parameters, get_filename, read_changable_parameters, read_om
-#from language import language
+from language import language
 
 from bp_widget import BasicParameterWidget
 from ch_widget import InputCharacterWidget
 from cp_widget import ChangableParameterWidget
+from om_widget import OtherMethodsWidget
 
 class AddOtherMethod(QWidget):
-    def __init__(self, language, data_to_input):
+    #def __init__(self, language, data_to_input):
+    def __init__(self, data_to_input=None):
         super().__init__()
-        #self.setUpdatesEnabled(True)
         self.language = language
         self.data_to_input = data_to_input
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
@@ -30,7 +29,7 @@ class AddOtherMethod(QWidget):
         self.setWindowState(Qt.WindowMaximized)
         self.setMinimumSize(1200, 600)
         self.setWindowTitle(self.language['add_other_method_window_title'])
-        self.setWindowIcon(QIcon(css.parameters_basic_icon))
+        self.setWindowIcon(QIcon(css.methods_others_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.left_groupbox(), 0, 0, 1, 1)
         self.grid.addWidget(self.right_groupbox(), 0, 1, 1, 1)
@@ -54,10 +53,10 @@ class AddOtherMethod(QWidget):
     def right_groupbox(self):
         self.methods_groupbox = QGroupBox(self.language['add_other_method_inserts'])
         self.methods_groupbox.layout = QGridLayout()
-        self.methods_groupbox.layout.addWidget(BasicParameterWidget(language=self.language, title='CH Basic', columns=3), 0, 0, 1, 1)
-        self.methods_groupbox.layout.addWidget(ChangableParameterWidget(language=self.language, title='CH Chang', columns=3), 0, 1, 1, 1)
-        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title='CH Char', columns=3), 1, 0, 1, 1)
-        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title='CH Char', columns=3), 1, 1, 1, 1)
+        self.methods_groupbox.layout.addWidget(BasicParameterWidget(language=self.language, title=self.language['add_other_method_inserts_bp'], columns=3), 0, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(ChangableParameterWidget(language=self.language, title=self.language['add_other_method_inserts_cp'], columns=3), 0, 1, 1, 1)
+        self.methods_groupbox.layout.addWidget(OtherMethodsWidget(language=self.language, title=self.language['add_other_method_inserts_om'], columns=3), 1, 0, 1, 1)
+        self.methods_groupbox.layout.addWidget(InputCharacterWidget(language=self.language, title=self.language['add_other_method_inserts_sc'], columns=3), 1, 1, 1, 1)
         self.methods_groupbox.setLayout(self.methods_groupbox.layout)
         return self.methods_groupbox
             

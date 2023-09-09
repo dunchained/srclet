@@ -183,16 +183,12 @@ class OtherMethodsWidget(QWidget):
 
     def delete_parameter(self, value):
         if value.text() == self.language['other_methods_widget_delete_msg_yes']:
-            self.get_list_of_files = next(
-                os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
+            self.get_list_of_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
             for self.file_to_delete in self.get_list_of_files:
-                self.path_to_file_to_delete = open(os.path.join(
-                    cwd + var.basic_parameters_folder + self.file_to_delete))
-                self.data_of_file_to_delete = json.load(
-                    self.path_to_file_to_delete)
+                self.path_to_file_to_delete = open(os.path.join(cwd + var.basic_parameters_folder + self.file_to_delete))
+                self.data_of_file_to_delete = json.load(self.path_to_file_to_delete)
                 if self.list_widget.currentItem().text() == self.data_of_file_to_delete['name']:
-                    os.remove(os.path.join(
-                        cwd + var.basic_parameters_folder + self.file_to_delete))
+                    os.remove(os.path.join(cwd + var.basic_parameters_folder + self.file_to_delete))
             self.refresh_parameters_list_after_deletion()
 
     def refresh_parameters_list_after_deletion(self):

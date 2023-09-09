@@ -10,8 +10,7 @@ import var
 from language import language
 
 class OtherMethodsWidget(QTabWidget):
-    #def __init__(self, language, title, columns=3):
-    def __init__(self, title='OM', columns=3):
+    def __init__(self, language, title, columns):
         super().__init__()
         self.columns = columns
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
@@ -71,7 +70,7 @@ class OtherMethodsWidget(QTabWidget):
         main_layout.addWidget(self.label_caption)
         main_layout.addWidget(self.tabs)
         QApplication.instance().focusChanged.connect(self.on_focus_changed)
-        self.show()
+        #self.show()
         
     def read_method_categories(self):
         self.cat = open(os.path.join(cwd + var.language_folder + self.language['language_description'] + '/' + var.om_cat_file))
