@@ -1,8 +1,8 @@
 {
     "name": "Month",
+    "symbol": "M",
     "category": "other",
     "unit": "",
-    "symbol": "M",
-    "description": "Ordinal number of the month for which the calculation is performed",
+    "description": "Ordinal number of the month for which the calculation is performed.",
     "type": "a"
 }

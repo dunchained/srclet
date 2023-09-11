@@ -1,0 +1,13 @@
+{
+    "name": "test1",
+    "unit": "2",
+    "symbol": "s",
+    "description": "s",
+    "method_conditions": "s",
+    "method_formula": "s",
+    "basic_parameters": "Tmax, Tmin",
+    "changable_parameters": "",
+    "other_methods": "",
+    "category": "temperature",
+    "type": "a"
+}
