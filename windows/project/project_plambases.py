@@ -3,6 +3,33 @@ import var
 cwd = os.path.curdir
 cwd_other = os.path.curdir + var.other_methods_folder
 
+def read_cps(project_path):
+    get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
+    cp_list = []
+    for file in get_files:
+        file_to_read = open(os.path.join(cwd + var.changable_parameters_folder + file))
+        file_data = json.load(file_to_read)
+        acp_dict = {
+            "name": file_data['name'],
+            "symbol": file_data['symbol'],
+            "value": file_data['value']}
+        cp_list.append(acp_dict)
+    file_to_read = open(os.path.join(cwd + var.projects_folder + project_path + '/data.json'))
+    project_file_data = json.load(file_to_read)
+    for key, value in project_file_data.items():
+        if key == 'weather_station_latitude':
+            acp_dict = {"name": 'Wather station latitude', "symbol": key, "value": value}
+            cp_list.append(acp_dict)
+        elif key == 'weather_station_elevation':
+            acp_dict = {"name": 'Wather station elevation', "symbol": key, "value": value}
+            cp_list.append(acp_dict)
+        elif key == 'weather_station_longitude':
+            acp_dict = {"name": 'Wather station longitude', "symbol": key, "value": value}
+            cp_list.append(acp_dict)
+        else:
+            pass
+    return cp_list
+
 def available_cps(project_path):
     get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
     cp_list = []
@@ -39,13 +66,13 @@ def read_project_data(project_path):
     data_to_read = pandas.read_excel(os.path.join(cwd + var.projects_folder + project_path + '/data.xlsx'), sheet_name='data_input', skiprows=1)
     # data_to_read = data_to_read.drop(data_to_read.columns[0], axis=1)
     column_names_list = data_to_read.columns.values.tolist()
+    
     column_symbols = []
     for symbol in column_names_list:
         get_files_parameters = next(
             os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
         for file1 in get_files_parameters:
-            file_to_read1 = open(os.path.join(
-                cwd + var.basic_parameters_folder + file1))
+            file_to_read1 = open(os.path.join(cwd + var.basic_parameters_folder + file1))
             file_data1 = json.load(file_to_read1)
             if symbol == file_data1['name']:
                 column_symbols.append(file_data1['symbol'])

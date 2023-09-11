@@ -4,9 +4,9 @@ from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QFormLayout, QApplication
 from PyQt5.QtWidgets import QDesktopWidget, QPushButton, QGroupBox, QTextEdit
 from PyQt5.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QLineEdit, QScrollArea
 import css, var, os, sys
-from project_plambases import available_cps, read_om_data
+from project_plambases import read_cps, read_om_data
 from project_plambases import other_read_methods_data_on_update, eto_read_methods_data, wb_read_methods_data
-from project_plambases import read_methods_data, read_project_data
+from project_plambases import available_cps, read_project_data
 cwd = os.path.curdir
 
 from language import language
@@ -58,7 +58,7 @@ class CalculateWidget(QWidget):
         self.acp_groupbox.setChecked(False)
         self.acp_layout = QVBoxLayout()
         self.acp_scroll = QWidget()
-        self.list_of_acp, _ = available_cps(project_path=self.project_title)
+        self.list_of_acp = read_cps(project_path=self.project_title)
         for self.acp in self.list_of_acp:
             self.acp1_groupbox = QGroupBox(self.acp['name'] + ':')
             self.flay = QFormLayout()
@@ -109,6 +109,10 @@ class CalculateWidget(QWidget):
         
         self.all_data_from_project_dict, self.all_pa_data_file_list, self.lista_dostupnih_param = read_project_data(project_path=self.project_title)
         _, self.base_data_list = available_cps(project_path=self.project_title)
+
+        print(self.all_pa_data_file_list)
+
+
         # ovaj dio treba da učita bp, cp
         for self.method in self.all_pa_data_file_list:
             self.om_gbox = QGroupBox(self.method)
@@ -121,6 +125,8 @@ class CalculateWidget(QWidget):
             self.om_layout.addWidget(self.om_gbox)
         
         self.all_available_others_methods_data, self.method_parameters_dict = read_om_data()
+
+        print(self.method_parameters_dict)
 
         for self.method, self.parameters in self.method_parameters_dict.items():
             self.parameters = self.parameters.split(', ')
