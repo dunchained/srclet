@@ -4,6 +4,7 @@ from widgets.ch_widget import InputCharacterWidget
 from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
 from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
 import sys, os, json
+from PyQt5.QtCore import Qt
 cwd = os.path.curdir
 
 
