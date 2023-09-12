@@ -1,0 +1,13 @@
+{
+    "name": "Testni metod",
+    "unit": "ss/aa",
+    "symbol": "om_test",
+    "description": "sa",
+    "method_conditions": "sa",
+    "method_formula": "sa",
+    "basic_parameters": "Tmin, Tmax, RHmin",
+    "changable_parameters": "",
+    "other_methods": "",
+    "category": "temperature",
+    "type": "a"
+}

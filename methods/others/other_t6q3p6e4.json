@@ -1,0 +1,13 @@
+{
+    "name": "omtest",
+    "unit": "o",
+    "symbol": "other_method_req_om",
+    "description": "a",
+    "method_conditions": "a",
+    "method_formula": "a",
+    "basic_parameters": "Tmax",
+    "changable_parameters": "",
+    "other_methods": "other_method1",
+    "category": "temperature",
+    "type": "a"
+}
