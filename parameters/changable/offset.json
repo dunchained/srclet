@@ -1,0 +1,9 @@
+{
+  "name": "Temperature offset",
+  "symbol": "offset",
+  "unit": "°C",
+  "category": "et",
+  "type": "a",
+  "description": "Temperature offset",
+  "value": "17.8"
+}

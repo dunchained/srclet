@@ -1,0 +1,55 @@
+{
+  "id": "rs_est",
+  "name": "Solar radiation from temperature range",
+  "symbol": "Rs",
+  "unit": "MJ/m²/day",
+  "group": "others",
+  "output": "Rs",
+  "parameters": {
+    "kRs": 0.17
+  },
+  "source": "Čadro (2019), (44)",
+  "expression": [
+    "Multiply",
+    [
+      "Multiply",
+      "kRs",
+      [
+        "Sqrt",
+        [
+          "Subtract",
+          "Tmax",
+          "Tmin"
+        ]
+      ]
+    ],
+    "Ra"
+  ],
+  "latex": "\\left(\\left(\\mathrm{kRs}\\cdot \\sqrt{\\left(\\mathrm{Tmax}-\\mathrm{Tmin}\\right)}\\right)\\cdot \\mathrm{Ra}\\right)",
+  "version": 1,
+  "type": "a",
+  "description": "Čadro (2019), (44)",
+  "method_conditions": "",
+  "method_formula": "\\left(\\left(\\mathrm{kRs}\\cdot \\sqrt{\\left(\\mathrm{Tmax}-\\mathrm{Tmin}\\right)}\\right)\\cdot \\mathrm{Ra}\\right)",
+  "formula_math": [
+    "Multiply",
+    [
+      "Multiply",
+      "kRs",
+      [
+        "Sqrt",
+        [
+          "Subtract",
+          "Tmax",
+          "Tmin"
+        ]
+      ]
+    ],
+    "Ra"
+  ],
+  "basic_parameters": "Ra, Tmax, Tmin",
+  "changable_parameters": "kRs",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

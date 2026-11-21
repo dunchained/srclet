@@ -1,0 +1,41 @@
+{
+  "id": "q_daily",
+  "name": "Daily irrigation hydromodule",
+  "symbol": "qDay",
+  "unit": "L/s/ha",
+  "group": "hydro",
+  "output": "qDay",
+  "parameters": {
+    "seconds": 86400
+  },
+  "source": "Čadro (2019), (36)",
+  "expression": [
+    "Divide",
+    [
+      "Multiply",
+      10000,
+      "dailyDepth"
+    ],
+    "seconds"
+  ],
+  "latex": "\\frac{\\left(10000\\cdot \\mathrm{dailyDepth}\\right)}{\\mathrm{seconds}}",
+  "version": 1,
+  "type": "a",
+  "description": "Čadro (2019), (36)",
+  "method_conditions": "",
+  "method_formula": "\\frac{\\left(10000\\cdot \\mathrm{dailyDepth}\\right)}{\\mathrm{seconds}}",
+  "formula_math": [
+    "Divide",
+    [
+      "Multiply",
+      10000,
+      "dailyDepth"
+    ],
+    "seconds"
+  ],
+  "basic_parameters": "dailyDepth",
+  "changable_parameters": "seconds",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

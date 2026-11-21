@@ -1,0 +1,72 @@
+{
+  "weather_station": "Visoko",
+  "weather_station_country": "BiH",
+  "weather_station_latitude": "43",
+  "weather_station_longitude": "18",
+  "weather_station_elevation": "422",
+  "project_description": "Nisam.",
+  "skip_rows": "1",
+  "source_file": "data2.txt",
+  "import_columns": [
+    {
+      "header": "Year",
+      "id": "Year"
+    },
+    {
+      "header": "Month",
+      "id": "Month"
+    },
+    {
+      "header": "Tmean",
+      "id": "Tmean"
+    },
+    {
+      "header": "Tmax",
+      "id": "Tmax"
+    },
+    {
+      "header": "Tmin",
+      "id": "Tmin"
+    },
+    {
+      "header": "Rhmean",
+      "id": "RHmean"
+    },
+    {
+      "header": "Rhmax",
+      "id": "RHmax"
+    },
+    {
+      "header": "Rhmin",
+      "id": "RHmin"
+    },
+    {
+      "header": "Rs",
+      "id": "Rs"
+    },
+    {
+      "header": "Wind",
+      "id": "uz"
+    },
+    {
+      "header": "Tdew",
+      "id": "Tdew"
+    }
+  ],
+  "decimal": ".",
+  "delimiter": "auto",
+  "format_version": 2,
+  "columns": [
+    "Year",
+    "Month",
+    "Tmean",
+    "Tmax",
+    "Tmin",
+    "RHmean",
+    "RHmax",
+    "RHmin",
+    "Rs",
+    "uz",
+    "Tdew"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "ea_tmin",
+  "name": "Vapour pressure from minimum temperature",
+  "symbol": "ea",
+  "unit": "kPa",
+  "group": "others",
+  "output": "ea",
+  "parameters": {},
+  "source": "Čadro (2019), (43)",
+  "expression": [
+    "Multiply",
+    0.611,
+    [
+      "Exp",
+      [
+        "Divide",
+        [
+          "Multiply",
+          17.27,
+          "Tmin"
+        ],
+        [
+          "Add",
+          "Tmin",
+          237.3
+        ]
+      ]
+    ]
+  ],
+  "latex": "\\left(0.611\\cdot \\exp\\left(\\frac{\\left(17.27\\cdot \\mathrm{Tmin}\\right)}{\\left(\\mathrm{Tmin}+237.3\\right)}\\right)\\right)",
+  "version": 1,
+  "type": "a",
+  "description": "Čadro (2019), (43)",
+  "method_conditions": "",
+  "method_formula": "\\left(0.611\\cdot \\exp\\left(\\frac{\\left(17.27\\cdot \\mathrm{Tmin}\\right)}{\\left(\\mathrm{Tmin}+237.3\\right)}\\right)\\right)",
+  "formula_math": [
+    "Multiply",
+    0.611,
+    [
+      "Exp",
+      [
+        "Divide",
+        [
+          "Multiply",
+          17.27,
+          "Tmin"
+        ],
+        [
+          "Add",
+          "Tmin",
+          237.3
+        ]
+      ]
+    ]
+  ],
+  "basic_parameters": "Tmin",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

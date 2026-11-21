@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'">
+<style>
+html { color-scheme: light; font: 18px sans-serif; background: white; }
+body { margin: 12px; } math-field { display: block; padding: 14px; min-height: 56px; }
+math-field::part(menu-toggle), math-field::part(virtual-keyboard-toggle) { display: none; }
+</style>
+<script defer src="vendor/mathlive.min.js"></script>
+<script defer src="vendor/latex-syntax.min.js"></script>
+<script defer src="editor.js"></script></head>
+<body><math-field id="field" aria-label="Formula"></math-field></body></html>

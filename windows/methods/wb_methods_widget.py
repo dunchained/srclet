@@ -1,8 +1,10 @@
+from mortys.language_morty import bind_key
+from widgets.formula_editor import FormulaField
 import sys, os, json
 cwd = os.path.curdir
-from PyQt5.QtWidgets import QVBoxLayout, QScrollArea, QGridLayout, QGroupBox, QLabel, QPushButton
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QVBoxLayout, QScrollArea, QGridLayout, QGroupBox, QLabel, QPushButton
+from PyQt6.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget, QApplication, QCheckBox
+from PyQt6.QtCore import Qt
 from variables import var
 from windows.methods.wb_methods_add import AddWBMethod
 from mortys.methods_morty import read_om, read_bp, read_cp, read_eto
@@ -35,7 +37,7 @@ class WBMethodsWidget(QWidget):
         self.on_focused_change = widget
          
     def create_list_of_methods(self):
-        self.methods_groupbox = QGroupBox(self.language['wb_methods_widget_list'])
+        self.methods_groupbox = bind_key(QGroupBox(), "title", 'wb_methods_widget_list')
         self.list_widget = QListWidget()
         self.get_files = next(os.walk(cwd + var.wb_methods_folder), (None, None, []))[2]
         self.methods_list = []
@@ -45,12 +47,12 @@ class WBMethodsWidget(QWidget):
             self.methods_list.append(self.file_data['name'])
         self.list_widget.addItems(self.methods_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
-        self.btn_add_method = QPushButton(self.language['eto_methods_widget_btn_add_method'])
-        self.btn_add_method_inherit = QPushButton(self.language['other_methods_widget_btn_add_new_inherit'])
+        self.btn_add_method = bind_key(QPushButton(), "text", 'eto_methods_widget_btn_add_method')
+        self.btn_add_method_inherit = bind_key(QPushButton(), "text", 'other_methods_widget_btn_add_new_inherit')
         self.btn_add_method_inherit.setEnabled(False)
         self.btn_add_method_inherit.clicked.connect(self.new_method_inherit)
         self.btn_add_method.clicked.connect(self.new_method)
-        self.btn_delete_method = QPushButton(self.language['eto_methods_widget_btn_delete_method'])
+        self.btn_delete_method = bind_key(QPushButton(), "text", 'eto_methods_widget_btn_delete_method')
         self.btn_delete_method.clicked.connect(self.delete_procedure)
         self.btn_delete_method.setEnabled(False)
         self.methods_groupbox.layout = QGridLayout()
@@ -62,10 +64,12 @@ class WBMethodsWidget(QWidget):
         return self.methods_groupbox
     
     def index_changed(self, i):
+        if i is None:
+            return
         self.get_files = next(os.walk(cwd + var.wb_methods_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + var.wb_methods_folder + file))
-            self.file_data = json.load(self.file_to_read)
+            with open(os.path.join(cwd + var.wb_methods_folder + file), encoding="utf-8") as handle:
+                self.file_data = json.load(handle)
             if i.text() == self.file_data['name']:
                 self.file_to_load = file
                 self.json_path = cwd + var.wb_methods_folder + self.file_to_load
@@ -84,6 +88,7 @@ class WBMethodsWidget(QWidget):
                             cparam=data['changable_parameters'],
                             om=data['other_methods'],
                             eto=data['eto_methods'])
+                        self.method_formula.tree = data.get("formula_math")
                         self.method_dict = {
                                     "name": data['name'] + self.language['other_methods_new_addition'],
                                     "symbol": data['symbol'],
@@ -91,6 +96,7 @@ class WBMethodsWidget(QWidget):
                                     "description": data['description'] + self.language['other_methods_new_addition'],
                                     "method_conditions": data['method_conditions'],
                                     "method_formula": data['method_formula'],
+                                    "formula_math": data.get("formula_math"),
                                     "basic_parameters": data['basic_parameters'],
                                     "changable_parameters": data['changable_parameters'],
                                     "other_methods": data['other_methods'],
@@ -111,6 +117,7 @@ class WBMethodsWidget(QWidget):
                             cparam=data['changable_parameters'],
                             om=data['other_methods'],
                             eto=data['eto_methods'])
+                        self.method_formula.tree = data.get("formula_math")
                         self.method_dict = {
                                     "name": data['name'] + self.language['other_methods_new_addition'],
                                     "symbol": data['symbol'],
@@ -118,6 +125,7 @@ class WBMethodsWidget(QWidget):
                                     "description": data['description'] + self.language['other_methods_new_addition'],
                                     "method_conditions": data['method_conditions'],
                                     "method_formula": data['method_formula'],
+                                    "formula_math": data.get("formula_math"),
                                     "basic_parameters": data['basic_parameters'],
                                     "changable_parameters": data['changable_parameters'],
                                     "other_methods": data['other_methods'],
@@ -182,14 +190,14 @@ class WBMethodsWidget(QWidget):
         
     def delete_procedure(self):
         self.msgBox = QMessageBox()
-        self.msgBox.setIcon(QMessageBox.Information)
-        self.msgBox.setText(self.language['eto_methods_widget_msg_delete'])
-        self.msgBox.setWindowTitle(self.language['eto_methods_widget_msg_delete_title'])
-        self.msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        self.buttonOK = self.msgBox.button(QMessageBox.Ok)
-        self.buttonOK.setText(self.language['eto_methods_widget_msg_delete_yes'])
-        self.buttonCancel = self.msgBox.button(QMessageBox.Cancel)
-        self.buttonCancel.setText(self.language['eto_methods_widget_msg_delete_cancel'])
+        self.msgBox.setIcon(QMessageBox.Icon.Information)
+        bind_key(self.msgBox, "text", 'eto_methods_widget_msg_delete')
+        bind_key(self.msgBox, "windowTitle", 'eto_methods_widget_msg_delete_title')
+        self.msgBox.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        self.buttonOK = self.msgBox.button(QMessageBox.StandardButton.Ok)
+        bind_key(self.buttonOK, "text", 'eto_methods_widget_msg_delete_yes')
+        self.buttonCancel = self.msgBox.button(QMessageBox.StandardButton.Cancel)
+        bind_key(self.buttonCancel, "text", 'eto_methods_widget_msg_delete_cancel')
         self.msgBox.buttonClicked.connect(self.delete_method)
         returnValue = self.msgBox.exec()
 
@@ -210,47 +218,47 @@ class WBMethodsWidget(QWidget):
             self.list_widget.takeItem(self.list_widget.row(item))
     
     def create_method_info(self):
-        self.method_info_groupbox = QGroupBox(self.language['eto_methods_widget_list'])
+        self.method_info_groupbox = bind_key(QGroupBox(), "title", 'eto_methods_widget_list')
         
-        self.text_method_name = QLabel(self.language['add_wb_method_info_name'])
+        self.text_method_name = bind_key(QLabel(), "text", 'add_wb_method_info_name')
         self.method_name = QLineEdit()
         
-        self.text_method_short_name = QLabel(self.language['add_wb_method_info_unit'])
+        self.text_method_short_name = bind_key(QLabel(), "text", 'add_wb_method_info_unit')
         self.method_short_name = QLineEdit()
         
-        self.text_method_symbol = QLabel(self.language['add_wb_method_info_symbol'])
+        self.text_method_symbol = bind_key(QLabel(), "text", 'add_wb_method_info_symbol')
         self.method_symbol = QLineEdit()
         
-        self.text_method_description = QLabel(self.language['add_wb_method_info_description'])
+        self.text_method_description = bind_key(QLabel(), "text", 'add_wb_method_info_description')
         self.method_description = QTextEdit()
         
-        self.text_method_conditions = QLabel(self.language['add_wb_method_info_conditions'])
+        self.text_method_conditions = bind_key(QLabel(), "text", 'add_wb_method_info_conditions')
         self.method_conditions = QTextEdit()
         
-        self.text_method_formula = QLabel(self.language['add_wb_method_info_formula'])
-        self.method_formula = QTextEdit()
+        self.text_method_formula = bind_key(QLabel(), "text", 'add_wb_method_info_formula')
+        self.method_formula = FormulaField()
         
-        self.text_basic_parameters = QLabel(self.language['add_wb_method_info_bp'])
-        self.text_complex_parameters = QLabel(self.language['add_wb_method_info_cp'])
-        self.text_om = QLabel(self.language['add_wb_method_info_om'])
-        self.text_et = QLabel(self.language['add_other_method_info_eto'])
+        self.text_basic_parameters = bind_key(QLabel(), "text", 'add_wb_method_info_bp')
+        self.text_complex_parameters = bind_key(QLabel(), "text", 'add_wb_method_info_cp')
+        self.text_om = bind_key(QLabel(), "text", 'add_wb_method_info_om')
+        self.text_et = bind_key(QLabel(), "text", 'add_other_method_info_eto')
         
-        self.text_bp_selected = QLabel(self.language['add_wb_method_info_bp_s'])
+        self.text_bp_selected = bind_key(QLabel(), "text", 'add_wb_method_info_bp_s')
         self.selected_bp_list = QLabel()
         
-        self.text_cp_selected = QLabel(self.language['add_wb_method_info_cp_s'])
+        self.text_cp_selected = bind_key(QLabel(), "text", 'add_wb_method_info_cp_s')
         self.selected_cp_list = QLabel()
 
-        self.text_om_selected = QLabel(self.language['add_wb_method_info_om_s'])
+        self.text_om_selected = bind_key(QLabel(), "text", 'add_wb_method_info_om_s')
         self.selected_om_list = QLabel()
 
-        self.text_et_selected = QLabel(self.language['add_other_method_info_eto_s'])
+        self.text_et_selected = bind_key(QLabel(), "text", 'add_other_method_info_eto_s')
         self.selected_et_list = QLabel()
         
-        self.btn_save_method_changes = QPushButton(self.language['eto_methods_widget_btn_save_changes'])
+        self.btn_save_method_changes = bind_key(QPushButton(), "text", 'eto_methods_widget_btn_save_changes')
         self.btn_save_method_changes.clicked.connect(self.save_changes_method)
 
-        self.btn_cancel_method_changes = QPushButton(self.language['eto_methods_widget_btn_cancel_changes'])
+        self.btn_cancel_method_changes = bind_key(QPushButton(), "text", 'eto_methods_widget_btn_cancel_changes')
         self.btn_cancel_method_changes.clicked.connect(self.cancel_changes_method)
 
         self.method_info_groupbox.layout = QGridLayout()
@@ -303,17 +311,17 @@ class WBMethodsWidget(QWidget):
     def save_changes_method(self):
         self.get_files = next(os.walk(cwd + var.wb_methods_folder), (None, None, []))[2]
         for file in self.get_files:
-            self.file_to_read = open(os.path.join(cwd + var.wb_methods_folder + file))
-            self.file_data = json.load(self.file_to_read)
+            with open(os.path.join(cwd + var.wb_methods_folder + file), encoding="utf-8") as handle:
+                self.file_data = json.load(handle)
             if self.method_name.text() == self.file_data['name']:
                 self.file_to_load = file
         if not self.method_name.text() or not self.method_short_name.text() or not self.method_symbol.text() or not self.method_formula.toPlainText() or not self.selected_bp_list.text():
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_wb_method_msg_missing'])
-            self.msg.setWindowTitle(self.language['add_wb_method_msg_missing_title'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'add_wb_method_msg_missing')
+            bind_key(self.msg, "windowTitle", 'add_wb_method_msg_missing_title')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
@@ -324,6 +332,7 @@ class WBMethodsWidget(QWidget):
                     "description": self.method_description.toPlainText(),
                     "method_conditions": self.method_conditions.toPlainText(),
                     "method_formula": self.method_formula.toPlainText(),
+                    "formula_math": self.method_formula.tree,
                     "basic_parameters": self.selected_bp_list.text(),
                     "changable_parameters": self.selected_cp_list.text(),
                     "other_methods": self.selected_om_list.text(),
@@ -335,11 +344,11 @@ class WBMethodsWidget(QWidget):
                 outfile.write(json_object)
                 
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['add_wb_method_msg_saved'])
-            self.msg.setWindowTitle(self.language['add_wb_method_msg_saved_title'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'add_wb_method_msg_saved')
+            bind_key(self.msg, "windowTitle", 'add_wb_method_msg_saved_title')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.show()
         
     def cancel_changes_method(self):
@@ -352,6 +361,7 @@ class WBMethodsWidget(QWidget):
         self.method_description.setText(data['description'])
         self.method_conditions.setText(data['method_conditions'])
         self.method_formula.setText(data['method_formula'])
+        self.method_formula.tree = data.get('formula_math')
         self.selected_bp_list.setText(data['basic_parameters'])
         
         self.bp_list_to_update = data['basic_parameters'].split(', ')
@@ -393,8 +403,8 @@ class WBMethodsWidget(QWidget):
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
                 for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
-                    self.file_data = json.load(self.file_to_read)
+                    with open(os.path.join(cwd + var.basic_parameters_folder + file), encoding="utf-8") as handle:
+                        self.file_data = json.load(handle)
                     if self.bp_check_list[i] == self.file_data['symbol']:
                         self.file_to_load = file
                 self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
@@ -415,7 +425,7 @@ class WBMethodsWidget(QWidget):
         self.bp_scroll.setLayout(self.bp_layout)
         bp = QScrollArea()
         bp.setWidget(self.bp_scroll)
-        bp.setWidgetResizable(1)
+        bp.setWidgetResizable(True)
         self.bp_groupbox.layout = QVBoxLayout()
         self.bp_groupbox.layout.addWidget(bp)
         self.bp_groupbox.setLayout(self.bp_groupbox.layout)
@@ -426,7 +436,7 @@ class WBMethodsWidget(QWidget):
             self.bpl = []
         else:
             self.bpl = self.selected_bp_list.text().split(', ')
-        if self.sender().checkState() == 2:
+        if self.sender().isChecked():
             self.bpl.append(self.sender().text())
             self.selected_bp_list.setText(', '.join(self.bpl))
         else:
@@ -446,8 +456,8 @@ class WBMethodsWidget(QWidget):
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.changable_parameters_folder), (None, None, []))[2]
                 for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.changable_parameters_folder + file))
-                    self.file_data = json.load(self.file_to_read)
+                    with open(os.path.join(cwd + var.changable_parameters_folder + file), encoding="utf-8") as handle:
+                        self.file_data = json.load(handle)
                     if self.cp_check_list[i] == self.file_data['symbol']:
                         self.file_to_load = file
                 self.json_path = cwd + var.changable_parameters_folder + self.file_to_load
@@ -467,7 +477,7 @@ class WBMethodsWidget(QWidget):
         self.cp_scroll.setLayout(self.cp_layout)
         cp = QScrollArea()
         cp.setWidget(self.cp_scroll)
-        cp.setWidgetResizable(1)
+        cp.setWidgetResizable(True)
         self.cp_groupbox.layout = QVBoxLayout()
         self.cp_groupbox.layout.addWidget(cp)
         self.cp_groupbox.setLayout(self.cp_groupbox.layout)
@@ -478,7 +488,7 @@ class WBMethodsWidget(QWidget):
             self.cpl = []
         else:
             self.cpl = self.selected_cp_list.text().split(', ')
-        if self.sender().checkState() == 2:
+        if self.sender().isChecked():
             self.cpl.append(self.sender().text())
             self.selected_cp_list.setText(', '.join(self.cpl))
         else:
@@ -497,8 +507,8 @@ class WBMethodsWidget(QWidget):
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.other_methods_folder), (None, None, []))[2]
                 for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.other_methods_folder + file))
-                    self.file_data = json.load(self.file_to_read)
+                    with open(os.path.join(cwd + var.other_methods_folder + file), encoding="utf-8") as handle:
+                        self.file_data = json.load(handle)
                     if self.om_check_list[i] == self.file_data['symbol']:
                         self.file_to_load = file
                 self.json_path = cwd + var.other_methods_folder + self.file_to_load
@@ -518,7 +528,7 @@ class WBMethodsWidget(QWidget):
         self.om_scroll.setLayout(self.om_layout)
         om = QScrollArea()
         om.setWidget(self.om_scroll)
-        om.setWidgetResizable(1)
+        om.setWidgetResizable(True)
         self.om_groupboxx.layout = QVBoxLayout()
         self.om_groupboxx.layout.addWidget(om)
         self.om_groupboxx.setLayout(self.om_groupboxx.layout)
@@ -529,7 +539,7 @@ class WBMethodsWidget(QWidget):
             self.ompl = []
         else:
             self.ompl = self.selected_om_list.text().split(', ')
-        if self.sender().checkState() == 2:
+        if self.sender().isChecked():
             self.ompl.append(self.sender().text())
             self.selected_om_list.setText(', '.join(self.ompl))
         else:
@@ -548,8 +558,8 @@ class WBMethodsWidget(QWidget):
                 self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                 self.get_files = next(os.walk(cwd + var.eto_methods_folder), (None, None, []))[2]
                 for file in self.get_files:
-                    self.file_to_read = open(os.path.join(cwd + var.eto_methods_folder + file))
-                    self.file_data = json.load(self.file_to_read)
+                    with open(os.path.join(cwd + var.eto_methods_folder + file), encoding="utf-8") as handle:
+                        self.file_data = json.load(handle)
                     if self.eto_check_list[i] == self.file_data['symbol']:
                         self.file_to_load = file
                 self.json_path = cwd + var.eto_methods_folder + self.file_to_load
@@ -572,7 +582,7 @@ class WBMethodsWidget(QWidget):
         self.eto_scroll.setLayout(self.eto_layout)
         eto = QScrollArea()
         eto.setWidget(self.eto_scroll)
-        eto.setWidgetResizable(1)
+        eto.setWidgetResizable(True)
         self.eto_groupboxx.layout = QVBoxLayout()
         self.eto_groupboxx.layout.addWidget(eto)
         self.eto_groupboxx.setLayout(self.eto_groupboxx.layout)
@@ -583,7 +593,7 @@ class WBMethodsWidget(QWidget):
             self.etopl = []
         else:
             self.etopl = self.selected_et_list.text().split(', ')
-        if self.sender().checkState() == 2:
+        if self.sender().isChecked():
             self.etopl.append(self.sender().text())
             self.selected_et_list.setText(', '.join(self.etopl))
         else:
@@ -593,4 +603,4 @@ class WBMethodsWidget(QWidget):
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = WBMethodsWidget()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())

@@ -1,0 +1,9 @@
+{
+  "name": "Initial soil water (mm)",
+  "symbol": "initial",
+  "unit": "mm",
+  "category": "wb",
+  "type": "a",
+  "description": "Initial soil water (mm)",
+  "value": "100.0"
+}

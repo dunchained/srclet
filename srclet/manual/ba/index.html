@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="bs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SRCLET · Uputstvo za korištenje</title>
+  <link rel="stylesheet" href="../manual.css">
+  <script src="../manual.js" defer></script>
+</head>
+<body>
+<h1>SRCLET · Uputstvo za korištenje</h1>
+<details id="settings" open>
+  <summary>Pokreni aplikaciju i odaberi jezik</summary>
+  <ol>
+    <li>Na Linuxu pokreni ./run.sh, a na Windowsu run.bat. Prvo pokretanje instalira zavisnosti i zahtijeva internet.</li>
+    <li>Otvori Datoteka → Postavke. Izaberi bosanski, engleski ili francuski. Jezik, veličina slova i ikone mijenjaju se odmah u otvorenim prozorima.</li>
+    <li>Uputstvo možeš ponovo otvoriti preko Pomoć → Uputstvo ili tipkom F1. Klik na naslov otvara poglavlje, a klik na sliku povećava prikaz.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="settings.png" alt="Postavke jezika, fontova i ikona na bosanskom."></button>
+    <figcaption>Postavke jezika, fontova i ikona na bosanskom.</figcaption>
+  </figure>
+</details>
+<details id="import">
+  <summary>Otvori projekat ili uvezi mjerenja</summary>
+  <ol>
+    <li>Za postojeći rad odaberi Projekat → Otvori postojeći projekat. Odaberi projekat iz liste ili pronađi njegov folder.</li>
+    <li>Za novi rad odaberi Projekat → Novi projekat. Upiši naziv, izaberi folder i popuni podatke o stanici. Geografska širina i nadmorska visina omogućavaju dodatne metode.</li>
+    <li>Klikni Dalje i odaberi TXT, TSV, CSV ili XLSX. Provjeri razdjelnik, decimalni znak i veze kolona u prvom redu pregleda. Potrebni su godina, mjesec i barem jedna mjerena veličina. Prazna polja i -999 označavaju nedostajuće vrijednosti.</li>
+    <li>Za prvi pokušaj učitaj examples/methods/workflow.csv i klikni Sačuvaj i otvori. Brojevi u primjeru su sintetički.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="import.png" alt="Pregled mjesečne datoteke i povezivanje kolona prije spašavanja."></button>
+    <figcaption>Pregled mjesečne datoteke i povezivanje kolona prije spašavanja.</figcaption>
+  </figure>
+</details>
+<details id="data">
+  <summary>Unesi ili ispravi projektne podatke</summary>
+  <ol>
+    <li>U novom projektu odaberi Ručni unos podataka ili u otvorenom projektu klikni Uredi podatke projekta.</li>
+    <li>Izaberi mjernu veličinu i klikni Dodaj kolonu. Dodaj red za svaki mjesec. Dvaput klikni ćeliju da promijeniš vrijednost. Kombinacija godine i mjeseca mora biti jedinstvena.</li>
+    <li>Sačuvaj podatke. Aplikacija zatim ponovo provjerava koje metode može izračunati. Izvorna uvezena radna knjiga ostaje u projektnom folderu.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="data.png" alt="Editor stanice i mjesečnih mjerenja."></button>
+    <figcaption>Editor stanice i mjesečnih mjerenja.</figcaption>
+  </figure>
+</details>
+<details id="parameters">
+  <summary>Definiši mjernu veličinu ili koeficijent</summary>
+  <ol>
+    <li>U meniju Prilagodi → Parametri izaberi Osnovni parametri za veličinu koja se uvozi ili Promjenjivi parametri za koeficijent.</li>
+    <li>Klikni Novi parametar. Unesi naziv, jedinstvenu oznaku, jedinicu i opis. Za koeficijent zadaj početnu vrijednost. Sačuvaj izmjene.</li>
+    <li>Oznaku koristi u zaglavlju datoteke i u formuli. U editoru metode možeš preuzeti koeficijent iz kataloga i podesiti ga za konkretan proračun.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="parameters.png" alt="Definicija minimalne temperature s oznakom Tmin i jedinicom °C."></button>
+    <figcaption>Definicija minimalne temperature s oznakom Tmin i jedinicom °C.</figcaption>
+  </figure>
+</details>
+<details id="selection">
+  <summary>Poveži evapotranspiraciju, vodni bilans i hidromodul</summary>
+  <ol>
+    <li>U Odabiru metoda provjeri radne podatke i period. Lista sadrži metode za koje u izabranom periodu postoje odgovarajuće vrijednosti.</li>
+    <li>Označi FAO-56 Penman–Monteith pa klikni Odaberi metodu. Njena mjesečna ET₀ postaje dostupna vodnim bilansima. Uz padavine i temperaturu možeš dodati McCabe–Markstrom.</li>
+    <li>Dodaj hidromodul ako imaš niz mjesečnih manjkova. Za izračun samo hidromodula dovoljno je direktno uvesti manjak, kao u examples/mliniste.csv.</li>
+    <li>Klikni Ukloni posljednju metodu ako želiš isprobati drugi redoslijed. Klikni Izračunaj i sačuvaj kad završiš izbor.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="selection.png" alt="Nakon odabira FAO-56 među dostupnim metodama pojavljuje se McCabe–Markstrom."></button>
+    <figcaption>Nakon odabira FAO-56 među dostupnim metodama pojavljuje se McCabe–Markstrom.</figcaption>
+  </figure>
+</details>
+<details id="catalog">
+  <summary>Dodaj, kopiraj ili izmijeni metodu</summary>
+  <ol>
+    <li>Otvori Katalog metoda iz projekta ili Prilagodi → Metode. Izaberi postojeću metodu, napravi kopiju ili klikni Nova metoda.</li>
+    <li>Zadaj grupu, naziv, oznaku, jedinicu i izlaznu veličinu. Koristi ET0 za mjesečnu ET u mm ili Deficit za mjesečni manjak u mm ako želiš da rezultat odmah prepoznaju naredne metode.</li>
+    <li>Složeniji model podijeli na korake. U kartici Prethodni mjesec upiši početnu zalihu, a u Koeficijenti metode definiši vrijednosti parametara. Korak označi za objavu kad njegov rezultat treba drugoj metodi.</li>
+    <li>Klikni Sačuvaj izmjene. U kartici Ulazni podaci možeš pregledati potrebne veličine i redove primjera. Za metode koje dolaze s aplikacijom dugme Izvezi primjer podataka… daje zaseban CSV koji možeš uvesti u novi projekat.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="catalog.png" alt="McCabe–Markstrom u istom editoru koji se koristi za vlastite metode."></button>
+    <figcaption>McCabe–Markstrom u istom editoru koji se koristi za vlastite metode.</figcaption>
+  </figure>
+</details>
+<details id="formula">
+  <summary>Napiši i isprobaj matematičku formulu</summary>
+  <ol>
+    <li>U editoru metode ili pojedinačnog koraka klikni Uredi formulu…. Upiši izraz ili upotrijebi dugmad za razlomak, korijen, stepen, zagrade i uslove.</li>
+    <li>Izaberi simbol iz liste. Popuni probne vrijednosti ili odaberi raspoloživi mjesec i klikni Isprobaj formulu. Za hidromodul upiši 34 mm za D i 31 dan za d.</li>
+    <li>Dobivenih 0,12694146 L/s/ha odgovara zaokruženoj vrijednosti 0,127 za Mlinište. Klikni Primijeni, zatim sačuvaj metodu u katalogu.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="formula.png" alt="Vizuelni razlomak za q₂₄ s provjerom na podacima za avgust."></button>
+    <figcaption>Vizuelni razlomak za q₂₄ s provjerom na podacima za avgust.</figcaption>
+  </figure>
+</details>
+<details id="frequency">
+  <summary>Odaberi učestalost i raspodjelu</summary>
+  <ol>
+    <li>Kao Niz za analizu učestalosti izaberi manjak, oticaj ili drugu dostupnu veličinu. Možeš koristiti uvezene podatke ili izlaz vodnog bilansa.</li>
+    <li>Označi jednu od šest metoda rangiranja i klikni Koeficijenti metode. Zadaj kalendarski mjesec, povratni period u godinama i raspodjelu. Za period od 10 godina potrebno je najmanje 10 godina s podatkom za taj mjesec.</li>
+    <li>Klikni Primijeni, zatim Odaberi metodu. Sačuvani rezultat sadrži procijenjenu vrijednost, rangove i grešku prilagodbe. Za manjak sadrži i hidromodul.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="frequency.png" alt="Mjesec, povratni period i raspodjela za Weibullovu metodu rangiranja."></button>
+    <figcaption>Mjesec, povratni period i raspodjela za Weibullovu metodu rangiranja.</figcaption>
+  </figure>
+</details>
+<details id="results">
+  <summary>Pregledaj rezultate, izvezi tabelu i nastavi rad</summary>
+  <ol>
+    <li>Otvori Sačuvani rezultati i izaberi zapis po nazivu metode i vremenu. Pregledaj izlaz, jedinicu i korištene ulaze.</li>
+    <li>Klikni Izvezi…. Izaberi XLSX za Excel tabelu i grafikon na posebnom listu. CSV, TSV i TXT služe za prenos tabelarnih podataka. U Excelu se za učestalost prikazuju vjerovatnoće prevazilaženja, a za mjesečne proračune vremenski niz.</li>
+    <li>Za nastavak proračuna vrati se na Odabir metoda i kao radne podatke izaberi ranije sačuvani mjesečni rezultat. Za promjenu videouputstva zamijeni adresu u datoteci video_url.txt u glavnom folderu aplikacije.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Uvećaj snimak ekrana"><img src="results.png" alt="Sačuvani vodni bilans s mjesečnim manjkom, zalihom, oticajem i dugmetom za izvoz."></button>
+    <figcaption>Sačuvani vodni bilans s mjesečnim manjkom, zalihom, oticajem i dugmetom za izvoz.</figcaption>
+  </figure>
+</details>
+<dialog aria-label="Uvećaj snimak ekrana"><button type="button">Zatvori</button><img alt=""></dialog>
+</body>
+</html>

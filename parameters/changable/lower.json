@@ -1,0 +1,9 @@
+{
+  "name": "Lower soil capacity",
+  "symbol": "lower",
+  "unit": "mm",
+  "category": "wb",
+  "type": "a",
+  "description": "Lower soil capacity",
+  "value": "74.6"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Rain temperature (°C)",
+  "symbol": "rain_temp",
+  "unit": "",
+  "category": "wb",
+  "type": "a",
+  "description": "Rain temperature (°C)",
+  "value": "3.3"
+}

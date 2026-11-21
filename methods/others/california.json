@@ -1,0 +1,40 @@
+{
+  "id": "california",
+  "name": "California (1923)",
+  "symbol": "california",
+  "unit": "mm/month",
+  "group": "frequency",
+  "output": null,
+  "parameters": {
+    "month": 8,
+    "years": 10
+  },
+  "source": "Čadro (2019), §5.1.2.3, (30)",
+  "expression": [
+    "Divide",
+    "r",
+    "n"
+  ],
+  "latex": "\\frac{r}{n}",
+  "version": 1,
+  "engine": "frequency",
+  "inputs": [
+    "Deficit"
+  ],
+  "distribution": "normal",
+  "order": 30,
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.3, (30)",
+  "method_conditions": "",
+  "method_formula": "\\frac{r}{n}",
+  "formula_math": [
+    "Divide",
+    "r",
+    "n"
+  ],
+  "basic_parameters": "Deficit",
+  "changable_parameters": "month, years",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Soil capacity (mm)",
+  "symbol": "capacity",
+  "unit": "mm",
+  "category": "wb",
+  "type": "a",
+  "description": "Soil capacity (mm)",
+  "value": "100.0"
+}

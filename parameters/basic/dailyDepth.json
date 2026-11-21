@@ -1,0 +1,8 @@
+{
+  "name": "Daily irrigation depth",
+  "unit": "mm/day",
+  "category": "rain",
+  "symbol": "dailyDepth",
+  "description": "Daily irrigation depth",
+  "type": "a"
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SRCLET · Manuel d’utilisation</title>
+  <link rel="stylesheet" href="../manual.css">
+  <script src="../manual.js" defer></script>
+</head>
+<body>
+<h1>SRCLET · Manuel d’utilisation</h1>
+<details id="settings" open>
+  <summary>Démarrer SRCLET et choisir la langue</summary>
+  <ol>
+    <li>Sous Linux, lancez ./run.sh. Sous Windows, double-cliquez sur run.bat. Le premier lancement installe les dépendances et nécessite une connexion Internet.</li>
+    <li>Ouvrez Fichier → Paramètres. Choisissez le bosnien, l’anglais ou le français. La langue et la taille du texte et des icônes changent immédiatement dans les fenêtres ouvertes.</li>
+    <li>Pour revenir à ce manuel, choisissez Aide → Manuel ou appuyez sur F1. Cliquez sur un chapitre pour le déplier et sur une capture pour l’agrandir.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="settings.png" alt="Réglages de langue, de texte et d’icônes en français."></button>
+    <figcaption>Réglages de langue, de texte et d’icônes en français.</figcaption>
+  </figure>
+</details>
+<details id="import">
+  <summary>Ouvrir un projet ou importer des mesures</summary>
+  <ol>
+    <li>Pour reprendre une étude, choisissez Projet → Ouvrir un projet. Sélectionnez un projet dans la liste ou parcourez les dossiers.</li>
+    <li>Pour démarrer une étude, choisissez Projet → Nouveau projet. Saisissez un nom, choisissez le dossier et renseignez la station. La latitude et l’altitude permettent d’utiliser des méthodes supplémentaires.</li>
+    <li>Cliquez sur Suivant et choisissez un fichier TXT, TSV, CSV ou XLSX. Vérifiez le séparateur, le signe décimal et les affectations dans la première ligne de l’aperçu. Il faut une année, un mois et au moins une mesure. Une cellule vide ou la valeur -999 indique une donnée manquante.</li>
+    <li>Pour un premier essai, importez examples/methods/workflow.csv et cliquez sur Enregistrer et ouvrir. Ce jeu de données est synthétique.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="import.png" alt="Aperçu du fichier mensuel et affectation des colonnes avant l’enregistrement."></button>
+    <figcaption>Aperçu du fichier mensuel et affectation des colonnes avant l’enregistrement.</figcaption>
+  </figure>
+</details>
+<details id="data">
+  <summary>Saisir ou corriger les données du projet</summary>
+  <ol>
+    <li>Dans un nouveau projet, choisissez Saisir les données. Dans un projet ouvert, cliquez sur Modifier les données du projet.</li>
+    <li>Choisissez une variable et cliquez sur Ajouter une colonne. Ajoutez une ligne par mois. Double-cliquez sur une cellule pour la modifier. Chaque couple année-mois doit être unique.</li>
+    <li>Enregistrez les données. SRCLET vérifie quelles méthodes peuvent utiliser les nouvelles valeurs. Le classeur importé à l’origine reste dans le dossier du projet.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="data.png" alt="Éditeur des coordonnées de station et des mesures mensuelles."></button>
+    <figcaption>Éditeur des coordonnées de station et des mesures mensuelles.</figcaption>
+  </figure>
+</details>
+<details id="parameters">
+  <summary>Définir une variable ou un coefficient</summary>
+  <ol>
+    <li>Dans Personnaliser → Paramètres, choisissez Paramètres de base pour une mesure importée ou Paramètres modifiables pour un coefficient.</li>
+    <li>Cliquez sur Nouveau paramètre. Renseignez le nom, un symbole unique, l’unité et la description. Pour un coefficient, indiquez la valeur par défaut et enregistrez.</li>
+    <li>Réutilisez le symbole dans l’en-tête du fichier et dans la formule. L’éditeur de méthodes permet de choisir un coefficient du catalogue et d’en ajuster la valeur pour le calcul.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="parameters.png" alt="Température minimale définie par le symbole Tmin et l’unité °C."></button>
+    <figcaption>Température minimale définie par le symbole Tmin et l’unité °C.</figcaption>
+  </figure>
+</details>
+<details id="selection">
+  <summary>Enchaîner l’évapotranspiration, le bilan hydrique et l’irrigation</summary>
+  <ol>
+    <li>Dans Sélection des méthodes, vérifiez les données de travail et la période. La liste regroupe les méthodes disposant des mesures nécessaires sur cette période.</li>
+    <li>Choisissez FAO-56 Penman–Monteith et cliquez sur Sélectionner la méthode. Son ET₀ mensuelle devient disponible pour les bilans hydriques. Avec des précipitations et des températures, vous pouvez ajouter McCabe–Markstrom.</li>
+    <li>Ajoutez le débit spécifique d’irrigation après avoir obtenu le déficit mensuel. Un déficit connu peut aussi être importé directement, comme dans examples/mliniste.csv.</li>
+    <li>Retirer la dernière méthode permet d’essayer un autre enchaînement. Cliquez sur Calculer et enregistrer pour conserver les calculs choisis.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="selection.png" alt="Le bilan de McCabe–Markstrom devient disponible après la sélection de FAO-56."></button>
+    <figcaption>Le bilan de McCabe–Markstrom devient disponible après la sélection de FAO-56.</figcaption>
+  </figure>
+</details>
+<details id="catalog">
+  <summary>Ajouter, dupliquer ou modifier une méthode</summary>
+  <ol>
+    <li>Ouvrez Catalogue des méthodes depuis le projet, ou passez par Personnaliser → Méthodes. Sélectionnez une méthode, dupliquez-la ou cliquez sur Nouvelle méthode.</li>
+    <li>Définissez la famille, le nom, le symbole, l’unité et la variable de sortie. Choisissez ET0 pour l’évapotranspiration mensuelle en mm ou Deficit pour le déficit mensuel en mm, afin que les méthodes suivantes reconnaissent la sortie.</li>
+    <li>Pour un modèle à plusieurs étapes, saisissez les formules dans l’ordre du calcul. Définissez le stockage initial dans Mois précédent et les coefficients dans Paramètres de la méthode. Rendez une étape disponible en sortie pour réutiliser sa valeur dans une autre méthode.</li>
+    <li>Enregistrez les modifications. L’onglet Données d’entrée présente les variables et les lignes d’exemple. Pour chaque méthode fournie, Exporter les données d’exemple… crée un fichier CSV que vous pouvez importer dans un nouveau projet.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="catalog.png" alt="McCabe–Markstrom dans l’éditeur qui sert également à créer vos propres méthodes."></button>
+    <figcaption>McCabe–Markstrom dans l’éditeur qui sert également à créer vos propres méthodes.</figcaption>
+  </figure>
+</details>
+<details id="formula">
+  <summary>Écrire et vérifier une formule</summary>
+  <ol>
+    <li>Cliquez sur Modifier la formule… pour une méthode ou une étape. Saisissez une expression ou utilisez les commandes de fraction, racine, puissance, accolades et cas conditionnels.</li>
+    <li>Insérez un symbole de la liste. Renseignez des valeurs d’essai ou choisissez un mois disponible, puis testez la formule. Pour le débit spécifique, utilisez D = 34 mm et d = 31 jours.</li>
+    <li>Le résultat de 0,12694146 L/s/ha s’arrondit à 0,127 pour Mlinište. Cliquez sur Appliquer, puis enregistrez la méthode dans le catalogue.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="formula.png" alt="Fraction de q₂₄ et résultat obtenu pour l’exemple du mois d’août."></button>
+    <figcaption>Fraction de q₂₄ et résultat obtenu pour l’exemple du mois d’août.</figcaption>
+  </figure>
+</details>
+<details id="frequency">
+  <summary>Choisir une méthode fréquentielle et une distribution</summary>
+  <ol>
+    <li>Dans Série pour l’analyse fréquentielle, choisissez le déficit, le ruissellement ou une autre variable. Vous pouvez employer une série importée ou issue d’un bilan hydrique.</li>
+    <li>Choisissez l’une des six méthodes de classement et ouvrez Paramètres de la méthode. Indiquez le mois, la période de retour en années et la distribution. Pour une période de retour de dix ans, il faut au moins dix années valides pour ce mois.</li>
+    <li>Cliquez sur Appliquer puis sur Sélectionner la méthode. Le résultat conserve l’estimation, les rangs et l’erreur d’ajustement. Pour le déficit, il donne aussi le débit spécifique d’irrigation.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="frequency.png" alt="Mois, période de retour et distribution associés à la position de Weibull."></button>
+    <figcaption>Mois, période de retour et distribution associés à la position de Weibull.</figcaption>
+  </figure>
+</details>
+<details id="results">
+  <summary>Consulter, exporter et réutiliser les résultats</summary>
+  <ol>
+    <li>Dans Résultats enregistrés, choisissez un calcul par son nom et son horodatage. Examinez la valeur, l’unité et les données utilisées.</li>
+    <li>Cliquez sur Exporter…. Choisissez XLSX pour obtenir un tableau Excel et un graphique sur une autre feuille. CSV, TSV et TXT exportent les données tabulaires. Le graphique présente les probabilités de dépassement pour une analyse fréquentielle et la série chronologique pour un calcul mensuel.</li>
+    <li>Pour poursuivre un calcul, revenez à Sélection des méthodes et choisissez un résultat mensuel enregistré comme données de travail. Pour modifier le guide vidéo, remplacez l’adresse dans video_url.txt à la racine de l’application.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Agrandir la capture d’écran"><img src="results.png" alt="Bilan hydrique mensuel enregistré avec déficit, stockage, ruissellement et commande d’export."></button>
+    <figcaption>Bilan hydrique mensuel enregistré avec déficit, stockage, ruissellement et commande d’export.</figcaption>
+  </figure>
+</details>
+<dialog aria-label="Agrandir la capture d’écran"><button type="button">Fermer</button><img alt=""></dialog>
+</body>
+</html>

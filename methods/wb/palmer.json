@@ -1,0 +1,206 @@
+{
+  "id": "palmer",
+  "name": "Palmer (1965)",
+  "symbol": "PALMER",
+  "unit": "mm/month",
+  "group": "wb",
+  "output": "Deficit",
+  "parameters": {
+    "surface": 25.4,
+    "lower": 74.6
+  },
+  "source": "Čadro (2019), §5.1.2.2, 12",
+  "expression": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "latex": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "version": 1,
+  "state": {
+    "SS": "surface",
+    "SU": "lower"
+  },
+  "steps": [
+    {
+      "symbol": "need",
+      "expression": [
+        "Max",
+        0,
+        [
+          "Subtract",
+          "ET0",
+          "PRCP"
+        ]
+      ],
+      "latex": "\\max\\left(0,\\left(\\mathrm{ET0}-\\mathrm{PRCP}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "excess",
+      "expression": [
+        "Max",
+        0,
+        [
+          "Subtract",
+          "PRCP",
+          "ET0"
+        ]
+      ],
+      "latex": "\\max\\left(0,\\left(\\mathrm{PRCP}-\\mathrm{ET0}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "lossS",
+      "expression": [
+        "Min",
+        "SS",
+        "need"
+      ],
+      "latex": "\\min\\left(\\mathrm{SS},\\mathrm{need}\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "lossU",
+      "expression": [
+        "Min",
+        "SU",
+        [
+          "Divide",
+          [
+            "Multiply",
+            [
+              "Subtract",
+              "need",
+              "lossS"
+            ],
+            "SU"
+          ],
+          [
+            "Add",
+            "surface",
+            "lower"
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{SU},\\frac{\\left(\\left(\\mathrm{need}-\\mathrm{lossS}\\right)\\cdot \\mathrm{SU}\\right)}{\\left(\\mathrm{surface}+\\mathrm{lower}\\right)}\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "fillS",
+      "expression": [
+        "Min",
+        [
+          "Subtract",
+          "surface",
+          "SS"
+        ],
+        "excess"
+      ],
+      "latex": "\\min\\left(\\left(\\mathrm{surface}-\\mathrm{SS}\\right),\\mathrm{excess}\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "fillU",
+      "expression": [
+        "Min",
+        [
+          "Subtract",
+          "lower",
+          "SU"
+        ],
+        [
+          "Subtract",
+          "excess",
+          "fillS"
+        ]
+      ],
+      "latex": "\\min\\left(\\left(\\mathrm{lower}-\\mathrm{SU}\\right),\\left(\\mathrm{excess}-\\mathrm{fillS}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "SS",
+      "expression": [
+        "Subtract",
+        [
+          "Add",
+          "SS",
+          "fillS"
+        ],
+        "lossS"
+      ],
+      "latex": "\\left(\\left(\\mathrm{SS}+\\mathrm{fillS}\\right)-\\mathrm{lossS}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "SU",
+      "expression": [
+        "Subtract",
+        [
+          "Add",
+          "SU",
+          "fillU"
+        ],
+        "lossU"
+      ],
+      "latex": "\\left(\\left(\\mathrm{SU}+\\mathrm{fillU}\\right)-\\mathrm{lossU}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "ST",
+      "expression": [
+        "Add",
+        "SS",
+        "SU"
+      ],
+      "latex": "\\left(\\mathrm{SS}+\\mathrm{SU}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "RO",
+      "expression": [
+        "Subtract",
+        [
+          "Subtract",
+          "excess",
+          "fillS"
+        ],
+        "fillU"
+      ],
+      "latex": "\\left(\\left(\\mathrm{excess}-\\mathrm{fillS}\\right)-\\mathrm{fillU}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "AET",
+      "expression": [
+        "Add",
+        [
+          "Add",
+          [
+            "Min",
+            "ET0",
+            "PRCP"
+          ],
+          "lossS"
+        ],
+        "lossU"
+      ],
+      "latex": "\\left(\\left(\\min\\left(\\mathrm{ET0},\\mathrm{PRCP}\\right)+\\mathrm{lossS}\\right)+\\mathrm{lossU}\\right)",
+      "publish": true
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.2, 12",
+  "method_conditions": "",
+  "method_formula": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "formula_math": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "basic_parameters": "ET0, PRCP",
+  "changable_parameters": "surface, lower",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "hazen",
+  "name": "Hazen (1930)",
+  "symbol": "hazen",
+  "unit": "mm/month",
+  "group": "frequency",
+  "output": null,
+  "parameters": {
+    "month": 8,
+    "years": 10
+  },
+  "source": "Čadro (2019), §5.1.2.3, (31)",
+  "expression": [
+    "Divide",
+    [
+      "Subtract",
+      "r",
+      0.5
+    ],
+    "n"
+  ],
+  "latex": "\\frac{\\left(r-0.5\\right)}{n}",
+  "version": 1,
+  "engine": "frequency",
+  "inputs": [
+    "Deficit"
+  ],
+  "distribution": "normal",
+  "order": 30,
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.3, (31)",
+  "method_conditions": "",
+  "method_formula": "\\frac{\\left(r-0.5\\right)}{n}",
+  "formula_math": [
+    "Divide",
+    [
+      "Subtract",
+      "r",
+      0.5
+    ],
+    "n"
+  ],
+  "basic_parameters": "Deficit",
+  "changable_parameters": "month, years",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

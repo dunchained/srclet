@@ -1,0 +1,8 @@
+{
+  "name": "Estimated ET",
+  "category": "ET0",
+  "unit": "mm/month",
+  "symbol": "EstimateET",
+  "description": "Estimated ET",
+  "type": "a"
+}

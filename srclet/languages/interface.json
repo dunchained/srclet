@@ -1,0 +1,2086 @@
+{
+  "&Cancel": [
+    "&Odustani",
+    "&Annuler"
+  ],
+  "&Customize": [
+    "&Prilagodi",
+    "&Personnaliser"
+  ],
+  "&File": [
+    "&Datoteka",
+    "&Fichier"
+  ],
+  "&Help": [
+    "&Pomoć",
+    "&Aide"
+  ],
+  "&Methods": [
+    "&Metode",
+    "&Méthodes"
+  ],
+  "&No": [
+    "&Ne",
+    "&Non"
+  ],
+  "&Open": [
+    "&Otvori",
+    "&Ouvrir"
+  ],
+  "&Parameters": [
+    "&Parametri",
+    "&Paramètres"
+  ],
+  "&Project": [
+    "&Projekat",
+    "&Projet"
+  ],
+  "&Save": [
+    "&Sačuvaj",
+    "&Enregistrer"
+  ],
+  "&Yes": [
+    "&Da",
+    "&Oui"
+  ],
+  "1.0": [
+    "1.0",
+    "1.0"
+  ],
+  "A header and at least one data row are required.": [
+    "Potrebni su zaglavlje i bar jedan red podataka.",
+    "Un en-tête et une ligne de données sont nécessaires."
+  ],
+  "About": [
+    "O programu",
+    "À propos"
+  ],
+  "Abouta SRCLET": [
+    "O programu SRCLET",
+    "À propos de SRCLET"
+  ],
+  "Actual sunshine duration in hours per day": [
+    "Stvarno trajanje sijanja sunca u satima dnevno.",
+    "Durée effective d’ensoleillement en heures par jour."
+  ],
+  "Actual vapour pressure": [
+    "Stvarni pritisak vodene pare",
+    "Pression de vapeur réelle"
+  ],
+  "Add basic parameter": [
+    "Dodaj osnovni parametar",
+    "Ajouter un paramètre de base"
+  ],
+  "Add changable parameter": [
+    "Dodaj promjenjivi parametar",
+    "Ajouter un paramètre modifiable"
+  ],
+  "Add column": [
+    "Dodaj kolonu",
+    "Ajouter une colonne"
+  ],
+  "Add formula step": [
+    "Dodaj korak formule",
+    "Ajouter une étape de calcul"
+  ],
+  "Add formulas and coefficients in the method catalog. Each supplied method includes a sample CSV file.": [
+    "Formule i koeficijente možeš dodati u katalogu metoda. Svaka isporučena metoda ima zaseban primjer CSV datoteke.",
+    "Ajoutez les formules et les coefficients dans le catalogue. Chaque méthode fournie dispose d’un fichier CSV d’exemple."
+  ],
+  "Add new ETO method": [
+    "Nova metoda ET₀",
+    "Nouvelle méthode ET₀"
+  ],
+  "Add new Other method": [
+    "Nova pomoćna metoda",
+    "Nouvelle méthode auxiliaire"
+  ],
+  "Add new WB method": [
+    "Nova metoda vodnog bilansa",
+    "Nouvelle méthode de bilan hydrique"
+  ],
+  "Add new method": [
+    "Dodaj metodu",
+    "Ajouter une méthode"
+  ],
+  "Add new method based on selected": [
+    "Nova metoda po uzoru na odabranu",
+    "Dupliquer la méthode sélectionnée"
+  ],
+  "Add new parameter": [
+    "Dodaj parametar",
+    "Ajouter un paramètre"
+  ],
+  "Add new parameter based on selected": [
+    "Novi parametar po uzoru na odabrani",
+    "Dupliquer le paramètre sélectionné"
+  ],
+  "Add row": [
+    "Dodaj red",
+    "Ajouter une ligne"
+  ],
+  "All Files (*)": [
+    "Sve datoteke (*)",
+    "Tous les fichiers (*)"
+  ],
+  "All files (*)": [
+    "Sve datoteke (*)",
+    "Tous les fichiers (*)"
+  ],
+  "All methods": [
+    "Sve metode",
+    "Toutes les méthodes"
+  ],
+  "All rights reserved.": [
+    "Sva prava zadržana.",
+    "Tous droits réservés."
+  ],
+  "Annual heat index": [
+    "Godišnji toplotni indeks",
+    "Indice thermique annuel"
+  ],
+  "Applications for such permission should be addressed to the softwere developer Mirza Uzunović by e-mail meet.jeanmonnet@gmail.com": [
+    "Za dozvolu se obratite programeru Mirzi Uzunoviću na meet.jeanmonnet@gmail.com.",
+    "Les demandes d’autorisation doivent être adressées au développeur Mirza Uzunović à meet.jeanmonnet@gmail.com."
+  ],
+  "Apply": [
+    "Primijeni",
+    "Appliquer"
+  ],
+  "Apply saved series": [
+    "Koristi sačuvani niz kao ulaz",
+    "Utiliser la série enregistrée"
+  ],
+  "Are you sure you vant to delete project:": [
+    "Obrisati projekat",
+    "Supprimer le projet"
+  ],
+  "Are you sure you want to delete selected method?": [
+    "Obrisati odabranu metodu?",
+    "Supprimer la méthode sélectionnée ?"
+  ],
+  "Are you sure you want to delete selected parameter?": [
+    "Obrisati odabrani parametar?",
+    "Supprimer le paramètre sélectionné ?"
+  ],
+  "At least one valid month is required.": [
+    "Potreban je bar jedan ispravan mjesec.",
+    "Au moins un mois valide est requis."
+  ],
+  "At least two paired months are required.": [
+    "Potrebna su najmanje dva mjeseca s oba podatka.",
+    "Il faut au moins deux mois avec des données appariées."
+  ],
+  "Authors [2022]": [
+    "Autori [2022]",
+    "Auteurs [2022]"
+  ],
+  "Authors also declines any responsibility for updating the data and assumes no responsibility for errors and omissions in the data provided. Users are, however, kindly asked to report any errors or deficiencies at: meet.jeanmonnet@gmail.com.": [
+    "Autori ne preuzimaju obavezu ažuriranja podataka niti odgovornost za njihove greške ili propuste. Molimo da ih prijavite na meet.jeanmonnet@gmail.com.",
+    "Les auteurs ne s’engagent pas à mettre les données à jour et déclinent toute responsabilité pour les erreurs ou omissions. Merci de les signaler à meet.jeanmonnet@gmail.com."
+  ],
+  "Authors decline all responsibility for errors or deficiencies in the database or in the files and documents that come with the SRCLET softwere.": [
+    "Autori ne preuzimaju odgovornost za greške ili nedostatke u bazi podataka, datotekama ili dokumentaciji priloženoj uz SRCLET.",
+    "Les auteurs déclinent toute responsabilité pour les erreurs ou lacunes de la base de données, des fichiers ou des documents fournis avec SRCLET."
+  ],
+  "Authors: Sabrija Čadro and Mirza Uzunović, University of Sarajevo (https://www.unsa.ba/), Faculty of Agriculture and Food scenes (https://www.ppf.unsa.ba/), Bosnia and Herzegovina": [
+    "Autori su Sabrija Čadro i Mirza Uzunović, Univerzitet u Sarajevu (https://www.unsa.ba/), Poljoprivredno-prehrambeni fakultet (https://www.ppf.unsa.ba/), Bosna i Hercegovina.",
+    "Auteurs : Sabrija Čadro et Mirza Uzunović, Université de Sarajevo (https://www.unsa.ba/), Faculté d’agriculture et des sciences de l’alimentation (https://www.ppf.unsa.ba/), Bosnie-Herzégovine."
+  ],
+  "Automatic": [
+    "Automatski",
+    "Automatique"
+  ],
+  "Available ETO methods:": [
+    "Dostupne metode ET₀",
+    "Méthodes ET₀ disponibles"
+  ],
+  "Available WB methods:": [
+    "Dostupne metode vodnog bilansa",
+    "Méthodes de bilan hydrique disponibles"
+  ],
+  "Available settings:": [
+    "Postavke",
+    "Paramètres disponibles"
+  ],
+  "Average minimum monthly air temperature in degree Celsious": [
+    "Srednja mjesečna minimalna temperatura zraka u °C.",
+    "Moyenne mensuelle des températures minimales de l’air en °C."
+  ],
+  "Average monthly maximum air temperature in degree Celsious": [
+    "Srednja mjesečna maksimalna temperatura zraka u °C.",
+    "Moyenne mensuelle des températures maximales de l’air en °C."
+  ],
+  "Average monthly reletive air humidity in procentages": [
+    "Srednja mjesečna relativna vlažnost zraka u procentima.",
+    "Humidité relative moyenne mensuelle de l’air en pourcentage."
+  ],
+  "Back": [
+    "Nazad",
+    "Précédent"
+  ],
+  "Basic Parameters": [
+    "Osnovni parametri",
+    "Paramètres de base"
+  ],
+  "Basic parameters": [
+    "Osnovni parametri",
+    "Paramètres de base"
+  ],
+  "Basic parameters:": [
+    "Osnovni parametri",
+    "Paramètres de base"
+  ],
+  "Braces": [
+    "Vitičaste zagrade",
+    "Accolades"
+  ],
+  "Browse": [
+    "Pregledaj",
+    "Parcourir"
+  ],
+  "Browse…": [
+    "Pregledaj…",
+    "Parcourir…"
+  ],
+  "Calculate and save": [
+    "Izračunaj i sačuvaj",
+    "Calculer et enregistrer"
+  ],
+  "Calculation": [
+    "Proračun",
+    "Calcul"
+  ],
+  "Calculation methods": [
+    "Računske metode",
+    "Méthodes de calcul"
+  ],
+  "Cancel": [
+    "Odustani",
+    "Annuler"
+  ],
+  "Cancel changes": [
+    "Poništi izmjene",
+    "Annuler les modifications"
+  ],
+  "Cases": [
+    "Uslovi",
+    "Cas"
+  ],
+  "Category": [
+    "Kategorija",
+    "Catégorie"
+  ],
+  "Changable Parameters": [
+    "Promjenjivi parametri",
+    "Paramètres modifiables"
+  ],
+  "Changable parameters": [
+    "Promjenjivi parametri",
+    "Paramètres modifiables"
+  ],
+  "Changable parameters:": [
+    "Promjenjivi parametri",
+    "Paramètres modifiables"
+  ],
+  "Changes...": [
+    "Izmjene",
+    "Modifications"
+  ],
+  "Charts": [
+    "Grafikoni",
+    "Graphiques"
+  ],
+  "Check data": [
+    "Provjeri podatke",
+    "Vérifier les données"
+  ],
+  "Check for data file:": [
+    "Provjeri datoteku s podacima",
+    "Vérifier le fichier de données"
+  ],
+  "Choose": [
+    "Odaberi",
+    "Choisir"
+  ],
+  "Choose a separate result file.": [
+    "Izaberite posebnu datoteku za rezultate.",
+    "Choisissez un fichier distinct pour les résultats."
+  ],
+  "Choose data file…": [
+    "Izaberi datoteku…",
+    "Choisir un fichier…"
+  ],
+  "Click to enter data type": [
+    "Klikni za odabir vrste podataka",
+    "Cliquer pour choisir le type de données"
+  ],
+  "Close": [
+    "Zatvori",
+    "Fermer"
+  ],
+  "Comma": [
+    "Zarez",
+    "Virgule"
+  ],
+  "Consecutive months required.": [
+    "Potrebni su uzastopni mjeseci.",
+    "Des mois consécutifs sont nécessaires."
+  ],
+  "Contact:": [
+    "Kontakt",
+    "Contact"
+  ],
+  "Copy": [
+    "Kopija",
+    "Copie"
+  ],
+  "Copyright": [
+    "Autorska prava",
+    "Droits d’auteur"
+  ],
+  "Correlation requires two varying series.": [
+    "Za korelaciju se oba niza moraju mijenjati.",
+    "La corrélation exige deux séries non constantes."
+  ],
+  "Country": [
+    "Država",
+    "Pays"
+  ],
+  "Country:": [
+    "Država",
+    "Pays"
+  ],
+  "Create New Folder": [
+    "Napravi novi folder",
+    "Créer un dossier"
+  ],
+  "Create new project...": [
+    "Kreiraj novi projekat…",
+    "Créer un projet…"
+  ],
+  "Create new project:": [
+    "Kreiraj novi projekat",
+    "Créer un projet"
+  ],
+  "Create project": [
+    "Kreiraj projekat",
+    "Créer le projet"
+  ],
+  "Critical month": [
+    "Kritični mjesec",
+    "Mois critique"
+  ],
+  "Daily global solar radiation (shortwave)": [
+    "Dnevno globalno kratkotalasno sunčevo zračenje.",
+    "Rayonnement solaire global journalier de courte longueur d’onde."
+  ],
+  "Daily irrigation depth": [
+    "Dnevna potrošnja vode",
+    "Lame d’eau journalière"
+  ],
+  "Daily irrigation hydromodule": [
+    "Dnevni hidromodul navodnjavanja",
+    "Débit spécifique journalier d’irrigation"
+  ],
+  "Daily mean estimated ET": [
+    "Procijenjena srednja dnevna ET",
+    "ET journalière moyenne estimée"
+  ],
+  "Daily mean reference ET": [
+    "Referentna srednja dnevna ET",
+    "ET journalière moyenne de référence"
+  ],
+  "Daily operating time": [
+    "Dnevno vrijeme rada",
+    "Durée journalière de fonctionnement"
+  ],
+  "Daily reference minus estimate": [
+    "Dnevna razlika referentne i procijenjene ET",
+    "Écart journalier entre ET de référence et estimée"
+  ],
+  "Data begining date:": [
+    "Početni datum",
+    "Date de début"
+  ],
+  "Data end date:": [
+    "Završni datum",
+    "Date de fin"
+  ],
+  "Data error": [
+    "Greška u podacima",
+    "Erreur de données"
+  ],
+  "Data file not tabbex txt.": [
+    "Datoteka nije tekst s tabulatorima.",
+    "Le fichier n’est pas un texte tabulé."
+  ],
+  "Data file...": [
+    "Datoteka s podacima…",
+    "Fichier de données…"
+  ],
+  "Data file: OK": [
+    "Datoteka je ispravna",
+    "Fichier valide"
+  ],
+  "Data options:": [
+    "Opcije podataka",
+    "Options des données"
+  ],
+  "Data saved...": [
+    "Podaci su sačuvani.",
+    "Données enregistrées."
+  ],
+  "Data shape:": [
+    "Dimenzije podataka",
+    "Dimensions du tableau"
+  ],
+  "Date Modified": [
+    "Datum izmjene",
+    "Date de modification"
+  ],
+  "Days": [
+    "Dani",
+    "Jours"
+  ],
+  "Days in month": [
+    "Broj dana u mjesecu",
+    "Jours dans le mois"
+  ],
+  "Decimal": [
+    "Decimalni znak",
+    "Séparateur décimal"
+  ],
+  "Default value": [
+    "Početna vrijednost",
+    "Valeur par défaut"
+  ],
+  "Deficit": [
+    "Manjak",
+    "Déficit"
+  ],
+  "Deficit (mm)": [
+    "Manjak (mm)",
+    "Déficit (mm)"
+  ],
+  "Deficit must be non-negative.": [
+    "Manjak vode mora biti pozitivan ili nula.",
+    "Le déficit doit être positif ou nul."
+  ],
+  "Degree-day melt factor": [
+    "Koeficijent topljenja po stepen-danu",
+    "Facteur de fonte par degré-jour"
+  ],
+  "Delete method...": [
+    "Brisanje metode",
+    "Suppression de la méthode"
+  ],
+  "Delete parameter...": [
+    "Brisanje parametra",
+    "Supprimer le paramètre"
+  ],
+  "Delete project?": [
+    "Obrisati projekat?",
+    "Supprimer le projet ?"
+  ],
+  "Delete selected method": [
+    "Obriši odabranu metodu",
+    "Supprimer la méthode sélectionnée"
+  ],
+  "Delete selected parameter": [
+    "Obriši odabrani parametar",
+    "Supprimer le paramètre sélectionné"
+  ],
+  "Delete selected project...": [
+    "Obriši projekat",
+    "Supprimer le projet"
+  ],
+  "Delimiter": [
+    "Razdjelnik kolona",
+    "Séparateur"
+  ],
+  "Description": [
+    "Opis",
+    "Description"
+  ],
+  "Detail View": [
+    "Detaljni prikaz",
+    "Affichage détaillé"
+  ],
+  "Developed by:": [
+    "Autori",
+    "Développé par"
+  ],
+  "Development": [
+    "Razvoj",
+    "Développement"
+  ],
+  "Dew point temperature": [
+    "Temperatura rosišta",
+    "Température du point de rosée"
+  ],
+  "Dew point temperature in degrees Celsious": [
+    "Temperatura tačke rose u °C.",
+    "Température du point de rosée en °C."
+  ],
+  "Direct runoff fraction": [
+    "Koeficijent direktnog oticaja",
+    "Fraction de ruissellement direct"
+  ],
+  "Directory:": [
+    "Folder",
+    "Dossier"
+  ],
+  "Disclamair": [
+    "Napomene",
+    "Avertissement"
+  ],
+  "Distribution": [
+    "Raspodjela",
+    "Distribution"
+  ],
+  "Do not use...": [
+    "Preskoči…",
+    "Ignorer…"
+  ],
+  "Do something with selected project...": [
+    "Rad s projektom",
+    "Actions"
+  ],
+  "Duplicate method": [
+    "Kopiraj metodu",
+    "Dupliquer la méthode"
+  ],
+  "Duplicate month": [
+    "Mjesec se ponavlja",
+    "Mois en double"
+  ],
+  "Duplicate month.": [
+    "Mjesec se ponavlja.",
+    "Mois en double."
+  ],
+  "ET0 Methods": [
+    "Metode ET₀",
+    "Méthodes ET₀"
+  ],
+  "ET0 methods:": [
+    "Metode ET₀",
+    "Méthodes ET₀"
+  ],
+  "ETO Methods": [
+    "Metode ET₀",
+    "Méthodes ET₀"
+  ],
+  "Edit formula…": [
+    "Uredi formulu…",
+    "Modifier la formule…"
+  ],
+  "Edit project data": [
+    "Uredi podatke projekta",
+    "Modifier les données du projet"
+  ],
+  "Edit step": [
+    "Uredi korak",
+    "Modifier l’étape"
+  ],
+  "Elevation": [
+    "Nadmorska visina",
+    "Altitude"
+  ],
+  "Elevation (m)": [
+    "Nadmorska visina (m)",
+    "Altitude (m)"
+  ],
+  "Elevation above sea level in meters": [
+    "Nadmorska visina u metrima.",
+    "Altitude au-dessus du niveau de la mer en mètres."
+  ],
+  "English": [
+    "Engleski",
+    "Anglais"
+  ],
+  "Enter a name and a valid symbol.": [
+    "Unesi naziv i ispravnu oznaku.",
+    "Saisissez un nom et un symbole valide."
+  ],
+  "Enter a name, a symbol and a unit.": [
+    "Unesi naziv, oznaku i jedinicu.",
+    "Saisissez un nom, un symbole et une unité."
+  ],
+  "Enter a numeric value.": [
+    "Unesi broj.",
+    "Saisissez une valeur numérique."
+  ],
+  "Enter a unique symbol and a value.": [
+    "Unesi jedinstvenu oznaku i vrijednost.",
+    "Saisissez un symbole unique et une valeur."
+  ],
+  "Enter data manually": [
+    "Ručni unos podataka",
+    "Saisir les données"
+  ],
+  "Enter new project name:": [
+    "Unesi naziv novog projekta",
+    "Saisir le nom du nouveau projet"
+  ],
+  "Estimated ET": [
+    "Procijenjena ET",
+    "ET estimée"
+  ],
+  "Evapotranspiration methods": [
+    "Metode evapotranspiracije",
+    "Méthodes d’évapotranspiration"
+  ],
+  "Exceedance frequency": [
+    "Učestalost prevazilaženja",
+    "Fréquence de dépassement"
+  ],
+  "Exceedance probability (%)": [
+    "Vjerovatnoća prevazilaženja (%)",
+    "Probabilité de dépassement (%)"
+  ],
+  "Exit": [
+    "Izlaz",
+    "Quitter"
+  ],
+  "Exponential": [
+    "Eksponencijalna",
+    "Exponentielle"
+  ],
+  "Export example data…": [
+    "Izvezi primjer podataka…",
+    "Exporter les données d’exemple…"
+  ],
+  "Export…": [
+    "Izvezi…",
+    "Exporter…"
+  ],
+  "Extraterrestrial radiation": [
+    "Ekstraterestričko zračenje",
+    "Rayonnement extraterrestre"
+  ],
+  "File": [
+    "Datoteka",
+    "Fichier"
+  ],
+  "File &name:": [
+    "&Naziv datoteke",
+    "&Nom du fichier"
+  ],
+  "File name:": [
+    "Naziv datoteke",
+    "Nom du fichier"
+  ],
+  "File not checked.": [
+    "Datoteka još nije provjerena.",
+    "Le fichier n’a pas encore été vérifié."
+  ],
+  "File type:": [
+    "Vrsta datoteke",
+    "Type de fichier"
+  ],
+  "Files of type:": [
+    "Vrsta datoteke",
+    "Type de fichier"
+  ],
+  "Fill the missing data...": [
+    "Dopuni podatke koji nedostaju…",
+    "Compléter les données manquantes…"
+  ],
+  "Finish": [
+    "Završi",
+    "Terminer"
+  ],
+  "Folder": [
+    "Folder",
+    "Dossier"
+  ],
+  "Formula": [
+    "Formula",
+    "Formule"
+  ],
+  "Formula editor": [
+    "Editor formula",
+    "Éditeur de formules"
+  ],
+  "Formula is too deeply nested.": [
+    "Formula sadrži previše nivoa ugnježđivanja.",
+    "La formule contient trop de niveaux imbriqués."
+  ],
+  "Forward": [
+    "Naprijed",
+    "Suivant"
+  ],
+  "Fraction": [
+    "Razlomak",
+    "Fraction"
+  ],
+  "Frequency analysis": [
+    "Analiza učestalosti",
+    "Analyse fréquentielle"
+  ],
+  "From month": [
+    "Od mjeseca",
+    "Du mois"
+  ],
+  "Gamma": [
+    "Gama",
+    "Gamma"
+  ],
+  "Good to go...": [
+    "Spremno za rad.",
+    "Prêt."
+  ],
+  "Gumbel": [
+    "Gumbel",
+    "Gumbel"
+  ],
+  "Historical conditions": [
+    "Naslijeđeni uslovi",
+    "Conditions historiques"
+  ],
+  "Humidity": [
+    "Vlažnost",
+    "Humidité"
+  ],
+  "Icon size": [
+    "Veličina ikona",
+    "Taille des icônes"
+  ],
+  "Import monthly measurements or enter them in the data editor.": [
+    "Uvezi mjesečna mjerenja ili ih upiši u editor podataka.",
+    "Importez des mesures mensuelles ou saisissez-les dans l’éditeur de données."
+  ],
+  "Incomplete expression.": [
+    "Izraz nije dovršen.",
+    "Expression incomplète."
+  ],
+  "Initial soil water (mm)": [
+    "Početna zaliha vode (mm)",
+    "Réserve initiale (mm)"
+  ],
+  "Initial value or parameter": [
+    "Početna vrijednost ili koeficijent",
+    "Valeur initiale ou paramètre"
+  ],
+  "Inline condition": [
+    "Uslov u formuli",
+    "Condition dans la formule"
+  ],
+  "Input columns": [
+    "Ulazne kolone",
+    "Colonnes d’entrée"
+  ],
+  "Input data": [
+    "Ulazni podaci",
+    "Données d’entrée"
+  ],
+  "Input font size": [
+    "Veličina slova u poljima za unos",
+    "Taille du texte des champs"
+  ],
+  "Input font size:": [
+    "Veličina slova pri unosu:",
+    "Police de saisie :"
+  ],
+  "Input period": [
+    "Period ulaznih podataka",
+    "Période des données"
+  ],
+  "Input preparation": [
+    "Priprema podataka",
+    "Préparation des données"
+  ],
+  "Input result": [
+    "Ulazni rezultat",
+    "Résultat utilisé en entrée"
+  ],
+  "Input values": [
+    "Ulazne vrijednosti",
+    "Valeurs d’entrée"
+  ],
+  "Inputs to formula": [
+    "Ulazi formule",
+    "Variables de la formule"
+  ],
+  "Inputs used": [
+    "Korišteni ulazi",
+    "Entrées utilisées"
+  ],
+  "Insert ET0 method:": [
+    "Umetni metodu ET₀",
+    "Insérer une méthode ET₀"
+  ],
+  "Insert basic parameter:": [
+    "Umetni osnovni parametar",
+    "Insérer un paramètre de base"
+  ],
+  "Insert changable parameter:": [
+    "Umetni promjenjivi parametar",
+    "Insérer un paramètre modifiable"
+  ],
+  "Insert other method:": [
+    "Umetni drugu metodu",
+    "Insérer une autre méthode"
+  ],
+  "Insert parameters, special characters or other methods:": [
+    "Umetni parametar, znak ili metodu",
+    "Insérer un paramètre, un symbole ou une méthode"
+  ],
+  "Insert special character:": [
+    "Umetni poseban znak",
+    "Insérer un caractère spécial"
+  ],
+  "Insert symbol": [
+    "Umetni simbol",
+    "Insérer un symbole"
+  ],
+  "Insolation": [
+    "Trajanje sijanja sunca",
+    "Durée d’ensoleillement"
+  ],
+  "Invalid arguments": [
+    "Neispravni argumenti",
+    "Arguments incorrects"
+  ],
+  "Invalid latitude.": [
+    "Neispravna geografska širina.",
+    "Latitude incorrecte."
+  ],
+  "Invalid method parameters.": [
+    "Provjeri koeficijente metode.",
+    "Vérifiez les paramètres de la méthode."
+  ],
+  "Invalid month or return period.": [
+    "Neispravan mjesec ili povratni period.",
+    "Mois ou période de retour incorrects."
+  ],
+  "Invalid probability.": [
+    "Vjerovatnoća mora biti između 0 i 1.",
+    "La probabilité doit être comprise entre 0 et 1."
+  ],
+  "Invalid project name.": [
+    "Naziv projekta nije ispravan.",
+    "Nom de projet invalide."
+  ],
+  "Invalid result history.": [
+    "Neispravna veza između prethodnih rezultata.",
+    "Historique des résultats incohérent."
+  ],
+  "Invalid soil, snow or runoff parameters.": [
+    "Provjeri parametre tla, snijega i oticaja.",
+    "Vérifiez les paramètres du sol, de la neige et du ruissellement."
+  ],
+  "Invalid station coordinates.": [
+    "Neispravne koordinate ili nadmorska visina stanice.",
+    "Coordonnées ou altitude de station incorrectes."
+  ],
+  "Invalid symbol.": [
+    "Neispravna oznaka.",
+    "Symbole incorrect."
+  ],
+  "Invalid wind height or Ångström coefficients.": [
+    "Provjeri visinu mjerenja vjetra i Ångströmove koeficijente.",
+    "Vérifiez la hauteur de mesure du vent et les coefficients d’Ångström."
+  ],
+  "Invalid year or month.": [
+    "Neispravna godina ili mjesec.",
+    "Année ou mois incorrect."
+  ],
+  "Irrigation hydromodule": [
+    "Hidromodul navodnjavanja",
+    "Débit spécifique d’irrigation"
+  ],
+  "Language": [
+    "Jezik",
+    "Langue"
+  ],
+  "Large": [
+    "Velika",
+    "Grande"
+  ],
+  "Latent heat of vaporisation": [
+    "Latentna toplota isparavanja",
+    "Chaleur latente de vaporisation"
+  ],
+  "Latitude": [
+    "Geografska širina",
+    "Latitude"
+  ],
+  "Latitude (°)": [
+    "Geografska širina (°)",
+    "Latitude (°)"
+  ],
+  "Latitude / vapour pressure out of range.": [
+    "Provjeri geografsku širinu i pritisak vodene pare.",
+    "Vérifiez la latitude et la pression de vapeur."
+  ],
+  "Latitude in decimal degrees. Positive for northern latitude, and negative for southern.": [
+    "Geografska širina u decimalnim stepenima. Sjeverna je pozitivna, a južna negativna.",
+    "Latitude en degrés décimaux, positive au nord et négative au sud."
+  ],
+  "List View": [
+    "Prikaz liste",
+    "Affichage en liste"
+  ],
+  "List of available methods:": [
+    "Dostupne metode",
+    "Méthodes disponibles"
+  ],
+  "List of available parameters:": [
+    "Dostupni parametri",
+    "Paramètres disponibles"
+  ],
+  "Load file and check data": [
+    "Učitaj datoteku i provjeri podatke",
+    "Charger le fichier et vérifier les données"
+  ],
+  "Log-normal": [
+    "Lognormalna",
+    "Log-normale"
+  ],
+  "Longitude (°)": [
+    "Geografska dužina (°)",
+    "Longitude (°)"
+  ],
+  "Look in:": [
+    "Folder",
+    "Dossier"
+  ],
+  "Lower soil capacity": [
+    "Kapacitet donjeg sloja tla",
+    "Capacité du sol profond"
+  ],
+  "Manual": [
+    "Uputstvo",
+    "Manuel"
+  ],
+  "Mathod symbol:": [
+    "Simbol metode",
+    "Symbole de la méthode"
+  ],
+  "Maximum melt fraction": [
+    "Najveći udio topljenja snijega",
+    "Fraction de fonte maximale"
+  ],
+  "Maximum monthly relative air humidity in procentage": [
+    "Maksimalna mjesečna relativna vlažnost zraka u procentima.",
+    "Humidité relative maximale mensuelle de l’air en pourcentage."
+  ],
+  "Maximum relative air humidity": [
+    "Maksimalna relativna vlažnost zraka",
+    "Humidité relative maximale"
+  ],
+  "Maximum temperature": [
+    "Maksimalna temperatura",
+    "Température maximale"
+  ],
+  "Mean daily wind speed at \"zu\" height in meters per second": [
+    "Srednja dnevna brzina vjetra na mjernoj visini u m/s.",
+    "Vitesse moyenne journalière du vent à la hauteur de mesure, en m/s."
+  ],
+  "Mean monthly air temperature in degree Celsious": [
+    "Srednja mjesečna temperatura zraka u °C.",
+    "Température moyenne mensuelle de l’air en °C."
+  ],
+  "Mean reletive air humidity": [
+    "Srednja relativna vlažnost zraka",
+    "Humidité relative moyenne"
+  ],
+  "Mean temperature": [
+    "Srednja temperatura",
+    "Température moyenne"
+  ],
+  "Medium": [
+    "Srednja",
+    "Moyenne"
+  ],
+  "Menu font size": [
+    "Veličina slova u menijima",
+    "Taille du texte des menus"
+  ],
+  "Menu font size:": [
+    "Veličina slova menija:",
+    "Police des menus :"
+  ],
+  "Method": [
+    "Metoda",
+    "Méthode"
+  ],
+  "Method SHA256": [
+    "SHA256 metode",
+    "SHA256 de la méthode"
+  ],
+  "Method basic parameters:": [
+    "Osnovni parametri metode",
+    "Paramètres de base de la méthode"
+  ],
+  "Method calculation formula:": [
+    "Računska formula",
+    "Formule de calcul"
+  ],
+  "Method catalog": [
+    "Katalog metoda",
+    "Catalogue des méthodes"
+  ],
+  "Method category:": [
+    "Kategorija",
+    "Catégorie"
+  ],
+  "Method changable parameters:": [
+    "Promjenjivi parametri metode",
+    "Paramètres modifiables de la méthode"
+  ],
+  "Method comparison": [
+    "Poređenje metoda",
+    "Comparaison des méthodes"
+  ],
+  "Method conditions:": [
+    "Uslovi primjene",
+    "Conditions"
+  ],
+  "Method description:": [
+    "Opis metode",
+    "Description de la méthode"
+  ],
+  "Method formula:": [
+    "Formula metode",
+    "Formule de la méthode"
+  ],
+  "Method group": [
+    "Grupa metoda",
+    "Famille de méthodes"
+  ],
+  "Method information:": [
+    "Podaci o metodi",
+    "Informations sur la méthode"
+  ],
+  "Method name...": [
+    "Naziv metode",
+    "Nom de la méthode"
+  ],
+  "Method name:": [
+    "Naziv metode",
+    "Nom de la méthode"
+  ],
+  "Method other methods:": [
+    "Zavisne metode",
+    "Méthodes requises"
+  ],
+  "Method parameters": [
+    "Koeficijenti metode",
+    "Paramètres de la méthode"
+  ],
+  "Method saved...": [
+    "Metoda je sačuvana.",
+    "Méthode enregistrée."
+  ],
+  "Method selection": [
+    "Odabir metoda",
+    "Sélection des méthodes"
+  ],
+  "Method symbol:": [
+    "Simbol metode",
+    "Symbole de la méthode"
+  ],
+  "Method unit:": [
+    "Jedinica",
+    "Unité"
+  ],
+  "Method with this name already exists. Try another name.": [
+    "Metoda s ovim nazivom već postoji.",
+    "Une méthode porte déjà ce nom."
+  ],
+  "Minimum monthly relative air humidity in procentages": [
+    "Minimalna mjesečna relativna vlažnost zraka u procentima.",
+    "Humidité relative minimale mensuelle de l’air en pourcentage."
+  ],
+  "Minimum relative air humidity": [
+    "Minimalna relativna vlažnost zraka",
+    "Humidité relative minimale"
+  ],
+  "Minimum temperature": [
+    "Minimalna temperatura",
+    "Température minimale"
+  ],
+  "Missing": [
+    "Nedostaje",
+    "Manquant"
+  ],
+  "Missing data...": [
+    "Nedostaju podaci…",
+    "Données manquantes…"
+  ],
+  "Missing method attributes...": [
+    "Nedostaju podaci o metodi",
+    "Attributs de méthode manquants"
+  ],
+  "Missing values": [
+    "Podaci koji nedostaju",
+    "Valeurs manquantes"
+  ],
+  "Model output": [
+    "Izlazi modela",
+    "Sorties du modèle"
+  ],
+  "Month": [
+    "Mjesec",
+    "Mois"
+  ],
+  "Monthly data": [
+    "Mjesečni podaci",
+    "Données mensuelles"
+  ],
+  "Monthly inputs": [
+    "Mjesečni podaci",
+    "Données mensuelles"
+  ],
+  "Name": [
+    "Naziv",
+    "Nom"
+  ],
+  "Net radiation": [
+    "Neto zračenje",
+    "Rayonnement net"
+  ],
+  "New Folder": [
+    "Novi folder",
+    "Nouveau dossier"
+  ],
+  "New method": [
+    "Nova metoda",
+    "Nouvelle méthode"
+  ],
+  "New parameter": [
+    "Novi parametar",
+    "Nouveau paramètre"
+  ],
+  "New project": [
+    "Novi projekat",
+    "Nouveau projet"
+  ],
+  "Next": [
+    "Dalje",
+    "Suivant"
+  ],
+  "No": [
+    "Ne",
+    "Non"
+  ],
+  "No calculable months.": [
+    "Nijedan mjesec nema dovoljno podataka za proračun.",
+    "Aucun mois ne comporte toutes les données nécessaires."
+  ],
+  "No data file selected.": [
+    "Datoteka s podacima još nije odabrana.",
+    "Aucun fichier de données sélectionné."
+  ],
+  "No file selected.": [
+    "Nijedna datoteka nije odabrana.",
+    "Aucun fichier sélectionné."
+  ],
+  "No matching case.": [
+    "Nijedan uslov nije ispunjen.",
+    "Aucun cas ne correspond."
+  ],
+  "No methods match these inputs.": [
+    "Za ove podatke nema dostupnih metoda.",
+    "Aucune méthode ne correspond à ces données."
+  ],
+  "No saved results": [
+    "Nema sačuvanih rezultata",
+    "Aucun résultat enregistré"
+  ],
+  "Non-finite number.": [
+    "Broj mora imati konačnu vrijednost.",
+    "Le nombre doit être fini."
+  ],
+  "Non-finite result.": [
+    "Rezultat mora imati konačnu vrijednost.",
+    "Le résultat doit être fini."
+  ],
+  "Normal": [
+    "Normalna",
+    "Normale"
+  ],
+  "Number of rows and months ratio: NOT OK": [
+    "Broj redova ne odgovara broju mjeseci.",
+    "Le nombre de lignes ne correspond pas au nombre de mois."
+  ],
+  "Number of rows and months ratio: OK": [
+    "Broj redova odgovara broju mjeseci.",
+    "Le nombre de lignes correspond au nombre de mois."
+  ],
+  "Number of rows:": [
+    "Broj redova",
+    "Nombre de lignes"
+  ],
+  "Number of selected columns:": [
+    "Broj odabranih kolona",
+    "Nombre de colonnes sélectionnées"
+  ],
+  "October 2022": [
+    "Oktobar 2022.",
+    "Octobre 2022"
+  ],
+  "Open": [
+    "Otvori",
+    "Ouvrir"
+  ],
+  "Open data file...": [
+    "Otvori datoteku s podacima…",
+    "Ouvrir un fichier de données…"
+  ],
+  "Open existing project": [
+    "Otvori postojeći projekat",
+    "Ouvrir un projet"
+  ],
+  "Open existing project...": [
+    "Otvori postojeći projekat",
+    "Ouvrir un projet"
+  ],
+  "Open file": [
+    "Otvori datoteku",
+    "Ouvrir le fichier"
+  ],
+  "Open folder…": [
+    "Otvori folder…",
+    "Ouvrir un dossier…"
+  ],
+  "Open in calculation": [
+    "Otvori u proračunu",
+    "Ouvrir dans le calcul"
+  ],
+  "Open selected project...": [
+    "Otvori projekat",
+    "Ouvrir le projet"
+  ],
+  "Open video guide": [
+    "Otvori videouputstvo",
+    "Ouvrir le guide vidéo"
+  ],
+  "Open video manual": [
+    "Otvori videouputstvo",
+    "Ouvrir le guide vidéo"
+  ],
+  "Ordinal number of the month for which the calculation is performed.": [
+    "Redni broj mjeseca za koji se vrši proračun.",
+    "Numéro du mois du calcul."
+  ],
+  "Ordinal number of the year for which the calculation is performed.": [
+    "Kalendarska godina za koju se vrši proračun.",
+    "Année civile du calcul."
+  ],
+  "Original inputs": [
+    "Izvorni podaci",
+    "Données d’origine"
+  ],
+  "Other": [
+    "Ostalo",
+    "Autre"
+  ],
+  "Other Methods": [
+    "Ostale metode",
+    "Autres méthodes"
+  ],
+  "Other methods": [
+    "Ostale metode",
+    "Autres méthodes"
+  ],
+  "Other methods:": [
+    "Ostale metode",
+    "Autres méthodes"
+  ],
+  "Output": [
+    "Izlazna veličina",
+    "Variable de sortie"
+  ],
+  "Parameter category:": [
+    "Kategorija parametra",
+    "Catégorie"
+  ],
+  "Parameter description:": [
+    "Opis parametra",
+    "Description"
+  ],
+  "Parameter information:": [
+    "Podaci o parametru",
+    "Informations sur le paramètre"
+  ],
+  "Parameter must have name...": [
+    "Unesite naziv parametra.",
+    "Saisissez le nom du paramètre."
+  ],
+  "Parameter name or unit empty...": [
+    "Unesite naziv i jedinicu parametra.",
+    "Saisissez le nom et l’unité du paramètre."
+  ],
+  "Parameter name...": [
+    "Naziv parametra",
+    "Nom du paramètre"
+  ],
+  "Parameter name:": [
+    "Naziv parametra",
+    "Nom du paramètre"
+  ],
+  "Parameter saved...": [
+    "Parametar je sačuvan.",
+    "Paramètre enregistré."
+  ],
+  "Parameter symbol:": [
+    "Simbol parametra",
+    "Symbole"
+  ],
+  "Parameter unit:": [
+    "Jedinica parametra",
+    "Unité"
+  ],
+  "Parameter value:": [
+    "Vrijednost parametra",
+    "Valeur"
+  ],
+  "Parameter with this name or symbol already exists. Parameter name and symbol are unique values.": [
+    "Ovaj naziv ili simbol je već zauzet. Izaberite jedinstven naziv i simbol.",
+    "Ce nom ou ce symbole est déjà utilisé. Choisissez un nom et un symbole uniques."
+  ],
+  "Parameters": [
+    "Parametri",
+    "Paramètres"
+  ],
+  "Parameters for this run": [
+    "Parametri ovog proračuna",
+    "Paramètres de ce calcul"
+  ],
+  "Paremeter category.": [
+    "Kategorija parametra.",
+    "Catégorie du paramètre."
+  ],
+  "Parent Directory": [
+    "Nadređeni folder",
+    "Dossier parent"
+  ],
+  "Pick a method in the calculation tab.": [
+    "Odaberite metodu u kartici Proračun.",
+    "Sélectionnez une méthode dans l’onglet Calcul."
+  ],
+  "Please select data file...": [
+    "Odaberi datoteku s podacima…",
+    "Choisir un fichier de données…"
+  ],
+  "Power": [
+    "Stepen",
+    "Puissance"
+  ],
+  "Precipitation": [
+    "Padavine",
+    "Précipitations"
+  ],
+  "Preview": [
+    "Pregled",
+    "Aperçu"
+  ],
+  "Previous month": [
+    "Prethodni mjesec",
+    "Mois précédent"
+  ],
+  "Procedures, methods, algorithms and documentation were developed and/or tested by Mirza Uzunović, Sabrija Čadro, Ognjen Žurovec, Monika Marković and Milan Gocić.": [
+    "Procedure, metode, algoritme i dokumentaciju razvili su ili testirali Mirza Uzunović, Sabrija Čadro, Ognjen Žurovec, Monika Marković i Milan Gocić.",
+    "Les procédures, méthodes, algorithmes et documents ont été développés ou testés par Mirza Uzunović, Sabrija Čadro, Ognjen Žurovec, Monika Marković et Milan Gocić."
+  ],
+  "Project": [
+    "Projekat",
+    "Projet"
+  ],
+  "Project data and methods": [
+    "Projektni podaci i metode",
+    "Données et méthodes du projet"
+  ],
+  "Project data file:": [
+    "Datoteka s podacima projekta",
+    "Fichier de données du projet"
+  ],
+  "Project files": [
+    "Projektne datoteke",
+    "Fichiers du projet"
+  ],
+  "Project folder already exists.": [
+    "Folder projekta već postoji.",
+    "Le dossier du projet existe déjà."
+  ],
+  "Project info:": [
+    "Podaci o projektu",
+    "Informations sur le projet"
+  ],
+  "Project name can not be empty...": [
+    "Naziv projekta je obavezan.",
+    "Le nom du projet est obligatoire."
+  ],
+  "Project name...": [
+    "Naziv projekta…",
+    "Nom du projet…"
+  ],
+  "Project saved...": [
+    "Projekat je sačuvan.",
+    "Projet enregistré."
+  ],
+  "Provide some short description of the project.": [
+    "Unesi kratak opis projekta.",
+    "Saisir une brève description du projet."
+  ],
+  "Publish as a result": [
+    "Ponudi kao rezultat",
+    "Rendre disponible en sortie"
+  ],
+  "Radiation coefficient": [
+    "Koeficijent zračenja",
+    "Coefficient de rayonnement"
+  ],
+  "Rain": [
+    "Kiša",
+    "Pluie"
+  ],
+  "Rain + snow": [
+    "Kiša i snijeg",
+    "Pluie et neige"
+  ],
+  "Rain temperature (°C)": [
+    "Temperatura kiše (°C)",
+    "Température de pluie (°C)"
+  ],
+  "Ready": [
+    "Spremno",
+    "Prêt"
+  ],
+  "Reference ET": [
+    "Referentna ET",
+    "ET de référence"
+  ],
+  "Reference FAO-56 ET": [
+    "Referentna FAO-56 ET",
+    "ET de référence FAO-56"
+  ],
+  "Reference evapotranspiration": [
+    "Referentna evapotranspiracija",
+    "Évapotranspiration de référence"
+  ],
+  "Refresh changable parameters list": [
+    "Osvježi promjenjive parametre",
+    "Actualiser les paramètres modifiables"
+  ],
+  "Refresh methods list": [
+    "Osvježi listu metoda",
+    "Actualiser les méthodes"
+  ],
+  "Refresh parameters list": [
+    "Osvježi listu parametara",
+    "Actualiser les paramètres"
+  ],
+  "Released:": [
+    "Datum izdanja",
+    "Date de publication"
+  ],
+  "Remove last method": [
+    "Ukloni posljednju metodu",
+    "Retirer la dernière méthode"
+  ],
+  "Remove row": [
+    "Ukloni red",
+    "Supprimer la ligne"
+  ],
+  "Reproduction and dissemination of material related to this computer software for educational, research or other non-commercial purposes are authorized without any prior written permission from the copyright holders provided the source is fully acknowledged.": [
+    "Umnožavanje i širenje materijala ovog softvera u obrazovne, istraživačke i druge nekomercijalne svrhe dozvoljeno je bez prethodne pisane dozvole nosilaca prava uz potpuno navođenje izvora.",
+    "La reproduction et la diffusion des documents de ce logiciel à des fins pédagogiques, scientifiques ou non commerciales sont autorisées sans accord écrit préalable des titulaires des droits, sous réserve de citer intégralement la source."
+  ],
+  "Reproduction of material in this information product for resale or other commercial purposes is prohibited without written permission of the copyright holders.": [
+    "Za umnožavanje materijala radi preprodaje ili druge komercijalne upotrebe potrebna je pisana dozvola nosilaca prava.",
+    "La reproduction de ce contenu pour la revente ou à toute autre fin commerciale nécessite l’autorisation écrite des titulaires des droits."
+  ],
+  "Result": [
+    "Rezultat",
+    "Résultat"
+  ],
+  "Results": [
+    "Rezultati",
+    "Résultats"
+  ],
+  "Return period (years)": [
+    "Povratni period (godine)",
+    "Période de retour (ans)"
+  ],
+  "Root": [
+    "Korijen",
+    "Racine"
+  ],
+  "Row": [
+    "Red",
+    "Ligne"
+  ],
+  "SRCLET": [
+    "SRCLET",
+    "SRCLET"
+  ],
+  "SRCLET 1.0 was developed as part of Jean Monnet project Modern techniques to ensure environmental sustainability in Eastern Europe - MEET (Project Reference: 621118-EPP-1-2020-1-BA-EPPJMO-MODULE) with the support of the Erasmus+ Programme of the European Union.": [
+    "SRCLET 1.0 razvijen je u okviru projekta Jean Monnet „Savremene tehnike za okolišnu održivost u istočnoj Evropi – MEET“ (621118-EPP-1-2020-1-BA-EPPJMO-MODULE), uz podršku programa Erasmus+ Evropske unije.",
+    "SRCLET 1.0 a été développé dans le cadre du projet Jean Monnet « Techniques modernes pour la durabilité environnementale en Europe de l’Est – MEET » (621118-EPP-1-2020-1-BA-EPPJMO-MODULE), avec le soutien du programme Erasmus+ de l’Union européenne."
+  ],
+  "Sabrija Čadro, Mirza Uzunović": [
+    "Sabrija Čadro, Mirza Uzunović",
+    "Sabrija Čadro, Mirza Uzunović"
+  ],
+  "Sample month": [
+    "Probni mjesec",
+    "Mois d’essai"
+  ],
+  "Save": [
+    "Sačuvaj",
+    "Enregistrer"
+  ],
+  "Save As": [
+    "Sačuvaj kao",
+    "Enregistrer sous"
+  ],
+  "Save and close": [
+    "Sačuvaj i zatvori",
+    "Enregistrer et fermer"
+  ],
+  "Save and open": [
+    "Sačuvaj i otvori",
+    "Enregistrer et ouvrir"
+  ],
+  "Save and open project": [
+    "Sačuvaj i otvori projekat",
+    "Enregistrer et ouvrir le projet"
+  ],
+  "Save changes": [
+    "Sačuvaj izmjene",
+    "Enregistrer les modifications"
+  ],
+  "Save data": [
+    "Sačuvaj podatke",
+    "Enregistrer les données"
+  ],
+  "Save project and exit": [
+    "Sačuvaj projekat i zatvori",
+    "Enregistrer le projet et fermer"
+  ],
+  "Save the calculation sequence to keep each result, its formula and its inputs. Open Saved results to export a table or an Excel chart.": [
+    "Sačuvaj redoslijed proračuna da zadržiš svaki rezultat, formulu i korištene ulaze. U sačuvanim rezultatima možeš izvesti tabelu ili Excel grafikon.",
+    "Enregistrez la séquence pour conserver chaque résultat, sa formule et ses données. Ouvrez les résultats enregistrés pour exporter un tableau ou un graphique Excel."
+  ],
+  "Save this catalog formula in the visual editor to calculate it.": [
+    "Za proračun prvo sačuvajte ovu katalošku formulu u vizuelnom editoru.",
+    "Enregistrez cette formule dans l’éditeur visuel pour la calculer."
+  ],
+  "Saved results": [
+    "Sačuvani rezultati",
+    "Résultats enregistrés"
+  ],
+  "Select a month for the preview.": [
+    "Izaberite mjesec za provjeru formule.",
+    "Sélectionnez un mois pour tester la formule."
+  ],
+  "Select an available method. Its outputs make further methods available in the same project.": [
+    "Odaberi dostupnu metodu. Njeni rezultati omogućavaju izbor narednih metoda u istom projektu.",
+    "Sélectionnez une méthode disponible. Ses résultats rendent d’autres méthodes accessibles dans le même projet."
+  ],
+  "Select language:": [
+    "Izaberite jezik:",
+    "Choisir la langue :"
+  ],
+  "Select method": [
+    "Odaberi metodu",
+    "Sélectionner la méthode"
+  ],
+  "Select project from the list:": [
+    "Izaberite projekat s liste",
+    "Sélectionner un projet"
+  ],
+  "Select year, month and a measurement. Each column ID must be unique.": [
+    "Odaberite godinu, mjesec i mjerenje. Svaki parametar smije imati samo jednu kolonu.",
+    "Sélectionnez l’année, le mois et une mesure. Chaque colonne doit être unique."
+  ],
+  "Selected ET0 methods:": [
+    "Odabrane metode ET₀",
+    "Méthodes ET₀ sélectionnées"
+  ],
+  "Selected basic parameters:": [
+    "Odabrani osnovni parametri",
+    "Paramètres de base sélectionnés"
+  ],
+  "Selected calculation sequence": [
+    "Redoslijed odabranih metoda",
+    "Séquence de calcul choisie"
+  ],
+  "Selected changable parameters:": [
+    "Odabrani promjenjivi parametri",
+    "Paramètres modifiables sélectionnés"
+  ],
+  "Selected other methods:": [
+    "Odabrane ostale metode",
+    "Autres méthodes sélectionnées"
+  ],
+  "Semicolon": [
+    "Tačka-zarez",
+    "Point-virgule"
+  ],
+  "Series": [
+    "Niz",
+    "Série"
+  ],
+  "Series for frequency analysis": [
+    "Niz za analizu učestalosti",
+    "Série pour l’analyse fréquentielle"
+  ],
+  "Settings": [
+    "Postavke",
+    "Paramètres"
+  ],
+  "Settings saved.": [
+    "Postavke su sačuvane.",
+    "Paramètres enregistrés."
+  ],
+  "Settings...": [
+    "Postavke",
+    "Paramètres"
+  ],
+  "Short project description:": [
+    "Opis projekta",
+    "Description du projet"
+  ],
+  "Show hidden files": [
+    "Prikaži skrivene datoteke",
+    "Afficher les fichiers cachés"
+  ],
+  "Size": [
+    "Veličina",
+    "Taille"
+  ],
+  "Skip column": [
+    "Preskoči kolonu",
+    "Ignorer la colonne"
+  ],
+  "Skip number of rows:": [
+    "Broj redova za preskakanje",
+    "Nombre de lignes à ignorer"
+  ],
+  "Skiping the rows can help...": [
+    "Preskoči redove ispred zaglavlja.",
+    "Ignorer les lignes précédant l’en-tête."
+  ],
+  "Small": [
+    "Mala",
+    "Petite"
+  ],
+  "Snow temperature (°C)": [
+    "Temperatura snijega (°C)",
+    "Température de neige (°C)"
+  ],
+  "Snow threshold": [
+    "Temperaturni prag za snijeg",
+    "Seuil thermique de neige"
+  ],
+  "Soil capacity (mm)": [
+    "Kapacitet tla (mm)",
+    "Capacité du sol (mm)"
+  ],
+  "Soil heat flux": [
+    "Toplotni tok u tlu",
+    "Flux de chaleur du sol"
+  ],
+  "Soil water balance": [
+    "Vodni bilans tla",
+    "Bilan hydrique du sol"
+  ],
+  "Solar radiation": [
+    "Sunčevo zračenje",
+    "Rayonnement solaire"
+  ],
+  "Solar radiation from temperature range": [
+    "Sunčevo zračenje iz temperaturne amplitude",
+    "Rayonnement solaire à partir de l’amplitude thermique"
+  ],
+  "Some of the method attributes are missing. Method has to be defined with name, unit, symbol, formula and basic parameters.": [
+    "Unesite naziv, jedinicu, simbol, formulu i osnovne parametre metode.",
+    "Indiquez le nom, l’unité, le symbole, la formule et les paramètres de base de la méthode."
+  ],
+  "Source": [
+    "Izvor",
+    "Source"
+  ],
+  "Source file": [
+    "Izvorna datoteka",
+    "Fichier source"
+  ],
+  "Space": [
+    "Razmak",
+    "Espace"
+  ],
+  "State symbol": [
+    "Oznaka prenesene veličine",
+    "Symbole de la variable reportée"
+  ],
+  "Station": [
+    "Stanica",
+    "Station"
+  ],
+  "Station radiation coefficient": [
+    "Koeficijent zračenja za stanicu",
+    "Coefficient de rayonnement de la station"
+  ],
+  "Station temperature offset": [
+    "Temperaturni koeficijent za stanicu",
+    "Coefficient de température de la station"
+  ],
+  "Subscript": [
+    "Indeks",
+    "Indice"
+  ],
+  "Success!": [
+    "Sačuvano",
+    "Enregistré"
+  ],
+  "Success...": [
+    "Sačuvano",
+    "Enregistré"
+  ],
+  "Successful...": [
+    "Uspješno završeno.",
+    "Opération réussie."
+  ],
+  "Sum of monthly precipitation": [
+    "Suma mjesečnih padavina.",
+    "Cumul mensuel des précipitations."
+  ],
+  "Sunshine / Radiation": [
+    "Insolacija i zračenje",
+    "Ensoleillement et rayonnement"
+  ],
+  "Sunshine hours outside daylight period.": [
+    "Insolacija je duža od dana.",
+    "L’insolation dépasse la durée du jour."
+  ],
+  "Surface soil capacity": [
+    "Kapacitet površinskog sloja tla",
+    "Capacité du sol superficiel"
+  ],
+  "Surplus runoff fraction": [
+    "Koeficijent oticanja viška",
+    "Fraction d’écoulement de l’excédent"
+  ],
+  "Symbol": [
+    "Oznaka",
+    "Symbole"
+  ],
+  "Symbol already exists.": [
+    "Oznaka već postoji.",
+    "Ce symbole existe déjà."
+  ],
+  "Tab": [
+    "Tabulator",
+    "Tabulation"
+  ],
+  "Temperature": [
+    "Temperatura",
+    "Température"
+  ],
+  "Temperature offset": [
+    "Temperaturni pomak",
+    "Décalage de température"
+  ],
+  "Test formula": [
+    "Isprobaj formulu",
+    "Tester la formule"
+  ],
+  "Text font size": [
+    "Veličina teksta",
+    "Taille du texte"
+  ],
+  "Text font size:": [
+    "Veličina slova teksta:",
+    "Police du texte :"
+  ],
+  "Text to be used as parameter short description.": [
+    "Kratak opis parametra.",
+    "Description courte du paramètre."
+  ],
+  "Text to be used as parameter symbol in formulas.": [
+    "Simbol parametra u formulama.",
+    "Symbole du paramètre dans les formules."
+  ],
+  "Text to be used for short explinations.": [
+    "Kratko objašnjenje.",
+    "Brève explication."
+  ],
+  "The European Commission support for the production of this prodact does not constitute an endorsement of the contents which reflects the views only of the authors, and the Commission cannot be held responsible for any use which may be made of the information contained therein.": [
+    "Podrška Evropske komisije izradi ovog proizvoda ne podrazumijeva odobravanje sadržaja. Sadržaj odražava stavove autora. Komisija ne odgovara za upotrebu navedenih informacija.",
+    "Le soutien de la Commission européenne à la réalisation de ce produit ne vaut pas approbation de son contenu, qui reflète le point de vue des auteurs. La Commission ne peut être tenue responsable de l’utilisation des informations qu’il contient."
+  ],
+  "The authors hope that this software tool, with God's help, will be useful to all people.": [
+    "Autori se nadaju da će, uz Božiju pomoć, ovaj program koristiti svim ljudima.",
+    "Les auteurs espèrent qu’avec l’aide de Dieu ce logiciel sera utile à tous."
+  ],
+  "There is a project with that name already...": [
+    "Projekat s tim nazivom već postoji.",
+    "Un projet de ce nom existe déjà."
+  ],
+  "This distribution requires non-negative data.": [
+    "Ova raspodjela zahtijeva nenegativne vrijednosti.",
+    "Cette distribution exige des valeurs positives ou nulles."
+  ],
+  "Thornthwaite (1948) · PET": [
+    "Thornthwaite (1948) · potencijalna ET",
+    "Thornthwaite (1948) · ET potentielle"
+  ],
+  "Thornthwaite (1948) · WB": [
+    "Thornthwaite (1948) · vodni bilans",
+    "Thornthwaite (1948) · bilan hydrique"
+  ],
+  "Thornthwaite · equation 24 as printed": [
+    "Thornthwaite · štampana jednačina 24",
+    "Thornthwaite · équation 24 imprimée"
+  ],
+  "To month": [
+    "Do mjeseca",
+    "Au mois"
+  ],
+  "Too few interior plotting positions.": [
+    "Premalo je tačaka s vjerovatnoćom između 0 i 1.",
+    "Trop peu de points ont une probabilité strictement comprise entre 0 et 1."
+  ],
+  "Tooltip About": [
+    "O programu",
+    "À propos"
+  ],
+  "Tooltip Basic parameters": [
+    "Osnovni parametri",
+    "Paramètres de base"
+  ],
+  "Tooltip Changable parameters": [
+    "Promjenjivi parametri",
+    "Paramètres modifiables"
+  ],
+  "Tooltip Evapotranspiration methods": [
+    "Metode evapotranspiracije",
+    "Méthodes d’évapotranspiration"
+  ],
+  "Tooltip Exit": [
+    "Izlaz",
+    "Quitter"
+  ],
+  "Tooltip Manual": [
+    "Uputstvo",
+    "Manuel"
+  ],
+  "Tooltip New project": [
+    "Novi projekat",
+    "Nouveau projet"
+  ],
+  "Tooltip Open existing project": [
+    "Otvori postojeći projekat",
+    "Ouvrir un projet"
+  ],
+  "Tooltip Other methods": [
+    "Ostale metode",
+    "Autres méthodes"
+  ],
+  "Tooltip Settings": [
+    "Postavke",
+    "Paramètres"
+  ],
+  "Tooltip Water balance methods": [
+    "Metode vodnog bilansa",
+    "Méthodes de bilan hydrique"
+  ],
+  "Type": [
+    "Vrsta",
+    "Type"
+  ],
+  "Unit": [
+    "Jedinica",
+    "Unité"
+  ],
+  "Unit to be used...": [
+    "Mjerna jedinica",
+    "Unité de mesure"
+  ],
+  "Unknown symbol": [
+    "Nepoznat simbol",
+    "Symbole inconnu"
+  ],
+  "Unsaved formula": [
+    "Nesačuvana formula",
+    "Formule non enregistrée"
+  ],
+  "Unsupported expression": [
+    "Nepodržan izraz",
+    "Expression non prise en charge"
+  ],
+  "Unsupported legacy formula.": [
+    "Stara formula zahtijeva uređivanje.",
+    "L’ancienne formule doit être modifiée."
+  ],
+  "Use catalog coefficient": [
+    "Preuzmi koeficijent iz kataloga",
+    "Utiliser le coefficient du catalogue"
+  ],
+  "Use result as input": [
+    "Koristi rezultat kao ulaz",
+    "Utiliser le résultat en entrée"
+  ],
+  "Valid months / sample size": [
+    "Ispravni mjeseci / veličina uzorka",
+    "Mois valides / taille de l’échantillon"
+  ],
+  "Value to be used in calculations.": [
+    "Vrijednost za proračun.",
+    "Valeur utilisée dans le calcul."
+  ],
+  "Vapour pressure from minimum temperature": [
+    "Pritisak vodene pare iz minimalne temperature",
+    "Pression de vapeur à partir de la température minimale"
+  ],
+  "Version": [
+    "Verzija",
+    "Version"
+  ],
+  "Version:": [
+    "Verzija",
+    "Version"
+  ],
+  "Video guide": [
+    "Videouputstvo",
+    "Guide vidéo"
+  ],
+  "Videos": [
+    "Video",
+    "Vidéos"
+  ],
+  "WB Methods": [
+    "Metode vodnog bilansa",
+    "Méthodes du bilan hydrique"
+  ],
+  "Water balance methods": [
+    "Metode vodnog bilansa",
+    "Méthodes de bilan hydrique"
+  ],
+  "Water deficit": [
+    "Manjak vode",
+    "Déficit hydrique"
+  ],
+  "Wather station name:": [
+    "Naziv meteorološke stanice",
+    "Nom de la station météorologique"
+  ],
+  "Weather station elevation (z):": [
+    "Nadmorska visina stanice (z)",
+    "Altitude de la station (z)"
+  ],
+  "Weather station latitude (ϕ):": [
+    "Geografska širina stanice (ϕ)",
+    "Latitude de la station (ϕ)"
+  ],
+  "Weather station longitude (ϕ):": [
+    "Geografska dužina stanice (λ)",
+    "Longitude de la station (λ)"
+  ],
+  "Web:": [
+    "Web-stranica",
+    "Site web"
+  ],
+  "Weibull": [
+    "Weibull",
+    "Weibull"
+  ],
+  "Wind": [
+    "Vjetar",
+    "Vent"
+  ],
+  "Wind measurement height (m)": [
+    "Visina mjerenja vjetra (m)",
+    "Hauteur de mesure du vent (m)"
+  ],
+  "Wind speed": [
+    "Brzina vjetra",
+    "Vitesse du vent"
+  ],
+  "Wind speed at 2 m": [
+    "Brzina vjetra na 2 m",
+    "Vitesse du vent à 2 m"
+  ],
+  "Working data": [
+    "Radni podaci",
+    "Données de travail"
+  ],
+  "Working with project:": [
+    "Otvoreni projekat",
+    "Projet en cours"
+  ],
+  "Year": [
+    "Godina",
+    "Année"
+  ],
+  "Yes": [
+    "Da",
+    "Oui"
+  ],
+  "_new": [
+    "_novi",
+    "_nouveau"
+  ],
+  "columns.": [
+    "kolona.",
+    "colonnes."
+  ],
+  "data_info": [
+    "Podaci",
+    "Données"
+  ],
+  "decimal degrees.": [
+    "decimalni stepeni",
+    "degrés décimaux"
+  ],
+  "https://meet.motherlandia.org/srclet/": [
+    "https://meet.motherlandia.org/srclet/",
+    "https://meet.motherlandia.org/srclet/"
+  ],
+  "meet.jeanmonnet@gmail.com": [
+    "meet.jeanmonnet@gmail.com",
+    "meet.jeanmonnet@gmail.com"
+  ],
+  "meters.": [
+    "metri",
+    "mètres"
+  ],
+  "methods_info": [
+    "Metode",
+    "Méthodes"
+  ],
+  "mm/month": [
+    "mm/mjesec",
+    "mm/mois"
+  ],
+  "save_export_calc": [
+    "Sačuvaj i izvezi proračun",
+    "Enregistrer et exporter le calcul"
+  ],
+  "status_info": [
+    "Status",
+    "État"
+  ],
+  "viz_options": [
+    "Opcije prikaza",
+    "Options d’affichage"
+  ],
+  "years": [
+    "godina",
+    "ans"
+  ],
+  "Ångström aₛ": [
+    "Ångström aₛ",
+    "Ångström aₛ"
+  ],
+  "Ångström bₛ": [
+    "Ångström bₛ",
+    "Ångström bₛ"
+  ]
+}

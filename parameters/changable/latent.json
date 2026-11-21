@@ -1,0 +1,9 @@
+{
+  "name": "Latent heat of vaporisation",
+  "symbol": "latent",
+  "unit": "MJ/kg",
+  "category": "et",
+  "type": "a",
+  "description": "Latent heat of vaporisation",
+  "value": "2.45"
+}

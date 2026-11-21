@@ -1,0 +1,15 @@
+:root { color-scheme:light; font: 17px/1.55 "Source Sans 3", system-ui, sans-serif; color:#203949; background:#f7fafb; }
+body { max-width:58rem; margin:auto; padding:1.5rem 2rem 4rem; }
+h1 { font-size:2rem; margin:0 0 1rem; }
+details { background:white; border:1px solid #b9c9cf; border-radius:6px; margin:.7rem 0; }
+summary { cursor:pointer; font-weight:650; padding:.85rem 1rem; }
+summary:focus-visible, button:focus-visible { outline:3px solid #13716b; }
+ol { padding:0 2rem 0 3rem; }
+li { margin:.36rem 0; }
+figure { margin:1.2rem; }
+figure button { display:block; width:100%; padding:0; border:1px solid #bdcbce; background:#fff; cursor:zoom-in; }
+figure img { display:block; width:100%; height:auto; }
+figcaption { margin-top:.45rem; color:#385565; }
+dialog { padding:.65rem; border:1px solid #637b86; max-width:96vw; max-height:92vh; box-sizing:border-box; overflow:auto; }
+dialog::backdrop { background:#102028b8; } dialog img { display:block; max-width:none; } dialog button { position:sticky; top:0; font:inherit; padding:.25rem 1rem; cursor:pointer; }
+@media print {body{padding:0} details{break-inside:avoid} details::details-content {display:block;content-visibility:visible;} }

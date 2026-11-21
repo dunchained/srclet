@@ -1,0 +1,9 @@
+{
+  "name": "Radiation coefficient",
+  "symbol": "kRs",
+  "unit": "°C⁻⁰·⁵",
+  "category": "et",
+  "type": "a",
+  "description": "Radiation coefficient",
+  "value": "0.17"
+}

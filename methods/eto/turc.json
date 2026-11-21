@@ -1,0 +1,143 @@
+{
+  "id": "turc",
+  "name": "Turc (1961)",
+  "symbol": "TURC",
+  "unit": "mm/month",
+  "group": "eto",
+  "output": "ET0",
+  "parameters": {
+    "latent": 2.45
+  },
+  "source": "Čadro (2019), (27)",
+  "expression": [
+    "Divide",
+    [
+      "Multiply",
+      [
+        "Divide",
+        [
+          "Multiply",
+          [
+            "Multiply",
+            [
+              "Multiply",
+              "d",
+              "aT"
+            ],
+            0.013
+          ],
+          [
+            "Max",
+            0,
+            "Tmean"
+          ]
+        ],
+        [
+          "Add",
+          [
+            "Max",
+            0,
+            "Tmean"
+          ],
+          15
+        ]
+      ],
+      [
+        "Add",
+        [
+          "Multiply",
+          23.8856,
+          "Rs"
+        ],
+        50
+      ]
+    ],
+    "latent"
+  ],
+  "latex": "\\frac{\\left(\\frac{\\left(\\left(\\left(d\\cdot \\mathrm{aT}\\right)\\cdot 0.013\\right)\\cdot \\max\\left(0,\\mathrm{Tmean}\\right)\\right)}{\\left(\\max\\left(0,\\mathrm{Tmean}\\right)+15\\right)}\\cdot \\left(\\left(23.8856\\cdot \\mathrm{Rs}\\right)+50\\right)\\right)}{\\mathrm{latent}}",
+  "version": 1,
+  "steps": [
+    {
+      "symbol": "aT",
+      "expression": [
+        "Which",
+        [
+          "GreaterEqual",
+          "RHmean",
+          50
+        ],
+        1,
+        "True",
+        [
+          "Add",
+          1,
+          [
+            "Divide",
+            [
+              "Subtract",
+              50,
+              "RHmean"
+            ],
+            70
+          ]
+        ]
+      ],
+      "latex": "\\begin{cases}1 & \\left(\\mathrm{RHmean}\\ge 50\\right) \\\\ \\left(1+\\frac{\\left(50-\\mathrm{RHmean}\\right)}{70}\\right) & \\mathrm{otherwise}\\end{cases}",
+      "publish": false
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), (27)",
+  "method_conditions": "",
+  "method_formula": "\\frac{\\left(\\frac{\\left(\\left(\\left(d\\cdot \\mathrm{aT}\\right)\\cdot 0.013\\right)\\cdot \\max\\left(0,\\mathrm{Tmean}\\right)\\right)}{\\left(\\max\\left(0,\\mathrm{Tmean}\\right)+15\\right)}\\cdot \\left(\\left(23.8856\\cdot \\mathrm{Rs}\\right)+50\\right)\\right)}{\\mathrm{latent}}",
+  "formula_math": [
+    "Divide",
+    [
+      "Multiply",
+      [
+        "Divide",
+        [
+          "Multiply",
+          [
+            "Multiply",
+            [
+              "Multiply",
+              "d",
+              "aT"
+            ],
+            0.013
+          ],
+          [
+            "Max",
+            0,
+            "Tmean"
+          ]
+        ],
+        [
+          "Add",
+          [
+            "Max",
+            0,
+            "Tmean"
+          ],
+          15
+        ]
+      ],
+      [
+        "Add",
+        [
+          "Multiply",
+          23.8856,
+          "Rs"
+        ],
+        50
+      ]
+    ],
+    "latent"
+  ],
+  "basic_parameters": "RHmean, Rs, Tmean, d",
+  "changable_parameters": "latent",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

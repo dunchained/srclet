@@ -1,0 +1,8 @@
+{
+  "name": "Wind speed at 2 m",
+  "unit": "m/s",
+  "category": "wind",
+  "symbol": "u2",
+  "description": "Wind speed at 2 m",
+  "type": "a"
+}

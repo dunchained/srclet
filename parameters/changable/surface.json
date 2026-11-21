@@ -1,0 +1,9 @@
+{
+  "name": "Surface soil capacity",
+  "symbol": "surface",
+  "unit": "mm",
+  "category": "wb",
+  "type": "a",
+  "description": "Surface soil capacity",
+  "value": "25.4"
+}

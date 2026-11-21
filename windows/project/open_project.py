@@ -1,8 +1,12 @@
+from mortys.language_morty import bind_key
+from pathlib import Path
+from PyQt6.QtWidgets import QFileDialog
+from mortys.language_morty import bind, tr
 from windows.project.project_opened import ProjectWindow
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox, QDesktopWidget, QListWidget
-from PyQt5.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QPushButton, QGroupBox
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QMessageBox, QListWidget
+from PyQt6.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QPushButton, QGroupBox
 from mortys.font_morty import read_text_font_size
 from variables import css, var
 import os
@@ -16,12 +20,12 @@ class OpenProjectWindow(QWidget):
     def __init__(self, language):
         super().__init__()
         self.language = language
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
         self.window_gui()
 
     def window_gui(self):
         self.setFixedSize(var.open_project_widith, var.open_project_height)
-        self.setWindowTitle(self.language['open_project_title'])
+        bind_key(self, "windowTitle", 'open_project_title')
         self.setWindowIcon(QIcon(css.open_project_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.list_of_projects(), 0, 0, 1, 1)
@@ -33,19 +37,18 @@ class OpenProjectWindow(QWidget):
 
     def center_gui(self):
         qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
+        cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
     def list_of_projects(self):
-        self.list_of_projects_groupbox = QGroupBox(
-            self.language['open_project_caption'])
+        self.list_of_projects_groupbox = bind_key(QGroupBox(), "title", 'open_project_caption')
         self.font_text = self.list_of_projects_groupbox.font()
         self.font_text.setPointSize(read_text_font_size())
         self.list_of_projects_groupbox.setFont(self.font_text)
         self.project_list = QListWidget()
-        self.project_list.addItems(
-            next(os.walk(os.path.curdir + var.projects_folder))[1])
+        self.project_list.addItems(sorted(p.name for p in Path("projects").iterdir()
+                                         if (p / "data.json").is_file() and (p / "data.xlsx").is_file()))
         self.project_list.currentItemChanged.connect(self.index_changed)
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.project_list)
@@ -54,15 +57,18 @@ class OpenProjectWindow(QWidget):
         return self.list_of_projects_groupbox
 
     def index_changed(self, i):
+        if i is None:
+            return
         self.json_path = cwd + var.projects_folder + i.text() + '/data.json'
-        with open(self.json_path) as json_file:
-            data = json.load(json_file)
-        self.label_project_description.setText(data['project_description'])
+        try:
+            data = json.loads(Path(self.json_path).read_text(encoding="utf-8-sig"))
+            self.label_project_description.setText(str(data.get("project_description", "")))
+        except (OSError, ValueError, AttributeError) as exc:
+            self.label_project_description.setText(tr("Data error") + " · " + str(exc))
         self.item_text = i.text()
 
     def project_description(self):
-        self.project_description_groupbox = QGroupBox(
-            self.language['open_project_description_caption'])
+        self.project_description_groupbox = bind_key(QGroupBox(), "title", 'open_project_description_caption')
         self.font_text = self.project_description_groupbox.font()
         self.font_text.setPointSize(read_text_font_size())
         self.project_description_groupbox.setFont(self.font_text)
@@ -74,22 +80,21 @@ class OpenProjectWindow(QWidget):
         return self.project_description_groupbox
 
     def do_something_with_project(self):
-        self.dswp_groupbox = QGroupBox(
-            self.language['open_project_btn_caption'])
+        self.dswp_groupbox = bind_key(QGroupBox(), "title", 'open_project_btn_caption')
         self.font_text = self.dswp_groupbox.font()
         self.font_text.setPointSize(read_text_font_size())
         self.dswp_groupbox.setFont(self.font_text)
-        self.buttonOpenProject = QPushButton(
-            self.language['open_project_btn_open'])
+        self.buttonOpenProject = bind_key(QPushButton(), "text", 'open_project_btn_open')
         self.buttonOpenProject.clicked.connect(self.open_project)
-        self.buttonDeleteProject = QPushButton(
-            self.language['open_project_btn_delete'])
+        self.buttonDeleteProject = bind_key(QPushButton(), "text", 'open_project_btn_delete')
         self.buttonDeleteProject.clicked.connect(self.delete_procedure)
-        self.buttonCancel = QPushButton(
-            self.language['open_project_btn_cancel'])
+        self.buttonCancel = bind_key(QPushButton(), "text", 'open_project_btn_cancel')
         self.buttonCancel.clicked.connect(self.close)
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.buttonOpenProject)
+        browse = bind(QPushButton(), "text", "Open folder…")
+        browse.clicked.connect(self.choose_folder)
+        self.vbox.addWidget(browse)
         self.vbox.addWidget(self.buttonDeleteProject)
         self.vbox.addWidget(self.buttonCancel)
         self.vbox.addStretch(1)
@@ -97,27 +102,39 @@ class OpenProjectWindow(QWidget):
         return self.dswp_groupbox
 
     def open_project(self):
-        self.project_path = cwd + var.projects_folder + self.item_text
+        if self.project_list.currentItem():
+            self.open_path(Path("projects") / self.project_list.currentItem().text())
+
+    def choose_folder(self):
+        path = QFileDialog.getExistingDirectory(self, tr("Project"))
+        if path:
+            self.open_path(Path(path))
+
+    def open_path(self, path):
+        from zipfile import BadZipFile
+        try:
+            self.next_window = ProjectWindow(str(path.resolve()), self.language)
+        except (OSError, ValueError, KeyError, BadZipFile) as error:
+            QMessageBox.warning(self, tr("Data error"), str(error))
+            return
         self.hide()
-        self.next_window = ProjectWindow(
-            project_path=self.project_path, language=self.language)
-        self.next_window.show()
 
     def delete_procedure(self):
+        if not self.project_list.currentItem():
+            return
         msgBox = QMessageBox()
-        msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText(self.language['open_project_delete_message'])
-        msgBox.setWindowTitle(
-            self.language['open_project_delete_message_title'])
-        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        buttonOK = msgBox.button(QMessageBox.Ok)
-        buttonOK.setText(self.language['open_project_delete_ok'])
-        buttonCancel = msgBox.button(QMessageBox.Cancel)
-        buttonCancel.setText(self.language['open_project_delete_cancel'])
+        msgBox.setIcon(QMessageBox.Icon.Information)
+        bind_key(msgBox, "text", 'open_project_delete_message')
+        bind_key(msgBox, "windowTitle", 'open_project_delete_message_title')
+        msgBox.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        buttonOK = msgBox.button(QMessageBox.StandardButton.Ok)
+        bind_key(buttonOK, "text", 'open_project_delete_ok')
+        buttonCancel = msgBox.button(QMessageBox.StandardButton.Cancel)
+        bind_key(buttonCancel, "text", 'open_project_delete_cancel')
         msgBox.buttonClicked.connect(self.delete_project)
 
         returnValue = msgBox.exec()
-        # if returnValue == QMessageBox.Ok:
+        # if returnValue == QMessageBox.StandardButton.Ok:
         # self.delete_project()
 
     def delete_project(self, value):

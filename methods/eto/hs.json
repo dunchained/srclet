@@ -1,0 +1,95 @@
+{
+  "id": "hs",
+  "name": "Hargreaves–Samani (1985)",
+  "symbol": "HS",
+  "unit": "mm/month",
+  "group": "eto",
+  "output": "ET0",
+  "parameters": {
+    "kRs": 0.17
+  },
+  "source": "Čadro (2019), (28)",
+  "expression": [
+    "Multiply",
+    [
+      "Multiply",
+      [
+        "Multiply",
+        [
+          "Multiply",
+          [
+            "Multiply",
+            [
+              "Multiply",
+              "d",
+              0.0135
+            ],
+            "kRs"
+          ],
+          0.408
+        ],
+        "Ra"
+      ],
+      [
+        "Add",
+        "Tmean",
+        17.8
+      ]
+    ],
+    [
+      "Sqrt",
+      [
+        "Subtract",
+        "Tmax",
+        "Tmin"
+      ]
+    ]
+  ],
+  "latex": "\\left(\\left(\\left(\\left(\\left(\\left(d\\cdot 0.0135\\right)\\cdot \\mathrm{kRs}\\right)\\cdot 0.408\\right)\\cdot \\mathrm{Ra}\\right)\\cdot \\left(\\mathrm{Tmean}+17.8\\right)\\right)\\cdot \\sqrt{\\left(\\mathrm{Tmax}-\\mathrm{Tmin}\\right)}\\right)",
+  "version": 1,
+  "type": "a",
+  "description": "Čadro (2019), (28)",
+  "method_conditions": "",
+  "method_formula": "\\left(\\left(\\left(\\left(\\left(\\left(d\\cdot 0.0135\\right)\\cdot \\mathrm{kRs}\\right)\\cdot 0.408\\right)\\cdot \\mathrm{Ra}\\right)\\cdot \\left(\\mathrm{Tmean}+17.8\\right)\\right)\\cdot \\sqrt{\\left(\\mathrm{Tmax}-\\mathrm{Tmin}\\right)}\\right)",
+  "formula_math": [
+    "Multiply",
+    [
+      "Multiply",
+      [
+        "Multiply",
+        [
+          "Multiply",
+          [
+            "Multiply",
+            [
+              "Multiply",
+              "d",
+              0.0135
+            ],
+            "kRs"
+          ],
+          0.408
+        ],
+        "Ra"
+      ],
+      [
+        "Add",
+        "Tmean",
+        17.8
+      ]
+    ],
+    [
+      "Sqrt",
+      [
+        "Subtract",
+        "Tmax",
+        "Tmin"
+      ]
+    ]
+  ],
+  "basic_parameters": "Ra, Tmax, Tmean, Tmin, d",
+  "changable_parameters": "kRs",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

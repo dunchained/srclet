@@ -1,0 +1,227 @@
+{
+  "id": "dingman",
+  "name": "Dingman (2002)",
+  "symbol": "DING",
+  "unit": "mm/month",
+  "group": "wb",
+  "output": "Deficit",
+  "parameters": {
+    "capacity": 100.0,
+    "initial": 100.0,
+    "snow_temp": 0.0,
+    "rain_temp": 6.0
+  },
+  "source": "Čadro (2019), §5.1.2.2, 14 · Dingman (2002), Box 7-3",
+  "expression": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "latex": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "version": 1,
+  "order": 20,
+  "state": {
+    "ST": "initial",
+    "PACK": 0
+  },
+  "steps": [
+    {
+      "symbol": "share",
+      "expression": [
+        "Min",
+        1,
+        [
+          "Max",
+          0,
+          [
+            "Divide",
+            [
+              "Subtract",
+              "Tmean",
+              "snow_temp"
+            ],
+            [
+              "Subtract",
+              "rain_temp",
+              "snow_temp"
+            ]
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(1,\\max\\left(0,\\frac{\\left(\\mathrm{Tmean}-\\mathrm{snow_temp}\\right)}{\\left(\\mathrm{rain_temp}-\\mathrm{snow_temp}\\right)}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "SNOW",
+      "expression": [
+        "Multiply",
+        [
+          "Subtract",
+          1,
+          "share"
+        ],
+        "PRCP"
+      ],
+      "latex": "\\left(\\left(1-\\mathrm{share}\\right)\\cdot \\mathrm{PRCP}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "MELT",
+      "expression": [
+        "Multiply",
+        "share",
+        [
+          "Add",
+          "PACK",
+          "SNOW"
+        ]
+      ],
+      "latex": "\\left(\\mathrm{share}\\cdot \\left(\\mathrm{PACK}+\\mathrm{SNOW}\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "PACK",
+      "expression": [
+        "Subtract",
+        [
+          "Add",
+          "PACK",
+          "SNOW"
+        ],
+        "MELT"
+      ],
+      "latex": "\\left(\\left(\\mathrm{PACK}+\\mathrm{SNOW}\\right)-\\mathrm{MELT}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "W",
+      "expression": [
+        "Add",
+        [
+          "Multiply",
+          "share",
+          "PRCP"
+        ],
+        "MELT"
+      ],
+      "latex": "\\left(\\left(\\mathrm{share}\\cdot \\mathrm{PRCP}\\right)+\\mathrm{MELT}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "draw",
+      "expression": [
+        "Multiply",
+        "ST",
+        [
+          "Subtract",
+          1,
+          [
+            "Exp",
+            [
+              "Divide",
+              [
+                "Negate",
+                [
+                  "Max",
+                  0,
+                  [
+                    "Subtract",
+                    "ET0",
+                    "W"
+                  ]
+                ]
+              ],
+              "capacity"
+            ]
+          ]
+        ]
+      ],
+      "latex": "\\left(\\mathrm{ST}\\cdot \\left(1-\\exp\\left(\\frac{-\\max\\left(0,\\left(\\mathrm{ET0}-W\\right)\\right)}{\\mathrm{capacity}}\\right)\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "use",
+      "expression": [
+        "Min",
+        "ET0",
+        [
+          "Add",
+          "W",
+          "draw"
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{ET0},\\left(W+\\mathrm{draw}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "SURPLUS",
+      "expression": [
+        "Max",
+        0,
+        [
+          "Subtract",
+          [
+            "Subtract",
+            [
+              "Add",
+              "ST",
+              "W"
+            ],
+            "ET0"
+          ],
+          "capacity"
+        ]
+      ],
+      "latex": "\\max\\left(0,\\left(\\left(\\left(\\mathrm{ST}+W\\right)-\\mathrm{ET0}\\right)-\\mathrm{capacity}\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "ST",
+      "expression": [
+        "Min",
+        "capacity",
+        [
+          "Max",
+          0,
+          [
+            "Subtract",
+            [
+              "Add",
+              "ST",
+              "W"
+            ],
+            "use"
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{capacity},\\max\\left(0,\\left(\\left(\\mathrm{ST}+W\\right)-\\mathrm{use}\\right)\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "AET",
+      "expression": "use",
+      "latex": "\\mathrm{use}",
+      "publish": true
+    },
+    {
+      "symbol": "RO",
+      "expression": "SURPLUS",
+      "latex": "\\mathrm{SURPLUS}",
+      "publish": true
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.2, 14 · Dingman (2002), Box 7-3",
+  "method_conditions": "",
+  "method_formula": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "formula_math": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "basic_parameters": "ET0, PRCP, Tmean",
+  "changable_parameters": "capacity, initial, snow_temp, rain_temp",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

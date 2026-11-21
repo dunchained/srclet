@@ -1,0 +1,28 @@
+{
+  "id": "sd2",
+  "name": "sd²",
+  "symbol": "sd2",
+  "unit": "(mm/day)²",
+  "group": "others",
+  "output": null,
+  "parameters": {},
+  "source": "Čadro (2019), §5.1.3, (39)",
+  "expression": "varianceTerm",
+  "latex": "\\mathrm{varianceTerm}",
+  "version": 1,
+  "engine": "comparison",
+  "inputs": [
+    "FAOPM",
+    "EstimateET"
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.3, (39)",
+  "method_conditions": "",
+  "method_formula": "\\mathrm{varianceTerm}",
+  "formula_math": "varianceTerm",
+  "basic_parameters": "EstimateET, FAOPM",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

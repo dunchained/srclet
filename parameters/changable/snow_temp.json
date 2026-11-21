@@ -1,0 +1,9 @@
+{
+  "name": "Snow temperature (°C)",
+  "symbol": "snow_temp",
+  "unit": "",
+  "category": "wb",
+  "type": "a",
+  "description": "Snow temperature (°C)",
+  "value": "-10.0"
+}

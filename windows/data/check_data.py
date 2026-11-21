@@ -1,12 +1,13 @@
+from mortys.language_morty import bind_key
 import pandas
 import numpy
 import os
 import sys
 import json
-from PyQt5.QtWidgets import QMessageBox, QVBoxLayout, QFormLayout, QHBoxLayout
-from PyQt5.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
-from PyQt5.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
-from PyQt5.QtCore import Qt, QDateTime, QDate, pyqtSignal
+from PyQt6.QtWidgets import QMessageBox, QVBoxLayout, QFormLayout, QHBoxLayout
+from PyQt6.QtWidgets import QGroupBox, QTableWidgetItem, QGridLayout, QLineEdit, QLabel
+from PyQt6.QtWidgets import QMenu, QPushButton, QTableWidget, QApplication, QSizePolicy, QDateEdit
+from PyQt6.QtCore import Qt, QDateTime, QDate, pyqtSignal
 from pathlib import Path
 from variables import var
 cwd = os.path.curdir
@@ -29,7 +30,7 @@ class CheckDataTypeWidget(TableWidget):
         self.language = language
         self.file_path = file_path
         self.project_path = project_path
-        self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
         self.buttons = []
         self.data = numpy.loadtxt(file_path, skiprows=1)
 
@@ -37,7 +38,7 @@ class CheckDataTypeWidget(TableWidget):
         self.create_options()
         self.create_data_type()
 
-        self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.table.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout = QGridLayout(self)
         layout.addWidget(self.table, 0, 0)
         layout.addWidget(self.groupBoxDataOptions, 1, 0)
@@ -90,7 +91,7 @@ class CheckDataTypeWidget(TableWidget):
 
         self.buttons
         for i in range(0, self.table.columnCount()):
-            button = QPushButton(self.language['check_data_select'])
+            button = bind_key(QPushButton(), "text", 'check_data_select')
             button.columnIndex = i
             self.buttons.append(button)
             self.table.setCellWidget(
@@ -115,8 +116,7 @@ class CheckDataTypeWidget(TableWidget):
             self.menu_kat.columnIndex = i
             self.menu_kat.addSeparator()
 
-            self.eto_method_menu = self.menu_kat.addMenu(
-                self.language['check_data_select_eto_method'])
+            self.eto_method_menu = bind_key(self.menu_kat.addMenu(""), "title", 'check_data_select_eto_method')
             for file in self.file_list_eto_methods:
                 self.file_to_load = open(os.path.join(
                     cwd + var.eto_methods_folder + file))
@@ -125,8 +125,7 @@ class CheckDataTypeWidget(TableWidget):
                     'ET0 | ' + self.file_data['name'] + '  |  ' + self.file_data['unit'])
                 self.menu_action.triggered.connect(self.set_column_value)
 
-            self.wb_method_menu = self.menu_kat.addMenu(
-                self.language['check_data_select_wb_method'])
+            self.wb_method_menu = bind_key(self.menu_kat.addMenu(""), "title", 'check_data_select_wb_method')
             for file in self.file_list_wb_methods:
                 self.file_to_load = open(os.path.join(
                     cwd + var.wb_methods_folder + file))
@@ -135,8 +134,7 @@ class CheckDataTypeWidget(TableWidget):
                     'WB | ' + self.file_data['name'] + '  |  ' + self.file_data['unit'])
                 self.menu_action.triggered.connect(self.set_column_value)
 
-            self.other_method_menu = self.menu_kat.addMenu(
-                self.language['check_data_select_other_method'])
+            self.other_method_menu = bind_key(self.menu_kat.addMenu(""), "title", 'check_data_select_other_method')
             for file in self.file_list_other_methods:
                 self.file_to_load = open(os.path.join(
                     cwd + var.other_methods_folder + file))
@@ -178,8 +176,7 @@ class CheckDataTypeWidget(TableWidget):
 
     def create_options(self):
         # Glavni box:
-        self.groupBoxDataOptions = QGroupBox(
-            self.language['check_data_data_options'])
+        self.groupBoxDataOptions = bind_key(QGroupBox(), "title", 'check_data_data_options')
         self.groupBoxDataOptionsLayout = QGridLayout()
 
         # Options box:
@@ -187,21 +184,17 @@ class CheckDataTypeWidget(TableWidget):
         self.groupBoxOptionsLayout = QVBoxLayout()
         self.flay = QFormLayout()
 
-        self.label_weather_station = QLabel(
-            self.language['check_data_station_name'])
+        self.label_weather_station = bind_key(QLabel(), "text", 'check_data_station_name')
         self.line_weather_station = QLineEdit()
         self.flay.addRow(self.label_weather_station, self.line_weather_station)
 
-        self.label_weather_station_country = QLabel(
-            self.language['check_data_country'])
+        self.label_weather_station_country = bind_key(QLabel(), "text", 'check_data_country')
         self.line_weather_station_country = QLineEdit()
         self.flay.addRow(self.label_weather_station_country,
                          self.line_weather_station_country)
 
-        self.label_weather_station_elevation = QLabel(
-            self.language['check_data_elevation'])
-        self.label_weather_station_elevation1 = QLabel(
-            self.language['check_data_elevation1'])
+        self.label_weather_station_elevation = bind_key(QLabel(), "text", 'check_data_elevation')
+        self.label_weather_station_elevation1 = bind_key(QLabel(), "text", 'check_data_elevation1')
         self.line_weather_station_elevation = QLineEdit()
         self.hlay_elevation = QHBoxLayout()
         self.hlay_elevation.addWidget(self.label_weather_station_elevation)
@@ -209,10 +202,8 @@ class CheckDataTypeWidget(TableWidget):
         self.hlay_elevation.addWidget(self.label_weather_station_elevation1)
         self.flay.addRow(self.hlay_elevation)
 
-        self.label_weather_station_latitude = QLabel(
-            self.language['check_data_latitude'])
-        self.label_weather_station_latitude1 = QLabel(
-            self.language['check_data_latitude1'])
+        self.label_weather_station_latitude = bind_key(QLabel(), "text", 'check_data_latitude')
+        self.label_weather_station_latitude1 = bind_key(QLabel(), "text", 'check_data_latitude1')
         self.line_weather_station_latitude = QLineEdit()
         self.hlay_latitude = QHBoxLayout()
         self.hlay_latitude.addWidget(self.label_weather_station_latitude)
@@ -220,10 +211,8 @@ class CheckDataTypeWidget(TableWidget):
         self.hlay_latitude.addWidget(self.label_weather_station_latitude1)
         self.flay.addRow(self.hlay_latitude)
 
-        self.label_weather_station_longitude = QLabel(
-            self.language['check_data_longitude'])
-        self.label_weather_station_longitude1 = QLabel(
-            self.language['check_data_longitude1'])
+        self.label_weather_station_longitude = bind_key(QLabel(), "text", 'check_data_longitude')
+        self.label_weather_station_longitude1 = bind_key(QLabel(), "text", 'check_data_longitude1')
         self.line_weather_station_longitude = QLineEdit()
         self.hlay_longitude = QHBoxLayout()
         self.hlay_longitude.addWidget(self.label_weather_station_longitude)
@@ -231,8 +220,7 @@ class CheckDataTypeWidget(TableWidget):
         self.hlay_longitude.addWidget(self.label_weather_station_longitude1)
         self.flay.addRow(self.hlay_longitude)
 
-        self.label_skip_rows = QLabel(
-            self.language['check_data_number_of_rows'])
+        self.label_skip_rows = bind_key(QLabel(), "text", 'check_data_number_of_rows')
         self.line_skip_rows = QLineEdit('1')
         self.flay.addRow(self.label_skip_rows, self.line_skip_rows)
 
@@ -243,32 +231,28 @@ class CheckDataTypeWidget(TableWidget):
         self.groupBoxCheckLayout = QGridLayout()
         self.flay_check = QFormLayout()
 
-        self.label_date_begining = QLabel(
-            self.language['check_data_begining_date'])
+        self.label_date_begining = bind_key(QLabel(), "text", 'check_data_begining_date')
         self.date_date_begining = QDateEdit(calendarPopup=True)
         self.date_date_begining.setDateTime(QDateTime.currentDateTime())
         self.flay_check.addRow(self.label_date_begining,
                                self.date_date_begining)
 
-        self.label_date_end = QLabel(self.language['check_data_end_date'])
+        self.label_date_end = bind_key(QLabel(), "text", 'check_data_end_date')
         self.date_date_end = QDateEdit(calendarPopup=True)
         self.date_date_end.setDateTime(QDateTime.currentDateTime())
         self.flay_check.addRow(self.label_date_end, self.date_date_end)
 
-        self.label_number_of_rows = QLabel(
-            self.language['check_data_num_rows'])
+        self.label_number_of_rows = bind_key(QLabel(), "text", 'check_data_num_rows')
         self.label_number_of_rows_num = QLabel('/')
         self.flay_check.addRow(self.label_number_of_rows,
                                self.label_number_of_rows_num)
 
-        self.label_number_of_selected_columns = QLabel(
-            self.language['check_data_num_cols'])
+        self.label_number_of_selected_columns = bind_key(QLabel(), "text", 'check_data_num_cols')
         self.label_number_of_selected_columns_num = QLabel('/')
         self.flay_check.addRow(
             self.label_number_of_selected_columns, self.label_number_of_selected_columns_num)
 
-        self.button_data_check = QPushButton(
-            self.language['check_data_btn_check_data'])
+        self.button_data_check = bind_key(QPushButton(), "text", 'check_data_btn_check_data')
         self.button_data_check.clicked.connect(self.check_data)
         self.flay_check.addRow(self.button_data_check)
 
@@ -282,11 +266,10 @@ class CheckDataTypeWidget(TableWidget):
         self.groupBoxCheck.setLayout(self.flay_check)
 
         # Postavka svega na DataOptionsGroupBox:
-        self.buttonSave = QPushButton(
-            self.language['check_data_btn_save_data'])
+        self.buttonSave = bind_key(QPushButton(), "text", 'check_data_btn_save_data')
         self.buttonSave.setEnabled(False)
         self.buttonSave.clicked.connect(self.save_data)
-        self.buttonClose = QPushButton(self.language['check_data_btn_cancel'])
+        self.buttonClose = bind_key(QPushButton(), "text", 'check_data_btn_cancel')
         self.buttonClose.clicked.connect(self.close_self)
 
         self.groupBoxDataOptionsLayout.addWidget(
@@ -326,16 +309,16 @@ class CheckDataTypeWidget(TableWidget):
             str(len(self.list_of_selected_columns)))
         broj_redova = int(self.label_number_of_rows_num.text())
         if broj_redova % 12 == 0:
-            self.label_check_done.setText(self.language['check_data_msg_1'])
+            bind_key(self.label_check_done, "text", 'check_data_msg_1')
             self.label_check_done1.setText(self.language['check_data_msg_2'] + self.label_number_of_rows_num.text(
             ) + 'x' + self.label_number_of_selected_columns_num.text())
-            self.label_check_done2.setText(self.language['check_data_msg_3'])
+            bind_key(self.label_check_done2, "text", 'check_data_msg_3')
             self.buttonSave.setEnabled(True)
         else:
-            self.label_check_done.setText(self.language['check_data_msg_4'])
+            bind_key(self.label_check_done, "text", 'check_data_msg_4')
             self.label_check_done1.setText(self.language['check_data_msg_2'] + self.label_number_of_rows_num.text(
             ) + 'x' + self.label_number_of_selected_columns_num.text())
-            self.label_check_done2.setText(self.language['check_data_msg_5'])
+            bind_key(self.label_check_done2, "text", 'check_data_msg_5')
             self.buttonSave.setEnabled(False)
 
     def read_table(self):
@@ -363,11 +346,11 @@ class CheckDataTypeWidget(TableWidget):
                     sheet_name='data_input', index=False)
         if not self.line_weather_station.text() or not self.line_weather_station_country.text() or not self.line_weather_station_elevation.text() or not self.line_weather_station_latitude.text() or not self.line_weather_station_longitude.text():
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['check_data_message'])
-            self.msg.setWindowTitle(self.language['check_data_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'check_data_message')
+            bind_key(self.msg, "windowTitle", 'check_data_caption')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
@@ -385,11 +368,11 @@ class CheckDataTypeWidget(TableWidget):
                 outfile.write(json_object)
 
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(self.language['check_data_message1'])
-            self.msg.setWindowTitle(self.language['check_data_caption1'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'check_data_message1')
+            bind_key(self.msg, "windowTitle", 'check_data_caption1')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.buttonClicked.connect(self.clicked)
             self.msg.buttonClicked.connect(self.close_self)
             self.msg.show()
@@ -401,4 +384,4 @@ class CheckDataTypeWidget(TableWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = CheckDataTypeWidget()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

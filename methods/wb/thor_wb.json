@@ -1,0 +1,134 @@
+{
+  "id": "thor_wb",
+  "name": "Thornthwaite (1948) · WB",
+  "symbol": "THORWB",
+  "unit": "mm/month",
+  "group": "wb",
+  "output": "Deficit",
+  "parameters": {
+    "capacity": 100.0,
+    "initial": 100.0
+  },
+  "source": "Čadro (2019), §5.1.2.2, 11",
+  "expression": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "latex": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "version": 1,
+  "order": 20,
+  "state": {
+    "ST": "initial"
+  },
+  "steps": [
+    {
+      "symbol": "W",
+      "expression": "PRCP",
+      "latex": "\\mathrm{PRCP}",
+      "publish": true
+    },
+    {
+      "symbol": "draw",
+      "expression": [
+        "Min",
+        "ST",
+        [
+          "Max",
+          0,
+          [
+            "Subtract",
+            "ET0",
+            "W"
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{ST},\\max\\left(0,\\left(\\mathrm{ET0}-W\\right)\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "use",
+      "expression": [
+        "Min",
+        "ET0",
+        [
+          "Add",
+          "W",
+          "draw"
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{ET0},\\left(W+\\mathrm{draw}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "SURPLUS",
+      "expression": [
+        "Max",
+        0,
+        [
+          "Subtract",
+          [
+            "Subtract",
+            [
+              "Add",
+              "ST",
+              "W"
+            ],
+            "ET0"
+          ],
+          "capacity"
+        ]
+      ],
+      "latex": "\\max\\left(0,\\left(\\left(\\left(\\mathrm{ST}+W\\right)-\\mathrm{ET0}\\right)-\\mathrm{capacity}\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "ST",
+      "expression": [
+        "Min",
+        "capacity",
+        [
+          "Max",
+          0,
+          [
+            "Subtract",
+            [
+              "Add",
+              "ST",
+              "W"
+            ],
+            "use"
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{capacity},\\max\\left(0,\\left(\\left(\\mathrm{ST}+W\\right)-\\mathrm{use}\\right)\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "AET",
+      "expression": "use",
+      "latex": "\\mathrm{use}",
+      "publish": true
+    },
+    {
+      "symbol": "RO",
+      "expression": "SURPLUS",
+      "latex": "\\mathrm{SURPLUS}",
+      "publish": true
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.2, 11",
+  "method_conditions": "",
+  "method_formula": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "formula_math": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "basic_parameters": "ET0, PRCP",
+  "changable_parameters": "capacity, initial",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

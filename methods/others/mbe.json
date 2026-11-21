@@ -1,0 +1,28 @@
+{
+  "id": "mbe",
+  "name": "MBE",
+  "symbol": "mbe",
+  "unit": "mm/day",
+  "group": "others",
+  "output": null,
+  "parameters": {},
+  "source": "Čadro (2019), §5.1.3, (38)",
+  "expression": "meanDiff",
+  "latex": "\\mathrm{meanDiff}",
+  "version": 1,
+  "engine": "comparison",
+  "inputs": [
+    "FAOPM",
+    "EstimateET"
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.3, (38)",
+  "method_conditions": "",
+  "method_formula": "\\mathrm{meanDiff}",
+  "formula_math": "meanDiff",
+  "basic_parameters": "EstimateET, FAOPM",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

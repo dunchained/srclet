@@ -1,0 +1,9 @@
+{
+  "name": "Surplus runoff fraction",
+  "symbol": "runoff",
+  "unit": "",
+  "category": "wb",
+  "type": "a",
+  "description": "Surplus runoff fraction",
+  "value": "0.61"
+}

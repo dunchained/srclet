@@ -1,0 +1,56 @@
+{
+  "id": "sevruk",
+  "name": "Sevruk–Geiger (1981)",
+  "symbol": "sevruk",
+  "unit": "mm/month",
+  "group": "frequency",
+  "output": null,
+  "parameters": {
+    "month": 8,
+    "years": 10
+  },
+  "source": "Čadro (2019), §5.1.2.3, (34)",
+  "expression": [
+    "Divide",
+    [
+      "Subtract",
+      "r",
+      0.44
+    ],
+    [
+      "Add",
+      "n",
+      0.12
+    ]
+  ],
+  "latex": "\\frac{\\left(r-0.44\\right)}{\\left(n+0.12\\right)}",
+  "version": 1,
+  "engine": "frequency",
+  "inputs": [
+    "Deficit"
+  ],
+  "distribution": "normal",
+  "order": 30,
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.3, (34)",
+  "method_conditions": "",
+  "method_formula": "\\frac{\\left(r-0.44\\right)}{\\left(n+0.12\\right)}",
+  "formula_math": [
+    "Divide",
+    [
+      "Subtract",
+      "r",
+      0.44
+    ],
+    [
+      "Add",
+      "n",
+      0.12
+    ]
+  ],
+  "basic_parameters": "Deficit",
+  "changable_parameters": "month, years",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Direct runoff fraction",
+  "symbol": "direct",
+  "unit": "",
+  "category": "wb",
+  "type": "a",
+  "description": "Direct runoff fraction",
+  "value": "0.076"
+}

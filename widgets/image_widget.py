@@ -1,7 +1,7 @@
 from variables import css
-from PyQt5.QtWidgets import QVBoxLayout, QWidget, QLabel
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from PyQt6.QtWidgets import QVBoxLayout, QWidget, QLabel
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap
 
 class ImageWidget(QWidget):
     def __init__(self):
@@ -10,5 +10,5 @@ class ImageWidget(QWidget):
         label = QLabel(self)
         pixmap = QPixmap(css.srclet_caption)
         label.setPixmap(pixmap)
-        layout.addWidget(label, alignment=Qt.AlignCenter)
+        layout.addWidget(label, alignment=Qt.AlignmentFlag.AlignCenter)
         self.setLayout(layout)

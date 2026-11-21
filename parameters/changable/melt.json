@@ -1,0 +1,9 @@
+{
+  "name": "Maximum melt fraction",
+  "symbol": "melt",
+  "unit": "",
+  "category": "wb",
+  "type": "a",
+  "description": "Maximum melt fraction",
+  "value": "0.5"
+}

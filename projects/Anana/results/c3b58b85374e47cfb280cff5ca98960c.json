@@ -1,0 +1,175 @@
+{
+  "format_version": 1,
+  "timestamp": "2026-11-21T22:09:55+00:00",
+  "method": {
+    "id": "weibull_normal",
+    "name": "Weibull (1939)",
+    "symbol": "weibull_normal",
+    "unit": "°C",
+    "group": "frequency",
+    "output": null,
+    "parameters": {
+      "month": 8,
+      "years": 3
+    },
+    "source": "Čadro (2019), §5.1.2.3, (32)",
+    "expression": [
+      "Divide",
+      "r",
+      [
+        "Add",
+        "n",
+        1
+      ]
+    ],
+    "latex": "\\frac{r}{\\left(n+1\\right)}",
+    "version": 1,
+    "engine": "frequency",
+    "inputs": [
+      "Deficit"
+    ],
+    "distribution": "normal",
+    "order": 3,
+    "type": "a",
+    "description": "Čadro (2019), §5.1.2.3, (32)",
+    "method_conditions": "",
+    "method_formula": "\\frac{r}{\\left(n+1\\right)}",
+    "formula_math": [
+      "Divide",
+      "r",
+      [
+        "Add",
+        "n",
+        1
+      ]
+    ],
+    "basic_parameters": "Deficit",
+    "changable_parameters": "month, years",
+    "other_methods": "",
+    "eto_methods": "",
+    "category": "other",
+    "series": "Tmean"
+  },
+  "formula_revision": "029b65eb9006b0bd4661153031927db1b6fc4ae3785667e58925912ee089722e",
+  "rows": [
+    {
+      "year": null,
+      "month": 8,
+      "value": 21.495439620166938,
+      "missing": [],
+      "inputs": {
+        "n": 3,
+        "period": 3
+      },
+      "outputs": {
+        "RMSE": 0.4006938426723768
+      },
+      "series": [
+        [
+          1961,
+          19.0
+        ],
+        [
+          1962,
+          21.7
+        ],
+        [
+          1963,
+          21.2
+        ]
+      ],
+      "plotting_positions": [
+        [
+          21.7,
+          0.25
+        ],
+        [
+          21.2,
+          0.5
+        ],
+        [
+          19.0,
+          0.75
+        ]
+      ]
+    }
+  ],
+  "input_period": [
+    "1961-01",
+    "1963-12"
+  ],
+  "input_result": "a35ed9502ce0444bb0c040add7c03b37.json",
+  "station_metadata": {
+    "weather_station": "Visoko",
+    "weather_station_country": "BiH",
+    "weather_station_latitude": "43",
+    "weather_station_longitude": "18",
+    "weather_station_elevation": "422",
+    "project_description": "Nisam.",
+    "skip_rows": "1",
+    "source_file": "data2.txt",
+    "import_columns": [
+      {
+        "header": "Year",
+        "id": "Year"
+      },
+      {
+        "header": "Month",
+        "id": "Month"
+      },
+      {
+        "header": "Tmean",
+        "id": "Tmean"
+      },
+      {
+        "header": "Tmax",
+        "id": "Tmax"
+      },
+      {
+        "header": "Tmin",
+        "id": "Tmin"
+      },
+      {
+        "header": "Rhmean",
+        "id": "RHmean"
+      },
+      {
+        "header": "Rhmax",
+        "id": "RHmax"
+      },
+      {
+        "header": "Rhmin",
+        "id": "RHmin"
+      },
+      {
+        "header": "Rs",
+        "id": "Rs"
+      },
+      {
+        "header": "Wind",
+        "id": "uz"
+      },
+      {
+        "header": "Tdew",
+        "id": "Tdew"
+      }
+    ],
+    "decimal": ".",
+    "delimiter": "auto",
+    "format_version": 2,
+    "columns": [
+      "Year",
+      "Month",
+      "Tmean",
+      "Tmax",
+      "Tmin",
+      "RHmean",
+      "RHmax",
+      "RHmin",
+      "Rs",
+      "uz",
+      "Tdew"
+    ]
+  },
+  "station": "Visoko"
+}

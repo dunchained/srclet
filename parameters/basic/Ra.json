@@ -1,0 +1,8 @@
+{
+  "name": "Extraterrestrial radiation",
+  "unit": "MJ/m²/day",
+  "category": "radiation",
+  "symbol": "Ra",
+  "description": "Extraterrestrial radiation",
+  "type": "a"
+}

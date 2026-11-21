@@ -1,0 +1,71 @@
+{
+  "weather_station": "aaaa",
+  "weather_station_country": "bih",
+  "weather_station_latitude": "",
+  "weather_station_longitude": "",
+  "weather_station_elevation": "234",
+  "project_description": "sasa",
+  "skip_rows": "1",
+  "source_file": "data2.txt",
+  "import_columns": [
+    {
+      "header": "Year",
+      "id": "Year"
+    },
+    {
+      "header": "Month",
+      "id": "Month"
+    },
+    {
+      "header": "Tmean",
+      "id": "Tmean"
+    },
+    {
+      "header": "Tmax",
+      "id": "Tmax"
+    },
+    {
+      "header": "Tmin",
+      "id": "Tmin"
+    },
+    {
+      "header": "Rhmean",
+      "id": "RHmean"
+    },
+    {
+      "header": "Rhmax",
+      "id": "RHmax"
+    },
+    {
+      "header": "Rhmin",
+      "id": "RHmin"
+    },
+    {
+      "header": "Rs",
+      "id": "Rs"
+    },
+    {
+      "header": "Wind",
+      "id": null
+    },
+    {
+      "header": "Tdew",
+      "id": "Tdew"
+    }
+  ],
+  "decimal": ".",
+  "delimiter": "auto",
+  "format_version": 2,
+  "columns": [
+    "Year",
+    "Month",
+    "Tmean",
+    "Tmax",
+    "Tmin",
+    "RHmean",
+    "RHmax",
+    "RHmin",
+    "Rs",
+    "Tdew"
+  ]
+}

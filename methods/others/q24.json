@@ -1,0 +1,48 @@
+{
+  "id": "q24",
+  "name": "Irrigation hydromodule",
+  "symbol": "q24",
+  "unit": "L/s/ha",
+  "group": "hydro",
+  "output": "q24",
+  "parameters": {},
+  "source": "Čadro (2019), §5.1.2.3, (37)",
+  "expression": [
+    "Divide",
+    [
+      "Multiply",
+      10000,
+      "D"
+    ],
+    [
+      "Multiply",
+      86400,
+      "d"
+    ]
+  ],
+  "latex": "\\frac{\\left(10000\\cdot D\\right)}{\\left(86400\\cdot d\\right)}",
+  "version": 1,
+  "order": 0,
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.3, (37)",
+  "method_conditions": "",
+  "method_formula": "\\frac{\\left(10000\\cdot D\\right)}{\\left(86400\\cdot d\\right)}",
+  "formula_math": [
+    "Divide",
+    [
+      "Multiply",
+      10000,
+      "D"
+    ],
+    [
+      "Multiply",
+      86400,
+      "d"
+    ]
+  ],
+  "basic_parameters": "D, d",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

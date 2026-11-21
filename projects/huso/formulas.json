@@ -1,0 +1,85 @@
+{
+  "fao56": {
+    "id": "fao56",
+    "name": "FAO-56 Penman–Monteith",
+    "unit": "mm/month",
+    "output": "ET0",
+    "parameters": {
+      "wind_height": 2.0,
+      "as": 0.25,
+      "bs": 0.5
+    },
+    "version": 1,
+    "source": "Allen et al. (1998), FAO-56, equations 6, 43, 46",
+    "latex": "d\\cdot\\frac{0.408\\cdot\\mathrm{slope}\\cdot(\\mathrm{Rn}-G)+\\mathrm{gamma}\\cdot\\frac{900}{T+273}\\cdot\\mathrm{u2}\\cdot(\\mathrm{es}-\\mathrm{ea})}{\\mathrm{slope}+\\mathrm{gamma}\\cdot(1+0.34\\cdot\\mathrm{u2})}",
+    "expression": [
+      "Multiply",
+      "d",
+      [
+        "Divide",
+        [
+          "Add",
+          [
+            "Multiply",
+            {
+              "num": "0.408"
+            },
+            "slope",
+            [
+              "Delimiter",
+              [
+                "Subtract",
+                "Rn",
+                "G"
+              ]
+            ]
+          ],
+          [
+            "Multiply",
+            "gamma",
+            [
+              "Divide",
+              900,
+              [
+                "Add",
+                "T",
+                273
+              ]
+            ],
+            "u2",
+            [
+              "Delimiter",
+              [
+                "Subtract",
+                "es",
+                "ea"
+              ]
+            ]
+          ]
+        ],
+        [
+          "Add",
+          "slope",
+          [
+            "Multiply",
+            "gamma",
+            [
+              "Delimiter",
+              [
+                "Add",
+                1,
+                [
+                  "Multiply",
+                  {
+                    "num": "0.34"
+                  },
+                  "u2"
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  }
+}

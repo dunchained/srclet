@@ -1,0 +1,155 @@
+{
+  "id": "thor",
+  "name": "Thornthwaite (1948) · PET",
+  "symbol": "THOR",
+  "unit": "mm/month",
+  "group": "eto",
+  "output": "ET0",
+  "parameters": {},
+  "source": "Čadro (2019), §5.1.5 · PyETo, Thornthwaite (1948)",
+  "expression": [
+    "Which",
+    [
+      "LessEqual",
+      "heatIndex",
+      0
+    ],
+    0,
+    "True",
+    [
+      "Multiply",
+      [
+        "Multiply",
+        [
+          "Multiply",
+          16,
+          [
+            "Divide",
+            "daylight",
+            12
+          ]
+        ],
+        [
+          "Divide",
+          "d",
+          30
+        ]
+      ],
+      [
+        "Power",
+        [
+          "Divide",
+          [
+            "Multiply",
+            10,
+            [
+              "Max",
+              0,
+              "Tmean"
+            ]
+          ],
+          "heatIndex"
+        ],
+        "exponent"
+      ]
+    ]
+  ],
+  "latex": "\\begin{cases}0 & \\left(\\mathrm{heatIndex}\\le 0\\right) \\\\ \\left(\\left(\\left(16\\cdot \\frac{\\mathrm{daylight}}{12}\\right)\\cdot \\frac{d}{30}\\right)\\cdot \\left(\\frac{\\left(10\\cdot \\max\\left(0,\\mathrm{Tmean}\\right)\\right)}{\\mathrm{heatIndex}}\\right)^{\\mathrm{exponent}}\\right) & \\mathrm{otherwise}\\end{cases}",
+  "version": 1,
+  "steps": [
+    {
+      "symbol": "exponent",
+      "expression": [
+        "Add",
+        [
+          "Add",
+          [
+            "Subtract",
+            [
+              "Multiply",
+              6.75e-07,
+              [
+                "Power",
+                "heatIndex",
+                3
+              ]
+            ],
+            [
+              "Multiply",
+              7.71e-05,
+              [
+                "Power",
+                "heatIndex",
+                2
+              ]
+            ]
+          ],
+          [
+            "Multiply",
+            0.01792,
+            "heatIndex"
+          ]
+        ],
+        0.49239
+      ],
+      "latex": "\\left(\\left(\\left(\\left(6.75e-07\\cdot \\left(\\mathrm{heatIndex}\\right)^{3}\\right)-\\left(7.71e-05\\cdot \\left(\\mathrm{heatIndex}\\right)^{2}\\right)\\right)+\\left(0.01792\\cdot \\mathrm{heatIndex}\\right)\\right)+0.49239\\right)",
+      "publish": false
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.5 · PyETo, Thornthwaite (1948)",
+  "method_conditions": "",
+  "method_formula": "\\begin{cases}0 & \\left(\\mathrm{heatIndex}\\le 0\\right) \\\\ \\left(\\left(\\left(16\\cdot \\frac{\\mathrm{daylight}}{12}\\right)\\cdot \\frac{d}{30}\\right)\\cdot \\left(\\frac{\\left(10\\cdot \\max\\left(0,\\mathrm{Tmean}\\right)\\right)}{\\mathrm{heatIndex}}\\right)^{\\mathrm{exponent}}\\right) & \\mathrm{otherwise}\\end{cases}",
+  "formula_math": [
+    "Which",
+    [
+      "LessEqual",
+      "heatIndex",
+      0
+    ],
+    0,
+    "True",
+    [
+      "Multiply",
+      [
+        "Multiply",
+        [
+          "Multiply",
+          16,
+          [
+            "Divide",
+            "daylight",
+            12
+          ]
+        ],
+        [
+          "Divide",
+          "d",
+          30
+        ]
+      ],
+      [
+        "Power",
+        [
+          "Divide",
+          [
+            "Multiply",
+            10,
+            [
+              "Max",
+              0,
+              "Tmean"
+            ]
+          ],
+          "heatIndex"
+        ],
+        "exponent"
+      ]
+    ]
+  ],
+  "basic_parameters": "Tmean, d, daylight, heatIndex",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "weibull_normal",
+  "name": "Weibull (1939)",
+  "symbol": "weibull_normal",
+  "unit": "mm/month",
+  "group": "frequency",
+  "output": null,
+  "parameters": {
+    "month": 8,
+    "years": 10
+  },
+  "source": "Čadro (2019), §5.1.2.3, (32)",
+  "expression": [
+    "Divide",
+    "r",
+    [
+      "Add",
+      "n",
+      1
+    ]
+  ],
+  "latex": "\\frac{r}{\\left(n+1\\right)}",
+  "version": 1,
+  "engine": "frequency",
+  "inputs": [
+    "Deficit"
+  ],
+  "distribution": "normal",
+  "order": 3,
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.3, (32)",
+  "method_conditions": "",
+  "method_formula": "\\frac{r}{\\left(n+1\\right)}",
+  "formula_math": [
+    "Divide",
+    "r",
+    [
+      "Add",
+      "n",
+      1
+    ]
+  ],
+  "basic_parameters": "Deficit",
+  "changable_parameters": "month, years",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

@@ -1,8 +1,8 @@
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QFormLayout, QApplication, QCheckBox
-from PyQt5.QtWidgets import QDesktopWidget, QPushButton, QGroupBox, QTextEdit
-from PyQt5.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QLineEdit, QScrollArea
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QHBoxLayout, QProgressBar, QFormLayout, QApplication, QCheckBox
+from PyQt6.QtWidgets import QPushButton, QGroupBox, QTextEdit
+from PyQt6.QtWidgets import QVBoxLayout, QWidget, QGridLayout, QLabel, QLineEdit, QScrollArea
 import css, var, os, sys
 from om_plambases import read_om_data, read_om_on_update
 from project_plambases import read_cps
@@ -37,13 +37,13 @@ class CalculateWidget(QWidget):
         self.grid.addWidget(self.status_info(), 3, 0, 1, 2)
         self.grid.addWidget(self.buttons_calculate(), 3, 2, 1, 2)
         self.setLayout(self.grid)
-        self.setWindowState(QtCore.Qt.WindowMaximized)
+        self.setWindowState(QtCore.Qt.WindowState.WindowMaximized)
         self.center_gui()
         self.show()
 
     def center_gui(self):
         qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
+        cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -72,7 +72,7 @@ class CalculateWidget(QWidget):
         self.acp_scroll.setLayout(self.acp_layout)
         acp = QScrollArea()
         acp.setWidget(self.acp_scroll)
-        acp.setWidgetResizable(1)
+        acp.setWidgetResizable(True)
         self.acp_groupbox.layout = QVBoxLayout()
         self.acp_groupbox.layout.addWidget(acp)
         self.acp_groupbox.setLayout(self.acp_groupbox.layout)
@@ -139,7 +139,7 @@ class CalculateWidget(QWidget):
         self.om_scroll.setLayout(self.om_layout)
         methods = QScrollArea()
         methods.setWidget(self.om_scroll)
-        methods.setWidgetResizable(1)
+        methods.setWidgetResizable(True)
         self.texte = ', '.join(self.start_data_symbols)
         self.label_remove = QLabel(self.texte)
         self.label_remove.setWordWrap(True)
@@ -333,7 +333,7 @@ class CalculateWidget(QWidget):
         self.eto_methods_scroll.setLayout(self.eto_methods_layout)
         methods = QScrollArea()
         methods.setWidget(self.eto_methods_scroll)
-        methods.setWidgetResizable(1)
+        methods.setWidgetResizable(True)
         self.eto_methods_groupbox.layout = QVBoxLayout()
         self.eto_methods_groupbox.layout.addWidget(methods)
         self.eto_methods_groupbox.layout.addWidget(self.label_remove_)
@@ -423,7 +423,7 @@ class CalculateWidget(QWidget):
         self.wb_methods_scroll.setLayout(self.wb_methods_layout)
         methods = QScrollArea()
         methods.setWidget(self.wb_methods_scroll)
-        methods.setWidgetResizable(1)
+        methods.setWidgetResizable(True)
         self.wb_methods_groupbox.layout = QVBoxLayout()
         self.wb_methods_groupbox.layout.addWidget(methods)
         self.wb_methods_groupbox.layout.addWidget(self.label_remove_k)
@@ -481,7 +481,7 @@ class CalculateWidget(QWidget):
             'status  | kalkulacija: 0 | mezertacmuminacija: 0')
         self.progress_bar = QProgressBar()
         self.progress_bar.setMaximum(100)
-        self.progress_bar.setAlignment(Qt.AlignCenter)
+        self.progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         # self.progress_bar.setVisible(False)
         # self.progress_bar.setSizePolicy()
         hbox = QHBoxLayout()
@@ -494,4 +494,4 @@ class CalculateWidget(QWidget):
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = CalculateWidget()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())

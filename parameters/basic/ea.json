@@ -1,0 +1,8 @@
+{
+  "name": "Actual vapour pressure",
+  "unit": "kPa",
+  "category": "humidity",
+  "symbol": "ea",
+  "description": "Actual vapour pressure",
+  "type": "a"
+}

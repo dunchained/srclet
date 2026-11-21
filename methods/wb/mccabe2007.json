@@ -1,0 +1,277 @@
+{
+  "id": "mccabe2007",
+  "name": "McCabe–Markstrom (2007)",
+  "symbol": "MCCABE",
+  "unit": "mm/month",
+  "group": "wb",
+  "output": "Deficit",
+  "parameters": {
+    "capacity": 100.0,
+    "initial": 100.0,
+    "direct": 0.076,
+    "runoff": 0.75,
+    "snow_temp": -10.0,
+    "rain_temp": 3.3,
+    "melt": 0.5
+  },
+  "source": "Čadro (2019), §5.1.2.2, 15",
+  "expression": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "latex": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "version": 1,
+  "order": 2,
+  "state": {
+    "ST": "initial",
+    "PACK": 0,
+    "CARRY": 0
+  },
+  "steps": [
+    {
+      "symbol": "share",
+      "expression": [
+        "Min",
+        1,
+        [
+          "Max",
+          0,
+          [
+            "Divide",
+            [
+              "Subtract",
+              "Tmean",
+              "snow_temp"
+            ],
+            [
+              "Subtract",
+              "rain_temp",
+              "snow_temp"
+            ]
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(1,\\max\\left(0,\\frac{\\left(\\mathrm{Tmean}-\\mathrm{snow_temp}\\right)}{\\left(\\mathrm{rain_temp}-\\mathrm{snow_temp}\\right)}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "rain",
+      "expression": [
+        "Multiply",
+        "PRCP",
+        "share"
+      ],
+      "latex": "\\left(\\mathrm{PRCP}\\cdot \\mathrm{share}\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "SNOW",
+      "expression": [
+        "Subtract",
+        "PRCP",
+        "rain"
+      ],
+      "latex": "\\left(\\mathrm{PRCP}-\\mathrm{rain}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "MELT",
+      "expression": [
+        "Multiply",
+        [
+          "Multiply",
+          [
+            "Add",
+            "PACK",
+            "SNOW"
+          ],
+          "share"
+        ],
+        "melt"
+      ],
+      "latex": "\\left(\\left(\\left(\\mathrm{PACK}+\\mathrm{SNOW}\\right)\\cdot \\mathrm{share}\\right)\\cdot \\mathrm{melt}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "PACK",
+      "expression": [
+        "Subtract",
+        [
+          "Add",
+          "PACK",
+          "SNOW"
+        ],
+        "MELT"
+      ],
+      "latex": "\\left(\\left(\\mathrm{PACK}+\\mathrm{SNOW}\\right)-\\mathrm{MELT}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "DRO",
+      "expression": [
+        "Multiply",
+        "rain",
+        "direct"
+      ],
+      "latex": "\\left(\\mathrm{rain}\\cdot \\mathrm{direct}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "W",
+      "expression": [
+        "Add",
+        [
+          "Subtract",
+          "rain",
+          "DRO"
+        ],
+        "MELT"
+      ],
+      "latex": "\\left(\\left(\\mathrm{rain}-\\mathrm{DRO}\\right)+\\mathrm{MELT}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "draw",
+      "expression": [
+        "Min",
+        "ST",
+        [
+          "Divide",
+          [
+            "Multiply",
+            [
+              "Max",
+              0,
+              [
+                "Subtract",
+                "ET0",
+                "W"
+              ]
+            ],
+            "ST"
+          ],
+          "capacity"
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{ST},\\frac{\\left(\\max\\left(0,\\left(\\mathrm{ET0}-W\\right)\\right)\\cdot \\mathrm{ST}\\right)}{\\mathrm{capacity}}\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "use",
+      "expression": [
+        "Min",
+        "ET0",
+        [
+          "Add",
+          "W",
+          "draw"
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{ET0},\\left(W+\\mathrm{draw}\\right)\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "SURPLUS",
+      "expression": [
+        "Max",
+        0,
+        [
+          "Subtract",
+          [
+            "Subtract",
+            [
+              "Add",
+              "ST",
+              "W"
+            ],
+            "ET0"
+          ],
+          "capacity"
+        ]
+      ],
+      "latex": "\\max\\left(0,\\left(\\left(\\left(\\mathrm{ST}+W\\right)-\\mathrm{ET0}\\right)-\\mathrm{capacity}\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "ST",
+      "expression": [
+        "Min",
+        "capacity",
+        [
+          "Max",
+          0,
+          [
+            "Subtract",
+            [
+              "Add",
+              "ST",
+              "W"
+            ],
+            "use"
+          ]
+        ]
+      ],
+      "latex": "\\min\\left(\\mathrm{capacity},\\max\\left(0,\\left(\\left(\\mathrm{ST}+W\\right)-\\mathrm{use}\\right)\\right)\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "AET",
+      "expression": "use",
+      "latex": "\\mathrm{use}",
+      "publish": true
+    },
+    {
+      "symbol": "release",
+      "expression": [
+        "Multiply",
+        [
+          "Add",
+          "CARRY",
+          "SURPLUS"
+        ],
+        "runoff"
+      ],
+      "latex": "\\left(\\left(\\mathrm{CARRY}+\\mathrm{SURPLUS}\\right)\\cdot \\mathrm{runoff}\\right)",
+      "publish": false
+    },
+    {
+      "symbol": "CARRY",
+      "expression": [
+        "Subtract",
+        [
+          "Add",
+          "CARRY",
+          "SURPLUS"
+        ],
+        "release"
+      ],
+      "latex": "\\left(\\left(\\mathrm{CARRY}+\\mathrm{SURPLUS}\\right)-\\mathrm{release}\\right)",
+      "publish": true
+    },
+    {
+      "symbol": "RO",
+      "expression": [
+        "Add",
+        "release",
+        "DRO"
+      ],
+      "latex": "\\left(\\mathrm{release}+\\mathrm{DRO}\\right)",
+      "publish": true
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.2, 15",
+  "method_conditions": "",
+  "method_formula": "\\left(\\mathrm{ET0}-\\mathrm{AET}\\right)",
+  "formula_math": [
+    "Subtract",
+    "ET0",
+    "AET"
+  ],
+  "basic_parameters": "ET0, PRCP, Tmean",
+  "changable_parameters": "capacity, initial, direct, runoff, snow_temp, rain_temp, melt",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

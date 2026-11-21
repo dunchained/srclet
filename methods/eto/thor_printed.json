@@ -1,0 +1,115 @@
+{
+  "id": "thor_printed",
+  "name": "Thornthwaite · equation 24 as printed",
+  "symbol": "THOR24",
+  "unit": "mm/month",
+  "group": "eto",
+  "output": "ET0",
+  "parameters": {},
+  "source": "Čadro (2019), (24–26)",
+  "expression": [
+    "Which",
+    [
+      "LessEqual",
+      "heatIndex",
+      0
+    ],
+    0,
+    "True",
+    [
+      "Multiply",
+      16,
+      [
+        "Power",
+        [
+          "Divide",
+          [
+            "Max",
+            0,
+            "Tmean"
+          ],
+          "heatIndex"
+        ],
+        "exponent"
+      ]
+    ]
+  ],
+  "latex": "\\begin{cases}0 & \\left(\\mathrm{heatIndex}\\le 0\\right) \\\\ \\left(16\\cdot \\left(\\frac{\\max\\left(0,\\mathrm{Tmean}\\right)}{\\mathrm{heatIndex}}\\right)^{\\mathrm{exponent}}\\right) & \\mathrm{otherwise}\\end{cases}",
+  "version": 1,
+  "steps": [
+    {
+      "symbol": "exponent",
+      "expression": [
+        "Add",
+        [
+          "Add",
+          [
+            "Subtract",
+            [
+              "Multiply",
+              6.75e-07,
+              [
+                "Power",
+                "heatIndex",
+                3
+              ]
+            ],
+            [
+              "Multiply",
+              7.71e-05,
+              [
+                "Power",
+                "heatIndex",
+                2
+              ]
+            ]
+          ],
+          [
+            "Multiply",
+            0.017912,
+            "heatIndex"
+          ]
+        ],
+        0.49239
+      ],
+      "latex": "\\left(\\left(\\left(\\left(6.75e-07\\cdot \\left(\\mathrm{heatIndex}\\right)^{3}\\right)-\\left(7.71e-05\\cdot \\left(\\mathrm{heatIndex}\\right)^{2}\\right)\\right)+\\left(0.017912\\cdot \\mathrm{heatIndex}\\right)\\right)+0.49239\\right)",
+      "publish": false
+    }
+  ],
+  "type": "a",
+  "description": "Čadro (2019), (24–26)",
+  "method_conditions": "",
+  "method_formula": "\\begin{cases}0 & \\left(\\mathrm{heatIndex}\\le 0\\right) \\\\ \\left(16\\cdot \\left(\\frac{\\max\\left(0,\\mathrm{Tmean}\\right)}{\\mathrm{heatIndex}}\\right)^{\\mathrm{exponent}}\\right) & \\mathrm{otherwise}\\end{cases}",
+  "formula_math": [
+    "Which",
+    [
+      "LessEqual",
+      "heatIndex",
+      0
+    ],
+    0,
+    "True",
+    [
+      "Multiply",
+      16,
+      [
+        "Power",
+        [
+          "Divide",
+          [
+            "Max",
+            0,
+            "Tmean"
+          ],
+          "heatIndex"
+        ],
+        "exponent"
+      ]
+    ]
+  ],
+  "basic_parameters": "Tmean, heatIndex",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Return period (years)",
+  "symbol": "years",
+  "unit": "",
+  "category": "other",
+  "type": "a",
+  "description": "Return period (years)",
+  "value": "10"
+}

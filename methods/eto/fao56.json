@@ -1,0 +1,157 @@
+{
+  "id": "fao56",
+  "name": "FAO-56 Penman–Monteith",
+  "symbol": "FAOPM",
+  "unit": "mm/month",
+  "group": "eto",
+  "output": "ET0",
+  "parameters": {
+    "wind_height": 2.0,
+    "as": 0.25,
+    "bs": 0.5
+  },
+  "source": "Čadro (2019), §5.1.2.1, (2–23)",
+  "expression": [
+    "Divide",
+    [
+      "Multiply",
+      "d",
+      [
+        "Add",
+        [
+          "Multiply",
+          [
+            "Multiply",
+            0.408,
+            "slope"
+          ],
+          [
+            "Subtract",
+            "Rn",
+            "G"
+          ]
+        ],
+        [
+          "Multiply",
+          [
+            "Multiply",
+            [
+              "Divide",
+              [
+                "Multiply",
+                "gamma",
+                900
+              ],
+              [
+                "Add",
+                "T",
+                273
+              ]
+            ],
+            "u2"
+          ],
+          [
+            "Subtract",
+            "es",
+            "ea"
+          ]
+        ]
+      ]
+    ],
+    [
+      "Add",
+      "slope",
+      [
+        "Multiply",
+        "gamma",
+        [
+          "Add",
+          1,
+          [
+            "Multiply",
+            0.34,
+            "u2"
+          ]
+        ]
+      ]
+    ]
+  ],
+  "latex": "\\frac{\\left(d\\cdot \\left(\\left(\\left(0.408\\cdot \\mathrm{slope}\\right)\\cdot \\left(\\mathrm{Rn}-G\\right)\\right)+\\left(\\left(\\frac{\\left(\\mathrm{gamma}\\cdot 900\\right)}{\\left(T+273\\right)}\\cdot \\mathrm{u2}\\right)\\cdot \\left(\\mathrm{es}-\\mathrm{ea}\\right)\\right)\\right)\\right)}{\\left(\\mathrm{slope}+\\left(\\mathrm{gamma}\\cdot \\left(1+\\left(0.34\\cdot \\mathrm{u2}\\right)\\right)\\right)\\right)}",
+  "version": 1,
+  "prepare": "fao",
+  "order": 1,
+  "type": "a",
+  "description": "Čadro (2019), §5.1.2.1, (2–23)",
+  "method_conditions": "",
+  "method_formula": "\\frac{\\left(d\\cdot \\left(\\left(\\left(0.408\\cdot \\mathrm{slope}\\right)\\cdot \\left(\\mathrm{Rn}-G\\right)\\right)+\\left(\\left(\\frac{\\left(\\mathrm{gamma}\\cdot 900\\right)}{\\left(T+273\\right)}\\cdot \\mathrm{u2}\\right)\\cdot \\left(\\mathrm{es}-\\mathrm{ea}\\right)\\right)\\right)\\right)}{\\left(\\mathrm{slope}+\\left(\\mathrm{gamma}\\cdot \\left(1+\\left(0.34\\cdot \\mathrm{u2}\\right)\\right)\\right)\\right)}",
+  "formula_math": [
+    "Divide",
+    [
+      "Multiply",
+      "d",
+      [
+        "Add",
+        [
+          "Multiply",
+          [
+            "Multiply",
+            0.408,
+            "slope"
+          ],
+          [
+            "Subtract",
+            "Rn",
+            "G"
+          ]
+        ],
+        [
+          "Multiply",
+          [
+            "Multiply",
+            [
+              "Divide",
+              [
+                "Multiply",
+                "gamma",
+                900
+              ],
+              [
+                "Add",
+                "T",
+                273
+              ]
+            ],
+            "u2"
+          ],
+          [
+            "Subtract",
+            "es",
+            "ea"
+          ]
+        ]
+      ]
+    ],
+    [
+      "Add",
+      "slope",
+      [
+        "Multiply",
+        "gamma",
+        [
+          "Add",
+          1,
+          [
+            "Multiply",
+            0.34,
+            "u2"
+          ]
+        ]
+      ]
+    ]
+  ],
+  "basic_parameters": "G, Rn, T, d, ea, es, gamma, slope, u2",
+  "changable_parameters": "wind_height, as, bs",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

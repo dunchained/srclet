@@ -1,0 +1,8 @@
+{
+  "name": "Water deficit",
+  "unit": "mm/month",
+  "category": "rain",
+  "symbol": "Deficit",
+  "description": "Water deficit",
+  "type": "a"
+}

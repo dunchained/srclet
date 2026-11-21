@@ -1,0 +1,9 @@
+{
+  "name": "Daily operating time",
+  "symbol": "seconds",
+  "unit": "s/day",
+  "category": "other",
+  "type": "a",
+  "description": "Daily operating time",
+  "value": "86400"
+}

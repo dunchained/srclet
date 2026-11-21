@@ -1,0 +1,8 @@
+{
+  "name": "Soil heat flux",
+  "unit": "MJ/m²/day",
+  "category": "radiation",
+  "symbol": "G",
+  "description": "Soil heat flux",
+  "type": "a"
+}

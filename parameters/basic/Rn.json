@@ -1,0 +1,8 @@
+{
+  "name": "Net radiation",
+  "unit": "MJ/m²/day",
+  "category": "radiation",
+  "symbol": "Rn",
+  "description": "Net radiation",
+  "type": "a"
+}

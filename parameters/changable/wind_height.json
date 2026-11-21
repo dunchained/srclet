@@ -1,0 +1,9 @@
+{
+  "name": "Wind measurement height (m)",
+  "symbol": "wind_height",
+  "unit": "",
+  "category": "et",
+  "type": "a",
+  "description": "Wind measurement height (m)",
+  "value": "2.0"
+}

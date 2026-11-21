@@ -1,0 +1,8 @@
+{
+  "name": "Annual heat index",
+  "unit": "",
+  "category": "temperature",
+  "symbol": "heatIndex",
+  "description": "Annual heat index",
+  "type": "a"
+}

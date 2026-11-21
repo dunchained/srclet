@@ -1,8 +1,8 @@
 import sys, json, os
 cwd = os.path.curdir
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
-from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
+from PyQt6.QtCore import Qt
 from variables import var
 
 
@@ -11,12 +11,12 @@ class InputCharacterWidget(QTabWidget):
         super().__init__()
         self.columns = columns
         self.input_title = title
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
         self.language = language
         self.widget_gui()
 
     def widget_gui(self):
-        self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowState.WindowMaximized)
         main_layout = QGridLayout()
         self.setLayout(main_layout)
         self.categories_list = self.read_character_categories()
@@ -43,7 +43,7 @@ class InputCharacterWidget(QTabWidget):
             self.sc_scroll.setLayout(self.sc_layout)
             sc = QScrollArea()
             sc.setWidget(self.sc_scroll)
-            sc.setWidgetResizable(1)
+            sc.setWidgetResizable(True)
             self.sc_groupbox.layout = QVBoxLayout()
             self.sc_groupbox.layout.addWidget(sc)
             self.sc_groupbox.setLayout(self.sc_groupbox.layout)
@@ -103,4 +103,4 @@ class InputCharacterWidget(QTabWidget):
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = InputCharacterWidget()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())

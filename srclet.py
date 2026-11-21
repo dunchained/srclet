@@ -1,22 +1,21 @@
-from windows.parameters.basic_parameters import BasicParameters
-from windows.parameters.changable_parameters import ChangableParameters
+from mortys.language_morty import bind_key
 from windows.project.open_project import OpenProjectWindow
-from windows.methods.eto_methods import ETOMethods
-from windows.methods.other_methods import OtherMethods
-from windows.methods.wb_methods import WBMethods
-from PyQt5.QtCore import QUrl
-from PyQt5.QtWidgets import QProxyStyle, QStyle, QToolTip
-from PyQt5.QtWidgets import QAction, QMainWindow, QApplication, QDesktopWidget, QMenu
-from PyQt5 import QtCore
-from PyQt5.QtGui import QIcon, QDesktopServices
+from PyQt6.QtWidgets import QProxyStyle, QStyle
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMenu
+from PyQt6 import QtCore
+from PyQt6.QtGui import QIcon
 from mortys.icon_morty import icon_size
-from mortys.font_morty import read_menu_font_size
-from mortys.language_morty import language
+from mortys.font_morty import apply_settings, read_menu_font_size
+from windows.methods.catalog import MethodCatalog
+from windows.parameters.catalog import ParameterCatalog
+from mortys.language_morty import language,qt_language
 from widgets.image_widget import ImageWidget
 from windows.settings.settings import SettingsWindow
 from windows.manual.manual import ManualWindow
 from windows.about.about import AboutWindow
-from windows.project.new_project import NewProjectWindow
+from windows.project.monthly_import import ProjectImport
+from windows.project.project_opened import ProjectWindow
 from variables import css, var
 import sys
 import os
@@ -25,7 +24,7 @@ class MyProxyStyle(QProxyStyle):
     pass
 
     def pixelMetric(self, QStyle_PixelMetric, option=None, widget=None):
-        if QStyle_PixelMetric == QStyle.PM_SmallIconSize:
+        if QStyle_PixelMetric == QStyle.PixelMetric.PM_SmallIconSize:
             return icon_size()
         else:
             return QProxyStyle.pixelMetric(self, QStyle_PixelMetric, option, widget)
@@ -34,8 +33,10 @@ class MyProxyStyle(QProxyStyle):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowState(QtCore.Qt.WindowMaximized)
-        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.CustomizeWindowHint)
+        self.setWindowState(QtCore.Qt.WindowState.WindowMaximized)
+        # self.setWindowFlags(QtCore.Qt.WindowType.WindowStaysOnTopHint | QtCore.Qt.WindowType.CustomizeWindowHint)
+        qt_language()
+        apply_settings()
         self.language = language()
         self.window_gui()
 
@@ -43,7 +44,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(var.srclet_window_min_widith,
                             var.srclet_window_min_height)
         self.setWindowIcon(QIcon(css.srclet_icon))
-        self.setWindowTitle(self.language['main_window_title'])
+        bind_key(self, "windowTitle", 'main_window_title')
         self.fileMenu()
         self.center_gui()
         self.central_widget = ImageWidget()
@@ -52,7 +53,7 @@ class MainWindow(QMainWindow):
 
     def center_gui(self):
         qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
+        cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -63,141 +64,136 @@ class MainWindow(QMainWindow):
         menubar.setFont(font)
 
         # File:
-        fileMenu = menubar.addMenu(self.language['menu_file'])
+        fileMenu = bind_key(menubar.addMenu(""), "title", 'menu_file')
         font = fileMenu.font()
         font.setPointSize(read_menu_font_size())
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
         # File - Settings:
-        settingsAct = QAction(QIcon(css.settings_icon),
-                              self.language['menu_file_settings'], self)
+        settingsAct = bind_key(QAction(QIcon(css.settings_icon),
+                              "", self), "text", 'menu_file_settings')
         settingsAct.setShortcut('Ctrl+S')
-        settingsAct.setToolTip(self.language['menu_file_settings_tooltip'])
+        bind_key(settingsAct, "toolTip", 'menu_file_settings_tooltip')
         settingsAct.triggered.connect(self.settings_window)
         fileMenu.addAction(settingsAct)
 
         fileMenu.addSeparator()
 
         # File - Exit:
-        exitAct = QAction(QIcon(css.exit_icon),
-                          self.language['menu_file_exit'], self)
+        exitAct = bind_key(QAction(QIcon(css.exit_icon),
+                          "", self), "text", 'menu_file_exit')
         exitAct.setShortcut('Ctrl+Q')
-        exitAct.setToolTip(self.language['menu_file_exit_tooltip'])
+        bind_key(exitAct, "toolTip", 'menu_file_exit_tooltip')
         exitAct.triggered.connect(self.exit_srclet)
         fileMenu.addAction(exitAct)
 
         # Project:
-        fileMenu = menubar.addMenu(self.language['menu_project'])
+        fileMenu = bind_key(menubar.addMenu(""), "title", 'menu_project')
         font = fileMenu.font()
         font.setPointSize(read_menu_font_size())
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
         # Project - New project:
-        newProjectAct = QAction(
-            QIcon((css.new_project_icon)), self.language['menu_project_new_project'], self)
+        newProjectAct = bind_key(QAction(
+            QIcon((css.new_project_icon)), "", self), "text", 'menu_project_new_project')
         newProjectAct.setShortcut('Ctrl+N')
-        newProjectAct.setToolTip(
-            self.language['menu_project_new_project_tooltip'])
+        bind_key(newProjectAct, "toolTip", 'menu_project_new_project_tooltip')
         newProjectAct.triggered.connect(self.new_project_window)
         fileMenu.addAction(newProjectAct)
 
         # Project - Open existing project:
-        openProjectAct = QAction(
-            QIcon((css.open_project_icon)), self.language['menu_project_open_project'], self)
+        openProjectAct = bind_key(QAction(
+            QIcon((css.open_project_icon)), "", self), "text", 'menu_project_open_project')
         openProjectAct.setShortcut('Ctrl+O')
-        openProjectAct.setToolTip(
-            self.language['menu_project_open_project_tooltip'])
+        bind_key(openProjectAct, "toolTip", 'menu_project_open_project_tooltip')
         openProjectAct.triggered.connect(self.open_project_window)
         fileMenu.addAction(openProjectAct)
 
         # Customize:
-        fileMenu = menubar.addMenu(self.language['menu_customize'])
+        fileMenu = bind_key(menubar.addMenu(""), "title", 'menu_customize')
         font = fileMenu.font()
         font.setPointSize(read_menu_font_size())
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
         # Customize - Parameters:
-        parameters_menu = QMenu(
-            self.language['menu_customize_parameters'], self)
+        parameters_menu = bind_key(QMenu(
+            "", self), "title", 'menu_customize_parameters')
         parameters_menu.setIcon(QIcon(css.parameters_icon))
         font = parameters_menu.font()
         font.setPointSize(read_menu_font_size())
         parameters_menu.setFont(font)
         parameters_menu.setToolTipsVisible(True)
 
-        parametersAct = QAction(QIcon(css.parameters_basic_icon),
-                                self.language['menu_customize_basic_parameters'], self)
+        parametersAct = bind_key(QAction(QIcon(css.parameters_basic_icon),
+                                "", self), "text", 'menu_customize_basic_parameters')
         parametersAct.setShortcut('Ctrl+B')
-        parametersAct.setToolTip(
-            self.language['menu_customize_basic_parameters_tooltip'])
+        bind_key(parametersAct, "toolTip", 'menu_customize_basic_parameters_tooltip')
         parametersAct.triggered.connect(self.basic_parameters_window)
         parameters_menu.addAction(parametersAct)
 
-        complexParametersAct = QAction(QIcon(
-            css.parameters_complex_icon), self.language['menu_customize_changable_parameters'], self)
+        complexParametersAct = bind_key(QAction(QIcon(
+            css.parameters_complex_icon), "", self), "text", 'menu_customize_changable_parameters')
         complexParametersAct.setShortcut('Ctrl+R')
-        complexParametersAct.setToolTip(
-            self.language['menu_customize_changable_parameters_tooltip'])
+        bind_key(complexParametersAct, "toolTip", 'menu_customize_changable_parameters_tooltip')
         complexParametersAct.triggered.connect(self.changable_parameters_window)
         parameters_menu.addAction(complexParametersAct)
 
         fileMenu.addMenu(parameters_menu)
 
         # Customize - Methods:
-        methods_menu = QMenu(self.language['menu_customize_methods'], self)
+        methods_menu = bind_key(QMenu("", self), "title", 'menu_customize_methods')
         methods_menu.setIcon(QIcon(css.methods_icon))
         font = methods_menu.font()
         font.setPointSize(read_menu_font_size())
         methods_menu.setFont(font)
         methods_menu.setToolTipsVisible(True)
 
-        etoAct = QAction(QIcon(css.methods_eto_icon),
-                         self.language['menu_customize_methods_eto'], self)
+        etoAct = bind_key(QAction(QIcon(css.methods_eto_icon),
+                         "", self), "text", 'menu_customize_methods_eto')
         etoAct.triggered.connect(self.eto_methods_window)
         etoAct.setShortcut('Ctrl+E')
-        etoAct.setToolTip(self.language['menu_customize_methods_eto_tooltip'])
+        bind_key(etoAct, "toolTip", 'menu_customize_methods_eto_tooltip')
         methods_menu.addAction(etoAct)
 
-        wbAct = QAction(QIcon(css.methods_wb_icon),
-                        self.language['menu_customize_methods_wb'], self)
+        wbAct = bind_key(QAction(QIcon(css.methods_wb_icon),
+                        "", self), "text", 'menu_customize_methods_wb')
         wbAct.triggered.connect(self.wb_methods_window)
         wbAct.setShortcut('Ctrl+W')
-        wbAct.setToolTip(self.language['menu_customize_methods_wb_tooltip'])
+        bind_key(wbAct, "toolTip", 'menu_customize_methods_wb_tooltip')
         methods_menu.addAction(wbAct)
 
-        otherAct = QAction(QIcon(css.methods_others_icon),
-                           self.language['menu_customize_methods_others'], self)
+        otherAct = bind_key(QAction(QIcon(css.methods_others_icon),
+                           "", self), "text", 'menu_customize_methods_others')
         otherAct.triggered.connect(self.other_methods_window)
         otherAct.setShortcut('Ctrl+T')
-        otherAct.setToolTip(
-            self.language['menu_customize_methods_others_tooltip'])
+        bind_key(otherAct, "toolTip", 'menu_customize_methods_others_tooltip')
         methods_menu.addAction(otherAct)
 
         fileMenu.addMenu(methods_menu)
 
         # Help:
-        fileMenu = menubar.addMenu(self.language['menu_help'])
+        fileMenu = bind_key(menubar.addMenu(""), "title", 'menu_help')
         font = fileMenu.font()
         font.setPointSize(read_menu_font_size())
         fileMenu.setFont(font)
         fileMenu.setToolTipsVisible(True)
 
         # Help - About:
-        aboutAct = QAction(QIcon(css.about_icon),
-                           self.language['menu_help_about'], self)
+        aboutAct = bind_key(QAction(QIcon(css.about_icon),
+                           "", self), "text", 'menu_help_about')
         aboutAct.setShortcut('Ctrl+A')
-        aboutAct.setToolTip(self.language['menu_help_about_tooltip'])
+        bind_key(aboutAct, "toolTip", 'menu_help_about_tooltip')
         aboutAct.triggered.connect(self.about_window)
         fileMenu.addAction(aboutAct)
 
         # Help - Manual:
-        helpAct = QAction(QIcon(css.manual_icon),
-                          self.language['menu_help_manual'], self)
+        helpAct = bind_key(QAction(QIcon(css.manual_icon),
+                          "", self), "text", 'menu_help_manual')
         helpAct.setShortcut('F1')
-        helpAct.setToolTip(self.language['menu_help_manual_tooltip'])
+        bind_key(helpAct, "toolTip", 'menu_help_manual_tooltip')
         helpAct.triggered.connect(self.manual_window)
         fileMenu.addAction(helpAct)
 
@@ -206,49 +202,58 @@ class MainWindow(QMainWindow):
         self.window_settings = SettingsWindow(self.language)
 
     def exit_srclet(self):
-        mainApplication.quit()
+        QApplication.quit()
         # self.close()
 
         # self.window_basic_parameters.close()
 
     # Project:
     def new_project_window(self):
-        self.window = NewProjectWindow(self.language)
+        self.window = ProjectImport(self)
+        self.window.projectCreated.connect(self.show_project)
+        self.window.show()
+
+    def show_project(self, path):
+        self.project_window = ProjectWindow(path, self.language)
 
     def open_project_window(self):
         self.window = OpenProjectWindow(self.language)
 
     # Customize:
     def basic_parameters_window(self):
-        self.window_basic_parameters = BasicParameters(self.language)
+        self.window_basic_parameters = ParameterCatalog("basic",self)
+        self.window_basic_parameters.show()
 
     def changable_parameters_window(self):
-        self.window = ChangableParameters(self.language)
+        self.window = ParameterCatalog("changable",self)
+        self.window.show()
 
     def eto_methods_window(self):
-        self.window = ETOMethods(self.language)
+        self.window = MethodCatalog('eto',self)
+        self.window.show()
 
     def wb_methods_window(self):
-        self.window = WBMethods(self.language)
+        self.window = MethodCatalog('wb',self)
+        self.window.show()
 
     def other_methods_window(self):
-        self.window = OtherMethods(self.language)
+        self.window = MethodCatalog('',self)
+        self.window.show()
 
     # Help:
     def about_window(self):
         self.window = AboutWindow(self.language)
 
     def manual_window(self):
-        # self.window = ManualWindow(self.language)
-        QDesktopServices.openUrl(QUrl(
-            'https://www.youtube.com/watch?v=ECTLzJow1Wo&list=PLBO2iP5zSYD7CbGOXEnMsUoWSkyxRsXTd'))
+        self.window = ManualWindow(self.language)
 
 
 if __name__ == '__main__':
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     mainApplication = QApplication(sys.argv)
-    myStyle = MyProxyStyle('Plastique')
+    myStyle = MyProxyStyle('Fusion')
     # The proxy style should be based on an existing style, like 'Windows',
     # 'Motif', 'Plastique', 'Fusion', ...
     mainApplication.setStyle(myStyle)
     mainWindow = MainWindow()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())

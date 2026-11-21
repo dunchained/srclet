@@ -1,0 +1,8 @@
+{
+  "name": "Reference ET",
+  "unit": "mm/month",
+  "category": "ET0",
+  "symbol": "ET0",
+  "description": "Reference ET",
+  "type": "a"
+}

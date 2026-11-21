@@ -1,0 +1,34 @@
+{
+  "id": "rmse",
+  "name": "RMSE",
+  "symbol": "rmse",
+  "unit": "mm/day",
+  "group": "others",
+  "output": null,
+  "parameters": {},
+  "source": "Čadro (2019), §5.1.3, (40)",
+  "expression": [
+    "Sqrt",
+    "meanSquare"
+  ],
+  "latex": "\\sqrt{\\mathrm{meanSquare}}",
+  "version": 1,
+  "engine": "comparison",
+  "inputs": [
+    "FAOPM",
+    "EstimateET"
+  ],
+  "type": "a",
+  "description": "Čadro (2019), §5.1.3, (40)",
+  "method_conditions": "",
+  "method_formula": "\\sqrt{\\mathrm{meanSquare}}",
+  "formula_math": [
+    "Sqrt",
+    "meanSquare"
+  ],
+  "basic_parameters": "EstimateET, FAOPM",
+  "changable_parameters": "",
+  "other_methods": "",
+  "eto_methods": "",
+  "category": "other"
+}

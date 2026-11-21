@@ -1,18 +1,19 @@
+from mortys.language_morty import bind_key
 from variables import var, css
 from widgets.ch_widget import InputCharacterWidget
 from mortys.changable_parameters_morty import get_filename
 from mortys.font_morty import read_text_font_size
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
-from PyQt5.QtWidgets import QVBoxLayout, QDesktopWidget, QGridLayout, QGroupBox, QLabel, QPushButton
+from PyQt6.QtGui import QIcon
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox, QApplication, QWidget, QTextEdit, QComboBox, QHBoxLayout, QLineEdit
+from PyQt6.QtWidgets import QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton
 import sys, json, os
 cwd = os.path.curdir
 
 class AddChangableParameter(QWidget):
     def __init__(self, language, data_to_input):
         super().__init__()
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
         self.data_to_input = data_to_input
         self.language = language
         self.window_gui()
@@ -21,10 +22,9 @@ class AddChangableParameter(QWidget):
         font = self.font()
         font.setPointSize(read_text_font_size())
         self.setFont(font)
-        self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowState.WindowMaximized)
         self.setMinimumSize(1200, 600)
-        self.setWindowTitle(
-            self.language['add_changable_parameter_window_title'])
+        bind_key(self, "windowTitle", 'add_changable_parameter_window_title')
         self.setWindowIcon(QIcon(css.parameters_changable_icon))
         self.grid = QGridLayout()
         self.grid.addWidget(self.pb_name_groupbox(), 0, 0, 1, 1)
@@ -43,7 +43,7 @@ class AddChangableParameter(QWidget):
 
     def center_gui(self):
         qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
+        cp = self.screen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -63,10 +63,8 @@ class AddChangableParameter(QWidget):
             pass
 
     def pb_value_groupbox(self):
-        self.pbv_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_value'])
-        self.text_parameter_value = QLabel(
-            self.language['add_changable_parameter_window_value_exp'])
+        self.pbv_groupbox = bind_key(QGroupBox(), "title", 'add_changable_parameter_window_value')
+        self.text_parameter_value = bind_key(QLabel(), "text", 'add_changable_parameter_window_value_exp')
         if self.data_to_input == None:
             self.parameter_value = QLineEdit()
         else:
@@ -78,10 +76,8 @@ class AddChangableParameter(QWidget):
         return self.pbv_groupbox
 
     def pb_name_groupbox(self):
-        self.pbn_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_name'])
-        self.text_parameter_name = QLabel(
-            self.language['add_changable_parameter_window_name_exp'])
+        self.pbn_groupbox = bind_key(QGroupBox(), "title", 'add_changable_parameter_window_name')
+        self.text_parameter_name = bind_key(QLabel(), "text", 'add_changable_parameter_window_name_exp')
         if self.data_to_input == None:
             self.parameter_name = QLineEdit()
         else:
@@ -93,10 +89,8 @@ class AddChangableParameter(QWidget):
         return self.pbn_groupbox
 
     def pb_category_groupbox(self):
-        self.pbc_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_category'])
-        self.text_parameter_category = QLabel(
-            self.language['add_changable_parameter_window_category_exp'])
+        self.pbc_groupbox = bind_key(QGroupBox(), "title", 'add_changable_parameter_window_category')
+        self.text_parameter_category = bind_key(QLabel(), "text", 'add_changable_parameter_window_category_exp')
         categories_file = open(os.path.join(
             cwd + var.language_folder + self.language['language_description'] + '/' + var.cp_cat_file))
         self.categories_file_data = json.load(categories_file)
@@ -118,10 +112,8 @@ class AddChangableParameter(QWidget):
         return self.pbc_groupbox
 
     def pb_symbol_groupbox(self):
-        self.pbs_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_symbol'])
-        self.text_parameter_symbol = QLabel(
-            self.language['add_changable_parameter_window_symbol_exp'])
+        self.pbs_groupbox = bind_key(QGroupBox(), "title", 'add_changable_parameter_window_symbol')
+        self.text_parameter_symbol = bind_key(QLabel(), "text", 'add_changable_parameter_window_symbol_exp')
         if self.data_to_input == None:
             self.parameter_symbol = QLineEdit()
         else:
@@ -133,10 +125,8 @@ class AddChangableParameter(QWidget):
         return self.pbs_groupbox
 
     def pb_unit_groupbox(self):
-        self.pbu_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_unit'])
-        self.text_parameter_unit = QLabel(
-            self.language['add_changable_parameter_window_unit_exp'])
+        self.pbu_groupbox = bind_key(QGroupBox(), "title", 'add_changable_parameter_window_unit')
+        self.text_parameter_unit = bind_key(QLabel(), "text", 'add_changable_parameter_window_unit_exp')
         if self.data_to_input == None:
             self.parameter_unit = QLineEdit()
         else:
@@ -148,10 +138,8 @@ class AddChangableParameter(QWidget):
         return self.pbu_groupbox
 
     def pb_description_groupbox(self):
-        self.pbd_groupbox = QGroupBox(
-            self.language['add_changable_parameter_window_desc'])
-        self.text_parameter_descriprion = QLabel(
-            self.language['add_changable_parameter_window_desc_exp'])
+        self.pbd_groupbox = bind_key(QGroupBox(), "title", 'add_changable_parameter_window_desc')
+        self.text_parameter_descriprion = bind_key(QLabel(), "text", 'add_changable_parameter_window_desc_exp')
         if self.data_to_input == None:
             self.parameter_descriprion = QTextEdit()
         else:
@@ -165,11 +153,9 @@ class AddChangableParameter(QWidget):
 
     def button_groupbox(self):
         self.btn_groupbox = QGroupBox()
-        self.buttonSaveParameter = QPushButton(
-            self.language['add_changable_parameter_window_btn_add'])
+        self.buttonSaveParameter = bind_key(QPushButton(), "text", 'add_changable_parameter_window_btn_add')
         self.buttonSaveParameter.clicked.connect(self.add_parameter)
-        self.buttonCancel = QPushButton(
-            self.language['add_changable_parameter_window_btn_cancel'])
+        self.buttonCancel = bind_key(QPushButton(), "text", 'add_changable_parameter_window_btn_cancel')
         self.buttonCancel.clicked.connect(self.close)
         self.btn_groupbox.layout = QHBoxLayout()
         self.btn_groupbox.layout.addWidget(self.buttonSaveParameter)
@@ -191,25 +177,21 @@ class AddChangableParameter(QWidget):
 
         if self.file_list:
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(
-                self.language['add_changable_parameter_window_name_message'])
-            self.msg.setWindowTitle(
-                self.language['add_changable_parameter_window_name_message_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'add_changable_parameter_window_name_message')
+            bind_key(self.msg, "windowTitle", 'add_changable_parameter_window_name_message_caption')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
             if not self.parameter_symbol.text() or not self.parameter_name.text():
                 self.msg = QMessageBox()
-                self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-                self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(
-                    self.language['add_changable_parameter_window_save_message'])
-                self.msg.setWindowTitle(
-                    self.language['add_changable_parameter_window_save_message_caption'])
-                self.msg.setStandardButtons(QMessageBox.Ok)
+                self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+                self.msg.setIcon(QMessageBox.Icon.Information)
+                bind_key(self.msg, "text", 'add_changable_parameter_window_save_message')
+                bind_key(self.msg, "windowTitle", 'add_changable_parameter_window_save_message_caption')
+                self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
                 self.msg.buttonClicked.connect(self.msg.close)
                 self.msg.show()
             else:
@@ -226,13 +208,11 @@ class AddChangableParameter(QWidget):
                 with open(cwd + var.changable_parameters_folder + self.file_name_to_save + ".json", "w") as outfile:
                     outfile.write(json_object)
                 self.msg = QMessageBox()
-                self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-                self.msg.setIcon(QMessageBox.Information)
-                self.msg.setText(
-                    self.language['add_changable_parameter_window_saved_message'])
-                self.msg.setWindowTitle(
-                    self.language['add_changable_parameter_window_saved_message_caption'])
-                self.msg.setStandardButtons(QMessageBox.Ok)
+                self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+                self.msg.setIcon(QMessageBox.Icon.Information)
+                bind_key(self.msg, "text", 'add_changable_parameter_window_saved_message')
+                bind_key(self.msg, "windowTitle", 'add_changable_parameter_window_saved_message_caption')
+                self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
                 self.msg.buttonClicked.connect(self.message_box_success)
                 self.msg.show()
 
@@ -243,4 +223,4 @@ class AddChangableParameter(QWidget):
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = AddChangableParameter()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())

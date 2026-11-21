@@ -1,21 +1,21 @@
 import sys, json, os
 cwd = os.path.curdir
-from PyQt5.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
-from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QScrollArea, QVBoxLayout, QGridLayout, QGroupBox, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QTabWidget, QLabel
+from PyQt6.QtCore import Qt
 from variables import var
 
 class BasicParameterWidget(QTabWidget):
     def __init__(self, language, title, columns=3):
         super().__init__()
         self.columns = columns
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
         self.language = language
         self.input_title = title
         self.window_gui()
 
     def window_gui(self):
-        self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowState.WindowMaximized)
         main_layout = QGridLayout()
         self.setLayout(main_layout)
         self.categories_list = self.read_parameter_categories()
@@ -35,8 +35,8 @@ class BasicParameterWidget(QTabWidget):
                     self.setStyleSheet('''QToolTip {min-width: 300px;}''')
                     self.get_basic = self.get_files = next(os.walk(cwd + var.basic_parameters_folder), (None, None, []))[2]
                     for file in self.get_basic:
-                        self.file_to_read = open(os.path.join(cwd + var.basic_parameters_folder + file))
-                        self.file_data = json.load(self.file_to_read)
+                        with open(os.path.join(cwd + var.basic_parameters_folder + file), encoding="utf-8") as handle:
+                            self.file_data = json.load(handle)
                         if self.characters_list[i] == self.file_data['symbol']:
                             self.file_to_load = file
                             self.json_path = cwd + var.basic_parameters_folder + self.file_to_load
@@ -55,7 +55,7 @@ class BasicParameterWidget(QTabWidget):
             self.sc_scroll.setLayout(self.sc_layout)
             sc = QScrollArea()
             sc.setWidget(self.sc_scroll)
-            sc.setWidgetResizable(1)
+            sc.setWidgetResizable(True)
             self.sc_groupbox.layout = QVBoxLayout()
             self.sc_groupbox.layout.addWidget(sc)
             self.sc_groupbox.setLayout(self.sc_groupbox.layout)
@@ -112,4 +112,4 @@ class BasicParameterWidget(QTabWidget):
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = BasicParameterWidget()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())

@@ -1,0 +1,8 @@
+{
+  "name": "Station radiation coefficient",
+  "unit": "°C⁻⁰·⁵",
+  "category": "radiation",
+  "symbol": "kRs",
+  "description": "Station radiation coefficient",
+  "type": "a"
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SRCLET user guide</title>
+  <link rel="stylesheet" href="../manual.css">
+  <script src="../manual.js" defer></script>
+</head>
+<body>
+<h1>SRCLET user guide</h1>
+<details id="settings" open>
+  <summary>Start SRCLET and set your language</summary>
+  <ol>
+    <li>Run ./run.sh on Linux or double-click run.bat on Windows. The first launch installs the dependencies and needs an internet connection.</li>
+    <li>Open File → Settings. Choose Bosnian, English or French. Changes to the language, font sizes and icons apply immediately to open windows.</li>
+    <li>Open Help → Manual or press F1 to return to this guide. Click a chapter to expand it or click a screenshot for a larger view.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="settings.png" alt="Language, font and icon settings in English."></button>
+    <figcaption>Language, font and icon settings in English.</figcaption>
+  </figure>
+</details>
+<details id="import">
+  <summary>Open a project or import measurements</summary>
+  <ol>
+    <li>For an existing study, choose Project → Open existing project. Select a project from the list or browse to its folder.</li>
+    <li>For a new study, choose Project → New project. Enter a name, choose a folder and fill in the station details. Latitude and elevation make additional methods available.</li>
+    <li>Click Next and choose a TXT, TSV, CSV or XLSX file. Check the delimiter, decimal mark and column assignments in the first preview row. A year, a month and at least one measurement are required. Empty cells and -999 mark missing values.</li>
+    <li>To try the workflow, open examples/methods/workflow.csv and click Save and open. The sample observations are synthetic.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="import.png" alt="Monthly data preview and column assignments before saving."></button>
+    <figcaption>Monthly data preview and column assignments before saving.</figcaption>
+  </figure>
+</details>
+<details id="data">
+  <summary>Enter or correct project data</summary>
+  <ol>
+    <li>Choose Enter data manually when creating a project, or Edit project data in an open project.</li>
+    <li>Choose a variable and click Add column. Add one row per month. Double-click a cell to change its value. Each year and month combination must be unique.</li>
+    <li>Click Save data. SRCLET checks which methods the updated observations support. The originally imported workbook is kept in the project folder.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="data.png" alt="Station information and monthly measurement editor."></button>
+    <figcaption>Station information and monthly measurement editor.</figcaption>
+  </figure>
+</details>
+<details id="parameters">
+  <summary>Define an input variable or coefficient</summary>
+  <ol>
+    <li>Under Customize → Parameters, choose Basic parameters for an imported measurement or Adjustable parameters for a coefficient.</li>
+    <li>Click New parameter. Enter a name, a unique symbol, a unit and a description. For a coefficient, enter its default value and save the changes.</li>
+    <li>Use the symbol in your input file and formula. In the method editor you can select a catalog coefficient and adjust its value for the method.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="parameters.png" alt="Minimum temperature defined by the symbol Tmin and the unit °C."></button>
+    <figcaption>Minimum temperature defined by the symbol Tmin and the unit °C.</figcaption>
+  </figure>
+</details>
+<details id="selection">
+  <summary>Link evapotranspiration, water balance and irrigation demand</summary>
+  <ol>
+    <li>In Method selection, check the working data and date range. The list shows methods with usable measurements during that period.</li>
+    <li>Select FAO-56 Penman–Monteith and click Select method. Its monthly ET₀ is now available to water balance methods. With rainfall and temperature in the data, add McCabe–Markstrom.</li>
+    <li>Add the irrigation hydromodule after deriving a monthly deficit. If you have measured deficits, you can import them directly as shown in examples/mliniste.csv.</li>
+    <li>Use Remove last method to try a different sequence. Click Calculate and save once you have selected the methods you need.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="selection.png" alt="McCabe–Markstrom becomes available after selecting FAO-56."></button>
+    <figcaption>McCabe–Markstrom becomes available after selecting FAO-56.</figcaption>
+  </figure>
+</details>
+<details id="catalog">
+  <summary>Add, duplicate or edit a method</summary>
+  <ol>
+    <li>Open Method catalog in the project or use Customize → Methods. Select an existing record, duplicate it, or click New method.</li>
+    <li>Set the group, name, symbol, unit and output. Use ET0 for monthly evapotranspiration in mm, or Deficit for monthly water deficit in mm, so subsequent methods recognise the output.</li>
+    <li>For a multi-step model, enter the equations in calculation order. Set initial storage under Previous month and coefficients under Method parameters. Mark a step for publication if other methods should be able to use its result.</li>
+    <li>Click Save changes. The Input data tab shows the formula inputs and example rows. For a supplied method, Export example data… saves a separate CSV file you can import into a new project.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="catalog.png" alt="McCabe–Markstrom displayed in the same editor used to create custom methods."></button>
+    <figcaption>McCabe–Markstrom displayed in the same editor used to create custom methods.</figcaption>
+  </figure>
+</details>
+<details id="formula">
+  <summary>Write and check a mathematical formula</summary>
+  <ol>
+    <li>Click Edit formula… for a method or an individual calculation step. Type an expression or use the controls for fractions, roots, powers, braces and cases.</li>
+    <li>Insert a symbol from the list. Enter sample values or choose an available sample month, then click Test formula. For the irrigation hydromodule, use D = 34 mm and d = 31 days.</li>
+    <li>The result, 0.12694146 L/s/ha, rounds to the published 0.127 for Mlinište. Click Apply, then save the method in the catalog.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="formula.png" alt="The q₂₄ fraction and its result for the August sample."></button>
+    <figcaption>The q₂₄ fraction and its result for the August sample.</figcaption>
+  </figure>
+</details>
+<details id="frequency">
+  <summary>Select a frequency method and distribution</summary>
+  <ol>
+    <li>Under Series for frequency analysis, choose the deficit, runoff or another available quantity. The series can come from an imported file or a water balance result.</li>
+    <li>Highlight one of the six ranking methods and click Method parameters. Set the calendar month, return period in years and distribution. A ten-year return period requires at least ten years of valid observations for that month.</li>
+    <li>Click Apply and then Select method. The saved result includes the estimated value, ranks and fit error. For deficit analysis it also includes the irrigation hydromodule.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="frequency.png" alt="Month, return period and distribution for the Weibull plotting position."></button>
+    <figcaption>Month, return period and distribution for the Weibull plotting position.</figcaption>
+  </figure>
+</details>
+<details id="results">
+  <summary>Review, export and reuse results</summary>
+  <ol>
+    <li>Open Saved results and choose a record by method name and timestamp. Review the output, unit and inputs used.</li>
+    <li>Click Export…. Choose XLSX for an Excel table with a chart on a separate worksheet. CSV, TSV and TXT export tabular data. Frequency results include an exceedance probability chart, while monthly results use a time series.</li>
+    <li>To continue a calculation, return to Method selection and pick an earlier monthly result as the working data. To change the video guide link, replace the address in video_url.txt in the application’s main folder.</li>
+  </ol>
+  <figure>
+    <button type="button" aria-label="Enlarge screenshot"><img src="results.png" alt="Saved monthly water balance with deficit, storage, runoff and the export control."></button>
+    <figcaption>Saved monthly water balance with deficit, storage, runoff and the export control.</figcaption>
+  </figure>
+</details>
+<dialog aria-label="Enlarge screenshot"><button type="button">Close</button><img alt=""></dialog>
+</body>
+</html>

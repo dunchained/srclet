@@ -1,0 +1,8 @@
+{
+  "name": "Station temperature offset",
+  "unit": "°C",
+  "category": "temperature",
+  "symbol": "offset",
+  "description": "Station temperature offset",
+  "type": "a"
+}

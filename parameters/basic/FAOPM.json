@@ -1,0 +1,8 @@
+{
+  "name": "Reference FAO-56 ET",
+  "category": "ET0",
+  "unit": "mm/month",
+  "symbol": "FAOPM",
+  "description": "Reference FAO-56 ET",
+  "type": "a"
+}

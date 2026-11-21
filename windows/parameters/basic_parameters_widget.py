@@ -1,10 +1,11 @@
+from mortys.language_morty import bind_key
 from windows.parameters.basic_parameters_add import AddBasicParameter
 from variables import var
 from widgets.ch_widget import InputCharacterWidget
-from PyQt5.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
-from PyQt5.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
+from PyQt6.QtWidgets import QLineEdit, QListWidget, QTextEdit, QMessageBox, QWidget
+from PyQt6.QtWidgets import QTabWidget, QVBoxLayout, QGridLayout, QGroupBox, QLabel, QPushButton, QApplication
 import sys, os, json
-from PyQt5.QtCore import Qt
+from PyQt6.QtCore import Qt
 cwd = os.path.curdir
 
 
@@ -61,24 +62,20 @@ class ParametersWidget(QWidget):
 
     def create_list_widget(self, category_list):
         self.category_list = category_list
-        self.groupBox = QGroupBox(
-            self.language['basic_parameters_widget_caption'])
+        self.groupBox = bind_key(QGroupBox(), "title", 'basic_parameters_widget_caption')
         self.list_widget = QListWidget()
         self.list_widget.addItems(self.category_list)
         self.list_widget.currentItemChanged.connect(self.index_changed)
 
-        self.buttonAddBasicParameter = QPushButton(
-            self.language['basic_parameters_widget_btn_add_new'])
+        self.buttonAddBasicParameter = bind_key(QPushButton(), "text", 'basic_parameters_widget_btn_add_new')
         self.buttonAddBasicParameter.clicked.connect(self.new_parameter_window)
 
-        self.buttonAddBasicParameterInherit = QPushButton(
-            self.language['basic_parameters_widget_btn_add_new_inherit'])
+        self.buttonAddBasicParameterInherit = bind_key(QPushButton(), "text", 'basic_parameters_widget_btn_add_new_inherit')
         self.buttonAddBasicParameterInherit.setEnabled(False)
         self.buttonAddBasicParameterInherit.clicked.connect(
             self.new_parameter_window_inherit)
 
-        self.buttonDelete = QPushButton(
-            self.language['basic_parameters_widget_btn_delete'])
+        self.buttonDelete = bind_key(QPushButton(), "text", 'basic_parameters_widget_btn_delete')
         self.buttonDelete.clicked.connect(self.delete_procedure)
         self.buttonDelete.setEnabled(False)
 
@@ -140,18 +137,14 @@ class ParametersWidget(QWidget):
 
     def delete_procedure(self):
         self.msgBox = QMessageBox()
-        self.msgBox.setIcon(QMessageBox.Information)
-        self.msgBox.setText(
-            self.language['basic_parameters_widget_delete_msg_title'])
-        self.msgBox.setWindowTitle(
-            self.language['basic_parameters_widget_delete_msg_message'])
-        self.msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        self.buttonOK = self.msgBox.button(QMessageBox.Ok)
-        self.buttonOK.setText(
-            self.language['basic_parameters_widget_delete_msg_yes'])
-        self.buttonCancel = self.msgBox.button(QMessageBox.Cancel)
-        self.buttonCancel.setText(
-            self.language['basic_parameters_widget_delete_msg_cancel'])
+        self.msgBox.setIcon(QMessageBox.Icon.Information)
+        bind_key(self.msgBox, "text", 'basic_parameters_widget_delete_msg_title')
+        bind_key(self.msgBox, "windowTitle", 'basic_parameters_widget_delete_msg_message')
+        self.msgBox.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        self.buttonOK = self.msgBox.button(QMessageBox.StandardButton.Ok)
+        bind_key(self.buttonOK, "text", 'basic_parameters_widget_delete_msg_yes')
+        self.buttonCancel = self.msgBox.button(QMessageBox.StandardButton.Cancel)
+        bind_key(self.buttonCancel, "text", 'basic_parameters_widget_delete_msg_cancel')
         self.msgBox.buttonClicked.connect(self.delete_parameter)
         returnValue = self.msgBox.exec()
 
@@ -177,25 +170,18 @@ class ParametersWidget(QWidget):
             self.list_widget.takeItem(self.list_widget.row(item))
 
     def create_parameter_widget(self):
-        self.groupBox = QGroupBox(
-            self.language['basic_parameters_widget_parameter_caption'])
-        self.text_parameter_name = QLabel(
-            self.language['add_basic_parameter_window_name'])
+        self.groupBox = bind_key(QGroupBox(), "title", 'basic_parameters_widget_parameter_caption')
+        self.text_parameter_name = bind_key(QLabel(), "text", 'add_basic_parameter_window_name')
         self.parameter_name = QLineEdit()
-        self.text_parameter_symbol = QLabel(
-            self.language['add_basic_parameter_window_symbol'])
+        self.text_parameter_symbol = bind_key(QLabel(), "text", 'add_basic_parameter_window_symbol')
         self.parameter_symbol = QLineEdit()
-        self.text_parameter_unit = QLabel(
-            self.language['add_basic_parameter_window_unit'])
+        self.text_parameter_unit = bind_key(QLabel(), "text", 'add_basic_parameter_window_unit')
         self.parameter_unit = QLineEdit()
-        self.text_parameter_descriprion = QLabel(
-            self.language['add_basic_parameter_window_desc'])
+        self.text_parameter_descriprion = bind_key(QLabel(), "text", 'add_basic_parameter_window_desc')
         self.parameter_descriprion = QTextEdit()
-        self.buttonSave = QPushButton(
-            self.language['basic_parameters_widget_parameter_btn_save_changes'])
+        self.buttonSave = bind_key(QPushButton(), "text", 'basic_parameters_widget_parameter_btn_save_changes')
         self.buttonSave.clicked.connect(self.save_changes_parameter)
-        self.buttonCancel = QPushButton(
-            self.language['basic_parameters_widget_parameter_btn_cancel_changes'])
+        self.buttonCancel = bind_key(QPushButton(), "text", 'basic_parameters_widget_parameter_btn_cancel_changes')
         self.buttonCancel.clicked.connect(self.cancel)
         self.buttonCancel.setEnabled(False)
         self.layout = QVBoxLayout()
@@ -238,13 +224,11 @@ class ParametersWidget(QWidget):
                 # self.kategorija = self.file_data['category']
         if not self.file_to_load or not self.parameter_name.text() or not self.parameter_symbol.text():
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(
-                self.language['add_basic_parameter_window_save_message'])
-            self.msg.setWindowTitle(
-                self.language['add_basic_parameter_window_save_message_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'add_basic_parameter_window_save_message')
+            bind_key(self.msg, "windowTitle", 'add_basic_parameter_window_save_message_caption')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.buttonClicked.connect(self.msg.close)
             self.msg.show()
         else:
@@ -260,13 +244,11 @@ class ParametersWidget(QWidget):
             with open(cwd + var.basic_parameters_folder + self.file_to_load, "w") as outfile:
                 outfile.write(json_object)
             self.msg = QMessageBox()
-            self.msg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.msg.setIcon(QMessageBox.Information)
-            self.msg.setText(
-                self.language['add_basic_parameter_window_saved_message'])
-            self.msg.setWindowTitle(
-                self.language['add_basic_parameter_window_saved_message_caption'])
-            self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+            self.msg.setIcon(QMessageBox.Icon.Information)
+            bind_key(self.msg, "text", 'add_basic_parameter_window_saved_message')
+            bind_key(self.msg, "windowTitle", 'add_basic_parameter_window_saved_message_caption')
+            self.msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             self.msg.show()
 
     def cancel(self):
@@ -290,4 +272,4 @@ class ParametersWidget(QWidget):
 if __name__ == '__main__':
     mainApplication = QApplication(sys.argv)
     mainWindow = ParametersCategoryTabs()
-    sys.exit(mainApplication.exec_())
+    sys.exit(mainApplication.exec())
